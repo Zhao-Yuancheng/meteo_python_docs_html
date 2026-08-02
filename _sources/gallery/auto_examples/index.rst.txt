@@ -150,9 +150,9 @@ NumPy 计算示例
    :includehidden:
 
 
-   /gallery/auto_examples/plot_basics/index.rst
-   /gallery/auto_examples/plot_numpy/index.rst
-   /gallery/auto_examples/plot_viz/index.rst
+   /./gallery/auto_examples/plot_basics/index.rst
+   /./gallery/auto_examples/plot_numpy/index.rst
+   /./gallery/auto_examples/plot_viz/index.rst
 
 
 .. only:: html
