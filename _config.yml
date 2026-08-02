@@ -1,0 +1,6 @@
+include:
+  - _static
+  - _sphinx_design_static
+  - _sources
+  - _images
+  - _downloads
