@@ -1,0 +1,724 @@
+
+<!DOCTYPE html>
+
+
+<html lang="zh-CN" data-content_root="../" >
+
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
+    <title>第 7 章术语：气象数据分析（一）Pandas &#8212; MeteoPython</title>
+  
+  
+  
+  <script data-cfasync="false">
+    document.documentElement.dataset.mode = localStorage.getItem("mode") || "";
+    document.documentElement.dataset.theme = localStorage.getItem("theme") || "";
+  </script>
+  <!--
+    this give us a css class that will be invisible only if js is disabled
+  -->
+  <noscript>
+    <style>
+      .pst-js-only { display: none !important; }
+
+    </style>
+  </noscript>
+  
+  <!-- Loaded before other Sphinx assets -->
+  <link href="../_static/styles/theme.css?digest=90905a2f556bf617f1a9" rel="stylesheet" />
+<link href="../_static/styles/pydata-sphinx-theme.css?digest=90905a2f556bf617f1a9" rel="stylesheet" />
+
+    <link rel="stylesheet" type="text/css" href="../_static/pygments.css?v=8f2a1f02" />
+    <link rel="stylesheet" type="text/css" href="../_static/copybutton.css?v=76b2166b" />
+    <link rel="stylesheet" type="text/css" href="../_static/sg_gallery.css?v=fd6457a4" />
+    <link rel="stylesheet" type="text/css" href="../_static/sg_gallery-binder.css?v=f4aeca0c" />
+    <link rel="stylesheet" type="text/css" href="../_static/sg_gallery-dataframe.css?v=2082cf3c" />
+    <link rel="stylesheet" type="text/css" href="../_static/sg_gallery-rendered-html.css?v=1277b6f3" />
+    <link rel="stylesheet" type="text/css" href="../_static/sphinx-design.min.css?v=95c83b7e" />
+    <link rel="stylesheet" type="text/css" href="../_static/./custom.css?v=fbe1f034" />
+  
+  <!-- So that users can add custom icons -->
+  <script defer src="../_static/scripts/fontawesome.js?digest=90905a2f556bf617f1a9"></script>
+  <!-- Pre-loaded scripts that we'll load fully later -->
+  <link rel="preload" as="script" href="../_static/scripts/bootstrap.js?digest=90905a2f556bf617f1a9" />
+<link rel="preload" as="script" href="../_static/scripts/pydata-sphinx-theme.js?digest=90905a2f556bf617f1a9" />
+
+    <script src="../_static/documentation_options.js?v=9becfed8"></script>
+    <script src="../_static/doctools.js?v=9bcbadda"></script>
+    <script src="../_static/sphinx_highlight.js?v=dc90522c"></script>
+    <script src="../_static/sg-tags.js?v=d80f6fa4"></script>
+    <script src="../_static/clipboard.min.js?v=a7894cd8"></script>
+    <script src="../_static/copybutton.js?v=fd10adb8"></script>
+    <script src="../_static/translations.js?v=beaddf03"></script>
+    <script src="../_static/design-tabs.js?v=f930bc37"></script>
+    <script>DOCUMENTATION_OPTIONS.pagename = 'api/ch07_terms';</script>
+    <script>
+        DOCUMENTATION_OPTIONS.theme_version = '0.20.0';
+        DOCUMENTATION_OPTIONS.theme_switcher_json_url = '_static/switcher.json';
+        DOCUMENTATION_OPTIONS.theme_switcher_version_match = '0.1.0';
+        DOCUMENTATION_OPTIONS.show_version_warning_banner =
+            false;
+        </script>
+    <script>DOCUMENTATION_OPTIONS.search_as_you_type = false;</script>
+    <link rel="icon" href="../_static/favicon.svg"/>
+    <link rel="index" title="索引" href="../genindex.html" />
+    <link rel="search" title="搜索" href="../search.html" />
+    <link rel="next" title="第 8 章术语：气象数据分析（二）Xarray" href="ch08_terms.html" />
+    <link rel="prev" title="第 6 章术语：气象数据计算 NumPy" href="ch06_terms.html" />
+  <meta name="viewport" content="width=device-width, initial-scale=1"/>
+  <meta name="docsearch:language" content="zh-CN"/>
+  <meta name="docsearch:version" content="0.1" />
+    <meta name="docbuild:last-update" content="2026-08-20"/>
+  
+    
+    <script src="../_static/searchtools.js"></script>
+    <script src="../_static/language_data.js"></script>
+    <script src="../searchindex.js"></script>
+  
+  </head>
+  <body data-default-mode="">
+  
+  
+  <div id="pst-skip-link" class="skip-link d-print-none"><a href="#main-content">跳转至主要内容</a></div>
+
+  
+  <div id="pst-scroll-pixel-helper"></div>
+  
+  <button type="button" class="btn rounded-pill" id="pst-back-to-top">
+    <i class="fa-solid fa-arrow-up"></i>回到顶部</button>
+  
+  
+  
+  
+  <dialog id="pst-search-dialog">
+    
+<form class="bd-search d-flex align-items-center"
+      action="../search.html"
+      method="get">
+  <i class="fa-solid fa-magnifying-glass"></i>
+  <input type="search"
+         class="form-control"
+         name="q"
+         placeholder="搜索文档…"
+         aria-label="搜索文档…"
+         autocomplete="off"
+         autocorrect="off"
+         autocapitalize="off"
+         spellcheck="false"/>
+  <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd>K</kbd></span>
+</form>
+  </dialog>
+
+  <div class="pst-async-banner-revealer d-none">
+  <aside id="bd-header-version-warning" class="d-none d-print-none" aria-label="版本警告"></aside>
+</div>
+
+  
+    <header id="pst-header" class="bd-header navbar navbar-expand-lg bd-navbar d-print-none">
+<div class="bd-header__inner bd-page-width">
+  <button class="pst-navbar-icon sidebar-toggle primary-toggle" aria-label="网页导航">
+    <span class="fa-solid fa-bars"></span>
+  </button>
+  
+  
+  <div class="col-lg-3 navbar-header-items__start">
+    
+      <div class="navbar-item">
+
+  
+    
+  
+
+<a class="navbar-brand logo" href="../index.html">
+  
+  
+  
+  
+  
+    
+    
+      
+    
+    
+    <img src="../_static/logo.svg" class="logo__image only-light" alt="MeteoPython - Home"/>
+    <img src="../_static/logo.svg" class="logo__image only-dark pst-js-only" alt="MeteoPython - Home"/>
+  
+  
+</a></div>
+    
+  </div>
+  
+  <div class="col-lg-9 navbar-header-items">
+    
+    <div class="me-auto navbar-header-items__center">
+      
+        <div class="navbar-item">
+<nav>
+  <ul class="bd-navbar-elements navbar-nav">
+    
+<li class="nav-item ">
+  <a class="nav-link nav-internal" href="../user_guide/index.html">
+    教程
+  </a>
+</li>
+
+
+<li class="nav-item ">
+  <a class="nav-link nav-internal" href="../tutorials/index.html">
+    练习
+  </a>
+</li>
+
+
+<li class="nav-item ">
+  <a class="nav-link nav-internal" href="../gallery/index.html">
+    示例
+  </a>
+</li>
+
+
+<li class="nav-item current active">
+  <a class="nav-link nav-internal" href="index.html">
+    术语参考
+  </a>
+</li>
+
+
+<li class="nav-item ">
+  <a class="nav-link nav-internal" href="../qa/index.html">
+    常见问题 Q&A
+  </a>
+</li>
+
+  </ul>
+</nav></div>
+      
+    </div>
+    
+    
+    <div class="navbar-header-items__end">
+      
+        <div class="navbar-item navbar-persistent--container">
+          
+
+<button class="btn search-button-field search-button__button pst-js-only" title="搜索" aria-label="搜索" data-bs-placement="bottom" data-bs-toggle="tooltip">
+ <i class="fa-solid fa-magnifying-glass"></i>
+ <span class="search-button__default-text">搜索</span>
+ <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd class="kbd-shortcut__modifier">K</kbd></span>
+</button>
+        </div>
+      
+      
+        <div class="navbar-item">
+
+<div class="theme-switch-container dropdown pst-js-only" data-bs-toggle="tooltip" data-bs-placement="bottom" title="Color mode">
+  <button class="btn btn-sm nav-link pst-navbar-icon theme-switch-button dropdown-toggle" aria-label="Color mode" data-bs-toggle="dropdown">
+    <i class="theme-switch fa-solid fa-sun fa-lg fa-fw" data-mode="light" title="亮色"></i>
+    <i class="theme-switch fa-solid fa-moon fa-lg fa-fw" data-mode="dark" title="暗色"></i>
+    <i class="theme-switch fa-solid fa-circle-half-stroke fa-lg fa-fw" data-mode="auto" title="System Settings"></i>
+  </button>
+  <ul class="dropdown-menu dropdown-menu-end">
+    <li><button class="dropdown-item d-flex align-items-center theme-change-button" data-mode="auto"><i class="fa-solid fa-circle-half-stroke fa-lg fa-fw me-1"></i>System Settings</button></li>
+    <li><button class="dropdown-item d-flex align-items-center theme-change-button" data-mode="light"><i class="fa-solid fa-sun fa-lg fa-fw me-1"></i>亮色</button></li>
+    <li><button class="dropdown-item d-flex align-items-center theme-change-button" data-mode="dark"><i class="fa-solid fa-moon fa-lg fa-fw me-1"></i>暗色</button></li>
+  </ul>
+</div></div>
+      
+        <div class="navbar-item"><ul class="navbar-icon-links"
+    aria-label="Icon Links">
+</ul></div>
+      
+    </div>
+    
+  </div>
+  
+  
+    <div class="navbar-persistent--mobile">
+
+<button class="btn search-button-field search-button__button pst-js-only" title="搜索" aria-label="搜索" data-bs-placement="bottom" data-bs-toggle="tooltip">
+ <i class="fa-solid fa-magnifying-glass"></i>
+ <span class="search-button__default-text">搜索</span>
+ <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd class="kbd-shortcut__modifier">K</kbd></span>
+</button>
+    </div>
+  
+
+  
+    <button class="pst-navbar-icon sidebar-toggle secondary-toggle" aria-label="当前页面">
+      <span class="fa-solid fa-outdent"></span>
+    </button>
+  
+</div>
+
+    </header>
+  
+
+  <div class="bd-container">
+    <div class="bd-container__inner bd-page-width">
+      
+      
+      
+      <dialog id="pst-primary-sidebar-modal"></dialog>
+      <div id="pst-primary-sidebar" class="bd-sidebar-primary bd-sidebar">
+        
+
+  
+  <div class="sidebar-header-items sidebar-primary__section">
+    
+    
+      <div class="sidebar-header-items__center">
+        
+          
+          
+            <div class="navbar-item">
+<nav>
+  <ul class="bd-navbar-elements navbar-nav">
+    
+<li class="nav-item ">
+  <a class="nav-link nav-internal" href="../user_guide/index.html">
+    教程
+  </a>
+</li>
+
+
+<li class="nav-item ">
+  <a class="nav-link nav-internal" href="../tutorials/index.html">
+    练习
+  </a>
+</li>
+
+
+<li class="nav-item ">
+  <a class="nav-link nav-internal" href="../gallery/index.html">
+    示例
+  </a>
+</li>
+
+
+<li class="nav-item current active">
+  <a class="nav-link nav-internal" href="index.html">
+    术语参考
+  </a>
+</li>
+
+
+<li class="nav-item ">
+  <a class="nav-link nav-internal" href="../qa/index.html">
+    常见问题 Q&A
+  </a>
+</li>
+
+  </ul>
+</nav></div>
+          
+        
+      </div>
+    
+    
+    
+      <div class="sidebar-header-items__end">
+        
+          <div class="navbar-item">
+
+<div class="theme-switch-container dropdown pst-js-only" data-bs-toggle="tooltip" data-bs-placement="bottom" title="Color mode">
+  <button class="btn btn-sm nav-link pst-navbar-icon theme-switch-button dropdown-toggle" aria-label="Color mode" data-bs-toggle="dropdown">
+    <i class="theme-switch fa-solid fa-sun fa-lg fa-fw" data-mode="light" title="亮色"></i>
+    <i class="theme-switch fa-solid fa-moon fa-lg fa-fw" data-mode="dark" title="暗色"></i>
+    <i class="theme-switch fa-solid fa-circle-half-stroke fa-lg fa-fw" data-mode="auto" title="System Settings"></i>
+  </button>
+  <ul class="dropdown-menu dropdown-menu-end">
+    <li><button class="dropdown-item d-flex align-items-center theme-change-button" data-mode="auto"><i class="fa-solid fa-circle-half-stroke fa-lg fa-fw me-1"></i>System Settings</button></li>
+    <li><button class="dropdown-item d-flex align-items-center theme-change-button" data-mode="light"><i class="fa-solid fa-sun fa-lg fa-fw me-1"></i>亮色</button></li>
+    <li><button class="dropdown-item d-flex align-items-center theme-change-button" data-mode="dark"><i class="fa-solid fa-moon fa-lg fa-fw me-1"></i>暗色</button></li>
+  </ul>
+</div></div>
+        
+          <div class="navbar-item"><ul class="navbar-icon-links"
+    aria-label="Icon Links">
+</ul></div>
+        
+      </div>
+    
+  </div>
+  
+    <div class="sidebar-primary-items__start sidebar-primary__section">
+        <div class="sidebar-primary-item pst-sidebar-collapse"><button id="pst-collapse-sidebar-button" aria-expanded="true" aria-controls="pst-primary-sidebar">
+  <svg class="pst-icon" role="img" aria-hidden="true" focusable="false" viewBox="0 0 16 16" xmlns="http://www.w3.org/2000/svg">
+    <path fill="currentColor" d="M3 15.5C2.36232 15.5 1.74874 15.2564 1.28478 14.8189C0.820828 14.3815 0.541576 13.7832 0.504167 13.1467L0.5 13L0.5 3C0.499965 2.36232 0.743605 1.74874 1.18107 1.28478C1.61854 0.820828 2.21676 0.541576 2.85333 0.504167L3 0.5L13 0.5C13.6377 0.499965 14.2513 0.743605 14.7152 1.18107C15.1792 1.61854 15.4584 2.21676 15.4958 2.85333L15.5 3L15.5 13C15.5 13.6377 15.2564 14.2513 14.8189 14.7152C14.3815 15.1792 13.7832 15.4584 13.1467 15.4958L13 15.5L3 15.5ZM3 13.8333L10.5 13.8333L10.5 2.16667L3 2.16667C2.79589 2.16669 2.59889 2.24163 2.44636 2.37726C2.29383 2.5129 2.19638 2.69979 2.1725 2.9025L2.16667 3L2.16667 13C2.16669 13.2041 2.24163 13.4011 2.37726 13.5536C2.5129 13.7062 2.69979 13.8036 2.9025 13.8275L3 13.8333ZM6.65583 10.325L6.5775 10.2558L4.91083 8.58917C4.76735 8.44567 4.68116 8.25476 4.66843 8.05223C4.65569 7.84971 4.71729 7.6495 4.84167 7.48917L4.91083 7.41083L6.5775 5.74417C6.72747 5.59471 6.9287 5.50794 7.14032 5.50148C7.35194 5.49502 7.55809 5.56935 7.7169 5.70937C7.8757 5.8494 7.97525 6.04463 7.99533 6.25539C8.01541 6.46616 7.95451 6.67667 7.825 6.84417L7.75583 6.9225L6.67917 8L7.75583 9.0775C7.89931 9.22099 7.98551 9.41191 7.99824 9.61443C8.01097 9.81695 7.94938 10.0172 7.825 10.1775L7.75583 10.2558C7.61234 10.3993 7.42142 10.4855 7.2189 10.4982C7.01638 10.511 6.81617 10.4494 6.65583 10.325Z"/>
+  </svg>
+  <span class="pst-collapse-sidebar-label">Collapse Sidebar</span>
+  <span class="pst-expand-sidebar-label">Expand Sidebar</span>
+</button></div>
+        <div class="sidebar-primary-item">
+
+<nav class="bd-docs-nav bd-links"
+     aria-label="章节导航">
+  <p class="bd-links__title" role="heading" aria-level="1">章节导航</p>
+  <div class="bd-toc-item navbar-nav"><ul class="current nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="ch01_terms.html">第 1 章术语：Python 简介及安装环境</a></li>
+<li class="toctree-l1"><a class="reference internal" href="ch02_terms.html">第 2 章术语：基本数据类型、变量和运算符</a></li>
+<li class="toctree-l1"><a class="reference internal" href="ch03_terms.html">第 3 章术语：分支、循环与条件</a></li>
+<li class="toctree-l1"><a class="reference internal" href="ch04_terms.html">第 4 章术语：函数及变量作用域、模块和包</a></li>
+<li class="toctree-l1"><a class="reference internal" href="ch05_terms.html">第 5 章术语：面向对象与高级语法</a></li>
+<li class="toctree-l1"><a class="reference internal" href="ch06_terms.html">第 6 章术语：气象数据计算 NumPy</a></li>
+<li class="toctree-l1 current active"><a class="current reference internal" href="#">第 7 章术语：气象数据分析（一）Pandas</a></li>
+<li class="toctree-l1"><a class="reference internal" href="ch08_terms.html">第 8 章术语：气象数据分析（二）Xarray</a></li>
+<li class="toctree-l1"><a class="reference internal" href="ch09_terms.html">第 9 章术语：Matplotlib 绘图</a></li>
+</ul>
+</div>
+</nav></div>
+    </div>
+  
+  
+  <div class="sidebar-primary-items__end sidebar-primary__section">
+      <div class="sidebar-primary-item">
+<div id="ethical-ad-placement"
+      class="flat"
+      data-ea-publisher="readthedocs"
+      data-ea-type="readthedocs-sidebar"
+      data-ea-manual="true">
+</div></div>
+  </div>
+
+
+      </div>
+      
+      <main id="main-content" class="bd-main" role="main">
+        
+        
+          <div class="bd-content">
+            <div class="bd-article-container">
+              
+              <div class="bd-header-article d-print-none">
+<div class="header-article-items header-article__inner">
+  
+    <div class="header-article-items__start">
+      
+        <div class="header-article-item">
+
+<nav aria-label="Breadcrumb" class="d-print-none">
+  <ul class="bd-breadcrumbs">
+    
+    <li class="breadcrumb-item breadcrumb-home">
+      <a href="../index.html" class="nav-link" aria-label="初始页面">
+        <i class="fa-solid fa-home"></i>
+      </a>
+    </li>
+    
+    <li class="breadcrumb-item"><a href="index.html" class="nav-link">术语参考</a></li>
+    
+    <li class="breadcrumb-item active" aria-current="page"><span class="ellipsis">第 7 章术语：气象数据分析（一）Pandas</span></li>
+  </ul>
+</nav>
+</div>
+      
+    </div>
+  
+  
+</div>
+</div>
+              
+              
+              
+                
+<div id="searchbox"></div>
+                <article class="bd-article">
+                  
+  <section id="pandas">
+<h1>第 7 章术语：气象数据分析（一）Pandas<a class="headerlink" href="#pandas" title="Link to this heading">#</a></h1>
+<p>配套 <a class="reference internal" href="../user_guide/data/pandas.html#tut-pandas"><span class="std std-ref">气象数据分析（一）Pandas</span></a> 正文使用。每个词条 = 一句话定义 + <strong>生活类比</strong> + <strong>代码示例</strong> + <strong>易混淆点</strong>。阅读前先记住一句话：<strong>Pandas 全在「表」与「筛」二字</strong>——DataFrame 是带标签的二维表，布尔索引是按条件「筛」记录，分组聚合是把表「拆开算再拼回」，而 NaN 就是观测簿上的那个「缺测斜杠」。</p>
+<div class="admonition seealso">
+<p class="admonition-title">参见</p>
+<p>配套正文：<a class="reference internal" href="../user_guide/data/pandas.html"><span class="doc">气象数据分析（一）Pandas</span></a>　·　配套练习：<a class="reference internal" href="../tutorials/data/ch07_practice.html"><span class="doc">第 7 章练习：气象数据分析（一）Pandas</span></a></p>
+</div>
+<dl class="glossary">
+<dt id="term-Series">Series<a class="headerlink" href="#term-Series" title="Link to this term">#</a></dt><dd><p>Pandas 中最基本的一维数据结构，把一组<strong>数据（values）</strong>与一组<strong>索引（index）</strong>绑定在一起，可容纳任意类型，按位置（<code class="docutils literal notranslate"><span class="pre">iloc</span></code>）或按标签（<code class="docutils literal notranslate"><span class="pre">loc</span></code>）取数。</p>
+<p><strong>生活类比</strong> —— 一列<strong>贴了姓名贴的座位</strong>。你可以说「我要找坐在第三个的同学」（<code class="docutils literal notranslate"><span class="pre">s.iloc[2]</span></code>），也可以说「我要找小王同学」（<code class="docutils literal notranslate"><span class="pre">s.loc[&quot;小王&quot;]</span></code>）——同一排座位，两种叫法都行。</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span><span class="w"> </span><span class="nn">pandas</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">pd</span>
+
+<span class="n">s</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">Series</span><span class="p">([</span><span class="mf">36.5</span><span class="p">,</span> <span class="mf">35.2</span><span class="p">,</span> <span class="mf">38.0</span><span class="p">],</span> <span class="n">index</span><span class="o">=</span><span class="p">[</span><span class="s2">&quot;北京&quot;</span><span class="p">,</span> <span class="s2">&quot;上海&quot;</span><span class="p">,</span> <span class="s2">&quot;广州&quot;</span><span class="p">])</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">s</span><span class="o">.</span><span class="n">loc</span><span class="p">[</span><span class="s2">&quot;上海&quot;</span><span class="p">])</span>        <span class="c1"># 按标签取：35.2</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">s</span><span class="o">.</span><span class="n">iloc</span><span class="p">[</span><span class="mi">1</span><span class="p">])</span>            <span class="c1"># 按位置取：35.2</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">s</span><span class="o">.</span><span class="n">values</span><span class="p">,</span> <span class="n">s</span><span class="o">.</span><span class="n">index</span><span class="p">)</span>    <span class="c1"># 底层数组与标签</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">s</span><span class="o">.</span><span class="n">describe</span><span class="p">())</span>         <span class="c1"># 统计描述</span>
+</pre></div>
+</div>
+<p><strong>易混淆点</strong> —— <code class="docutils literal notranslate"><span class="pre">Series</span></code> 只能存一组数据（一根轴），而 <code class="docutils literal notranslate"><span class="pre">DataFrame</span></code> 至少两根轴；一列座位只是年级名单里的<strong>一列</strong>，是无法自成一张「表」的——只有多列拼起来才是表格。</p>
+</dd>
+<dt id="term-DataFrame">DataFrame<a class="headerlink" href="#term-DataFrame" title="Link to this term">#</a></dt><dd><p>Pandas 中最核心的二维表格型数据结构，可看作多个 <code class="docutils literal notranslate"><span class="pre">Series</span></code> 按列拼接而成，不同列可以有不同类型，共享同一套行索引。</p>
+<p><strong>生活类比</strong> —— 一张<strong>整班座位表</strong>。表的每一列放同一类信息（一列全是姓名、一列全是学号、一列全是气象要素），列与列之间类型可以不同，但整张表共用同一行标签（学号）。气象站点逐日观测就是最典型的 <code class="docutils literal notranslate"><span class="pre">DataFrame</span></code>——一行一条记录、一列一个要素。</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">df</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">({</span>
+    <span class="s2">&quot;温度&quot;</span><span class="p">:</span> <span class="p">[</span><span class="mi">18</span><span class="p">,</span> <span class="mi">22</span><span class="p">,</span> <span class="mi">26</span><span class="p">],</span>
+    <span class="s2">&quot;湿度&quot;</span><span class="p">:</span> <span class="p">[</span><span class="mi">65</span><span class="p">,</span> <span class="mi">70</span><span class="p">,</span> <span class="mi">60</span><span class="p">],</span>
+    <span class="s2">&quot;风速&quot;</span><span class="p">:</span> <span class="p">[</span><span class="mi">3</span><span class="p">,</span> <span class="mi">4</span><span class="p">,</span> <span class="mi">2</span><span class="p">],</span>
+<span class="p">},</span> <span class="n">index</span><span class="o">=</span><span class="p">[</span><span class="s2">&quot;08:00&quot;</span><span class="p">,</span> <span class="s2">&quot;12:00&quot;</span><span class="p">,</span> <span class="s2">&quot;14:00&quot;</span><span class="p">])</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">df</span><span class="p">[</span><span class="s2">&quot;温度&quot;</span><span class="p">])</span>     <span class="c1"># 取一列，返回 Series</span>
+</pre></div>
+</div>
+<p><strong>易混淆点</strong> —— 取<strong>一列</strong>用 <code class="docutils literal notranslate"><span class="pre">df[&quot;温度&quot;]</span></code>（返回 Series）；取<strong>多列</strong>必须 <code class="docutils literal notranslate"><span class="pre">df[[&quot;温度&quot;,</span> <span class="pre">&quot;湿度&quot;]]</span></code>（双层括号，返回 DataFrame）。单列省略列表会少一层，稍不留神就报 <code class="docutils literal notranslate"><span class="pre">KeyError</span></code> 或拿错类型。</p>
+</dd>
+<dt id="term-Index">索引 Index<a class="headerlink" href="#term-Index" title="Link to this term">#</a></dt><dd><p>每一起数据都有<strong>标签</strong>，它对应行索引集合；所谓<strong>数据对齐</strong>，就是算术或合并时 Pandas 自动把标签相同的行放在一起计算。</p>
+<p><strong>生活类比</strong> —— 索引就是考场上的<strong>准考证号</strong>。数据对齐就是联考时按准考证号把试卷对号入座——学号相同才放一起算，学号不同的绝不混。</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">s1</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">Series</span><span class="p">([</span><span class="mi">100</span><span class="p">,</span> <span class="mi">101</span><span class="p">],</span> <span class="n">index</span><span class="o">=</span><span class="p">[</span><span class="s2">&quot;8点&quot;</span><span class="p">,</span> <span class="s2">&quot;9点&quot;</span><span class="p">])</span>
+<span class="n">s2</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">Series</span><span class="p">([</span><span class="mi">200</span><span class="p">,</span> <span class="mi">202</span><span class="p">],</span> <span class="n">index</span><span class="o">=</span><span class="p">[</span><span class="s2">&quot;9点&quot;</span><span class="p">,</span> <span class="s2">&quot;10点&quot;</span><span class="p">])</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">s1</span> <span class="o">+</span> <span class="n">s2</span><span class="p">)</span>   <span class="c1"># 只有 &quot;9点&quot; 有值(301)；&quot;8点&quot;、&quot;10点&quot; 因为对不上号 → NaN</span>
+</pre></div>
+</div>
+<p><strong>易混淆点</strong> —— <code class="docutils literal notranslate"><span class="pre">loc</span></code> 按标签取、<strong>含两端</strong>；<code class="docutils literal notranslate"><span class="pre">iloc</span></code> 按整数位置取、<strong>左闭右开</strong>。写 <code class="docutils literal notranslate"><span class="pre">df.loc[0]</span></code> 想取第一行却报错，多半是因为索引不是整数 0 开头——先打印 <code class="docutils literal notranslate"><span class="pre">df.index</span></code> 看清楚标签是什么。</p>
+</dd>
+<dt id="term-0">布尔索引<a class="headerlink" href="#term-0" title="Link to this term">#</a></dt><dd><p>按<strong>条件真假</strong>筛选数据的核心方法（英文 Boolean Indexing）：对列算出一组 True/False 掩码，只保留真值所在的行，本质是用逻辑条件替代数字下标。</p>
+<p><strong>生活类比</strong> —— 农业气象里的<strong>震动筛子</strong>。你有一堆逐日观测（谷物），只想看「高温日」（温度 &gt; 35℃）——布尔索引就是那个筛眼，条件「温度 &gt; 35」先生成一个 True/False 判断（每颗谷物过不过得了筛孔），只有为真的行才落进筛子里，其余全部过滤掉。</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">df</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">({</span>
+    <span class="s2">&quot;温度&quot;</span><span class="p">:</span> <span class="p">[</span><span class="mi">28</span><span class="p">,</span> <span class="mi">36</span><span class="p">,</span> <span class="mi">39</span><span class="p">,</span> <span class="mi">22</span><span class="p">,</span> <span class="mi">33</span><span class="p">],</span>
+    <span class="s2">&quot;湿度&quot;</span><span class="p">:</span> <span class="p">[</span><span class="mi">60</span><span class="p">,</span> <span class="mi">55</span><span class="p">,</span> <span class="mi">70</span><span class="p">,</span> <span class="mi">80</span><span class="p">,</span> <span class="mi">45</span><span class="p">],</span>
+    <span class="s2">&quot;风速&quot;</span><span class="p">:</span> <span class="p">[</span><span class="mi">3</span><span class="p">,</span> <span class="mi">5</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">4</span><span class="p">,</span> <span class="mi">6</span><span class="p">],</span>
+<span class="p">},</span> <span class="n">index</span><span class="o">=</span><span class="p">[</span><span class="s2">&quot;周一&quot;</span><span class="p">,</span> <span class="s2">&quot;周二&quot;</span><span class="p">,</span> <span class="s2">&quot;周三&quot;</span><span class="p">,</span> <span class="s2">&quot;周四&quot;</span><span class="p">,</span> <span class="s2">&quot;周五&quot;</span><span class="p">])</span>
+
+<span class="n">hot_days</span> <span class="o">=</span> <span class="n">df</span><span class="p">[</span><span class="n">df</span><span class="p">[</span><span class="s2">&quot;温度&quot;</span><span class="p">]</span> <span class="o">&gt;</span> <span class="mi">35</span><span class="p">]</span>                     <span class="c1"># 高温日：周二、周三</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">hot_days</span><span class="p">)</span>
+<span class="n">alert</span> <span class="o">=</span> <span class="n">df</span><span class="p">[(</span><span class="n">df</span><span class="p">[</span><span class="s2">&quot;温度&quot;</span><span class="p">]</span> <span class="o">&gt;</span> <span class="mi">38</span><span class="p">)</span> <span class="o">|</span> <span class="p">(</span><span class="n">df</span><span class="p">[</span><span class="s2">&quot;风速&quot;</span><span class="p">]</span> <span class="o">&gt;</span> <span class="mi">5</span><span class="p">)]</span>   <span class="c1"># 高温或大风：周三、周五</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">alert</span><span class="p">)</span>
+
+<span class="n">df</span><span class="o">.</span><span class="n">loc</span><span class="p">[</span><span class="n">df</span><span class="p">[</span><span class="s2">&quot;温度&quot;</span><span class="p">]</span> <span class="o">&gt;</span> <span class="mi">35</span><span class="p">,</span> <span class="s2">&quot;高温标志&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="mi">1</span>            <span class="c1"># 安全地给高温日打标</span>
+</pre></div>
+</div>
+<p><strong>易混淆点</strong> ——
+- 必须用按位 <code class="docutils literal notranslate"><span class="pre">&amp;</span></code>（且）/<code class="docutils literal notranslate"><span class="pre">|</span></code>（或）/<code class="docutils literal notranslate"><span class="pre">~</span></code>（非）且每个条件加圆括号，关键字 <code class="docutils literal notranslate"><span class="pre">and</span></code>/<code class="docutils literal notranslate"><span class="pre">or</span></code> 在此直接报 <code class="docutils literal notranslate"><span class="pre">ValueError</span></code>；
+- <code class="docutils literal notranslate"><span class="pre">df[df[&quot;温度&quot;]</span> <span class="pre">&gt;</span> <span class="pre">35]</span></code> 筛的是<strong>行</strong>，<code class="docutils literal notranslate"><span class="pre">df[[&quot;温度&quot;,</span> <span class="pre">&quot;湿度&quot;]]</span></code> 筛的是<strong>列</strong>，别把单双层括号搞混；
+- 筛选后要改值请走 <code class="docutils literal notranslate"><span class="pre">df.loc[条件,</span> <span class="pre">列]</span> <span class="pre">=</span> <span class="pre">...</span></code>，直接 <code class="docutils literal notranslate"><span class="pre">df[df[&quot;温度&quot;]</span> <span class="pre">&gt;</span> <span class="pre">30][&quot;湿度&quot;]</span> <span class="pre">=</span> <span class="pre">50</span></code> 会触发 <code class="docutils literal notranslate"><span class="pre">SettingWithCopyWarning</span></code>（改的可能是临时副本）；
+- 筛选「含『雨』的天气现象」用 <code class="docutils literal notranslate"><span class="pre">df[&quot;天气&quot;].str.contains(&quot;雨&quot;)</span></code>，而不是 <code class="docutils literal notranslate"><span class="pre">==</span> <span class="pre">&quot;雨&quot;</span></code>。</p>
+</dd>
+<dt id="term-1">分组聚合<a class="headerlink" href="#term-1" title="Link to this term">#</a></dt><dd><p>遵循「拆分—应用—合并」（Split-Apply-Combine）范式（英文 GroupBy &amp; Aggregation）：先按一列或多列把数据拆成若干组，再对每组各自聚合（求均值、极值、计数等，把多行压成一行摘要），最后合并回一张新表。</p>
+<p><strong>生活类比</strong> —— 气象中心汇总全国数据。你有一沓 100 个站点、10 年的逐日记录，要算「各站年平均气温」：先把属于兰州站的纸张抽出来放一堆、北京站的放另一堆……（<strong>拆分</strong>）；每堆分别加总除以天数（<strong>应用聚合</strong>）；最后得到一张只有站点列表和各站年平均温的汇总表（<strong>合并</strong>）。</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">df</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">({</span>
+    <span class="s2">&quot;站点&quot;</span><span class="p">:</span> <span class="p">[</span><span class="s2">&quot;A&quot;</span><span class="p">,</span> <span class="s2">&quot;A&quot;</span><span class="p">,</span> <span class="s2">&quot;B&quot;</span><span class="p">,</span> <span class="s2">&quot;B&quot;</span><span class="p">,</span> <span class="s2">&quot;A&quot;</span><span class="p">,</span> <span class="s2">&quot;C&quot;</span><span class="p">],</span>
+    <span class="s2">&quot;年份&quot;</span><span class="p">:</span> <span class="p">[</span><span class="mi">2020</span><span class="p">,</span> <span class="mi">2021</span><span class="p">,</span> <span class="mi">2020</span><span class="p">,</span> <span class="mi">2021</span><span class="p">,</span> <span class="mi">2022</span><span class="p">,</span> <span class="mi">2020</span><span class="p">],</span>
+    <span class="s2">&quot;温度&quot;</span><span class="p">:</span> <span class="p">[</span><span class="mi">18</span><span class="p">,</span> <span class="mi">19</span><span class="p">,</span> <span class="mi">15</span><span class="p">,</span> <span class="mi">16</span><span class="p">,</span> <span class="mi">20</span><span class="p">,</span> <span class="mi">22</span><span class="p">],</span>
+    <span class="s2">&quot;降水&quot;</span><span class="p">:</span> <span class="p">[</span><span class="mi">100</span><span class="p">,</span> <span class="mi">120</span><span class="p">,</span> <span class="mi">80</span><span class="p">,</span> <span class="mi">90</span><span class="p">,</span> <span class="mi">110</span><span class="p">,</span> <span class="mi">60</span><span class="p">],</span>
+<span class="p">})</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">df</span><span class="o">.</span><span class="n">groupby</span><span class="p">(</span><span class="s2">&quot;站点&quot;</span><span class="p">)[</span><span class="s2">&quot;温度&quot;</span><span class="p">]</span><span class="o">.</span><span class="n">mean</span><span class="p">())</span>          <span class="c1"># 各站平均温度</span>
+<span class="n">result</span> <span class="o">=</span> <span class="n">df</span><span class="o">.</span><span class="n">groupby</span><span class="p">(</span><span class="s2">&quot;站点&quot;</span><span class="p">)</span><span class="o">.</span><span class="n">agg</span><span class="p">({</span>                 <span class="c1"># 多列多聚合</span>
+    <span class="s2">&quot;温度&quot;</span><span class="p">:</span> <span class="p">[</span><span class="s2">&quot;mean&quot;</span><span class="p">,</span> <span class="s2">&quot;max&quot;</span><span class="p">],</span>
+    <span class="s2">&quot;降水&quot;</span><span class="p">:</span> <span class="s2">&quot;sum&quot;</span><span class="p">,</span>
+<span class="p">})</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">result</span><span class="p">)</span>
+<span class="n">df</span><span class="p">[</span><span class="s2">&quot;距平&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">df</span><span class="o">.</span><span class="n">groupby</span><span class="p">(</span><span class="s2">&quot;站点&quot;</span><span class="p">)[</span><span class="s2">&quot;温度&quot;</span><span class="p">]</span><span class="o">.</span><span class="n">transform</span><span class="p">(</span><span class="k">lambda</span> <span class="n">x</span><span class="p">:</span> <span class="n">x</span> <span class="o">-</span> <span class="n">x</span><span class="o">.</span><span class="n">mean</span><span class="p">())</span>
+</pre></div>
+</div>
+<p><strong>易混淆点</strong> ——
+- <code class="docutils literal notranslate"><span class="pre">df.groupby(&quot;站点&quot;)</span></code> 返回的只是<strong>惰性的计划对象</strong>，直接 <code class="docutils literal notranslate"><span class="pre">print</span></code> 只见内存地址，必须紧跟 <code class="docutils literal notranslate"><span class="pre">.mean()</span></code>/<code class="docutils literal notranslate"><span class="pre">.agg()</span></code> 才真正执行；
+- 聚合（.mean）行数<strong>变少</strong>；<code class="docutils literal notranslate"><span class="pre">transform</span></code> 行数<strong>不变</strong>（把组内统计广播回每一行，常用于在原表加一列「该站平均值」）；
+- 分组列默认成为新表索引，想保留为普通列用 <code class="docutils literal notranslate"><span class="pre">as_index=False</span></code> 或 <code class="docutils literal notranslate"><span class="pre">.reset_index()</span></code>，否则后续按它筛选会 <code class="docutils literal notranslate"><span class="pre">KeyError</span></code>。</p>
+</dd>
+<dt id="term-2">透视表<a class="headerlink" href="#term-2" title="Link to this term">#</a></dt><dd><p>把「长格式」数据重塑成「宽格式」汇总工具（英文 pivot_table）：取一个（或多个）键做行索引、取一个键做列标签，在交叉格子上执行聚合（求和、平均、计数）。</p>
+<p><strong>生活类比</strong> —— 把原始流水账变成<strong>气象要素时空分布表</strong>。原始数据是逐条流水「A站 1月 气温 5 度」「B站 1月 气温 4 度」……透视表把「站名」放行标题、「月份」放列标题，交叉格子里自动填上该站该月的值——一眼横向比站点差异、纵向比季节演变。</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">df</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">({</span>
+    <span class="s2">&quot;站点&quot;</span><span class="p">:</span> <span class="p">[</span><span class="s2">&quot;A&quot;</span><span class="p">,</span> <span class="s2">&quot;A&quot;</span><span class="p">,</span> <span class="s2">&quot;B&quot;</span><span class="p">,</span> <span class="s2">&quot;B&quot;</span><span class="p">,</span> <span class="s2">&quot;A&quot;</span><span class="p">,</span> <span class="s2">&quot;B&quot;</span><span class="p">],</span>
+    <span class="s2">&quot;月份&quot;</span><span class="p">:</span> <span class="p">[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="mi">3</span><span class="p">],</span>
+    <span class="s2">&quot;温度&quot;</span><span class="p">:</span> <span class="p">[</span><span class="mi">5</span><span class="p">,</span> <span class="mi">7</span><span class="p">,</span> <span class="mi">4</span><span class="p">,</span> <span class="mi">6</span><span class="p">,</span> <span class="mi">8</span><span class="p">,</span> <span class="mi">9</span><span class="p">],</span>
+    <span class="s2">&quot;降水&quot;</span><span class="p">:</span> <span class="p">[</span><span class="mi">20</span><span class="p">,</span> <span class="mi">30</span><span class="p">,</span> <span class="mi">10</span><span class="p">,</span> <span class="mi">25</span><span class="p">,</span> <span class="mi">35</span><span class="p">,</span> <span class="mi">15</span><span class="p">],</span>
+<span class="p">})</span>
+<span class="n">pivot</span> <span class="o">=</span> <span class="n">df</span><span class="o">.</span><span class="n">pivot_table</span><span class="p">(</span>       <span class="c1"># 行=站点，列=月份，值=平均温度（默认 mean）</span>
+    <span class="n">index</span><span class="o">=</span><span class="s2">&quot;站点&quot;</span><span class="p">,</span> <span class="n">columns</span><span class="o">=</span><span class="s2">&quot;月份&quot;</span><span class="p">,</span> <span class="n">values</span><span class="o">=</span><span class="s2">&quot;温度&quot;</span><span class="p">)</span>
+<span class="n">pivot_adv</span> <span class="o">=</span> <span class="n">df</span><span class="o">.</span><span class="n">pivot_table</span><span class="p">(</span>
+    <span class="n">index</span><span class="o">=</span><span class="s2">&quot;站点&quot;</span><span class="p">,</span> <span class="n">columns</span><span class="o">=</span><span class="s2">&quot;月份&quot;</span><span class="p">,</span> <span class="n">values</span><span class="o">=</span><span class="p">[</span><span class="s2">&quot;温度&quot;</span><span class="p">,</span> <span class="s2">&quot;降水&quot;</span><span class="p">],</span>
+    <span class="n">aggfunc</span><span class="o">=</span><span class="s2">&quot;sum&quot;</span><span class="p">,</span> <span class="n">margins</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">margins_name</span><span class="o">=</span><span class="s2">&quot;合计&quot;</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">pivot_adv</span><span class="p">)</span>
+</pre></div>
+</div>
+<p><strong>易混淆点</strong> ——
+- 用 <code class="docutils literal notranslate"><span class="pre">pivot</span></code> 遭遇重复（同一组 index+columns）会报 <code class="docutils literal notranslate"><span class="pre">ValueError</span></code>；<strong>气象原始数据几乎必有重复</strong>，所以一律用 <code class="docutils literal notranslate"><span class="pre">pivot_table</span></code>（内部自动聚合）；
+- <code class="docutils literal notranslate"><span class="pre">df.pivot_table(index=&quot;站点&quot;,</span> <span class="pre">columns=&quot;月份&quot;,</span> <span class="pre">values=&quot;温度&quot;)</span></code> 等价于 <code class="docutils literal notranslate"><span class="pre">df.groupby([&quot;站点&quot;,</span> <span class="pre">&quot;月份&quot;])[&quot;温度&quot;].mean().unstack()</span></code>，但透视表写法更直观；
+- <code class="docutils literal notranslate"><span class="pre">margins=True</span></code> 的合计行用的是与 <code class="docutils literal notranslate"><span class="pre">aggfunc</span></code> 相同的算法：<code class="docutils literal notranslate"><span class="pre">aggfunc=&quot;mean&quot;</span></code> 时合计行是「整体均值」，而不是「各月均值的平均」。</p>
+</dd>
+<dt id="term-NaN">NaN（缺失值标记）<a class="headerlink" href="#term-NaN" title="Link to this term">#</a></dt><dd><p>NaN（Not a Number，非数）是 Pandas/NumPy 表示数值缺失的标准占位符。它的核心特性是「传染性」：任何含 NaN 的算术结果仍是 NaN；某列一旦出现 NaN，整列 dtype 会被从 int 提升为 float64。</p>
+<p><strong>生活类比</strong> —— 观测簿上的<strong>缺测章</strong>。某天自动站通信中断、温度记录空白，记录员画一个斜杠「 / 」——这既不是 0℃（0 度是有效观测，代表冰点），也不是「还没记」，而是「本条记录不存在」。在 Pandas 里，NaN 就是这个斜杠。</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span><span class="w"> </span><span class="nn">numpy</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">np</span>
+
+<span class="n">df</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">({</span><span class="s2">&quot;温度&quot;</span><span class="p">:</span> <span class="p">[</span><span class="mi">22</span><span class="p">,</span> <span class="mi">28</span><span class="p">,</span> <span class="n">np</span><span class="o">.</span><span class="n">nan</span><span class="p">,</span> <span class="mi">25</span><span class="p">,</span> <span class="mi">19</span><span class="p">],</span>
+                   <span class="s2">&quot;湿度&quot;</span><span class="p">:</span> <span class="p">[</span><span class="mi">65</span><span class="p">,</span> <span class="n">np</span><span class="o">.</span><span class="n">nan</span><span class="p">,</span> <span class="mi">70</span><span class="p">,</span> <span class="mi">55</span><span class="p">,</span> <span class="mi">60</span><span class="p">]})</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">df</span><span class="o">.</span><span class="n">isna</span><span class="p">())</span>                       <span class="c1"># True/False 缺测矩阵</span>
+<span class="n">df</span><span class="p">[</span><span class="s2">&quot;温度&quot;</span><span class="p">]</span><span class="o">.</span><span class="n">fillna</span><span class="p">(</span><span class="n">df</span><span class="p">[</span><span class="s2">&quot;温度&quot;</span><span class="p">]</span><span class="o">.</span><span class="n">mean</span><span class="p">(),</span> <span class="n">inplace</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>   <span class="c1"># 用历史均值填补</span>
+<span class="n">df</span><span class="p">[</span><span class="s2">&quot;湿度&quot;</span><span class="p">]</span><span class="o">.</span><span class="n">fillna</span><span class="p">(</span><span class="n">method</span><span class="o">=</span><span class="s2">&quot;ffill&quot;</span><span class="p">,</span> <span class="n">inplace</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>      <span class="c1"># 用上一条记录向前填充</span>
+
+<span class="n">df_clean</span> <span class="o">=</span> <span class="n">df</span><span class="o">.</span><span class="n">dropna</span><span class="p">()</span>                 <span class="c1"># 删除含 NaN 的行</span>
+<span class="n">df_temp</span> <span class="o">=</span> <span class="n">df</span><span class="o">.</span><span class="n">dropna</span><span class="p">(</span><span class="n">subset</span><span class="o">=</span><span class="p">[</span><span class="s2">&quot;温度&quot;</span><span class="p">])</span>   <span class="c1"># 只删温度缺测的行</span>
+<span class="n">df</span><span class="o">.</span><span class="n">replace</span><span class="p">(</span><span class="o">-</span><span class="mi">9999</span><span class="p">,</span> <span class="n">np</span><span class="o">.</span><span class="n">nan</span><span class="p">,</span> <span class="n">inplace</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>  <span class="c1"># 常见气象缺测值 → NaN</span>
+</pre></div>
+</div>
+<p><strong>易混淆点</strong> ——
+- <code class="docutils literal notranslate"><span class="pre">np.nan</span> <span class="pre">==</span> <span class="pre">np.nan</span></code> 结果是 <code class="docutils literal notranslate"><span class="pre">False</span></code>——绝不要用 <code class="docutils literal notranslate"><span class="pre">df[df[&quot;温度&quot;]</span> <span class="pre">==</span> <span class="pre">np.nan]</span></code> 筛缺测，必须用 <code class="docutils literal notranslate"><span class="pre">pd.isna(df[&quot;温度&quot;])</span></code> 或 <code class="docutils literal notranslate"><span class="pre">np.isnan()</span></code>；
+- 气压原本是整数列，一处缺测会让整列悄悄变成 <code class="docutils literal notranslate"><span class="pre">float64</span></code>；
+- <code class="docutils literal notranslate"><span class="pre">df[&quot;温度&quot;].sum()</span></code> 默认跳过 NaN（<code class="docutils literal notranslate"><span class="pre">skipna=True</span></code>），会悄悄漏掉缺测；若单站缺测率超过 5%，应先插补或标记再算统计量，否则结果代表性不足。</p>
+</dd>
+</dl>
+<section id="id1">
+<h2>速记对照表<a class="headerlink" href="#id1" title="Link to this heading">#</a></h2>
+<p>网格表把最易混的词条放一起对照记忆：</p>
+<div class="pst-scrollable-table-container"><table class="table" id="id2">
+<caption><span class="caption-text">Pandas 速记对照表</span><a class="headerlink" href="#id2" title="Link to this table">#</a></caption>
+<thead>
+<tr class="row-odd"><th class="head"><p>对象</p></th>
+<th class="head"><p>说白了是什么</p></th>
+<th class="head"><p>一句话记忆</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">Series</span></code></p></td>
+<td><p>一列带标签的数据</p></td>
+<td><p>一列名单，能按座次也能按名字</p></td>
+</tr>
+<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">DataFrame</span></code></p></td>
+<td><p>多列拼成的二维表</p></td>
+<td><p>一张表，多列要素</p></td>
+</tr>
+<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">索引</span> <span class="pre">Index</span></code></p></td>
+<td><p>行标签集合；数据对齐按标签匹配</p></td>
+<td><p>学号对上才放一起算</p></td>
+</tr>
+<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">布尔索引</span></code></p></td>
+<td><p>按条件真假筛行</p></td>
+<td><p>筛子只放 T 的记录</p></td>
+</tr>
+<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">groupby</span></code></p></td>
+<td><p>拆分—应用—合并</p></td>
+<td><p>先分堆、再算、再拼回</p></td>
+</tr>
+<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">pivot_table</span></code></p></td>
+<td><p>长表变矩阵汇总</p></td>
+<td><p>站位 × 时间一目了然</p></td>
+</tr>
+<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">transform</span></code></p></td>
+<td><p>组内统计广播回每一行</p></td>
+<td><p>行数不变加一列</p></td>
+</tr>
+<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">NaN</span></code></p></td>
+<td><p>观测簿上的缺测斜杠</p></td>
+<td><p>是缺测，不是 0</p></td>
+</tr>
+<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">&amp;</span></code> / <code class="docutils literal notranslate"><span class="pre">|</span></code></p></td>
+<td><p>多条件「且 / 或」</p></td>
+<td><p>每个条件记得加括号</p></td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="admonition note">
+<p class="admonition-title">备注</p>
+<p>最值得记的一条</p>
+<p>所有取数前先问自己：这是<strong>标签</strong>还是<strong>位置</strong>？——标签式取数 <code class="docutils literal notranslate"><span class="pre">loc</span></code> 和 <code class="docutils literal notranslate"><span class="pre">sel</span></code> 含两端，位置式取数 <code class="docutils literal notranslate"><span class="pre">iloc</span></code> 和 <code class="docutils literal notranslate"><span class="pre">isel</span></code> 左闭右开。顺序一认错，边界就错一整天。</p>
+</div>
+</section>
+</section>
+
+
+                </article>
+              
+              
+              
+              
+              
+                <footer class="prev-next-footer d-print-none">
+                  
+<div class="prev-next-area">
+    <a class="left-prev"
+       href="ch06_terms.html"
+       title="上一页">
+      <i class="fa-solid fa-angle-left"></i>
+      <div class="prev-next-info">
+        <p class="prev-next-subtitle">上一页</p>
+        <p class="prev-next-title">第 6 章术语：气象数据计算 NumPy</p>
+      </div>
+    </a>
+    <a class="right-next"
+       href="ch08_terms.html"
+       title="下一页">
+      <div class="prev-next-info">
+        <p class="prev-next-subtitle">下一页</p>
+        <p class="prev-next-title">第 8 章术语：气象数据分析（二）Xarray</p>
+      </div>
+      <i class="fa-solid fa-angle-right"></i>
+    </a>
+</div>
+                </footer>
+              
+            </div>
+            
+            
+              
+                <dialog id="pst-secondary-sidebar-modal"></dialog>
+                <div id="pst-secondary-sidebar" class="bd-sidebar-secondary bd-toc"><div class="sidebar-secondary-items sidebar-secondary__inner">
+
+
+  <div class="sidebar-secondary-item">
+<div
+    id="pst-page-navigation-heading-2"
+    class="page-toc tocsection onthispage">
+    <i class="fa-solid fa-list"></i> 当前页面
+  </div>
+  <nav id="pst-page-toc-nav" class="page-toc" aria-labelledby="pst-page-navigation-heading-2">
+    <ul class="pst-show_toc_level nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id1">速记对照表</a></li>
+</ul>
+  </nav></div>
+
+</div></div>
+              
+            
+          </div>
+          <footer class="bd-footer-content">
+            
+          </footer>
+        
+      </main>
+    </div>
+  </div>
+  
+  <!-- Scripts loaded after <body> so the DOM is not blocked -->
+  <script defer src="../_static/scripts/bootstrap.js?digest=90905a2f556bf617f1a9"></script>
+<script defer src="../_static/scripts/pydata-sphinx-theme.js?digest=90905a2f556bf617f1a9"></script>
+
+  <footer class="bd-footer">
+<div class="bd-footer__inner bd-page-width">
+  
+    <div class="footer-items__start">
+      
+        <div class="footer-item">
+
+  <p class="copyright">
+    
+      © Copyright 2026, 兰州大学大气科学学院编程社区.
+      <br/>
+    
+  </p>
+</div>
+      
+        <div class="footer-item">
+
+  <p class="sphinx-version">
+    由 <a href="https://www.sphinx-doc.org/">Sphinx</a> 8.2.3创建。
+    <br/>
+  </p>
+</div>
+      
+    </div>
+  
+  
+  
+    <div class="footer-items__end">
+      
+        <div class="footer-item">
+<p class="theme-version">
+  <!-- # L10n: Setting the PST URL as an argument as this does not need to be localized -->
+  使用 <a href="https://pydata-sphinx-theme.readthedocs.io/en/stable/index.html">PyData Sphinx Theme</a> 0.20.0构建.
+</p></div>
+      
+    </div>
+  
+</div>
+
+  </footer>
+  </body>
+</html>

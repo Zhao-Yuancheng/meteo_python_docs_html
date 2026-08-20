@@ -1,0 +1,1146 @@
+
+<!DOCTYPE html>
+
+
+<html lang="zh-CN" data-content_root="../../" >
+
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
+    <title>气象数据绘图（一）Matplotlib &#8212; MeteoPython</title>
+  
+  
+  
+  <script data-cfasync="false">
+    document.documentElement.dataset.mode = localStorage.getItem("mode") || "";
+    document.documentElement.dataset.theme = localStorage.getItem("theme") || "";
+  </script>
+  <!--
+    this give us a css class that will be invisible only if js is disabled
+  -->
+  <noscript>
+    <style>
+      .pst-js-only { display: none !important; }
+
+    </style>
+  </noscript>
+  
+  <!-- Loaded before other Sphinx assets -->
+  <link href="../../_static/styles/theme.css?digest=90905a2f556bf617f1a9" rel="stylesheet" />
+<link href="../../_static/styles/pydata-sphinx-theme.css?digest=90905a2f556bf617f1a9" rel="stylesheet" />
+
+    <link rel="stylesheet" type="text/css" href="../../_static/pygments.css?v=8f2a1f02" />
+    <link rel="stylesheet" type="text/css" href="../../_static/copybutton.css?v=76b2166b" />
+    <link rel="stylesheet" type="text/css" href="../../_static/sg_gallery.css?v=fd6457a4" />
+    <link rel="stylesheet" type="text/css" href="../../_static/sg_gallery-binder.css?v=f4aeca0c" />
+    <link rel="stylesheet" type="text/css" href="../../_static/sg_gallery-dataframe.css?v=2082cf3c" />
+    <link rel="stylesheet" type="text/css" href="../../_static/sg_gallery-rendered-html.css?v=1277b6f3" />
+    <link rel="stylesheet" type="text/css" href="../../_static/sphinx-design.min.css?v=95c83b7e" />
+    <link rel="stylesheet" type="text/css" href="../../_static/./custom.css?v=fbe1f034" />
+  
+  <!-- So that users can add custom icons -->
+  <script defer src="../../_static/scripts/fontawesome.js?digest=90905a2f556bf617f1a9"></script>
+  <!-- Pre-loaded scripts that we'll load fully later -->
+  <link rel="preload" as="script" href="../../_static/scripts/bootstrap.js?digest=90905a2f556bf617f1a9" />
+<link rel="preload" as="script" href="../../_static/scripts/pydata-sphinx-theme.js?digest=90905a2f556bf617f1a9" />
+
+    <script src="../../_static/documentation_options.js?v=9becfed8"></script>
+    <script src="../../_static/doctools.js?v=9bcbadda"></script>
+    <script src="../../_static/sphinx_highlight.js?v=dc90522c"></script>
+    <script src="../../_static/sg-tags.js?v=d80f6fa4"></script>
+    <script src="../../_static/clipboard.min.js?v=a7894cd8"></script>
+    <script src="../../_static/copybutton.js?v=fd10adb8"></script>
+    <script src="../../_static/translations.js?v=beaddf03"></script>
+    <script src="../../_static/design-tabs.js?v=f930bc37"></script>
+    <script>DOCUMENTATION_OPTIONS.pagename = 'user_guide/viz/matplotlib';</script>
+    <script>
+        DOCUMENTATION_OPTIONS.theme_version = '0.20.0';
+        DOCUMENTATION_OPTIONS.theme_switcher_json_url = '_static/switcher.json';
+        DOCUMENTATION_OPTIONS.theme_switcher_version_match = '0.1.0';
+        DOCUMENTATION_OPTIONS.show_version_warning_banner =
+            false;
+        </script>
+    <script>DOCUMENTATION_OPTIONS.search_as_you_type = false;</script>
+    <link rel="icon" href="../../_static/favicon.svg"/>
+    <link rel="index" title="索引" href="../../genindex.html" />
+    <link rel="search" title="搜索" href="../../search.html" />
+    <link rel="next" title="气象数据绘图（二）Cartopy" href="cartopy.html" />
+    <link rel="prev" title="模块三 气象数据可视化" href="index.html" />
+  <meta name="viewport" content="width=device-width, initial-scale=1"/>
+  <meta name="docsearch:language" content="zh-CN"/>
+  <meta name="docsearch:version" content="0.1" />
+    <meta name="docbuild:last-update" content="2026-08-20"/>
+  
+    
+    <script src="../../_static/searchtools.js"></script>
+    <script src="../../_static/language_data.js"></script>
+    <script src="../../searchindex.js"></script>
+  
+  </head>
+  <body data-default-mode="">
+  
+  
+  <div id="pst-skip-link" class="skip-link d-print-none"><a href="#main-content">跳转至主要内容</a></div>
+
+  
+  <div id="pst-scroll-pixel-helper"></div>
+  
+  <button type="button" class="btn rounded-pill" id="pst-back-to-top">
+    <i class="fa-solid fa-arrow-up"></i>回到顶部</button>
+  
+  
+  
+  
+  <dialog id="pst-search-dialog">
+    
+<form class="bd-search d-flex align-items-center"
+      action="../../search.html"
+      method="get">
+  <i class="fa-solid fa-magnifying-glass"></i>
+  <input type="search"
+         class="form-control"
+         name="q"
+         placeholder="搜索文档…"
+         aria-label="搜索文档…"
+         autocomplete="off"
+         autocorrect="off"
+         autocapitalize="off"
+         spellcheck="false"/>
+  <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd>K</kbd></span>
+</form>
+  </dialog>
+
+  <div class="pst-async-banner-revealer d-none">
+  <aside id="bd-header-version-warning" class="d-none d-print-none" aria-label="版本警告"></aside>
+</div>
+
+  
+    <header id="pst-header" class="bd-header navbar navbar-expand-lg bd-navbar d-print-none">
+<div class="bd-header__inner bd-page-width">
+  <button class="pst-navbar-icon sidebar-toggle primary-toggle" aria-label="网页导航">
+    <span class="fa-solid fa-bars"></span>
+  </button>
+  
+  
+  <div class="col-lg-3 navbar-header-items__start">
+    
+      <div class="navbar-item">
+
+  
+    
+  
+
+<a class="navbar-brand logo" href="../../index.html">
+  
+  
+  
+  
+  
+    
+    
+      
+    
+    
+    <img src="../../_static/logo.svg" class="logo__image only-light" alt="MeteoPython - Home"/>
+    <img src="../../_static/logo.svg" class="logo__image only-dark pst-js-only" alt="MeteoPython - Home"/>
+  
+  
+</a></div>
+    
+  </div>
+  
+  <div class="col-lg-9 navbar-header-items">
+    
+    <div class="me-auto navbar-header-items__center">
+      
+        <div class="navbar-item">
+<nav>
+  <ul class="bd-navbar-elements navbar-nav">
+    
+<li class="nav-item current active">
+  <a class="nav-link nav-internal" href="../index.html">
+    教程
+  </a>
+</li>
+
+
+<li class="nav-item ">
+  <a class="nav-link nav-internal" href="../../tutorials/index.html">
+    练习
+  </a>
+</li>
+
+
+<li class="nav-item ">
+  <a class="nav-link nav-internal" href="../../gallery/index.html">
+    示例
+  </a>
+</li>
+
+
+<li class="nav-item ">
+  <a class="nav-link nav-internal" href="../../api/index.html">
+    术语参考
+  </a>
+</li>
+
+
+<li class="nav-item ">
+  <a class="nav-link nav-internal" href="../../qa/index.html">
+    常见问题 Q&A
+  </a>
+</li>
+
+  </ul>
+</nav></div>
+      
+    </div>
+    
+    
+    <div class="navbar-header-items__end">
+      
+        <div class="navbar-item navbar-persistent--container">
+          
+
+<button class="btn search-button-field search-button__button pst-js-only" title="搜索" aria-label="搜索" data-bs-placement="bottom" data-bs-toggle="tooltip">
+ <i class="fa-solid fa-magnifying-glass"></i>
+ <span class="search-button__default-text">搜索</span>
+ <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd class="kbd-shortcut__modifier">K</kbd></span>
+</button>
+        </div>
+      
+      
+        <div class="navbar-item">
+
+<div class="theme-switch-container dropdown pst-js-only" data-bs-toggle="tooltip" data-bs-placement="bottom" title="Color mode">
+  <button class="btn btn-sm nav-link pst-navbar-icon theme-switch-button dropdown-toggle" aria-label="Color mode" data-bs-toggle="dropdown">
+    <i class="theme-switch fa-solid fa-sun fa-lg fa-fw" data-mode="light" title="亮色"></i>
+    <i class="theme-switch fa-solid fa-moon fa-lg fa-fw" data-mode="dark" title="暗色"></i>
+    <i class="theme-switch fa-solid fa-circle-half-stroke fa-lg fa-fw" data-mode="auto" title="System Settings"></i>
+  </button>
+  <ul class="dropdown-menu dropdown-menu-end">
+    <li><button class="dropdown-item d-flex align-items-center theme-change-button" data-mode="auto"><i class="fa-solid fa-circle-half-stroke fa-lg fa-fw me-1"></i>System Settings</button></li>
+    <li><button class="dropdown-item d-flex align-items-center theme-change-button" data-mode="light"><i class="fa-solid fa-sun fa-lg fa-fw me-1"></i>亮色</button></li>
+    <li><button class="dropdown-item d-flex align-items-center theme-change-button" data-mode="dark"><i class="fa-solid fa-moon fa-lg fa-fw me-1"></i>暗色</button></li>
+  </ul>
+</div></div>
+      
+        <div class="navbar-item"><ul class="navbar-icon-links"
+    aria-label="Icon Links">
+</ul></div>
+      
+    </div>
+    
+  </div>
+  
+  
+    <div class="navbar-persistent--mobile">
+
+<button class="btn search-button-field search-button__button pst-js-only" title="搜索" aria-label="搜索" data-bs-placement="bottom" data-bs-toggle="tooltip">
+ <i class="fa-solid fa-magnifying-glass"></i>
+ <span class="search-button__default-text">搜索</span>
+ <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd class="kbd-shortcut__modifier">K</kbd></span>
+</button>
+    </div>
+  
+
+  
+    <button class="pst-navbar-icon sidebar-toggle secondary-toggle" aria-label="当前页面">
+      <span class="fa-solid fa-outdent"></span>
+    </button>
+  
+</div>
+
+    </header>
+  
+
+  <div class="bd-container">
+    <div class="bd-container__inner bd-page-width">
+      
+      
+      
+      <dialog id="pst-primary-sidebar-modal"></dialog>
+      <div id="pst-primary-sidebar" class="bd-sidebar-primary bd-sidebar">
+        
+
+  
+  <div class="sidebar-header-items sidebar-primary__section">
+    
+    
+      <div class="sidebar-header-items__center">
+        
+          
+          
+            <div class="navbar-item">
+<nav>
+  <ul class="bd-navbar-elements navbar-nav">
+    
+<li class="nav-item current active">
+  <a class="nav-link nav-internal" href="../index.html">
+    教程
+  </a>
+</li>
+
+
+<li class="nav-item ">
+  <a class="nav-link nav-internal" href="../../tutorials/index.html">
+    练习
+  </a>
+</li>
+
+
+<li class="nav-item ">
+  <a class="nav-link nav-internal" href="../../gallery/index.html">
+    示例
+  </a>
+</li>
+
+
+<li class="nav-item ">
+  <a class="nav-link nav-internal" href="../../api/index.html">
+    术语参考
+  </a>
+</li>
+
+
+<li class="nav-item ">
+  <a class="nav-link nav-internal" href="../../qa/index.html">
+    常见问题 Q&A
+  </a>
+</li>
+
+  </ul>
+</nav></div>
+          
+        
+      </div>
+    
+    
+    
+      <div class="sidebar-header-items__end">
+        
+          <div class="navbar-item">
+
+<div class="theme-switch-container dropdown pst-js-only" data-bs-toggle="tooltip" data-bs-placement="bottom" title="Color mode">
+  <button class="btn btn-sm nav-link pst-navbar-icon theme-switch-button dropdown-toggle" aria-label="Color mode" data-bs-toggle="dropdown">
+    <i class="theme-switch fa-solid fa-sun fa-lg fa-fw" data-mode="light" title="亮色"></i>
+    <i class="theme-switch fa-solid fa-moon fa-lg fa-fw" data-mode="dark" title="暗色"></i>
+    <i class="theme-switch fa-solid fa-circle-half-stroke fa-lg fa-fw" data-mode="auto" title="System Settings"></i>
+  </button>
+  <ul class="dropdown-menu dropdown-menu-end">
+    <li><button class="dropdown-item d-flex align-items-center theme-change-button" data-mode="auto"><i class="fa-solid fa-circle-half-stroke fa-lg fa-fw me-1"></i>System Settings</button></li>
+    <li><button class="dropdown-item d-flex align-items-center theme-change-button" data-mode="light"><i class="fa-solid fa-sun fa-lg fa-fw me-1"></i>亮色</button></li>
+    <li><button class="dropdown-item d-flex align-items-center theme-change-button" data-mode="dark"><i class="fa-solid fa-moon fa-lg fa-fw me-1"></i>暗色</button></li>
+  </ul>
+</div></div>
+        
+          <div class="navbar-item"><ul class="navbar-icon-links"
+    aria-label="Icon Links">
+</ul></div>
+        
+      </div>
+    
+  </div>
+  
+    <div class="sidebar-primary-items__start sidebar-primary__section">
+        <div class="sidebar-primary-item pst-sidebar-collapse"><button id="pst-collapse-sidebar-button" aria-expanded="true" aria-controls="pst-primary-sidebar">
+  <svg class="pst-icon" role="img" aria-hidden="true" focusable="false" viewBox="0 0 16 16" xmlns="http://www.w3.org/2000/svg">
+    <path fill="currentColor" d="M3 15.5C2.36232 15.5 1.74874 15.2564 1.28478 14.8189C0.820828 14.3815 0.541576 13.7832 0.504167 13.1467L0.5 13L0.5 3C0.499965 2.36232 0.743605 1.74874 1.18107 1.28478C1.61854 0.820828 2.21676 0.541576 2.85333 0.504167L3 0.5L13 0.5C13.6377 0.499965 14.2513 0.743605 14.7152 1.18107C15.1792 1.61854 15.4584 2.21676 15.4958 2.85333L15.5 3L15.5 13C15.5 13.6377 15.2564 14.2513 14.8189 14.7152C14.3815 15.1792 13.7832 15.4584 13.1467 15.4958L13 15.5L3 15.5ZM3 13.8333L10.5 13.8333L10.5 2.16667L3 2.16667C2.79589 2.16669 2.59889 2.24163 2.44636 2.37726C2.29383 2.5129 2.19638 2.69979 2.1725 2.9025L2.16667 3L2.16667 13C2.16669 13.2041 2.24163 13.4011 2.37726 13.5536C2.5129 13.7062 2.69979 13.8036 2.9025 13.8275L3 13.8333ZM6.65583 10.325L6.5775 10.2558L4.91083 8.58917C4.76735 8.44567 4.68116 8.25476 4.66843 8.05223C4.65569 7.84971 4.71729 7.6495 4.84167 7.48917L4.91083 7.41083L6.5775 5.74417C6.72747 5.59471 6.9287 5.50794 7.14032 5.50148C7.35194 5.49502 7.55809 5.56935 7.7169 5.70937C7.8757 5.8494 7.97525 6.04463 7.99533 6.25539C8.01541 6.46616 7.95451 6.67667 7.825 6.84417L7.75583 6.9225L6.67917 8L7.75583 9.0775C7.89931 9.22099 7.98551 9.41191 7.99824 9.61443C8.01097 9.81695 7.94938 10.0172 7.825 10.1775L7.75583 10.2558C7.61234 10.3993 7.42142 10.4855 7.2189 10.4982C7.01638 10.511 6.81617 10.4494 6.65583 10.325Z"/>
+  </svg>
+  <span class="pst-collapse-sidebar-label">Collapse Sidebar</span>
+  <span class="pst-expand-sidebar-label">Expand Sidebar</span>
+</button></div>
+        <div class="sidebar-primary-item">
+
+<nav class="bd-docs-nav bd-links"
+     aria-label="章节导航">
+  <p class="bd-links__title" role="heading" aria-level="1">章节导航</p>
+  <div class="bd-toc-item navbar-nav"><ul class="current nav bd-sidenav">
+<li class="toctree-l1 has-children"><a class="reference internal" href="../basics/index.html">模块一 Python 编程基础</a><details open="open"><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
+<li class="toctree-l2"><a class="reference internal" href="../basics/python_conda.html">Python 与 Conda 简介</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../basics/datatypes.html">基本数据类型、变量和运算符</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../basics/flow.html">分支、条件与循环</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../basics/functions.html">函数及变量作用域、模块和包</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../basics/oop.html">面向对象与高级语法</a></li>
+</ul>
+</details></li>
+<li class="toctree-l1 has-children"><a class="reference internal" href="../data/index.html">模块二 气象数据处理</a><details open="open"><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
+<li class="toctree-l2"><a class="reference internal" href="../data/numpy.html">气象数据计算 NumPy</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../data/pandas.html">气象数据分析（一）Pandas</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../data/xarray.html">气象数据分析（二）Xarray</a></li>
+</ul>
+</details></li>
+<li class="toctree-l1 current active has-children"><a class="reference internal" href="index.html">模块三 气象数据可视化</a><details open="open"><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul class="current">
+<li class="toctree-l2 current active"><a class="current reference internal" href="#">气象数据绘图（一）Matplotlib</a></li>
+<li class="toctree-l2"><a class="reference internal" href="cartopy.html">气象数据绘图（二）Cartopy</a></li>
+</ul>
+</details></li>
+</ul>
+</div>
+</nav></div>
+    </div>
+  
+  
+  <div class="sidebar-primary-items__end sidebar-primary__section">
+      <div class="sidebar-primary-item">
+<div id="ethical-ad-placement"
+      class="flat"
+      data-ea-publisher="readthedocs"
+      data-ea-type="readthedocs-sidebar"
+      data-ea-manual="true">
+</div></div>
+  </div>
+
+
+      </div>
+      
+      <main id="main-content" class="bd-main" role="main">
+        
+        
+          <div class="bd-content">
+            <div class="bd-article-container">
+              
+              <div class="bd-header-article d-print-none">
+<div class="header-article-items header-article__inner">
+  
+    <div class="header-article-items__start">
+      
+        <div class="header-article-item">
+
+<nav aria-label="Breadcrumb" class="d-print-none">
+  <ul class="bd-breadcrumbs">
+    
+    <li class="breadcrumb-item breadcrumb-home">
+      <a href="../../index.html" class="nav-link" aria-label="初始页面">
+        <i class="fa-solid fa-home"></i>
+      </a>
+    </li>
+    
+    <li class="breadcrumb-item"><a href="../index.html" class="nav-link">教程</a></li>
+    
+    
+    <li class="breadcrumb-item"><a href="index.html" class="nav-link">模块三 气象数据可视化</a></li>
+    
+    <li class="breadcrumb-item active" aria-current="page"><span class="ellipsis">气象数据绘图（一）Matplotlib</span></li>
+  </ul>
+</nav>
+</div>
+      
+    </div>
+  
+  
+</div>
+</div>
+              
+              
+              
+                
+<div id="searchbox"></div>
+                <article class="bd-article">
+                  
+  <section id="matplotlib">
+<span id="tut-mpl"></span><h1>气象数据绘图（一）Matplotlib<a class="headerlink" href="#matplotlib" title="Link to this heading">#</a></h1>
+<p>第 9 节 · 模块三 气象数据可视化
+贯穿项目第 9 步：绘制兰州气温时间序列图、散点图、直方图。</p>
+<section id="t-902">
+<span id="ch09-animation"></span><h2>配套动画（T-902）<a class="headerlink" href="#t-902" title="Link to this heading">#</a></h2>
+<p>本章配了两支动画，先看再读，效果更佳：</p>
+<p>（1）**Matplotlib 核心概念动画**——把 <a class="reference internal" href="../../api/ch09_terms.html#term-Figure"><span class="xref std std-term">Figure（画布）</span></a>／<a class="reference internal" href="../../api/ch09_terms.html#term-Axes"><span class="xref std std-term">Axes（坐标区 / 绘图区）</span></a>／<a class="reference internal" href="../../api/ch09_terms.html#term-Artist"><span class="xref std std-term">Artist（绘图元素）</span></a> 谁管什么，以及面向对象接口&quot;先 <code class="docutils literal notranslate"><span class="pre">fig,</span> <span class="pre">ax</span> <span class="pre">=</span> <span class="pre">plt.subplots()</span></code> 拿画布，再往 <code class="docutils literal notranslate"><span class="pre">ax</span></code> 上下笔&quot;这件事讲透。</p>
+<div  class="sphinx-contrib-video-container align-left"><video controls="True" preload="auto" width="100%"><source src="../../_images/T902_Matplotlib%E6%A0%B8%E5%BF%83%E6%A6%82%E5%BF%B5%E5%8A%A8%E7%94%BB_av1.webm" type="video/webm"></video></div><p>（2）**画图全流程演示**——从拿到数据、创建画布、画图、设轴标签、加标题图例，到 <code class="docutils literal notranslate"><span class="pre">savefig</span></code> 导出的完整闭环，一气呵成。</p>
+<div  class="sphinx-contrib-video-container align-left"><video controls="True" preload="auto" width="100%"><source src="../../_images/T902_Matplotlib%E7%94%BB%E5%9B%BE%E5%85%A8%E6%B5%81%E7%A8%8B%E6%BC%94%E7%A4%BA_av1.webm" type="video/webm"></video></div><p>面向对象接口（<code class="docutils literal notranslate"><span class="pre">fig,</span> <span class="pre">ax</span></code>）是推荐写法，便于拼多子图：</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span><span class="w"> </span><span class="nn">numpy</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">np</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">matplotlib.pyplot</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">plt</span>
+
+<span class="n">x</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">linspace</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">2</span> <span class="o">*</span> <span class="n">np</span><span class="o">.</span><span class="n">pi</span><span class="p">,</span> <span class="mi">200</span><span class="p">)</span>
+<span class="n">fig</span><span class="p">,</span> <span class="n">ax</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">subplots</span><span class="p">(</span><span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">7</span><span class="p">,</span> <span class="mi">3</span><span class="p">))</span>
+<span class="n">ax</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">np</span><span class="o">.</span><span class="n">sin</span><span class="p">(</span><span class="n">x</span><span class="p">),</span> <span class="n">label</span><span class="o">=</span><span class="s2">&quot;sin&quot;</span><span class="p">)</span>
+<span class="n">ax</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">np</span><span class="o">.</span><span class="n">cos</span><span class="p">(</span><span class="n">x</span><span class="p">),</span> <span class="n">label</span><span class="o">=</span><span class="s2">&quot;cos&quot;</span><span class="p">)</span>
+<span class="n">ax</span><span class="o">.</span><span class="n">set_xlabel</span><span class="p">(</span><span class="s2">&quot;x&quot;</span><span class="p">)</span>
+<span class="n">ax</span><span class="o">.</span><span class="n">set_ylabel</span><span class="p">(</span><span class="s2">&quot;值&quot;</span><span class="p">)</span>
+<span class="n">ax</span><span class="o">.</span><span class="n">legend</span><span class="p">()</span>
+<span class="n">ax</span><span class="o">.</span><span class="n">set_title</span><span class="p">(</span><span class="s2">&quot;正弦与余弦&quot;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
+</pre></div>
+</div>
+<p>本章将覆盖的知识点：Figure / Axes 面向对象接口、<code class="docutils literal notranslate"><span class="pre">plot</span></code> / <code class="docutils literal notranslate"><span class="pre">scatter</span></code> / <code class="docutils literal notranslate"><span class="pre">bar</span></code> / <code class="docutils literal notranslate"><span class="pre">hist</span></code>、标签 / 标题 / 图例、子图、<code class="docutils literal notranslate"><span class="pre">savefig</span></code>；提升拓展：<code class="docutils literal notranslate"><span class="pre">twinx</span></code> 双轴、<code class="docutils literal notranslate"><span class="pre">annotate</span></code> 标注、自定义样式。此外，下面这份「气象绘图最佳实践」浓缩了把&quot;画对图&quot;的关键经验——气象里&quot;数据是米，绘图是炊&quot;，米再好，炊不好，读者端起饭碗就皱眉头。</p>
+</section>
+<section id="id1">
+<h2>最佳实践：气象绘图规范<a class="headerlink" href="#id1" title="Link to this heading">#</a></h2>
+<p>□ 项目第 9 步的整体画面：绘制兰州气温时间序列图、散点图、直方图。这份规范把走弯路后回头的经验浓缩成册，可供读者逐条对照。</p>
+<section id="pyplot">
+<h3>面向对象接口，别让 pyplot 全局状态&quot;打游击&quot;<a class="headerlink" href="#pyplot" title="Link to this heading">#</a></h3>
+<p>Matplotlib 有两种用法，初学者最常踩的就是把两种混在一起用。</p>
+<p><strong>状态机（pyplot）写法</strong>：<code class="docutils literal notranslate"><span class="pre">plt.plot(...)</span></code>、<code class="docutils literal notranslate"><span class="pre">plt.xlabel(...)</span></code>、<code class="docutils literal notranslate"><span class="pre">plt.title(...)</span></code> 一层一层叠在 Matplotlib 内部的&quot;当前画布&quot;上，像流水线上工人轮流往同一块板上钉钉子，谁最后改的谁说了算。</p>
+<p><strong>面向对象（OO）写法</strong>：先 <code class="docutils literal notranslate"><span class="pre">fig,</span> <span class="pre">ax</span> <span class="pre">=</span> <span class="pre">plt.subplots()</span></code> 创建&quot;画布 + 坐标区&quot;这对搭档，之后所有操作都<strong>明确指定</strong>是画在哪个 <code class="docutils literal notranslate"><span class="pre">ax</span></code> 上。就像每个小组都有自己的白板和记号笔，互不串台。</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span><span class="w"> </span><span class="nn">matplotlib.pyplot</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">plt</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">numpy</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">np</span>
+
+<span class="c1"># ✅ 推荐：面向对象接口，一切操作挂在 ax 上</span>
+<span class="n">fig</span><span class="p">,</span> <span class="n">ax</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">subplots</span><span class="p">(</span><span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">7</span><span class="p">,</span> <span class="mi">4</span><span class="p">))</span>
+<span class="n">x</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">arange</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">32</span><span class="p">)</span>                 <span class="c1"># 1~31 日</span>
+<span class="n">t</span> <span class="o">=</span> <span class="mi">15</span> <span class="o">+</span> <span class="mf">3.5</span> <span class="o">*</span> <span class="n">np</span><span class="o">.</span><span class="n">sin</span><span class="p">(</span><span class="mi">2</span> <span class="o">*</span> <span class="n">np</span><span class="o">.</span><span class="n">pi</span> <span class="o">*</span> <span class="n">x</span> <span class="o">/</span> <span class="mi">31</span><span class="p">)</span>   <span class="c1"># 模拟一条正弦气温曲线</span>
+<span class="n">ax</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">t</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="s2">&quot;tab:red&quot;</span><span class="p">,</span> <span class="n">lw</span><span class="o">=</span><span class="mi">2</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="s2">&quot;逐日平均温&quot;</span><span class="p">)</span>
+<span class="n">ax</span><span class="o">.</span><span class="n">set_xlabel</span><span class="p">(</span><span class="s2">&quot;日期（日）&quot;</span><span class="p">)</span>
+<span class="n">ax</span><span class="o">.</span><span class="n">set_ylabel</span><span class="p">(</span><span class="s2">&quot;气温（℃）&quot;</span><span class="p">)</span>
+<span class="n">ax</span><span class="o">.</span><span class="n">set_title</span><span class="p">(</span><span class="s2">&quot;兰州某月逐日平均温&quot;</span><span class="p">)</span>
+<span class="n">ax</span><span class="o">.</span><span class="n">legend</span><span class="p">()</span>
+<span class="n">ax</span><span class="o">.</span><span class="n">grid</span><span class="p">(</span><span class="kc">True</span><span class="p">,</span> <span class="n">ls</span><span class="o">=</span><span class="s2">&quot;--&quot;</span><span class="p">,</span> <span class="n">alpha</span><span class="o">=</span><span class="mf">0.4</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
+</pre></div>
+</div>
+<div class="admonition warning">
+<p class="admonition-title">警告</p>
+<p>风险点：<code class="docutils literal notranslate"><span class="pre">plt.plot</span></code> 之后又混用 <code class="docutils literal notranslate"><span class="pre">ax.plot</span></code>，当前坐标系是谁你心里没数，多图、多子图时元素会画错地方，排错如大海捞针——这就是全局状态混乱在&quot;打游击&quot;。</p>
+<p>💡 什么时候才特意用 pyplot？只有三类场景：<strong>多张独立图</strong>（一张画完 <code class="docutils literal notranslate"><span class="pre">plt.figure()</span></code> 再开下一张）、<strong>多子图布局</strong>用 <code class="docutils literal notranslate"><span class="pre">plt.subplots()</span></code>、以及<strong>清画布</strong> <code class="docutils literal notranslate"><span class="pre">plt.clf()</span></code> / <code class="docutils literal notranslate"><span class="pre">plt.close()</span></code> 回收内存时。其余画图细节，一律交给 <code class="docutils literal notranslate"><span class="pre">ax</span></code>。</p>
+</div>
+<p>✅ 最佳实践口诀：画每个坐标系的元素，永远从 <code class="docutils literal notranslate"><span class="pre">fig,</span> <span class="pre">ax</span> <span class="pre">=</span> <span class="pre">plt.subplots()</span></code> 起步；凡是对&quot;某个具体图&quot;的操作，都用 <code class="docutils literal notranslate"><span class="pre">ax.xxx</span></code>。</p>
+</section>
+<section id="id2">
+<h3>四种气象图的做法与要点<a class="headerlink" href="#id2" title="Link to this heading">#</a></h3>
+<section id="plot">
+<h4>气温时间序列折线图（<code class="docutils literal notranslate"><span class="pre">plot</span></code>）<a class="headerlink" href="#plot" title="Link to this heading">#</a></h4>
+<p>时间和温度养在同一个坐标系里，折线把&quot;这是一天一个点&quot;的断续观测连绵成&quot;冷暖起伏&quot;的生命线。做折线图只需保证：横轴是时间，纵轴是气温，连线别太粗，别在点与点之间填太多视觉噪音。</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span><span class="w"> </span><span class="nn">numpy</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">np</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">matplotlib.pyplot</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">plt</span>
+
+<span class="n">fig</span><span class="p">,</span> <span class="n">ax</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">subplots</span><span class="p">(</span><span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">9</span><span class="p">,</span> <span class="mi">4</span><span class="p">))</span>
+<span class="n">doy</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">arange</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">32</span><span class="p">)</span>                     <span class="c1"># 一年中的第 1~31 天</span>
+<span class="n">temp</span> <span class="o">=</span> <span class="mi">8</span> <span class="o">+</span> <span class="mi">12</span> <span class="o">*</span> <span class="n">np</span><span class="o">.</span><span class="n">cos</span><span class="p">(</span><span class="mi">2</span> <span class="o">*</span> <span class="n">np</span><span class="o">.</span><span class="n">pi</span> <span class="o">*</span> <span class="p">(</span><span class="n">doy</span> <span class="o">-</span> <span class="mi">200</span><span class="p">)</span> <span class="o">/</span> <span class="mi">365</span><span class="p">)</span>  <span class="c1"># 冬冷夏热的年周期</span>
+
+<span class="c1"># ✅ plot 画折线：color 定颜色、lw 定粗细、marker 定节点</span>
+<span class="n">ax</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">doy</span><span class="p">,</span> <span class="n">temp</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="s2">&quot;tab:blue&quot;</span><span class="p">,</span> <span class="n">lw</span><span class="o">=</span><span class="mf">1.8</span><span class="p">,</span> <span class="n">marker</span><span class="o">=</span><span class="s2">&quot;o&quot;</span><span class="p">,</span>
+        <span class="n">ms</span><span class="o">=</span><span class="mi">4</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="s2">&quot;日平均温&quot;</span><span class="p">)</span>
+<span class="n">ax</span><span class="o">.</span><span class="n">axhline</span><span class="p">(</span><span class="n">temp</span><span class="o">.</span><span class="n">mean</span><span class="p">(),</span> <span class="n">color</span><span class="o">=</span><span class="s2">&quot;gray&quot;</span><span class="p">,</span> <span class="n">ls</span><span class="o">=</span><span class="s2">&quot;--&quot;</span><span class="p">,</span> <span class="n">lw</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="s2">&quot;年均值&quot;</span><span class="p">)</span>
+<span class="n">ax</span><span class="o">.</span><span class="n">fill_between</span><span class="p">(</span><span class="n">doy</span><span class="p">,</span> <span class="n">temp</span><span class="p">,</span> <span class="n">temp</span><span class="o">.</span><span class="n">mean</span><span class="p">(),</span> <span class="n">color</span><span class="o">=</span><span class="s2">&quot;tab:blue&quot;</span><span class="p">,</span>
+                <span class="n">alpha</span><span class="o">=</span><span class="mf">0.15</span><span class="p">)</span>                <span class="c1"># 填色增强冷暖「气泡感」</span>
+<span class="n">ax</span><span class="o">.</span><span class="n">set_xlabel</span><span class="p">(</span><span class="s2">&quot;一年中的第几天&quot;</span><span class="p">)</span>
+<span class="n">ax</span><span class="o">.</span><span class="n">set_ylabel</span><span class="p">(</span><span class="s2">&quot;气温（℃）&quot;</span><span class="p">)</span>
+<span class="n">ax</span><span class="o">.</span><span class="n">legend</span><span class="p">(</span><span class="n">loc</span><span class="o">=</span><span class="s2">&quot;best&quot;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
+</pre></div>
+</div>
+<p>✅ 要点：趋势着重用折线；点太多且间隔不等时别用 <code class="docutils literal notranslate"><span class="pre">marker='o'</span></code>（会糊成一团墨），实心折线更能体现实测的连续感；年均值或气候均值用一条虚线 <code class="docutils literal notranslate"><span class="pre">axhline</span></code> 当&quot;地平线&quot;，比读者自动脑补强得多。</p>
+</section>
+<section id="scatter">
+<h4>两要素相关性散点图（<code class="docutils literal notranslate"><span class="pre">scatter</span></code>）<a class="headerlink" href="#scatter" title="Link to this heading">#</a></h4>
+<p>想看&quot;逐日最高温&quot;和&quot;逐日最低温&quot;是不是手牵手一起涨，散点图最直观：每个点代表一天，横轴最低温、纵轴最高温。若点子沿一条对角线密集排布，说明两要素强相关，那一刻&quot;日最高温&quot;和&quot;日最低温&quot;像一对默契的双胞胎。</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span><span class="w"> </span><span class="nn">numpy</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">np</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">matplotlib.pyplot</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">plt</span>
+
+<span class="n">rng</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">default_rng</span><span class="p">(</span><span class="mi">7</span><span class="p">)</span>
+<span class="n">day_mean</span> <span class="o">=</span> <span class="mi">15</span> <span class="o">+</span> <span class="mi">6</span> <span class="o">*</span> <span class="n">np</span><span class="o">.</span><span class="n">cos</span><span class="p">(</span><span class="mi">2</span> <span class="o">*</span> <span class="n">np</span><span class="o">.</span><span class="n">pi</span> <span class="o">*</span> <span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">arange</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">61</span><span class="p">)</span> <span class="o">-</span> <span class="mi">200</span><span class="p">)</span> <span class="o">/</span> <span class="mi">365</span><span class="p">)</span>
+<span class="n">tmin</span> <span class="o">=</span> <span class="n">day_mean</span> <span class="o">-</span> <span class="mi">7</span> <span class="o">+</span> <span class="n">rng</span><span class="o">.</span><span class="n">normal</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mf">1.5</span><span class="p">,</span> <span class="mi">60</span><span class="p">)</span>   <span class="c1"># 每天的最低温</span>
+<span class="n">tmax</span> <span class="o">=</span> <span class="n">day_mean</span> <span class="o">+</span> <span class="mi">7</span> <span class="o">+</span> <span class="n">rng</span><span class="o">.</span><span class="n">normal</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mf">1.5</span><span class="p">,</span> <span class="mi">60</span><span class="p">)</span>   <span class="c1"># 每天的最高温</span>
+
+<span class="n">fig</span><span class="p">,</span> <span class="n">ax</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">subplots</span><span class="p">(</span><span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">7</span><span class="p">,</span> <span class="mi">5</span><span class="p">))</span>
+<span class="n">ax</span><span class="o">.</span><span class="n">scatter</span><span class="p">(</span><span class="n">tmin</span><span class="p">,</span> <span class="n">tmax</span><span class="p">,</span> <span class="n">s</span><span class="o">=</span><span class="mi">25</span><span class="p">,</span> <span class="n">alpha</span><span class="o">=</span><span class="mf">0.75</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="s2">&quot;tab:orange&quot;</span><span class="p">,</span>
+           <span class="n">edgecolors</span><span class="o">=</span><span class="s2">&quot;k&quot;</span><span class="p">,</span> <span class="n">linewidths</span><span class="o">=</span><span class="mf">0.4</span><span class="p">)</span>
+<span class="c1"># ✅ 参考线：没有任何一天的最高温低于最低温，这条对角线是&quot;物理下限&quot;</span>
+<span class="n">lo</span><span class="p">,</span> <span class="n">hi</span> <span class="o">=</span> <span class="n">ax</span><span class="o">.</span><span class="n">get_xlim</span><span class="p">()</span>
+<span class="n">ax</span><span class="o">.</span><span class="n">plot</span><span class="p">([</span><span class="n">lo</span><span class="p">,</span> <span class="n">hi</span><span class="p">],</span> <span class="p">[</span><span class="n">lo</span><span class="p">,</span> <span class="n">hi</span><span class="p">],</span> <span class="n">ls</span><span class="o">=</span><span class="s2">&quot;--&quot;</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="s2">&quot;gray&quot;</span><span class="p">,</span> <span class="n">lw</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="s2">&quot;tmax = tmin&quot;</span><span class="p">)</span>
+<span class="n">ax</span><span class="o">.</span><span class="n">set_xlabel</span><span class="p">(</span><span class="s2">&quot;日最低温（℃）&quot;</span><span class="p">)</span>
+<span class="n">ax</span><span class="o">.</span><span class="n">set_ylabel</span><span class="p">(</span><span class="s2">&quot;日最高温（℃）&quot;</span><span class="p">)</span>
+<span class="n">ax</span><span class="o">.</span><span class="n">set_aspect</span><span class="p">(</span><span class="s2">&quot;equal&quot;</span><span class="p">,</span> <span class="n">adjustable</span><span class="o">=</span><span class="s2">&quot;box&quot;</span><span class="p">)</span>      <span class="c1"># 保证对角线是 45°</span>
+<span class="n">ax</span><span class="o">.</span><span class="n">legend</span><span class="p">()</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
+</pre></div>
+</div>
+<div class="admonition warning">
+<p class="admonition-title">警告</p>
+<p>风险点：散点没 <code class="docutils literal notranslate"><span class="pre">alpha</span></code>（透明度）时，几十上百个点叠在一起会变成一团实心色块，掩盖真实的点云密度。适当 <code class="docutils literal notranslate"><span class="pre">alpha</span></code>（0.5~0.8）和细白描边 <code class="docutils literal notranslate"><span class="pre">edgecolors='k'</span></code> 能救回可读性。</p>
+</div>
+<p>✅ 要点：想读&quot;相关性强不强、线性不线性、有没有离群点&quot;，颜色的深浅由点密不密来决定；不要一进门就追求拟合回归线，先用裸散点观察数据长什么样。</p>
+</section>
+<section id="hist">
+<h4>气温分布直方图（<code class="docutils literal notranslate"><span class="pre">hist</span></code>）<a class="headerlink" href="#hist" title="Link to this heading">#</a></h4>
+<p>直方图回答&quot;气温大多待在哪一档&quot;。把整年逐日均温和逐日温差（最高温 − 最低温）都码进直方图，能一眼看出：年气温分布到底偏不偏（<strong>偏态</strong>）、有没有<strong>双峰</strong>（春天和秋天挤成两个山头）、以及这个内陆城市的<strong>昼夜温差</strong>是否常年被拉得很开。</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span><span class="w"> </span><span class="nn">numpy</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">np</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">matplotlib.pyplot</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">plt</span>
+
+<span class="n">rng</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">default_rng</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span>
+<span class="c1"># 演示数据：偏态 + 双峰并存，模拟「春秋温和、夏季酷热」的全年温度</span>
+<span class="n">t</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">concatenate</span><span class="p">([</span>
+    <span class="n">rng</span><span class="o">.</span><span class="n">normal</span><span class="p">(</span><span class="mi">12</span><span class="p">,</span> <span class="mi">6</span><span class="p">,</span> <span class="mi">200</span><span class="p">),</span>     <span class="c1"># 春秋一坨，偏冷</span>
+    <span class="n">rng</span><span class="o">.</span><span class="n">normal</span><span class="p">(</span><span class="mi">27</span><span class="p">,</span> <span class="mi">4</span><span class="p">,</span> <span class="mi">120</span><span class="p">),</span>     <span class="c1"># 夏季一坨，偏热</span>
+<span class="p">])</span>
+
+<span class="n">fig</span><span class="p">,</span> <span class="n">ax</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">subplots</span><span class="p">(</span><span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">7</span><span class="p">,</span> <span class="mi">4</span><span class="p">))</span>
+<span class="n">ax</span><span class="o">.</span><span class="n">hist</span><span class="p">(</span><span class="n">t</span><span class="p">,</span> <span class="n">bins</span><span class="o">=</span><span class="mi">25</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="s2">&quot;tab:green&quot;</span><span class="p">,</span> <span class="n">edgecolor</span><span class="o">=</span><span class="s2">&quot;white&quot;</span><span class="p">,</span> <span class="n">alpha</span><span class="o">=</span><span class="mf">0.9</span><span class="p">)</span>
+<span class="n">ax</span><span class="o">.</span><span class="n">axvline</span><span class="p">(</span><span class="n">t</span><span class="o">.</span><span class="n">mean</span><span class="p">(),</span> <span class="n">color</span><span class="o">=</span><span class="s2">&quot;k&quot;</span><span class="p">,</span> <span class="n">ls</span><span class="o">=</span><span class="s2">&quot;--&quot;</span><span class="p">,</span> <span class="n">lw</span><span class="o">=</span><span class="mf">1.5</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="sa">f</span><span class="s2">&quot;均值 </span><span class="si">{</span><span class="n">t</span><span class="o">.</span><span class="n">mean</span><span class="p">()</span><span class="si">:</span><span class="s2">.1f</span><span class="si">}</span><span class="s2"> ℃&quot;</span><span class="p">)</span>
+<span class="n">ax</span><span class="o">.</span><span class="n">set_xlabel</span><span class="p">(</span><span class="s2">&quot;气温（℃）&quot;</span><span class="p">)</span>
+<span class="n">ax</span><span class="o">.</span><span class="n">set_ylabel</span><span class="p">(</span><span class="s2">&quot;频数（天）&quot;</span><span class="p">)</span>
+<span class="n">ax</span><span class="o">.</span><span class="n">legend</span><span class="p">()</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
+</pre></div>
+</div>
+<p>✅ 要点：<code class="docutils literal notranslate"><span class="pre">bins</span></code> 是&quot;切几格&quot;，太少糊成一根根柱子看不清形状，太多又抖成锯齿；可从 15~30 起步试试手感。想看&quot;占了多少比例&quot;，加 <code class="docutils literal notranslate"><span class="pre">density=True</span></code> 把纵轴换成概率密度。均值在图上画一条竖直虚线，读者立刻知道分布的中轴在哪。</p>
+</section>
+<section id="subplots-2-2-sharex">
+<h4>多子图布局（<code class="docutils literal notranslate"><span class="pre">subplots(2,2)</span></code> / <code class="docutils literal notranslate"><span class="pre">sharex</span></code>）<a class="headerlink" href="#subplots-2-2-sharex" title="Link to this heading">#</a></h4>
+<p>图太多就分房子住——一张画布装 2×2 或 3×1 个坐标区，各管一事。要点是：共享横轴的子图一定开 <code class="docutils literal notranslate"><span class="pre">sharex=True</span></code>，让它们底部 y 轴对齐、刻度一致，读者扫一眼就能横着对比时间轴。</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span><span class="w"> </span><span class="nn">numpy</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">np</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">matplotlib.pyplot</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">plt</span>
+
+<span class="n">doy</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">arange</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">31</span><span class="p">)</span>
+<span class="n">t</span> <span class="o">=</span> <span class="mi">16</span> <span class="o">+</span> <span class="mi">5</span> <span class="o">*</span> <span class="n">np</span><span class="o">.</span><span class="n">cos</span><span class="p">(</span><span class="mi">2</span> <span class="o">*</span> <span class="n">np</span><span class="o">.</span><span class="n">pi</span> <span class="o">*</span> <span class="p">(</span><span class="n">doy</span> <span class="o">-</span> <span class="mi">195</span><span class="p">)</span> <span class="o">/</span> <span class="mi">200</span><span class="p">)</span>
+
+<span class="c1"># ✅ 2×2 布局：四格各司其职</span>
+<span class="n">fig</span><span class="p">,</span> <span class="n">axes</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">subplots</span><span class="p">(</span><span class="mi">2</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">11</span><span class="p">,</span> <span class="mi">7</span><span class="p">),</span> <span class="n">sharex</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+<span class="n">axes</span><span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">doy</span><span class="p">,</span> <span class="n">t</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="s2">&quot;tab:red&quot;</span><span class="p">);</span>   <span class="n">axes</span><span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">set_title</span><span class="p">(</span><span class="s2">&quot;折线：逐日气温&quot;</span><span class="p">)</span>
+<span class="n">axes</span><span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">]</span><span class="o">.</span><span class="n">scatter</span><span class="p">(</span><span class="n">t</span><span class="p">[:</span><span class="o">-</span><span class="mi">1</span><span class="p">],</span> <span class="n">t</span><span class="p">[</span><span class="mi">1</span><span class="p">:],</span> <span class="n">s</span><span class="o">=</span><span class="mi">20</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="s2">&quot;tab:blue&quot;</span><span class="p">);</span> <span class="n">axes</span><span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">]</span><span class="o">.</span><span class="n">set_title</span><span class="p">(</span><span class="s2">&quot;散点：相邻日相关&quot;</span><span class="p">)</span>
+<span class="n">axes</span><span class="p">[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">hist</span><span class="p">(</span><span class="n">t</span><span class="p">,</span> <span class="n">bins</span><span class="o">=</span><span class="mi">12</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="s2">&quot;tab:green&quot;</span><span class="p">);</span>            <span class="n">axes</span><span class="p">[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">set_title</span><span class="p">(</span><span class="s2">&quot;直方：分布&quot;</span><span class="p">)</span>
+<span class="n">axes</span><span class="p">[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">]</span><span class="o">.</span><span class="n">boxplot</span><span class="p">(</span><span class="n">t</span><span class="p">);</span>                                     <span class="n">axes</span><span class="p">[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">]</span><span class="o">.</span><span class="n">set_title</span><span class="p">(</span><span class="s2">&quot;箱线：离散度&quot;</span><span class="p">)</span>
+
+<span class="c1"># 下一行统一 X 轴刻度标题（sharex 只共享刻度线，标题要单独写）</span>
+<span class="k">for</span> <span class="n">ax</span> <span class="ow">in</span> <span class="n">axes</span><span class="p">[</span><span class="mi">1</span><span class="p">,</span> <span class="p">:]:</span>
+    <span class="n">ax</span><span class="o">.</span><span class="n">set_xlabel</span><span class="p">(</span><span class="s2">&quot;日期（日）&quot;</span><span class="p">)</span>
+<span class="k">for</span> <span class="n">ax</span> <span class="ow">in</span> <span class="n">axes</span><span class="p">[:,</span> <span class="mi">0</span><span class="p">]:</span>
+    <span class="n">ax</span><span class="o">.</span><span class="n">set_ylabel</span><span class="p">(</span><span class="s2">&quot;气温（℃）&quot;</span><span class="p">)</span>
+
+<span class="n">fig</span><span class="o">.</span><span class="n">suptitle</span><span class="p">(</span><span class="s2">&quot;兰州某时段气候速览&quot;</span><span class="p">,</span> <span class="n">fontsize</span><span class="o">=</span><span class="mi">14</span><span class="p">)</span>   <span class="c1"># 整图标题</span>
+<span class="n">fig</span><span class="o">.</span><span class="n">tight_layout</span><span class="p">()</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
+</pre></div>
+</div>
+<p>💡 记忆：<code class="docutils literal notranslate"><span class="pre">plt.subplots(2,</span> <span class="pre">2)</span></code> 返回的 <code class="docutils literal notranslate"><span class="pre">axes</span></code> 是个二维数组，用 <code class="docutils literal notranslate"><span class="pre">axes[行,</span> <span class="pre">列]</span></code> 取元；开了 <code class="docutils literal notranslate"><span class="pre">sharex</span></code>，上面那行省掉一堆重复的横轴刻度，画面立刻清爽。</p>
+</section>
+</section>
+<section id="id3">
+<h3>常规参数：让图&quot;立&quot;得起来<a class="headerlink" href="#id3" title="Link to this heading">#</a></h3>
+<ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">figsize</span></code>：画布尺寸，多子图或长序列数据要放大，别让梅西挤进电话亭；</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">dpi</span></code>：分辨率（常用 100~150），PNG 导出时像素密度所在；</p></li>
+<li><p>每个 <code class="docutils literal notranslate"><span class="pre">ax</span></code> 都要有 <code class="docutils literal notranslate"><span class="pre">set_xlabel</span></code> / <code class="docutils literal notranslate"><span class="pre">set_ylabel</span></code> / <code class="docutils literal notranslate"><span class="pre">set_title</span></code>，多曲线加 <code class="docutils literal notranslate"><span class="pre">legend(loc=...)</span></code>，线太多加 <code class="docutils literal notranslate"><span class="pre">grid(ls='--',</span> <span class="pre">alpha=0.3)</span></code>；</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">colorbar</span></code>：<strong>只对有颜色映射的图</strong>（<code class="docutils literal notranslate"><span class="pre">scatter</span></code> 用 <code class="docutils literal notranslate"><span class="pre">c=</span></code>、<code class="docutils literal notranslate"><span class="pre">pcolormesh</span></code>、<code class="docutils literal notranslate"><span class="pre">contourf</span></code>）用，普通折线散点别乱挂；</p></li>
+<li><p>保存必须 <code class="docutils literal notranslate"><span class="pre">savefig(&quot;a.png&quot;,</span> <span class="pre">bbox_inches=&quot;tight&quot;,</span> <span class="pre">dpi=150)</span></code>——<code class="docutils literal notranslate"><span class="pre">bbox_inches='tight'</span></code> 会把图边裁剪到刚好贴合内容，四周不留白；</p></li>
+<li><p>画完 <code class="docutils literal notranslate"><span class="pre">plt.show()</span></code> 看效果，批处理时 <code class="docutils literal notranslate"><span class="pre">plt.close(fig)</span></code> 释放画布内存，否则 100 张图跑完内存爆表。</p></li>
+</ul>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span><span class="w"> </span><span class="nn">matplotlib.pyplot</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">plt</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">numpy</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">np</span>
+
+<span class="n">fig</span><span class="p">,</span> <span class="n">ax</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">subplots</span><span class="p">(</span><span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">8</span><span class="p">,</span> <span class="mi">4</span><span class="p">))</span>
+<span class="n">x</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">linspace</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">2</span> <span class="o">*</span> <span class="n">np</span><span class="o">.</span><span class="n">pi</span><span class="p">,</span> <span class="mi">200</span><span class="p">)</span>
+<span class="n">ax</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">np</span><span class="o">.</span><span class="n">sin</span><span class="p">(</span><span class="n">x</span><span class="p">),</span> <span class="n">color</span><span class="o">=</span><span class="s2">&quot;tab:blue&quot;</span><span class="p">)</span>
+<span class="n">ax</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">np</span><span class="o">.</span><span class="n">cos</span><span class="p">(</span><span class="n">x</span><span class="p">),</span> <span class="n">color</span><span class="o">=</span><span class="s2">&quot;tab:orange&quot;</span><span class="p">)</span>
+<span class="n">ax</span><span class="o">.</span><span class="n">set_title</span><span class="p">(</span><span class="s2">&quot;正弦与余弦&quot;</span><span class="p">);</span> <span class="n">ax</span><span class="o">.</span><span class="n">legend</span><span class="p">([</span><span class="s2">&quot;sin&quot;</span><span class="p">,</span> <span class="s2">&quot;cos&quot;</span><span class="p">]);</span> <span class="n">ax</span><span class="o">.</span><span class="n">grid</span><span class="p">(</span><span class="n">ls</span><span class="o">=</span><span class="s2">&quot;--&quot;</span><span class="p">,</span> <span class="n">alpha</span><span class="o">=</span><span class="mf">0.3</span><span class="p">)</span>
+
+<span class="c1"># ✅ 半成品先 show 抽查，定稿务必 savefig（加 dpi 和 bbox_inches）</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">tight_layout</span><span class="p">()</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
+<span class="n">fig</span><span class="o">.</span><span class="n">savefig</span><span class="p">(</span><span class="s2">&quot;D:</span><span class="se">\\</span><span class="s2">Code</span><span class="se">\\</span><span class="s2">Vibe</span><span class="se">\\</span><span class="s2">SUBMIT</span><span class="se">\\</span><span class="s2">Chapter09</span><span class="se">\\</span><span class="s2">demo_out.png&quot;</span><span class="p">,</span>
+            <span class="n">bbox_inches</span><span class="o">=</span><span class="s2">&quot;tight&quot;</span><span class="p">,</span> <span class="n">dpi</span><span class="o">=</span><span class="mi">150</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">close</span><span class="p">(</span><span class="n">fig</span><span class="p">)</span>          <span class="c1"># ✅ 批处理关键：画完就回收</span>
+</pre></div>
+</div>
+</section>
+<section id="id4">
+<h3>提升技巧：一键从&quot;能用的图&quot;到&quot;好看的图&quot;<a class="headerlink" href="#id4" title="Link to this heading">#</a></h3>
+<p><strong>双轴 ``twinx``</strong>：当同一时间轴上要摆两个量纲不同的物理量（温度 ℃ 与降水 mm，风速 m/s 与气压 hPa），各走各的坐标轴：</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span><span class="w"> </span><span class="nn">matplotlib.pyplot</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">plt</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">numpy</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">np</span>
+
+<span class="n">x</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">arange</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">32</span><span class="p">)</span>
+<span class="n">temp</span> <span class="o">=</span> <span class="mi">15</span> <span class="o">+</span> <span class="mi">4</span> <span class="o">*</span> <span class="n">np</span><span class="o">.</span><span class="n">sin</span><span class="p">(</span><span class="mi">2</span> <span class="o">*</span> <span class="n">np</span><span class="o">.</span><span class="n">pi</span> <span class="o">*</span> <span class="n">x</span> <span class="o">/</span> <span class="mi">31</span><span class="p">)</span>      <span class="c1"># ℃</span>
+<span class="n">rain</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">default_rng</span><span class="p">(</span><span class="mi">3</span><span class="p">)</span><span class="o">.</span><span class="n">uniform</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">12</span><span class="p">,</span> <span class="mi">30</span><span class="p">)</span>  <span class="c1"># mm</span>
+
+<span class="n">fig</span><span class="p">,</span> <span class="n">ax1</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">subplots</span><span class="p">(</span><span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">8</span><span class="p">,</span> <span class="mi">4</span><span class="p">))</span>
+<span class="n">ax1</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">temp</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="s2">&quot;tab:red&quot;</span><span class="p">,</span> <span class="n">lw</span><span class="o">=</span><span class="mi">2</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="s2">&quot;气温&quot;</span><span class="p">)</span>
+<span class="n">ax1</span><span class="o">.</span><span class="n">set_ylabel</span><span class="p">(</span><span class="s2">&quot;气温（℃）&quot;</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="s2">&quot;tab:red&quot;</span><span class="p">);</span> <span class="n">ax1</span><span class="o">.</span><span class="n">tick_params</span><span class="p">(</span><span class="n">axis</span><span class="o">=</span><span class="s2">&quot;y&quot;</span><span class="p">,</span> <span class="n">colors</span><span class="o">=</span><span class="s2">&quot;tab:red&quot;</span><span class="p">)</span>
+
+<span class="n">ax2</span> <span class="o">=</span> <span class="n">ax1</span><span class="o">.</span><span class="n">twinx</span><span class="p">()</span>                 <span class="c1"># ✅ 共享横轴、另起右纵轴</span>
+<span class="n">ax2</span><span class="o">.</span><span class="n">bar</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">rain</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="s2">&quot;tab:blue&quot;</span><span class="p">,</span> <span class="n">alpha</span><span class="o">=</span><span class="mf">0.35</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="s2">&quot;降水&quot;</span><span class="p">)</span>
+<span class="n">ax2</span><span class="o">.</span><span class="n">set_ylabel</span><span class="p">(</span><span class="s2">&quot;降水（mm）&quot;</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="s2">&quot;tab:blue&quot;</span><span class="p">);</span> <span class="n">ax2</span><span class="o">.</span><span class="n">tick_params</span><span class="p">(</span><span class="n">axis</span><span class="o">=</span><span class="s2">&quot;y&quot;</span><span class="p">,</span> <span class="n">colors</span><span class="o">=</span><span class="s2">&quot;tab:blue&quot;</span><span class="p">)</span>
+
+<span class="n">ax1</span><span class="o">.</span><span class="n">set_xlabel</span><span class="p">(</span><span class="s2">&quot;日期（日）&quot;</span><span class="p">)</span>
+<span class="n">fig</span><span class="o">.</span><span class="n">suptitle</span><span class="p">(</span><span class="s2">&quot;温度与降水——量纲不同，双轴共舞&quot;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
+</pre></div>
+</div>
+<div class="admonition warning">
+<p class="admonition-title">警告</p>
+<p>风险点：双轴一定要用<strong>颜色区分两套刻度</strong>（左轴、右轴各自着色），否则读者分不清哪个刻度属于哪条线；两轴的量程比例也别相差几十倍，否则矮的一方会被碾成水平线。</p>
+</div>
+<p><strong>``annotate`` 标注极值点</strong>：年最热、年最冷那天，用箭头一针见血指出来：</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span><span class="w"> </span><span class="nn">numpy</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">np</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">matplotlib.pyplot</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">plt</span>
+
+<span class="n">doy</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">arange</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">367</span><span class="p">)</span>
+<span class="n">temp</span> <span class="o">=</span> <span class="mi">10</span> <span class="o">+</span> <span class="mi">15</span> <span class="o">*</span> <span class="n">np</span><span class="o">.</span><span class="n">cos</span><span class="p">(</span><span class="mi">2</span> <span class="o">*</span> <span class="n">np</span><span class="o">.</span><span class="n">pi</span> <span class="o">*</span> <span class="p">(</span><span class="n">doy</span> <span class="o">-</span> <span class="mi">202</span><span class="p">)</span> <span class="o">/</span> <span class="mi">365</span><span class="p">)</span>
+
+<span class="n">fig</span><span class="p">,</span> <span class="n">ax</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">subplots</span><span class="p">(</span><span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">9</span><span class="p">,</span> <span class="mi">4</span><span class="p">))</span>
+<span class="n">ax</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">doy</span><span class="p">,</span> <span class="n">temp</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="s2">&quot;tab:blue&quot;</span><span class="p">,</span> <span class="n">lw</span><span class="o">=</span><span class="mf">1.5</span><span class="p">)</span>
+<span class="n">i_hot</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">argmax</span><span class="p">(</span><span class="n">temp</span><span class="p">));</span> <span class="n">i_cold</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">argmin</span><span class="p">(</span><span class="n">temp</span><span class="p">))</span>
+
+<span class="n">ax</span><span class="o">.</span><span class="n">annotate</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;最热 ≈</span><span class="si">{</span><span class="n">temp</span><span class="p">[</span><span class="n">i_hot</span><span class="p">]</span><span class="si">:</span><span class="s2">.0f</span><span class="si">}</span><span class="s2">℃（第 </span><span class="si">{</span><span class="n">i_hot</span><span class="o">+</span><span class="mi">1</span><span class="si">}</span><span class="s2"> 天）&quot;</span><span class="p">,</span>
+            <span class="n">xy</span><span class="o">=</span><span class="p">(</span><span class="n">i_hot</span> <span class="o">+</span> <span class="mi">1</span><span class="p">,</span> <span class="n">temp</span><span class="p">[</span><span class="n">i_hot</span><span class="p">]),</span> <span class="n">xytext</span><span class="o">=</span><span class="p">(</span><span class="n">i_hot</span> <span class="o">+</span> <span class="mi">40</span><span class="p">,</span> <span class="n">temp</span><span class="p">[</span><span class="n">i_hot</span><span class="p">]</span> <span class="o">-</span> <span class="mi">4</span><span class="p">),</span>
+            <span class="n">arrowprops</span><span class="o">=</span><span class="nb">dict</span><span class="p">(</span><span class="n">arrowstyle</span><span class="o">=</span><span class="s2">&quot;-&gt;&quot;</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="s2">&quot;k&quot;</span><span class="p">),</span> <span class="n">fontsize</span><span class="o">=</span><span class="mi">9</span><span class="p">)</span>
+<span class="n">ax</span><span class="o">.</span><span class="n">annotate</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;最冷 ≈</span><span class="si">{</span><span class="n">temp</span><span class="p">[</span><span class="n">i_cold</span><span class="p">]</span><span class="si">:</span><span class="s2">.0f</span><span class="si">}</span><span class="s2">℃（第 </span><span class="si">{</span><span class="n">i_cold</span><span class="o">+</span><span class="mi">1</span><span class="si">}</span><span class="s2"> 天）&quot;</span><span class="p">,</span>
+            <span class="n">xy</span><span class="o">=</span><span class="p">(</span><span class="n">i_cold</span> <span class="o">+</span> <span class="mi">1</span><span class="p">,</span> <span class="n">temp</span><span class="p">[</span><span class="n">i_cold</span><span class="p">]),</span> <span class="n">xytext</span><span class="o">=</span><span class="p">(</span><span class="n">i_cold</span> <span class="o">-</span> <span class="mi">150</span><span class="p">,</span> <span class="n">temp</span><span class="p">[</span><span class="n">i_cold</span><span class="p">]</span> <span class="o">+</span> <span class="mi">6</span><span class="p">),</span>
+            <span class="n">arrowprops</span><span class="o">=</span><span class="nb">dict</span><span class="p">(</span><span class="n">arrowstyle</span><span class="o">=</span><span class="s2">&quot;-&gt;&quot;</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="s2">&quot;k&quot;</span><span class="p">),</span> <span class="n">fontsize</span><span class="o">=</span><span class="mi">9</span><span class="p">)</span>
+<span class="n">ax</span><span class="o">.</span><span class="n">set_xlabel</span><span class="p">(</span><span class="s2">&quot;一年中的第几天&quot;</span><span class="p">);</span> <span class="n">ax</span><span class="o">.</span><span class="n">set_ylabel</span><span class="p">(</span><span class="s2">&quot;气温（℃）&quot;</span><span class="p">);</span> <span class="n">ax</span><span class="o">.</span><span class="n">set_title</span><span class="p">(</span><span class="s2">&quot;标注冬夏极值点&quot;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
+</pre></div>
+</div>
+<p><strong>自定义样式 ``rcParams`` / 风格</strong>：全局主题用 <code class="docutils literal notranslate"><span class="pre">plt.style.use(&quot;seaborn-v0_8-whitegrid&quot;)</span></code>、<code class="docutils literal notranslate"><span class="pre">&quot;ggplot&quot;</span></code> 一把梭；想改字体、字号、线宽等默认值，用 <code class="docutils literal notranslate"><span class="pre">plt.rcParams</span></code> 一次性配好：</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span><span class="w"> </span><span class="nn">matplotlib.pyplot</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">plt</span>
+
+<span class="c1"># ✅ 工程开始处统一风格，整个文件生效，不用每张图重复设</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">style</span><span class="o">.</span><span class="n">use</span><span class="p">(</span><span class="s2">&quot;seaborn-v0_8-whitegrid&quot;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">rcParams</span><span class="p">[</span><span class="s2">&quot;font.sans-serif&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="p">[</span><span class="s2">&quot;SimHei&quot;</span><span class="p">,</span> <span class="s2">&quot;Microsoft YaHei&quot;</span><span class="p">,</span>
+                                   <span class="s2">&quot;Noto Sans CJK SC&quot;</span><span class="p">,</span> <span class="s2">&quot;WenQuanYi Micro Hei&quot;</span><span class="p">]</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">rcParams</span><span class="p">[</span><span class="s2">&quot;axes.unicode_minus&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="kc">False</span>   <span class="c1"># 让负号不是方块</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">rcParams</span><span class="p">[</span><span class="s2">&quot;figure.dpi&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="mi">120</span>
+</pre></div>
+</div>
+<div class="admonition warning">
+<p class="admonition-title">警告</p>
+<p>风险点：中文显示为&quot;□□方块&quot;的根因，不是缺库，而是<strong>没把中文字体装进 ``font.sans-serif`` 白名单</strong>，顺带漏了 <code class="docutils literal notranslate"><span class="pre">axes.unicode_minus</span> <span class="pre">=</span> <span class="pre">False</span></code> 导致负号也是方块。三行 <code class="docutils literal notranslate"><span class="pre">rcParams</span></code> 一起上，F5 一次到位。</p>
+</div>
+</section>
+<section id="id5">
+<h3>常见坑位一次排雷<a class="headerlink" href="#id5" title="Link to this heading">#</a></h3>
+<div class="pst-scrollable-table-container"><table class="table">
+<colgroup>
+<col style="width: 22.0%" />
+<col style="width: 32.0%" />
+<col style="width: 46.0%" />
+</colgroup>
+<thead>
+<tr class="row-odd"><th class="head"><p>坑</p></th>
+<th class="head"><p>症状</p></th>
+<th class="head"><p>排雷</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p>混用 pyplot 与 OO</p></td>
+<td><p>元素画到&quot;错误的画布/子图&quot;上</p></td>
+<td><p>全文件统一用 <code class="docutils literal notranslate"><span class="pre">fig,</span> <span class="pre">ax</span></code>，只在开图/清图时碰 pyplot</p></td>
+</tr>
+<tr class="row-odd"><td><p>中文未配置</p></td>
+<td><p>图上全是一条条小方块</p></td>
+<td><p>顶部 <code class="docutils literal notranslate"><span class="pre">rcParams[&quot;font.sans-serif&quot;]</span></code> + <code class="docutils literal notranslate"><span class="pre">unicode_minus</span></code></p></td>
+</tr>
+<tr class="row-even"><td><p>只 <code class="docutils literal notranslate"><span class="pre">show()</span></code> 不 <code class="docutils literal notranslate"><span class="pre">savefig</span></code></p></td>
+<td><p>跑批处理时&quot;图一闪而过、无文件产出&quot;</p></td>
+<td><p>每次 <code class="docutils literal notranslate"><span class="pre">savefig(...,</span> <span class="pre">bbox_inches=&quot;tight&quot;,</span> <span class="pre">dpi=150)</span></code></p></td>
+</tr>
+<tr class="row-odd"><td><p>图例 <code class="docutils literal notranslate"><span class="pre">loc</span></code> 不合适</p></td>
+<td><p>legend 压住曲线趋势</p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">loc=&quot;best&quot;</span></code> 或手动 <code class="docutils literal notranslate"><span class="pre">bbox_to_anchor=(1.02,</span> <span class="pre">1)</span></code> 放到图外</p></td>
+</tr>
+<tr class="row-even"><td><p>刻度重叠</p></td>
+<td><p>日期/标签糊成一坨</p></td>
+<td><p>加 <code class="docutils literal notranslate"><span class="pre">figsize</span></code>、<code class="docutils literal notranslate"><span class="pre">plt.xticks(rotation=45)</span></code>、或用 <code class="docutils literal notranslate"><span class="pre">tick_params</span></code> 稀疏刻度</p></td>
+</tr>
+<tr class="row-odd"><td><p>不 <code class="docutils literal notranslate"><span class="pre">close</span></code></p></td>
+<td><p>跑多张循环内存疯涨</p></td>
+<td><p>循环里画完 <code class="docutils literal notranslate"><span class="pre">plt.close(fig)</span></code></p></td>
+</tr>
+</tbody>
+</table>
+</div>
+</section>
+<section id="id6">
+<h3>完整综合示例：一张多子图图板<a class="headerlink" href="#id6" title="Link to this heading">#</a></h3>
+<p>把折线、散点、直方图装进一张 3 行图板，是第 9 步收官之作的雏形——数据在脚本内用 NumPy 构造，不开任何外部文件。</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span><span class="w"> </span><span class="nn">numpy</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">np</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">matplotlib.pyplot</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">plt</span>
+
+<span class="n">plt</span><span class="o">.</span><span class="n">rcParams</span><span class="p">[</span><span class="s2">&quot;font.sans-serif&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="p">[</span><span class="s2">&quot;SimHei&quot;</span><span class="p">,</span> <span class="s2">&quot;Microsoft YaHei&quot;</span><span class="p">,</span>
+                                   <span class="s2">&quot;Noto Sans CJK SC&quot;</span><span class="p">,</span> <span class="s2">&quot;WenQuanYi Micro Hei&quot;</span><span class="p">]</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">rcParams</span><span class="p">[</span><span class="s2">&quot;axes.unicode_minus&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="kc">False</span>
+
+<span class="n">rng</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">default_rng</span><span class="p">(</span><span class="mi">2024</span><span class="p">)</span>
+<span class="n">days_per_month</span> <span class="o">=</span> <span class="p">[</span><span class="mi">31</span><span class="p">,</span> <span class="mi">28</span><span class="p">,</span> <span class="mi">31</span><span class="p">,</span> <span class="mi">30</span><span class="p">,</span> <span class="mi">31</span><span class="p">,</span> <span class="mi">30</span><span class="p">,</span> <span class="mi">31</span><span class="p">,</span> <span class="mi">31</span><span class="p">,</span> <span class="mi">30</span><span class="p">,</span> <span class="mi">31</span><span class="p">,</span> <span class="mi">30</span><span class="p">,</span> <span class="mi">31</span><span class="p">]</span>
+<span class="n">doy</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">arange</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">366</span><span class="p">)</span>
+<span class="n">month</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">repeat</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">arange</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">13</span><span class="p">),</span> <span class="n">days_per_month</span><span class="p">)</span>
+
+<span class="c1"># 兰州年周期：峰值在 7 月中旬</span>
+<span class="n">day_mean</span> <span class="o">=</span> <span class="p">(</span><span class="mf">10.5</span> <span class="o">+</span> <span class="mi">15</span> <span class="o">*</span> <span class="n">np</span><span class="o">.</span><span class="n">cos</span><span class="p">(</span><span class="mi">2</span> <span class="o">*</span> <span class="n">np</span><span class="o">.</span><span class="n">pi</span> <span class="o">*</span> <span class="p">(</span><span class="n">doy</span> <span class="o">-</span> <span class="mi">202</span><span class="p">)</span> <span class="o">/</span> <span class="mi">365</span><span class="p">)</span>
+            <span class="o">+</span> <span class="n">rng</span><span class="o">.</span><span class="n">normal</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mf">1.8</span><span class="p">,</span> <span class="mi">365</span><span class="p">))</span>
+<span class="n">diurnal</span> <span class="o">=</span> <span class="mi">6</span> <span class="o">+</span> <span class="n">rng</span><span class="o">.</span><span class="n">normal</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mf">2.0</span><span class="p">,</span> <span class="mi">365</span><span class="p">)</span>          <span class="c1"># 昼夜温差</span>
+<span class="n">tmax</span> <span class="o">=</span> <span class="n">day_mean</span> <span class="o">+</span> <span class="n">diurnal</span>
+<span class="n">tmin</span> <span class="o">=</span> <span class="n">day_mean</span> <span class="o">-</span> <span class="n">diurnal</span>
+
+<span class="n">hot</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">argmax</span><span class="p">(</span><span class="n">day_mean</span><span class="p">));</span> <span class="n">cold</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">argmin</span><span class="p">(</span><span class="n">day_mean</span><span class="p">))</span>
+<span class="n">monthly</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([</span><span class="n">day_mean</span><span class="p">[</span><span class="n">month</span> <span class="o">==</span> <span class="n">m</span><span class="p">]</span><span class="o">.</span><span class="n">mean</span><span class="p">()</span> <span class="k">for</span> <span class="n">m</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">13</span><span class="p">)])</span>
+
+<span class="n">fig</span><span class="p">,</span> <span class="n">axes</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">subplots</span><span class="p">(</span><span class="mi">3</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">11</span><span class="p">,</span> <span class="mi">12</span><span class="p">))</span>
+
+<span class="c1"># ① 上：逐日平均温折线 + 月均温阶梯叠加 + 冬夏极值标注</span>
+<span class="n">axes</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">doy</span><span class="p">,</span> <span class="n">day_mean</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="s2">&quot;tab:blue&quot;</span><span class="p">,</span> <span class="n">lw</span><span class="o">=</span><span class="mf">1.2</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="s2">&quot;逐日平均温&quot;</span><span class="p">)</span>
+<span class="n">axes</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">arange</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">13</span><span class="p">)</span> <span class="o">*</span> <span class="mi">30</span><span class="p">,</span> <span class="n">monthly</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="s2">&quot;tab:red&quot;</span><span class="p">,</span> <span class="n">lw</span><span class="o">=</span><span class="mi">2</span><span class="p">,</span>
+             <span class="n">marker</span><span class="o">=</span><span class="s2">&quot;o&quot;</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="s2">&quot;月均温&quot;</span><span class="p">)</span>
+<span class="n">axes</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">annotate</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;7 月最热 ≈</span><span class="si">{</span><span class="n">day_mean</span><span class="p">[</span><span class="n">hot</span><span class="p">]</span><span class="si">:</span><span class="s2">.1f</span><span class="si">}</span><span class="s2">℃&quot;</span><span class="p">,</span>
+                 <span class="n">xy</span><span class="o">=</span><span class="p">(</span><span class="n">hot</span> <span class="o">+</span> <span class="mi">1</span><span class="p">,</span> <span class="n">day_mean</span><span class="p">[</span><span class="n">hot</span><span class="p">]),</span>
+                 <span class="n">xytext</span><span class="o">=</span><span class="p">(</span><span class="n">hot</span> <span class="o">-</span> <span class="mi">60</span><span class="p">,</span> <span class="n">day_mean</span><span class="p">[</span><span class="n">hot</span><span class="p">]</span> <span class="o">+</span> <span class="mi">4</span><span class="p">),</span>
+                 <span class="n">arrowprops</span><span class="o">=</span><span class="nb">dict</span><span class="p">(</span><span class="n">arrowstyle</span><span class="o">=</span><span class="s2">&quot;-&gt;&quot;</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="s2">&quot;k&quot;</span><span class="p">))</span>
+<span class="n">axes</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">annotate</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;1 月最冷 ≈</span><span class="si">{</span><span class="n">day_mean</span><span class="p">[</span><span class="n">cold</span><span class="p">]</span><span class="si">:</span><span class="s2">.1f</span><span class="si">}</span><span class="s2">℃&quot;</span><span class="p">,</span>
+                 <span class="n">xy</span><span class="o">=</span><span class="p">(</span><span class="n">cold</span> <span class="o">+</span> <span class="mi">1</span><span class="p">,</span> <span class="n">day_mean</span><span class="p">[</span><span class="n">cold</span><span class="p">]),</span>
+                 <span class="n">xytext</span><span class="o">=</span><span class="p">(</span><span class="n">cold</span> <span class="o">+</span> <span class="mi">220</span><span class="p">,</span> <span class="n">day_mean</span><span class="p">[</span><span class="n">cold</span><span class="p">]</span> <span class="o">-</span> <span class="mi">8</span><span class="p">),</span>
+                 <span class="n">arrowprops</span><span class="o">=</span><span class="nb">dict</span><span class="p">(</span><span class="n">arrowstyle</span><span class="o">=</span><span class="s2">&quot;-&gt;&quot;</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="s2">&quot;k&quot;</span><span class="p">))</span>
+<span class="n">axes</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">set_title</span><span class="p">(</span><span class="s2">&quot;逐日平均温（年周期，冬冷夏热）&quot;</span><span class="p">)</span>
+<span class="n">axes</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">legend</span><span class="p">();</span> <span class="n">axes</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">grid</span><span class="p">(</span><span class="n">ls</span><span class="o">=</span><span class="s2">&quot;--&quot;</span><span class="p">,</span> <span class="n">alpha</span><span class="o">=</span><span class="mf">0.3</span><span class="p">)</span>
+
+<span class="c1"># ② 中：日最高温 vs 日最低温散点（看相关）</span>
+<span class="n">sc</span> <span class="o">=</span> <span class="n">axes</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span><span class="o">.</span><span class="n">scatter</span><span class="p">(</span><span class="n">tmin</span><span class="p">,</span> <span class="n">tmax</span><span class="p">,</span> <span class="n">c</span><span class="o">=</span><span class="n">month</span><span class="p">,</span> <span class="n">cmap</span><span class="o">=</span><span class="s2">&quot;turbo&quot;</span><span class="p">,</span> <span class="n">s</span><span class="o">=</span><span class="mi">14</span><span class="p">,</span> <span class="n">alpha</span><span class="o">=</span><span class="mf">0.7</span><span class="p">)</span>
+<span class="n">lo</span><span class="p">,</span> <span class="n">hi</span> <span class="o">=</span> <span class="n">axes</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span><span class="o">.</span><span class="n">get_xlim</span><span class="p">()</span>
+<span class="n">axes</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span><span class="o">.</span><span class="n">plot</span><span class="p">([</span><span class="o">-</span><span class="mi">15</span><span class="p">,</span> <span class="mi">40</span><span class="p">],</span> <span class="p">[</span><span class="o">-</span><span class="mi">15</span><span class="p">,</span> <span class="mi">40</span><span class="p">],</span> <span class="n">ls</span><span class="o">=</span><span class="s2">&quot;--&quot;</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="s2">&quot;gray&quot;</span><span class="p">,</span> <span class="n">lw</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="s2">&quot;tmax = tmin&quot;</span><span class="p">)</span>
+<span class="n">axes</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span><span class="o">.</span><span class="n">set_xlabel</span><span class="p">(</span><span class="s2">&quot;日最低温（℃）&quot;</span><span class="p">);</span> <span class="n">axes</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span><span class="o">.</span><span class="n">set_ylabel</span><span class="p">(</span><span class="s2">&quot;日最高温（℃）&quot;</span><span class="p">)</span>
+<span class="n">axes</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span><span class="o">.</span><span class="n">set_title</span><span class="p">(</span><span class="s2">&quot;日最高温 vs 日最低温散点（颜色=月份）&quot;</span><span class="p">)</span>
+<span class="n">axes</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span><span class="o">.</span><span class="n">legend</span><span class="p">()</span>
+<span class="n">fig</span><span class="o">.</span><span class="n">colorbar</span><span class="p">(</span><span class="n">sc</span><span class="p">,</span> <span class="n">ax</span><span class="o">=</span><span class="n">axes</span><span class="p">[</span><span class="mi">1</span><span class="p">],</span> <span class="n">label</span><span class="o">=</span><span class="s2">&quot;月份&quot;</span><span class="p">)</span>
+
+<span class="c1"># ③ 下：全年逐日平均温分布直方图</span>
+<span class="n">axes</span><span class="p">[</span><span class="mi">2</span><span class="p">]</span><span class="o">.</span><span class="n">hist</span><span class="p">(</span><span class="n">day_mean</span><span class="p">,</span> <span class="n">bins</span><span class="o">=</span><span class="mi">30</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="s2">&quot;tab:green&quot;</span><span class="p">,</span> <span class="n">edgecolor</span><span class="o">=</span><span class="s2">&quot;white&quot;</span><span class="p">,</span> <span class="n">alpha</span><span class="o">=</span><span class="mf">0.9</span><span class="p">)</span>
+<span class="n">axes</span><span class="p">[</span><span class="mi">2</span><span class="p">]</span><span class="o">.</span><span class="n">axvline</span><span class="p">(</span><span class="n">day_mean</span><span class="o">.</span><span class="n">mean</span><span class="p">(),</span> <span class="n">color</span><span class="o">=</span><span class="s2">&quot;k&quot;</span><span class="p">,</span> <span class="n">ls</span><span class="o">=</span><span class="s2">&quot;--&quot;</span><span class="p">,</span> <span class="n">lw</span><span class="o">=</span><span class="mf">1.5</span><span class="p">)</span>
+<span class="n">axes</span><span class="p">[</span><span class="mi">2</span><span class="p">]</span><span class="o">.</span><span class="n">set_xlabel</span><span class="p">(</span><span class="s2">&quot;逐日平均温（℃）&quot;</span><span class="p">);</span> <span class="n">axes</span><span class="p">[</span><span class="mi">2</span><span class="p">]</span><span class="o">.</span><span class="n">set_ylabel</span><span class="p">(</span><span class="s2">&quot;频数（天）&quot;</span><span class="p">)</span>
+<span class="n">axes</span><span class="p">[</span><span class="mi">2</span><span class="p">]</span><span class="o">.</span><span class="n">set_title</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;全年气温分布（均值 </span><span class="si">{</span><span class="n">day_mean</span><span class="o">.</span><span class="n">mean</span><span class="p">()</span><span class="si">:</span><span class="s2">.1f</span><span class="si">}</span><span class="s2"> ℃，呈双峰偏态）&quot;</span><span class="p">)</span>
+
+<span class="n">fig</span><span class="o">.</span><span class="n">suptitle</span><span class="p">(</span><span class="s2">&quot;兰州 2024 全年气温综合分析&quot;</span><span class="p">,</span> <span class="n">fontsize</span><span class="o">=</span><span class="mi">15</span><span class="p">)</span>
+<span class="n">fig</span><span class="o">.</span><span class="n">tight_layout</span><span class="p">()</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">close</span><span class="p">(</span><span class="n">fig</span><span class="p">)</span>
+</pre></div>
+</div>
+</section>
+</section>
+<section id="id7">
+<h2>绘图参数速查手册：颜色、线条、文字与标记<a class="headerlink" href="#id7" title="Link to this heading">#</a></h2>
+<p>除图形函数外，Matplotlib 里的颜色、线型、文字字号、标记样式还有一整套速查写法。画图卡壳时拿出来对照，避免&quot;想画虚线却写错了线型&quot;这类玄学报错。以下速查对应术语 <a class="reference internal" href="../../api/ch09_terms.html#term-Figure"><span class="xref std std-term">Figure（画布）</span></a>、<a class="reference internal" href="../../api/ch09_terms.html#term-Axes"><span class="xref std std-term">Axes（坐标区 / 绘图区）</span></a> 等，详见 <a class="reference internal" href="../../api/ch09_terms.html"><span class="doc">第 9 章术语：Matplotlib 绘图</span></a>。</p>
+<section id="id8">
+<h3>颜色<a class="headerlink" href="#id8" title="Link to this heading">#</a></h3>
+<div class="pst-scrollable-table-container"><table class="table">
+<colgroup>
+<col style="width: 20.0%" />
+<col style="width: 40.0%" />
+<col style="width: 40.0%" />
+</colgroup>
+<thead>
+<tr class="row-odd"><th class="head"><p>方式</p></th>
+<th class="head"><p>示例</p></th>
+<th class="head"><p>适用场景</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p>颜色名称</p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">'red'</span></code>、<code class="docutils literal notranslate"><span class="pre">'blue'</span></code>、<code class="docutils literal notranslate"><span class="pre">'green'</span></code></p></td>
+<td><p>快速直观</p></td>
+</tr>
+<tr class="row-odd"><td><p>单字母缩写</p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">'r'</span></code>、<code class="docutils literal notranslate"><span class="pre">'b'</span></code>、<code class="docutils literal notranslate"><span class="pre">'g'</span></code>、<code class="docutils literal notranslate"><span class="pre">'k'</span></code>、<code class="docutils literal notranslate"><span class="pre">'w'</span></code></p></td>
+<td><p>简写代码</p></td>
+</tr>
+<tr class="row-even"><td><p>十六进制</p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">'#FF5733'</span></code></p></td>
+<td><p>精确匹配颜色</p></td>
+</tr>
+<tr class="row-odd"><td><p>RGB 元组</p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">(0.2,</span> <span class="pre">0.4,</span> <span class="pre">0.6)</span></code></p></td>
+<td><p>自定义颜色</p></td>
+</tr>
+<tr class="row-even"><td><p>颜色映射</p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">cmap</span> <span class="pre">=</span> <span class="pre">'RdBu_r'</span></code></p></td>
+<td><p>填色图、按数值着色</p></td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="admonition note">
+<p class="admonition-title">备注</p>
+<p><code class="docutils literal notranslate"><span class="pre">'r'</span></code>、<code class="docutils literal notranslate"><span class="pre">'red'</span></code> 等价；<code class="docutils literal notranslate"><span class="pre">'k'</span></code> 是黑色、<code class="docutils literal notranslate"><span class="pre">'w'</span></code> 是白色。颜色映射 <code class="docutils literal notranslate"><span class="pre">cmap</span></code> 用在&quot;数值 → 颜色&quot;的图上（<code class="docutils literal notranslate"><span class="pre">scatter(c=...)</span></code>、<code class="docutils literal notranslate"><span class="pre">contourf</span></code>），并配一条色带。</p>
+</div>
+</section>
+<section id="id9">
+<h3>线条、文字与标记<a class="headerlink" href="#id9" title="Link to this heading">#</a></h3>
+<div class="pst-scrollable-table-container"><table class="table">
+<colgroup>
+<col style="width: 20.0%" />
+<col style="width: 28.0%" />
+<col style="width: 52.0%" />
+</colgroup>
+<thead>
+<tr class="row-odd"><th class="head"><p>属性</p></th>
+<th class="head"><p>参数名</p></th>
+<th class="head"><p>常用值</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p>线型</p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">linestyle</span></code> / <code class="docutils literal notranslate"><span class="pre">ls</span></code></p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">'-'</span></code> 实线、<code class="docutils literal notranslate"><span class="pre">'--'</span></code> 虚线、<code class="docutils literal notranslate"><span class="pre">'-.'</span></code> 点划线、<code class="docutils literal notranslate"><span class="pre">':'</span></code> 点线</p></td>
+</tr>
+<tr class="row-odd"><td><p>线宽</p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">linewidth</span></code> / <code class="docutils literal notranslate"><span class="pre">lw</span></code></p></td>
+<td><p>数值，默认 <code class="docutils literal notranslate"><span class="pre">1.0</span></code>，常用 <code class="docutils literal notranslate"><span class="pre">1.5``~``2.5</span></code></p></td>
+</tr>
+<tr class="row-even"><td><p>颜色</p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">color</span></code> / <code class="docutils literal notranslate"><span class="pre">c</span></code></p></td>
+<td><p>见上面颜色表</p></td>
+</tr>
+<tr class="row-odd"><td><p>字体大小</p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">fontsize</span></code></p></td>
+<td><p>正文 <code class="docutils literal notranslate"><span class="pre">10``~``16</span></code>，标题 <code class="docutils literal notranslate"><span class="pre">14``~``20</span></code></p></td>
+</tr>
+<tr class="row-even"><td><p>字体粗细</p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">fontweight</span></code></p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">'normal'</span></code>、<code class="docutils literal notranslate"><span class="pre">'bold'</span></code></p></td>
+</tr>
+<tr class="row-odd"><td><p>字体家族</p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">fontfamily</span></code></p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">'serif'</span></code>、<code class="docutils literal notranslate"><span class="pre">'monospace'</span></code></p></td>
+</tr>
+</tbody>
+</table>
+</div>
+<p>标记 <code class="docutils literal notranslate"><span class="pre">marker</span></code> 的常用样式：</p>
+<div class="pst-scrollable-table-container"><table class="table">
+<colgroup>
+<col style="width: 24.0%" />
+<col style="width: 38.0%" />
+<col style="width: 24.0%" />
+<col style="width: 14.0%" />
+</colgroup>
+<thead>
+<tr class="row-odd"><th class="head"><p>标记</p></th>
+<th class="head"><p>说明</p></th>
+<th class="head"><p>标记</p></th>
+<th class="head"><p>说明</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">.</span></code></p></td>
+<td><p>点</p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">s</span></code></p></td>
+<td><p>方形</p></td>
+</tr>
+<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">,</span></code></p></td>
+<td><p>细点（像素级）</p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">p</span></code></p></td>
+<td><p>五角形</p></td>
+</tr>
+<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">o</span></code></p></td>
+<td><p>圆圈</p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">+</span></code></p></td>
+<td><p>加号</p></td>
+</tr>
+<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">8</span></code></p></td>
+<td><p>八边形</p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">P</span></code></p></td>
+<td><p>填充加号</p></td>
+</tr>
+<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">D</span></code></p></td>
+<td><p>菱形</p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">x</span></code></p></td>
+<td><p>十字形</p></td>
+</tr>
+<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">d</span></code></p></td>
+<td><p>细菱形</p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">*</span></code></p></td>
+<td><p>星形</p></td>
+</tr>
+<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">&lt;</span></code></p></td>
+<td><p>左三角</p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">&gt;</span></code></p></td>
+<td><p>右三角</p></td>
+</tr>
+<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">^</span></code></p></td>
+<td><p>上三角</p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">v</span></code></p></td>
+<td><p>下三角</p></td>
+</tr>
+</tbody>
+</table>
+</div>
+</section>
+<section id="id10">
+<h3>气象常用图形<a class="headerlink" href="#id10" title="Link to this heading">#</a></h3>
+<div class="pst-scrollable-table-container"><table class="table">
+<colgroup>
+<col style="width: 24.0%" />
+<col style="width: 32.0%" />
+<col style="width: 44.0%" />
+</colgroup>
+<thead>
+<tr class="row-odd"><th class="head"><p>图形类型</p></th>
+<th class="head"><p>Matplotlib 函数</p></th>
+<th class="head"><p>气象用途</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p>等值线图</p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">contour</span></code> / <code class="docutils literal notranslate"><span class="pre">contourf</span></code></p></td>
+<td><p>气压场、温度场、高度场</p></td>
+</tr>
+<tr class="row-odd"><td><p>矢量箭头</p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">quiver</span></code></p></td>
+<td><p>风场矢量</p></td>
+</tr>
+<tr class="row-even"><td><p>风羽图</p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">barbs</span></code></p></td>
+<td><p>站点风羽</p></td>
+</tr>
+<tr class="row-odd"><td><p>箱线图</p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">boxplot</span></code></p></td>
+<td><p>数据统计对比</p></td>
+</tr>
+<tr class="row-even"><td><p>流线图</p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">streamplot</span></code></p></td>
+<td><p>流场分析</p></td>
+</tr>
+</tbody>
+</table>
+</div>
+<p>这些是第 10 章 Cartopy 地图绘图的地基：<code class="docutils literal notranslate"><span class="pre">contourf</span></code> 填色 + <code class="docutils literal notranslate"><span class="pre">quiver</span></code>／<code class="docutils literal notranslate"><span class="pre">barbs</span></code> 叠风场，是气象图的经典组合。</p>
+</section>
+<section id="id11">
+<h3>要点总结<a class="headerlink" href="#id11" title="Link to this heading">#</a></h3>
+<ol class="arabic simple">
+<li><p>画图从 <code class="docutils literal notranslate"><span class="pre">fig,</span> <span class="pre">ax</span> <span class="pre">=</span> <span class="pre">plt.subplots()</span></code> 起步，具体元素全归 <code class="docutils literal notranslate"><span class="pre">ax</span></code> 管；pyplot 只在开图、多图/多子图、清画布时出场；</p></li>
+<li><p>折线 <code class="docutils literal notranslate"><span class="pre">plot</span></code> 看趋势、散点 <code class="docutils literal notranslate"><span class="pre">scatter</span></code> 看相关（配对角线参考线）、直方图 <code class="docutils literal notranslate"><span class="pre">hist</span></code> 看分布（偏态 / 双峰 / 昼夜温差）；</p></li>
+<li><p>多子图 <code class="docutils literal notranslate"><span class="pre">subplots(行,列)</span></code> 配 <code class="docutils literal notranslate"><span class="pre">sharex=True</span></code> 共享时间轴，刻度对齐横着可比；</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">figsize</span></code> / <code class="docutils literal notranslate"><span class="pre">dpi</span></code> / 标签 / 标题 / 图例 / 网格 是图的地基；<code class="docutils literal notranslate"><span class="pre">colorbar</span></code> 只给颜色映射图用；</p></li>
+<li><p>保存 <code class="docutils literal notranslate"><span class="pre">savefig(bbox_inches=&quot;tight&quot;,</span> <span class="pre">dpi=150)</span></code>，画完 <code class="docutils literal notranslate"><span class="pre">plt.close(fig)</span></code> 防内存泄漏；</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">twinx</span></code> 双轴管不同量纲、<code class="docutils literal notranslate"><span class="pre">annotate</span></code> 定点标极值、<code class="docutils literal notranslate"><span class="pre">rcParams</span></code> 统一定中文字体与风格；</p></li>
+<li><p>中文字体、负号方块、不 savefig、图例挡数据、刻度重叠——五座大头坑，各有排雷口诀。</p></li>
+</ol>
+<div class="admonition seealso">
+<p class="admonition-title">参见</p>
+<p>示例画廊 <a class="reference internal" href="../../gallery/plot_viz/index.html"><span class="doc">气象数据可视化示例</span></a>　·　配套练习：<a class="reference internal" href="../../tutorials/viz/ch09_practice.html"><span class="doc">第 9 章练习：Matplotlib 气象绘图</span></a>　·　术语参考：<a class="reference internal" href="../../api/ch09_terms.html"><span class="doc">第 9 章术语：Matplotlib 绘图</span></a></p>
+</div>
+</section>
+</section>
+</section>
+
+
+                </article>
+              
+              
+              
+              
+              
+                <footer class="prev-next-footer d-print-none">
+                  
+<div class="prev-next-area">
+    <a class="left-prev"
+       href="index.html"
+       title="上一页">
+      <i class="fa-solid fa-angle-left"></i>
+      <div class="prev-next-info">
+        <p class="prev-next-subtitle">上一页</p>
+        <p class="prev-next-title">模块三 气象数据可视化</p>
+      </div>
+    </a>
+    <a class="right-next"
+       href="cartopy.html"
+       title="下一页">
+      <div class="prev-next-info">
+        <p class="prev-next-subtitle">下一页</p>
+        <p class="prev-next-title">气象数据绘图（二）Cartopy</p>
+      </div>
+      <i class="fa-solid fa-angle-right"></i>
+    </a>
+</div>
+                </footer>
+              
+            </div>
+            
+            
+              
+                <dialog id="pst-secondary-sidebar-modal"></dialog>
+                <div id="pst-secondary-sidebar" class="bd-sidebar-secondary bd-toc"><div class="sidebar-secondary-items sidebar-secondary__inner">
+
+
+  <div class="sidebar-secondary-item">
+<div
+    id="pst-page-navigation-heading-2"
+    class="page-toc tocsection onthispage">
+    <i class="fa-solid fa-list"></i> 当前页面
+  </div>
+  <nav id="pst-page-toc-nav" class="page-toc" aria-labelledby="pst-page-navigation-heading-2">
+    <ul class="pst-show_toc_level nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#t-902">配套动画（T-902）</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id1">最佳实践：气象绘图规范</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#pyplot">面向对象接口，别让 pyplot 全局状态"打游击"</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#id2">四种气象图的做法与要点</a><ul class="nav section-nav flex-column">
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#plot">气温时间序列折线图（<code class="docutils literal notranslate"><span class="pre">plot</span></code>）</a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#scatter">两要素相关性散点图（<code class="docutils literal notranslate"><span class="pre">scatter</span></code>）</a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#hist">气温分布直方图（<code class="docutils literal notranslate"><span class="pre">hist</span></code>）</a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#subplots-2-2-sharex">多子图布局（<code class="docutils literal notranslate"><span class="pre">subplots(2,2)</span></code> / <code class="docutils literal notranslate"><span class="pre">sharex</span></code>）</a></li>
+</ul>
+</li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#id3">常规参数：让图"立"得起来</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#id4">提升技巧：一键从"能用的图"到"好看的图"</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#id5">常见坑位一次排雷</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#id6">完整综合示例：一张多子图图板</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id7">绘图参数速查手册：颜色、线条、文字与标记</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#id8">颜色</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#id9">线条、文字与标记</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#id10">气象常用图形</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#id11">要点总结</a></li>
+</ul>
+</li>
+</ul>
+  </nav></div>
+
+</div></div>
+              
+            
+          </div>
+          <footer class="bd-footer-content">
+            
+          </footer>
+        
+      </main>
+    </div>
+  </div>
+  
+  <!-- Scripts loaded after <body> so the DOM is not blocked -->
+  <script defer src="../../_static/scripts/bootstrap.js?digest=90905a2f556bf617f1a9"></script>
+<script defer src="../../_static/scripts/pydata-sphinx-theme.js?digest=90905a2f556bf617f1a9"></script>
+
+  <footer class="bd-footer">
+<div class="bd-footer__inner bd-page-width">
+  
+    <div class="footer-items__start">
+      
+        <div class="footer-item">
+
+  <p class="copyright">
+    
+      © Copyright 2026, 兰州大学大气科学学院编程社区.
+      <br/>
+    
+  </p>
+</div>
+      
+        <div class="footer-item">
+
+  <p class="sphinx-version">
+    由 <a href="https://www.sphinx-doc.org/">Sphinx</a> 8.2.3创建。
+    <br/>
+  </p>
+</div>
+      
+    </div>
+  
+  
+  
+    <div class="footer-items__end">
+      
+        <div class="footer-item">
+<p class="theme-version">
+  <!-- # L10n: Setting the PST URL as an argument as this does not need to be localized -->
+  使用 <a href="https://pydata-sphinx-theme.readthedocs.io/en/stable/index.html">PyData Sphinx Theme</a> 0.20.0构建.
+</p></div>
+      
+    </div>
+  
+</div>
+
+  </footer>
+  </body>
+</html>

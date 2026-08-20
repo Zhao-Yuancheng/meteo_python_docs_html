@@ -1,0 +1,1885 @@
+
+<!DOCTYPE html>
+
+
+<html lang="zh-CN" data-content_root="../../" >
+
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
+    <title>面向对象、函数式编程与高级语法 Q&amp;A &#8212; MeteoPython</title>
+  
+  
+  
+  <script data-cfasync="false">
+    document.documentElement.dataset.mode = localStorage.getItem("mode") || "";
+    document.documentElement.dataset.theme = localStorage.getItem("theme") || "";
+  </script>
+  <!--
+    this give us a css class that will be invisible only if js is disabled
+  -->
+  <noscript>
+    <style>
+      .pst-js-only { display: none !important; }
+
+    </style>
+  </noscript>
+  
+  <!-- Loaded before other Sphinx assets -->
+  <link href="../../_static/styles/theme.css?digest=90905a2f556bf617f1a9" rel="stylesheet" />
+<link href="../../_static/styles/pydata-sphinx-theme.css?digest=90905a2f556bf617f1a9" rel="stylesheet" />
+
+    <link rel="stylesheet" type="text/css" href="../../_static/pygments.css?v=8f2a1f02" />
+    <link rel="stylesheet" type="text/css" href="../../_static/copybutton.css?v=76b2166b" />
+    <link rel="stylesheet" type="text/css" href="../../_static/sg_gallery.css?v=fd6457a4" />
+    <link rel="stylesheet" type="text/css" href="../../_static/sg_gallery-binder.css?v=f4aeca0c" />
+    <link rel="stylesheet" type="text/css" href="../../_static/sg_gallery-dataframe.css?v=2082cf3c" />
+    <link rel="stylesheet" type="text/css" href="../../_static/sg_gallery-rendered-html.css?v=1277b6f3" />
+    <link rel="stylesheet" type="text/css" href="../../_static/sphinx-design.min.css?v=95c83b7e" />
+    <link rel="stylesheet" type="text/css" href="../../_static/./custom.css?v=fbe1f034" />
+  
+  <!-- So that users can add custom icons -->
+  <script defer src="../../_static/scripts/fontawesome.js?digest=90905a2f556bf617f1a9"></script>
+  <!-- Pre-loaded scripts that we'll load fully later -->
+  <link rel="preload" as="script" href="../../_static/scripts/bootstrap.js?digest=90905a2f556bf617f1a9" />
+<link rel="preload" as="script" href="../../_static/scripts/pydata-sphinx-theme.js?digest=90905a2f556bf617f1a9" />
+
+    <script src="../../_static/documentation_options.js?v=9becfed8"></script>
+    <script src="../../_static/doctools.js?v=9bcbadda"></script>
+    <script src="../../_static/sphinx_highlight.js?v=dc90522c"></script>
+    <script src="../../_static/sg-tags.js?v=d80f6fa4"></script>
+    <script src="../../_static/clipboard.min.js?v=a7894cd8"></script>
+    <script src="../../_static/copybutton.js?v=fd10adb8"></script>
+    <script src="../../_static/translations.js?v=beaddf03"></script>
+    <script src="../../_static/design-tabs.js?v=f930bc37"></script>
+    <script>DOCUMENTATION_OPTIONS.pagename = 'qa/basics/05-面向对象函数式高级语法-QA';</script>
+    <script>
+        DOCUMENTATION_OPTIONS.theme_version = '0.20.0';
+        DOCUMENTATION_OPTIONS.theme_switcher_json_url = '_static/switcher.json';
+        DOCUMENTATION_OPTIONS.theme_switcher_version_match = '0.1.0';
+        DOCUMENTATION_OPTIONS.show_version_warning_banner =
+            false;
+        </script>
+    <script>DOCUMENTATION_OPTIONS.search_as_you_type = false;</script>
+    <link rel="icon" href="../../_static/favicon.svg"/>
+    <link rel="index" title="索引" href="../../genindex.html" />
+    <link rel="search" title="搜索" href="../../search.html" />
+    <link rel="next" title="模块二 气象数据处理（常见问题 Q&amp;A）" href="../data/index.html" />
+    <link rel="prev" title="函数、变量作用域、模块与包 Q&amp;A" href="04-%E5%87%BD%E6%95%B0%E4%BD%9C%E7%94%A8%E5%9F%9F%E6%A8%A1%E5%9D%97%E5%8C%85-QA.html" />
+  <meta name="viewport" content="width=device-width, initial-scale=1"/>
+  <meta name="docsearch:language" content="zh-CN"/>
+  <meta name="docsearch:version" content="0.1" />
+    <meta name="docbuild:last-update" content="2026-08-20"/>
+  
+    
+    <script src="../../_static/searchtools.js"></script>
+    <script src="../../_static/language_data.js"></script>
+    <script src="../../searchindex.js"></script>
+  
+  </head>
+  <body data-default-mode="">
+  
+  
+  <div id="pst-skip-link" class="skip-link d-print-none"><a href="#main-content">跳转至主要内容</a></div>
+
+  
+  <div id="pst-scroll-pixel-helper"></div>
+  
+  <button type="button" class="btn rounded-pill" id="pst-back-to-top">
+    <i class="fa-solid fa-arrow-up"></i>回到顶部</button>
+  
+  
+  
+  
+  <dialog id="pst-search-dialog">
+    
+<form class="bd-search d-flex align-items-center"
+      action="../../search.html"
+      method="get">
+  <i class="fa-solid fa-magnifying-glass"></i>
+  <input type="search"
+         class="form-control"
+         name="q"
+         placeholder="搜索文档…"
+         aria-label="搜索文档…"
+         autocomplete="off"
+         autocorrect="off"
+         autocapitalize="off"
+         spellcheck="false"/>
+  <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd>K</kbd></span>
+</form>
+  </dialog>
+
+  <div class="pst-async-banner-revealer d-none">
+  <aside id="bd-header-version-warning" class="d-none d-print-none" aria-label="版本警告"></aside>
+</div>
+
+  
+    <header id="pst-header" class="bd-header navbar navbar-expand-lg bd-navbar d-print-none">
+<div class="bd-header__inner bd-page-width">
+  <button class="pst-navbar-icon sidebar-toggle primary-toggle" aria-label="网页导航">
+    <span class="fa-solid fa-bars"></span>
+  </button>
+  
+  
+  <div class="col-lg-3 navbar-header-items__start">
+    
+      <div class="navbar-item">
+
+  
+    
+  
+
+<a class="navbar-brand logo" href="../../index.html">
+  
+  
+  
+  
+  
+    
+    
+      
+    
+    
+    <img src="../../_static/logo.svg" class="logo__image only-light" alt="MeteoPython - Home"/>
+    <img src="../../_static/logo.svg" class="logo__image only-dark pst-js-only" alt="MeteoPython - Home"/>
+  
+  
+</a></div>
+    
+  </div>
+  
+  <div class="col-lg-9 navbar-header-items">
+    
+    <div class="me-auto navbar-header-items__center">
+      
+        <div class="navbar-item">
+<nav>
+  <ul class="bd-navbar-elements navbar-nav">
+    
+<li class="nav-item ">
+  <a class="nav-link nav-internal" href="../../user_guide/index.html">
+    教程
+  </a>
+</li>
+
+
+<li class="nav-item ">
+  <a class="nav-link nav-internal" href="../../tutorials/index.html">
+    练习
+  </a>
+</li>
+
+
+<li class="nav-item ">
+  <a class="nav-link nav-internal" href="../../gallery/index.html">
+    示例
+  </a>
+</li>
+
+
+<li class="nav-item ">
+  <a class="nav-link nav-internal" href="../../api/index.html">
+    术语参考
+  </a>
+</li>
+
+
+<li class="nav-item current active">
+  <a class="nav-link nav-internal" href="../index.html">
+    常见问题 Q&A
+  </a>
+</li>
+
+  </ul>
+</nav></div>
+      
+    </div>
+    
+    
+    <div class="navbar-header-items__end">
+      
+        <div class="navbar-item navbar-persistent--container">
+          
+
+<button class="btn search-button-field search-button__button pst-js-only" title="搜索" aria-label="搜索" data-bs-placement="bottom" data-bs-toggle="tooltip">
+ <i class="fa-solid fa-magnifying-glass"></i>
+ <span class="search-button__default-text">搜索</span>
+ <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd class="kbd-shortcut__modifier">K</kbd></span>
+</button>
+        </div>
+      
+      
+        <div class="navbar-item">
+
+<div class="theme-switch-container dropdown pst-js-only" data-bs-toggle="tooltip" data-bs-placement="bottom" title="Color mode">
+  <button class="btn btn-sm nav-link pst-navbar-icon theme-switch-button dropdown-toggle" aria-label="Color mode" data-bs-toggle="dropdown">
+    <i class="theme-switch fa-solid fa-sun fa-lg fa-fw" data-mode="light" title="亮色"></i>
+    <i class="theme-switch fa-solid fa-moon fa-lg fa-fw" data-mode="dark" title="暗色"></i>
+    <i class="theme-switch fa-solid fa-circle-half-stroke fa-lg fa-fw" data-mode="auto" title="System Settings"></i>
+  </button>
+  <ul class="dropdown-menu dropdown-menu-end">
+    <li><button class="dropdown-item d-flex align-items-center theme-change-button" data-mode="auto"><i class="fa-solid fa-circle-half-stroke fa-lg fa-fw me-1"></i>System Settings</button></li>
+    <li><button class="dropdown-item d-flex align-items-center theme-change-button" data-mode="light"><i class="fa-solid fa-sun fa-lg fa-fw me-1"></i>亮色</button></li>
+    <li><button class="dropdown-item d-flex align-items-center theme-change-button" data-mode="dark"><i class="fa-solid fa-moon fa-lg fa-fw me-1"></i>暗色</button></li>
+  </ul>
+</div></div>
+      
+        <div class="navbar-item"><ul class="navbar-icon-links"
+    aria-label="Icon Links">
+</ul></div>
+      
+    </div>
+    
+  </div>
+  
+  
+    <div class="navbar-persistent--mobile">
+
+<button class="btn search-button-field search-button__button pst-js-only" title="搜索" aria-label="搜索" data-bs-placement="bottom" data-bs-toggle="tooltip">
+ <i class="fa-solid fa-magnifying-glass"></i>
+ <span class="search-button__default-text">搜索</span>
+ <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd class="kbd-shortcut__modifier">K</kbd></span>
+</button>
+    </div>
+  
+
+  
+    <button class="pst-navbar-icon sidebar-toggle secondary-toggle" aria-label="当前页面">
+      <span class="fa-solid fa-outdent"></span>
+    </button>
+  
+</div>
+
+    </header>
+  
+
+  <div class="bd-container">
+    <div class="bd-container__inner bd-page-width">
+      
+      
+      
+      <dialog id="pst-primary-sidebar-modal"></dialog>
+      <div id="pst-primary-sidebar" class="bd-sidebar-primary bd-sidebar">
+        
+
+  
+  <div class="sidebar-header-items sidebar-primary__section">
+    
+    
+      <div class="sidebar-header-items__center">
+        
+          
+          
+            <div class="navbar-item">
+<nav>
+  <ul class="bd-navbar-elements navbar-nav">
+    
+<li class="nav-item ">
+  <a class="nav-link nav-internal" href="../../user_guide/index.html">
+    教程
+  </a>
+</li>
+
+
+<li class="nav-item ">
+  <a class="nav-link nav-internal" href="../../tutorials/index.html">
+    练习
+  </a>
+</li>
+
+
+<li class="nav-item ">
+  <a class="nav-link nav-internal" href="../../gallery/index.html">
+    示例
+  </a>
+</li>
+
+
+<li class="nav-item ">
+  <a class="nav-link nav-internal" href="../../api/index.html">
+    术语参考
+  </a>
+</li>
+
+
+<li class="nav-item current active">
+  <a class="nav-link nav-internal" href="../index.html">
+    常见问题 Q&A
+  </a>
+</li>
+
+  </ul>
+</nav></div>
+          
+        
+      </div>
+    
+    
+    
+      <div class="sidebar-header-items__end">
+        
+          <div class="navbar-item">
+
+<div class="theme-switch-container dropdown pst-js-only" data-bs-toggle="tooltip" data-bs-placement="bottom" title="Color mode">
+  <button class="btn btn-sm nav-link pst-navbar-icon theme-switch-button dropdown-toggle" aria-label="Color mode" data-bs-toggle="dropdown">
+    <i class="theme-switch fa-solid fa-sun fa-lg fa-fw" data-mode="light" title="亮色"></i>
+    <i class="theme-switch fa-solid fa-moon fa-lg fa-fw" data-mode="dark" title="暗色"></i>
+    <i class="theme-switch fa-solid fa-circle-half-stroke fa-lg fa-fw" data-mode="auto" title="System Settings"></i>
+  </button>
+  <ul class="dropdown-menu dropdown-menu-end">
+    <li><button class="dropdown-item d-flex align-items-center theme-change-button" data-mode="auto"><i class="fa-solid fa-circle-half-stroke fa-lg fa-fw me-1"></i>System Settings</button></li>
+    <li><button class="dropdown-item d-flex align-items-center theme-change-button" data-mode="light"><i class="fa-solid fa-sun fa-lg fa-fw me-1"></i>亮色</button></li>
+    <li><button class="dropdown-item d-flex align-items-center theme-change-button" data-mode="dark"><i class="fa-solid fa-moon fa-lg fa-fw me-1"></i>暗色</button></li>
+  </ul>
+</div></div>
+        
+          <div class="navbar-item"><ul class="navbar-icon-links"
+    aria-label="Icon Links">
+</ul></div>
+        
+      </div>
+    
+  </div>
+  
+    <div class="sidebar-primary-items__start sidebar-primary__section">
+        <div class="sidebar-primary-item pst-sidebar-collapse"><button id="pst-collapse-sidebar-button" aria-expanded="true" aria-controls="pst-primary-sidebar">
+  <svg class="pst-icon" role="img" aria-hidden="true" focusable="false" viewBox="0 0 16 16" xmlns="http://www.w3.org/2000/svg">
+    <path fill="currentColor" d="M3 15.5C2.36232 15.5 1.74874 15.2564 1.28478 14.8189C0.820828 14.3815 0.541576 13.7832 0.504167 13.1467L0.5 13L0.5 3C0.499965 2.36232 0.743605 1.74874 1.18107 1.28478C1.61854 0.820828 2.21676 0.541576 2.85333 0.504167L3 0.5L13 0.5C13.6377 0.499965 14.2513 0.743605 14.7152 1.18107C15.1792 1.61854 15.4584 2.21676 15.4958 2.85333L15.5 3L15.5 13C15.5 13.6377 15.2564 14.2513 14.8189 14.7152C14.3815 15.1792 13.7832 15.4584 13.1467 15.4958L13 15.5L3 15.5ZM3 13.8333L10.5 13.8333L10.5 2.16667L3 2.16667C2.79589 2.16669 2.59889 2.24163 2.44636 2.37726C2.29383 2.5129 2.19638 2.69979 2.1725 2.9025L2.16667 3L2.16667 13C2.16669 13.2041 2.24163 13.4011 2.37726 13.5536C2.5129 13.7062 2.69979 13.8036 2.9025 13.8275L3 13.8333ZM6.65583 10.325L6.5775 10.2558L4.91083 8.58917C4.76735 8.44567 4.68116 8.25476 4.66843 8.05223C4.65569 7.84971 4.71729 7.6495 4.84167 7.48917L4.91083 7.41083L6.5775 5.74417C6.72747 5.59471 6.9287 5.50794 7.14032 5.50148C7.35194 5.49502 7.55809 5.56935 7.7169 5.70937C7.8757 5.8494 7.97525 6.04463 7.99533 6.25539C8.01541 6.46616 7.95451 6.67667 7.825 6.84417L7.75583 6.9225L6.67917 8L7.75583 9.0775C7.89931 9.22099 7.98551 9.41191 7.99824 9.61443C8.01097 9.81695 7.94938 10.0172 7.825 10.1775L7.75583 10.2558C7.61234 10.3993 7.42142 10.4855 7.2189 10.4982C7.01638 10.511 6.81617 10.4494 6.65583 10.325Z"/>
+  </svg>
+  <span class="pst-collapse-sidebar-label">Collapse Sidebar</span>
+  <span class="pst-expand-sidebar-label">Expand Sidebar</span>
+</button></div>
+        <div class="sidebar-primary-item">
+
+<nav class="bd-docs-nav bd-links"
+     aria-label="章节导航">
+  <p class="bd-links__title" role="heading" aria-level="1">章节导航</p>
+  <div class="bd-toc-item navbar-nav"><ul class="current nav bd-sidenav">
+<li class="toctree-l1 current active has-children"><a class="reference internal" href="index.html">模块一 Python 编程基础（常见问题 Q&amp;A）</a><details open="open"><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="00-%E9%80%9A%E7%94%A8%E6%8E%92%E9%94%99%E6%8C%87%E5%8D%97.html">通用排错方法论：从「看不懂报错」到「有的放矢」 Q&amp;A</a></li>
+<li class="toctree-l2"><a class="reference internal" href="01-Python%E7%AE%80%E4%BB%8B%E4%B8%8EConda%E7%8E%AF%E5%A2%83-QA.html">Python 简介及安装环境 Q&amp;A</a></li>
+<li class="toctree-l2"><a class="reference internal" href="02-%E6%95%B0%E6%8D%AE%E7%B1%BB%E5%9E%8B%E4%B8%8E%E8%BF%90%E7%AE%97%E7%AC%A6-QA.html">基本数据类型、变量和运算符 Q&amp;A</a></li>
+<li class="toctree-l2"><a class="reference internal" href="03-%E5%88%86%E6%94%AF%E6%9D%A1%E4%BB%B6%E5%BE%AA%E7%8E%AF-QA.html">分支、条件与循环 Q&amp;A</a></li>
+<li class="toctree-l2"><a class="reference internal" href="04-%E5%87%BD%E6%95%B0%E4%BD%9C%E7%94%A8%E5%9F%9F%E6%A8%A1%E5%9D%97%E5%8C%85-QA.html">函数、变量作用域、模块与包 Q&amp;A</a></li>
+<li class="toctree-l2 current active"><a class="current reference internal" href="#">面向对象、函数式编程与高级语法 Q&amp;A</a></li>
+</ul>
+</details></li>
+<li class="toctree-l1 has-children"><a class="reference internal" href="../data/index.html">模块二 气象数据处理（常见问题 Q&amp;A）</a><details open="open"><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
+<li class="toctree-l2"><a class="reference internal" href="../data/06-NumPy%E6%B0%94%E8%B1%A1%E8%AE%A1%E7%AE%97-QA.html">气象数据计算 NumPy Q&amp;A</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../data/07-Pandas%E6%B0%94%E8%B1%A1%E5%88%86%E6%9E%90-QA.html">气象数据分析（一）Pandas Q&amp;A</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../data/08-Xarray%E6%B0%94%E8%B1%A1%E5%88%86%E6%9E%90-QA.html">Xarray 气象数据处理（二）Q&amp;A</a></li>
+</ul>
+</details></li>
+<li class="toctree-l1 has-children"><a class="reference internal" href="../viz/index.html">模块三 气象数据可视化（常见问题 Q&amp;A）</a><details open="open"><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
+<li class="toctree-l2"><a class="reference internal" href="../viz/09-Matplotlib%E6%B0%94%E8%B1%A1%E7%BB%98%E5%9B%BE-QA.html">气象数据绘图（一）Matplotlib Q&amp;A</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../viz/10-Cartopy%E6%B0%94%E8%B1%A1%E7%BB%98%E5%9B%BE-QA.html">气象数据绘图（二）Cartopy Q&amp;A</a></li>
+</ul>
+</details></li>
+</ul>
+</div>
+</nav></div>
+    </div>
+  
+  
+  <div class="sidebar-primary-items__end sidebar-primary__section">
+      <div class="sidebar-primary-item">
+<div id="ethical-ad-placement"
+      class="flat"
+      data-ea-publisher="readthedocs"
+      data-ea-type="readthedocs-sidebar"
+      data-ea-manual="true">
+</div></div>
+  </div>
+
+
+      </div>
+      
+      <main id="main-content" class="bd-main" role="main">
+        
+        
+          <div class="bd-content">
+            <div class="bd-article-container">
+              
+              <div class="bd-header-article d-print-none">
+<div class="header-article-items header-article__inner">
+  
+    <div class="header-article-items__start">
+      
+        <div class="header-article-item">
+
+<nav aria-label="Breadcrumb" class="d-print-none">
+  <ul class="bd-breadcrumbs">
+    
+    <li class="breadcrumb-item breadcrumb-home">
+      <a href="../../index.html" class="nav-link" aria-label="初始页面">
+        <i class="fa-solid fa-home"></i>
+      </a>
+    </li>
+    
+    <li class="breadcrumb-item"><a href="../index.html" class="nav-link">常见问题 Q&amp;A</a></li>
+    
+    
+    <li class="breadcrumb-item"><a href="index.html" class="nav-link">模块一 Python 编程基础（常见问题 Q&amp;A）</a></li>
+    
+    <li class="breadcrumb-item active" aria-current="page"><span class="ellipsis">面向对象、函数式编程与高级语法 Q&amp;A</span></li>
+  </ul>
+</nav>
+</div>
+      
+    </div>
+  
+  
+</div>
+</div>
+              
+              
+              
+                
+<div id="searchbox"></div>
+                <article class="bd-article">
+                  
+  <section id="q-a">
+<h1>面向对象、函数式编程与高级语法 Q&amp;A<a class="headerlink" href="#q-a" title="Link to this heading">#</a></h1>
+<blockquote>
+<div><p>章节定位：第 5 章（模块一）· 对应用户指南
+<code class="docutils literal notranslate"><span class="pre">user_guide/basics/oop.rst</span></code> 的
+5.1~5.7（类/对象、封装、继承、模块中的类、装饰器/生成器/推导式/match-case
+高级语法）· 贯穿项目「Station 气象站类」 通用排错方法论见
+<a class="reference internal" href="00-%E9%80%9A%E7%94%A8%E6%8E%92%E9%94%99%E6%8C%87%E5%8D%97.html"><span class="doc">00-通用排错指南</span></a>。本文全部报错均在本机
+Python 环境实测，报错信息原样粘贴。 比对口径：正文全文已对齐 oop.rst
+5.7 节的「最高频易错点」与 5.3 的 <code class="docutils literal notranslate"><span class="pre">&#64;property</span></code>、5.4 继承、5.6
+<code class="docutils literal notranslate"><span class="pre">MeteoStation</span></code>
+实战；构造/析构、<code class="docutils literal notranslate"><span class="pre">match-case</span></code>、装饰器、生成器等「高级语法」正文多为拓展导向（占位），以下按官方
++ 实测为准并来源已在条目内注明。</p>
+</div></blockquote>
+<section id="id1">
+<span id="id2"></span><h2>5.0 本章报错总览表<a class="headerlink" href="#id1" title="Link to this heading">#</a></h2>
+<div class="pst-scrollable-table-container"><table class="table">
+<thead>
+<tr class="row-odd"><th class="head"><p>序号</p></th>
+<th class="head"><p>中文场景</p></th>
+<th class="head"><p>真实报错类型</p></th>
+<th class="head"><p>关键词</p></th>
+<th class="head"><p>排错方向一句话</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p>5.1.1</p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">__init__</span></code> 忘了 <code class="docutils literal notranslate"><span class="pre">self</span></code></p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">TypeError</span></code></p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">takes</span> <span class="pre">2</span> <span class="pre">positional</span> <span class="pre">arguments</span> <span class="pre">but</span> <span class="pre">3</span> <span class="pre">were</span> <span class="pre">given</span></code></p></td>
+<td><p>第一参数应是 self，被自动填占</p></td>
+</tr>
+<tr class="row-odd"><td><p>5.1.2</p></td>
+<td><p>方法忘了 <code class="docutils literal notranslate"><span class="pre">self</span></code></p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">TypeError</span></code></p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">takes</span> <span class="pre">0</span> <span class="pre">positional</span> <span class="pre">arguments</span> <span class="pre">but</span> <span class="pre">1</span> <span class="pre">was</span> <span class="pre">given</span></code></p></td>
+<td><p>实例调用自动多传一个 self</p></td>
+</tr>
+<tr class="row-even"><td><p>5.1.3</p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">Station.info()</span></code>（类.方法）缺
+self</p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">TypeError</span></code></p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">missing</span> <span class="pre">1</span> <span class="pre">required</span> <span class="pre">positional</span> <span class="pre">argument:</span> <span class="pre">'self'</span></code></p></td>
+<td><p>调方法要么给实例、要么手动传实例</p></td>
+</tr>
+<tr class="row-odd"><td><p>5.1.4</p></td>
+<td><p>方法第一参数非 self 传参错位</p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">TypeError</span></code></p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">takes</span> <span class="pre">1</span> <span class="pre">positional</span> <span class="pre">argument</span> <span class="pre">but</span> <span class="pre">2</span> <span class="pre">were</span> <span class="pre">given</span></code></p></td>
+<td><p>实参被塞错位置</p></td>
+</tr>
+<tr class="row-even"><td><p>5.2.1</p></td>
+<td><p>只 <code class="docutils literal notranslate"><span class="pre">self.属性</span></code> 却没定义</p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">AttributeError</span></code></p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">has</span> <span class="pre">no</span> <span class="pre">attribute</span> <span class="pre">'temp'</span></code></p></td>
+<td><p>读到的属性从没被赋值/拼写不一致</p></td>
+</tr>
+<tr class="row-odd"><td><p>5.2.2</p></td>
+<td><p>属性名大小写/下划线不对</p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">AttributeError</span></code></p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">has</span> <span class="pre">no</span> <span class="pre">attribute</span> <span class="pre">'station_id'</span></code></p></td>
+<td><p>命名要处处一致（<code class="docutils literal notranslate"><span class="pre">self.station_id</span></code>）</p></td>
+</tr>
+<tr class="row-even"><td><p>5.2.3</p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">__init__</span></code> 拼错</p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">TypeError</span></code></p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">Station()</span> <span class="pre">takes</span> <span class="pre">no</span> <span class="pre">arguments</span></code></p></td>
+<td><p>构造没被调用才「不收参」</p></td>
+</tr>
+<tr class="row-odd"><td><p>5.2.4</p></td>
+<td><p>外部摸 <code class="docutils literal notranslate"><span class="pre">__私有属性</span></code></p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">AttributeError</span></code></p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">has</span> <span class="pre">no</span> <span class="pre">attribute</span> <span class="pre">'__deposit'</span></code></p></td>
+<td><p>私有名已被改写，非语法级加密</p></td>
+</tr>
+<tr class="row-even"><td><p>5.2.5</p></td>
+<td><p>类共享/实例私有混淆</p></td>
+<td><p>无报错但错</p></td>
+<td><p>—</p></td>
+<td><p>实例赋值会生成本实例同名属性</p></td>
+</tr>
+<tr class="row-odd"><td><p>5.3.1</p></td>
+<td><p>子类忘 <code class="docutils literal notranslate"><span class="pre">super().__init__</span></code></p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">AttributeError</span></code></p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">has</span> <span class="pre">no</span> <span class="pre">attribute</span> <span class="pre">'lat'</span></code></p></td>
+<td><p>父类构造没跑，父类属性缺失</p></td>
+</tr>
+<tr class="row-even"><td><p>5.4.1</p></td>
+<td><p>read-only 属性被赋值</p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">AttributeError</span></code></p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">property</span> <span class="pre">'mean_temp'</span> <span class="pre">...</span> <span class="pre">has</span> <span class="pre">no</span> <span class="pre">setter</span></code></p></td>
+<td><p>补 <code class="docutils literal notranslate"><span class="pre">&#64;xxx.setter</span></code></p></td>
+</tr>
+<tr class="row-odd"><td><p>5.4.2</p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">&#64;classmethod</span></code> 少参数/忘 cls</p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">TypeError</span></code></p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">missing</span> <span class="pre">1</span> <span class="pre">required</span> <span class="pre">positional</span> <span class="pre">argument</span></code></p></td>
+<td><p>cls 也占一位</p></td>
+</tr>
+<tr class="row-even"><td><p>5.5.1</p></td>
+<td><p>装饰器忘 <code class="docutils literal notranslate"><span class="pre">return</span> <span class="pre">inner</span></code></p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">TypeError</span></code></p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">'NoneType'</span> <span class="pre">object</span> <span class="pre">is</span> <span class="pre">not</span> <span class="pre">callable</span></code></p></td>
+<td><p>装饰器返回值应是函数</p></td>
+</tr>
+<tr class="row-odd"><td><p>5.5.2</p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">return</span> <span class="pre">wrapper()</span></code> 而非
+<code class="docutils literal notranslate"><span class="pre">wrapper</span></code></p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">TypeError</span></code></p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">'int'</span> <span class="pre">object</span> <span class="pre">is</span> <span class="pre">not</span> <span class="pre">callable</span></code></p></td>
+<td><p>返回了结果不是函数</p></td>
+</tr>
+<tr class="row-even"><td><p>5.5.3</p></td>
+<td><p>带参装饰器层级不够</p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">TypeError</span></code></p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">missing</span> <span class="pre">1</span> <span class="pre">required</span> <span class="pre">positional</span> <span class="pre">argument:</span> <span class="pre">'func'</span></code></p></td>
+<td><p>需外层套三层</p></td>
+</tr>
+<tr class="row-odd"><td><p>5.6.1</p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">next()</span></code> 取完</p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">StopIteration</span></code></p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">StopIteration:</span></code></p></td>
+<td><p>迭代器已耗尽</p></td>
+</tr>
+<tr class="row-even"><td><p>5.6.2</p></td>
+<td><p>生成器内 <code class="docutils literal notranslate"><span class="pre">return</span> <span class="pre">值</span></code></p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">StopIteration.value</span></code></p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">value='count=2'</span></code></p></td>
+<td><p>return 值不直接返回，存进异常</p></td>
+</tr>
+<tr class="row-odd"><td><p>5.6.3</p></td>
+<td><p>忘 <code class="docutils literal notranslate"><span class="pre">yield</span></code> 当生成器用</p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">TypeError</span></code></p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">'NoneType'</span> <span class="pre">object</span> <span class="pre">is</span> <span class="pre">not</span> <span class="pre">an</span> <span class="pre">iterator</span></code></p></td>
+<td><p>没 yield 就不是生成器，返回 None</p></td>
+</tr>
+<tr class="row-even"><td><p>5.7.1</p></td>
+<td><p>推导式引用未定义变量</p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">NameError</span></code></p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">name</span> <span class="pre">'mean_t'</span> <span class="pre">is</span> <span class="pre">not</span> <span class="pre">defined</span></code></p></td>
+<td><p>推导式内变量名也要定义</p></td>
+</tr>
+<tr class="row-odd"><td><p>5.7.2</p></td>
+<td><p>类体内推导式访问类属性</p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">NameError</span></code></p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">name</span> <span class="pre">'base'</span> <span class="pre">is</span> <span class="pre">not</span> <span class="pre">defined</span></code></p></td>
+<td><p>推导式独立作用域</p></td>
+</tr>
+<tr class="row-even"><td><p>5.8.1</p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">map</span></code>/<code class="docutils literal notranslate"><span class="pre">filter</span></code> 忘 <code class="docutils literal notranslate"><span class="pre">list()</span></code></p></td>
+<td><p>无报错但错</p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">&lt;map</span> <span class="pre">object</span> <span class="pre">at</span> <span class="pre">0x...&gt;</span></code></p></td>
+<td><p>惰性迭代器，需消费</p></td>
+</tr>
+<tr class="row-odd"><td><p>5.8.2</p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">filter(None)</span></code> 删掉 0℃</p></td>
+<td><p>无报错但错</p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">[5.0,</span> <span class="pre">-3.5,</span> <span class="pre">8.0]</span></code></p></td>
+<td><p>假值判据误伤 0 与 NaN</p></td>
+</tr>
+<tr class="row-even"><td><p>5.8.3</p></td>
+<td><p>lambda 循环捕获变量</p></td>
+<td><p>无报错但错</p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">[2,</span> <span class="pre">2,</span> <span class="pre">2]</span></code></p></td>
+<td><p>闭包晚绑定，需默认参数快照</p></td>
+</tr>
+<tr class="row-odd"><td><p>5.9.1</p></td>
+<td><p>match-case 的 case 忘冒号</p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">SyntaxError</span></code></p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">expected</span> <span class="pre">':'</span></code></p></td>
+<td><p>编译期语法错误，缩进/冒号要齐</p></td>
+</tr>
+<tr class="row-even"><td><p>5.10.1</p></td>
+<td><p>没定义 <code class="docutils literal notranslate"><span class="pre">__repr__</span></code>/<code class="docutils literal notranslate"><span class="pre">__str__</span></code></p></td>
+<td><p>无报错但难读</p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">&lt;Station</span> <span class="pre">object</span> <span class="pre">at</span> <span class="pre">0x...&gt;</span></code></p></td>
+<td><p>打印对象只会显示地址</p></td>
+</tr>
+</tbody>
+</table>
+</div>
+<hr class="docutils" />
+</section>
+<section id="self">
+<span id="id3"></span><h2>5.1 self 与实例方法（本章最高频区）<a class="headerlink" href="#self" title="Link to this heading">#</a></h2>
+<blockquote>
+<div><p>关于 self 的根因，请先对照通用指南 0.3 的异常家谱：self
+相关的报错几乎全是 <code class="docutils literal notranslate"><span class="pre">TypeError</span></code>（参数个数/位置不对）。而
+<code class="docutils literal notranslate"><span class="pre">AttributeError</span></code>（见
+5.2）则是「对象上根本没有这个属性」。<strong>TypeError
+看「参数」、AttributeError
+看「属性/方法名」，这是区分这两大类的一先手。</strong></p>
+</div></blockquote>
+<section id="init-self-takes-positional-arguments">
+<span id="id4"></span><h3>5.1.1 <code class="docutils literal notranslate"><span class="pre">__init__</span></code> 忘了写 <code class="docutils literal notranslate"><span class="pre">self</span></code> → takes … positional arguments<a class="headerlink" href="#init-self-takes-positional-arguments" title="Link to this heading">#</a></h3>
+<p><strong>现象 / 真实报错信息</strong>（实测）</p>
+<div class="highlight-text notranslate"><div class="highlight"><pre><span></span>Traceback (most recent call last):
+  ...
+TypeError: Station.__init__() takes 2 positional arguments but 3 were given
+</pre></div>
+</div>
+<p><strong>原因</strong> 实例化 <code class="docutils literal notranslate"><span class="pre">Station(&quot;52889&quot;,</span> <span class="pre">&quot;兰州&quot;)</span></code> 时，Python
+会自动把<strong>新建实例塞进第一个实参位</strong>，于是实际发出去的实参是「实例 +
+两个实参」共 3 个；而你把 <code class="docutils literal notranslate"><span class="pre">self</span></code> 写漏，方法只剩 2
+个形参，装不下第三个。报错文案里的「2 个参数却给了 3
+个」里的「多出的那个」，正是营养被抢的实例自己。</p>
+<p><strong>解决办法</strong>（先把 self 补在最前）</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="k">class</span><span class="w"> </span><span class="nc">Station</span><span class="p">:</span>
+    <span class="k">def</span><span class="w"> </span><span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">station_id</span><span class="p">,</span> <span class="n">name</span><span class="p">):</span>   <span class="c1"># 最前必须有 self</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">station_id</span> <span class="o">=</span> <span class="n">station_id</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">name</span> <span class="o">=</span> <span class="n">name</span>
+
+<span class="n">s</span> <span class="o">=</span> <span class="n">Station</span><span class="p">(</span><span class="s2">&quot;52889&quot;</span><span class="p">,</span> <span class="s2">&quot;兰州&quot;</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">s</span><span class="o">.</span><span class="n">name</span><span class="p">)</span>   <span class="c1"># 兰州</span>
+</pre></div>
+</div>
+<blockquote>
+<div><p><strong>气象场景一句话</strong>：这就像「台站报观测所得那条上传命令漏填了站位号」——报文整体多塞了一个字段、上传接口却只留了两个槽位，格式对不上直接被退回。</p>
+</div></blockquote>
+</section>
+<section id="self-takes-0-positional-arguments-but-1-was-given">
+<span id="id5"></span><h3>5.1.2 普通方法忘写 <code class="docutils literal notranslate"><span class="pre">self</span></code> → takes 0 positional arguments but 1 was given<a class="headerlink" href="#self-takes-0-positional-arguments-but-1-was-given" title="Link to this heading">#</a></h3>
+<p><strong>现象 / 真实报错信息</strong>（实测）</p>
+<div class="highlight-text notranslate"><div class="highlight"><pre><span></span>Traceback (most recent call last):
+    print(s2.info())
+          ^^^^^^^^^
+TypeError: Station.info() takes 0 positional arguments but 1 was given
+</pre></div>
+</div>
+<p><strong>原因</strong> <code class="docutils literal notranslate"><span class="pre">def</span> <span class="pre">info():</span></code> 没有 self（也没任何参数），但通过 <code class="docutils literal notranslate"><span class="pre">s2.info()</span></code>
+调用时，Python <strong>额外自动传入实例 s2</strong>，共 1
+个实参，函数却一个槽位都没有。「说了不接参数，却硬塞了一个实例」。</p>
+<p><strong>解决办法</strong></p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="k">class</span><span class="w"> </span><span class="nc">Station</span><span class="p">:</span>
+    <span class="k">def</span><span class="w"> </span><span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">station_id</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">station_id</span> <span class="o">=</span> <span class="n">station_id</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">info</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>                      <span class="c1"># 补上 self</span>
+        <span class="k">return</span> <span class="sa">f</span><span class="s2">&quot;站号 </span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">station_id</span><span class="si">}</span><span class="s2">&quot;</span>
+
+<span class="nb">print</span><span class="p">(</span><span class="n">Station</span><span class="p">(</span><span class="s2">&quot;52889&quot;</span><span class="p">)</span><span class="o">.</span><span class="n">info</span><span class="p">())</span>           <span class="c1"># 站号 52889</span>
+</pre></div>
+</div>
+<blockquote>
+<div><p><strong>气象场景一句话</strong>：自记站上报「无参方法」，调度程序却习惯性每站补发一次站位对象——理由只有一个，你给方法的「签名」少给了
+self 这一位。</p>
+</div></blockquote>
+</section>
+<section id="station-info-missing-self">
+<span id="stationinfo-missing-self"></span><h3>5.1.3 用类名直接调方法（<code class="docutils literal notranslate"><span class="pre">Station.info()</span></code>）→ missing … ‘self’<a class="headerlink" href="#station-info-missing-self" title="Link to this heading">#</a></h3>
+<p><strong>现象 / 真实报错信息</strong>（实测）</p>
+<div class="highlight-text notranslate"><div class="highlight"><pre><span></span>TypeError: Station.info() missing 1 required positional argument: &#39;self&#39;
+</pre></div>
+</div>
+<p><strong>原因</strong> <code class="docutils literal notranslate"><span class="pre">instance.method()</span></code> 的写法会自动把实例填给
+self；只有当你<strong>绕过实例、直接用 ``类名.方法()``</strong>
+时，这个自动填充消失，self 立刻缺位。oop.rst 5.2
+明确讲过「类对象无法直接调用带 self 的实例方法」。</p>
+<p><strong>解决办法</strong></p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="c1"># 要么走实例：</span>
+<span class="n">s</span> <span class="o">=</span> <span class="n">Station</span><span class="p">(</span><span class="s2">&quot;52889&quot;</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">s</span><span class="o">.</span><span class="n">info</span><span class="p">())</span>
+
+<span class="c1"># 要么手动补实例作为第一个实参（能跑但少见）：</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">Station</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="n">s</span><span class="p">))</span>      <span class="c1"># 类名.方法(实例) —— self 手动填上</span>
+</pre></div>
+</div>
+<blockquote>
+<div><p><strong>气象场景一句话</strong>：<code class="docutils literal notranslate"><span class="pre">Station.info()</span></code>
+就像是拿着一整摞台的「类蓝图」直接要数据，却忘了指定「具体是哪座站」——没有台站位置，统计自然无从谈起。</p>
+</div></blockquote>
+</section>
+<section id="id6">
+<span id="id7"></span><h3>5.1.4 方法第一参数命名非 <code class="docutils literal notranslate"><span class="pre">self</span></code>（占了位置）→ 参数错位<a class="headerlink" href="#id6" title="Link to this heading">#</a></h3>
+<p><strong>现象 / 真实报错信息</strong>（实测）</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="k">def</span><span class="w"> </span><span class="nf">rename</span><span class="p">(</span><span class="n">new_name</span><span class="p">):</span>   <span class="c1"># 第一参数应是 self</span>
+    <span class="bp">self</span><span class="o">.</span><span class="n">station_id</span> <span class="o">=</span> <span class="n">new_name</span>
+
+<span class="n">s7</span><span class="o">.</span><span class="n">rename</span><span class="p">(</span><span class="s2">&quot;57036&quot;</span><span class="p">)</span>
+</pre></div>
+</div>
+<div class="highlight-text notranslate"><div class="highlight"><pre><span></span>Traceback (most recent call last):
+    s7.rename(&quot;57036&quot;)
+    ^^^^^^^^^^^^^^^^^^
+TypeError: Station.rename() takes 1 positional argument but 2 were given
+</pre></div>
+</div>
+<p><strong>原因</strong> <code class="docutils literal notranslate"><span class="pre">self</span></code> 这个名字可以换成 <code class="docutils literal notranslate"><span class="pre">this</span></code>、<code class="docutils literal notranslate"><span class="pre">obj</span></code> 等（oop.rst 5.3
+也强调「重要的是位置不是名字」），但<strong>位置必须留出来</strong>。你把它删掉，方法只剩
+<code class="docutils literal notranslate"><span class="pre">new_name</span></code> 一个槽位，实例却占据它，而你要传的 <code class="docutils literal notranslate"><span class="pre">&quot;57036&quot;</span></code> 就没了位置。</p>
+<p><strong>解决办法</strong></p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="k">class</span><span class="w"> </span><span class="nc">Station</span><span class="p">:</span>
+    <span class="k">def</span><span class="w"> </span><span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">station_id</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">station_id</span> <span class="o">=</span> <span class="n">station_id</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">rename</span><span class="p">(</span><span class="n">this</span><span class="p">,</span> <span class="n">new_name</span><span class="p">):</span>   <span class="c1"># 位置第一位必须是&quot;实例&quot;，名字随意</span>
+        <span class="n">this</span><span class="o">.</span><span class="n">station_id</span> <span class="o">=</span> <span class="n">new_name</span>
+
+<span class="n">s</span> <span class="o">=</span> <span class="n">Station</span><span class="p">(</span><span class="s2">&quot;52889&quot;</span><span class="p">)</span>
+<span class="n">s</span><span class="o">.</span><span class="n">rename</span><span class="p">(</span><span class="s2">&quot;57036&quot;</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">s</span><span class="o">.</span><span class="n">station_id</span><span class="p">)</span>   <span class="c1"># 57036</span>
+</pre></div>
+</div>
+<blockquote>
+<div><p><strong>气象场景一句话</strong>：台站改区站号的流程里，「站位」这一栏永远固定排在第一列——你可以给它换个名字，但不可能把它从第一列挪走，否则后面的数据全都对不齐。</p>
+</div></blockquote>
+<hr class="docutils" />
+</section>
+</section>
+<section id="attributeerror">
+<span id="id8"></span><h2>5.2 属性：实例属性、命名、伪私有（多报 AttributeError）<a class="headerlink" href="#attributeerror" title="Link to this heading">#</a></h2>
+<section id="self-attributeerror-has-no-attribute">
+<span id="id9"></span><h3>5.2.1 只写 <code class="docutils literal notranslate"><span class="pre">self.属性</span></code> 却没定义 → AttributeError has no attribute<a class="headerlink" href="#self-attributeerror-has-no-attribute" title="Link to this heading">#</a></h3>
+<p><strong>现象 / 真实报错信息</strong>（实测）</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="k">def</span><span class="w"> </span><span class="nf">today_temp</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+    <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">temp</span>      <span class="c1"># temp 从没被赋值过</span>
+</pre></div>
+</div>
+<div class="highlight-text notranslate"><div class="highlight"><pre><span></span>AttributeError: &#39;Station&#39; object has no attribute &#39;temp&#39;
+</pre></div>
+</div>
+<p><strong>原因</strong> 实例属性是在首次 <code class="docutils literal notranslate"><span class="pre">self.xxx</span> <span class="pre">=</span> <span class="pre">值</span></code> 赋值时才「出生」的（oop.rst
+5.3：「实例对象一开始是空的」）。你在这里只<strong>读</strong>
+<code class="docutils literal notranslate"><span class="pre">self.temp</span></code>，却在别处从没赋值过它，于是对象上根本没有这个属性。归还一个自记站，站上却连温度传感器都没装。</p>
+<p><strong>解决办法</strong>：读之前先赋值——要么在 <code class="docutils literal notranslate"><span class="pre">__init__</span></code> 里初始化，要么用
+<code class="docutils literal notranslate"><span class="pre">setattr</span></code> / 先判断存在。</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="k">class</span><span class="w"> </span><span class="nc">Station</span><span class="p">:</span>
+    <span class="k">def</span><span class="w"> </span><span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">station_id</span><span class="p">,</span> <span class="n">temp</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">station_id</span> <span class="o">=</span> <span class="n">station_id</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">temperature</span> <span class="o">=</span> <span class="n">temp</span>          <span class="c1"># 先&quot;生&quot;这个属性</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">today_temp</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">temperature</span>
+</pre></div>
+</div>
+<p>判空写法（避免 KeyError 式翻车，但更应防患于未然）：</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="k">def</span><span class="w"> </span><span class="nf">today_temp</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+    <span class="k">return</span> <span class="nb">getattr</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="s2">&quot;temperature&quot;</span><span class="p">,</span> <span class="kc">None</span><span class="p">)</span>   <span class="c1"># 属性不存在时返回 None</span>
+</pre></div>
+</div>
+<blockquote>
+<div><p><strong>气象场景一句话</strong>：这就像你去查某站今天气温，可那一列观测在库里压根没入库过——「对象没有这个属性」等于「观测手册里没有这一格」。</p>
+</div></blockquote>
+</section>
+<section id="id10">
+<span id="id11"></span><h3>5.2.2 属性命名：大小写 / 下划线不一致 → AttributeError<a class="headerlink" href="#id10" title="Link to this heading">#</a></h3>
+<p><strong>现象 / 真实报错信息</strong>（实测）</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="bp">self</span><span class="o">.</span><span class="n">Temp</span>   <span class="o">=</span> <span class="n">temp</span>          <span class="c1"># 存进 Temp</span>
+<span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">temp</span>             <span class="c1"># 读 temp —— 大小写不一致</span>
+</pre></div>
+</div>
+<div class="highlight-text notranslate"><div class="highlight"><pre><span></span>AttributeError: &#39;Station&#39; object has no attribute &#39;temp&#39;
+</pre></div>
+</div>
+<p>另一种：类内存 <code class="docutils literal notranslate"><span class="pre">self.stationID</span></code>（驼峰），外部想读
+<code class="docutils literal notranslate"><span class="pre">s6.station_id</span></code>（下划线）：</p>
+<div class="highlight-text notranslate"><div class="highlight"><pre><span></span>AttributeError: &#39;Station&#39; object has no attribute &#39;station_id&#39;
+</pre></div>
+</div>
+<p><strong>原因</strong> Python 区分大小写；<code class="docutils literal notranslate"><span class="pre">Temp</span></code> 与 <code class="docutils literal notranslate"><span class="pre">temp</span></code>、<code class="docutils literal notranslate"><span class="pre">stationID</span></code> 与
+<code class="docutils literal notranslate"><span class="pre">station_id</span></code> 是<strong>两个完全不同的属性</strong>。学了 <code class="docutils literal notranslate"><span class="pre">__init__</span></code>
+后最常见的错：<code class="docutils literal notranslate"><span class="pre">__init__</span></code>
+里一个名、方法或外部又一个名，肉眼看起来像是一回事，Python
+却认定是两回事。</p>
+<p><strong>解决办法</strong>：全项目统一一套命名规范。本项目贯穿项目/<code class="docutils literal notranslate"><span class="pre">MeteoStation</span></code>
+用<strong>小写下划线</strong>（<code class="docutils literal notranslate"><span class="pre">station_id</span></code>、<code class="docutils literal notranslate"><span class="pre">temperature</span></code>、<code class="docutils literal notranslate"><span class="pre">mean_temp</span></code>），照此写：</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="k">class</span><span class="w"> </span><span class="nc">Station</span><span class="p">:</span>
+    <span class="k">def</span><span class="w"> </span><span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">station_id</span><span class="p">,</span> <span class="n">temperature</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">station_id</span> <span class="o">=</span> <span class="n">station_id</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">temperature</span> <span class="o">=</span> <span class="n">temperature</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">today_temp</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">temperature</span>          <span class="c1"># 与初值同款命名</span>
+
+<span class="nb">print</span><span class="p">(</span><span class="n">Station</span><span class="p">(</span><span class="s2">&quot;52889&quot;</span><span class="p">,</span> <span class="mf">25.0</span><span class="p">)</span><span class="o">.</span><span class="n">today_temp</span><span class="p">())</span>
+</pre></div>
+</div>
+<blockquote>
+<div><p><strong>气象场景一句话</strong>：<code class="docutils literal notranslate"><span class="pre">stationID</span></code> 和 <code class="docutils literal notranslate"><span class="pre">station_id</span></code>
+在观测数据库里就是两张不同的台账列——台账没对好，<code class="docutils literal notranslate"><span class="pre">AttributeError</span></code>
+就一次次点名找不到那一列。</p>
+</div></blockquote>
+</section>
+<section id="init-init-init-station-takes-no-arguments">
+<span id="id12"></span><h3>5.2.3 <code class="docutils literal notranslate"><span class="pre">__init__</span></code> 拼错（写成 <code class="docutils literal notranslate"><span class="pre">__init</span></code> / <code class="docutils literal notranslate"><span class="pre">_init_</span></code>）→ Station() takes no arguments<a class="headerlink" href="#init-init-init-station-takes-no-arguments" title="Link to this heading">#</a></h3>
+<p><strong>现象 / 真实报错信息</strong>（实测）</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="k">class</span><span class="w"> </span><span class="nc">Station</span><span class="p">:</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">__init</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">station_id</span><span class="p">):</span>    <span class="c1"># 写错，少一个下划线</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">station_id</span> <span class="o">=</span> <span class="n">station_id</span>
+
+<span class="n">s</span> <span class="o">=</span> <span class="n">Station</span><span class="p">(</span><span class="s2">&quot;52889&quot;</span><span class="p">)</span>
+</pre></div>
+</div>
+<div class="highlight-text notranslate"><div class="highlight"><pre><span></span>TypeError: Station() takes no arguments
+</pre></div>
+</div>
+<p><strong>原因</strong> <code class="docutils literal notranslate"><span class="pre">__init__</span></code> 是「双下划线开头 +
+双下划线结尾」的魔法方法（名字两端各两根下划线）。你写成
+<code class="docutils literal notranslate"><span class="pre">__init</span></code>（尾只有一根）或 <code class="docutils literal notranslate"><span class="pre">_init_</span></code>（头尾各一根），Python
+就不认为它是构造函数——于是用默认构造
+<code class="docutils literal notranslate"><span class="pre">object.__init__</span></code>，它<strong>不接受任何参数</strong>，你却传了
+<code class="docutils literal notranslate"><span class="pre">&quot;52889&quot;</span></code>，于是报「这个类不收参数」。</p>
+<blockquote>
+<div><p>提醒：5.1.1 的报错是 <code class="docutils literal notranslate"><span class="pre">takes</span> <span class="pre">2</span> <span class="pre">...</span> <span class="pre">given</span> <span class="pre">3</span></code>，而<strong>这里</strong>是
+<code class="docutils literal notranslate"><span class="pre">takes</span> <span class="pre">no</span> <span class="pre">arguments</span></code>——区别在于前者 self
+还在只是漏位，后者构造根本没被兑现。</p>
+</div></blockquote>
+<p><strong>解决办法</strong>：数清楚下划线——<code class="docutils literal notranslate"><span class="pre">def</span> <span class="pre">__init__(self,</span> <span class="pre">...)</span></code>（首尾都是两根
+<code class="docutils literal notranslate"><span class="pre">__</span></code>）。</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="k">class</span><span class="w"> </span><span class="nc">Station</span><span class="p">:</span>
+    <span class="k">def</span><span class="w"> </span><span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">station_id</span><span class="p">):</span>    <span class="c1"># 三处：def 后、参数前各一对双下划线</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">station_id</span> <span class="o">=</span> <span class="n">station_id</span>
+
+<span class="nb">print</span><span class="p">(</span><span class="n">Station</span><span class="p">(</span><span class="s2">&quot;52889&quot;</span><span class="p">)</span><span class="o">.</span><span class="n">station_id</span><span class="p">)</span>     <span class="c1"># 52889</span>
+</pre></div>
+</div>
+<blockquote>
+<div><p><strong>气象场景一句话</strong>：站点在申报系统的「注册」表里漏填、漏勾了一处必填（双下划线成了单下划线），系统默认它「无感注册」，自然拒绝任何站号录入。</p>
+</div></blockquote>
+</section>
+<section id="id13">
+<span id="id14"></span><h3>5.2.4 外部直接访问 <code class="docutils literal notranslate"><span class="pre">__私有属性</span></code> → AttributeError（伪私有）<a class="headerlink" href="#id13" title="Link to this heading">#</a></h3>
+<p><strong>现象 / 真实报错信息</strong>（实测）</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">st</span><span class="o">.</span><span class="n">__deposit</span>
+</pre></div>
+</div>
+<div class="highlight-text notranslate"><div class="highlight"><pre><span></span>AttributeError: &#39;Station&#39; object has no attribute &#39;__deposit&#39;
+</pre></div>
+</div>
+<p><strong>原因</strong> 双下划线开头的名字（<code class="docutils literal notranslate"><span class="pre">__deposit</span></code>）会触发「名称改写（name
+mangling）」，底层改成 <code class="docutils literal notranslate"><span class="pre">_Station__deposit</span></code>，外部直接写 <code class="docutils literal notranslate"><span class="pre">__deposit</span></code>
+当然找不到。它的本质<strong>不是语法级加密</strong>，而是开发层的「伪私有」约定（oop.rst
+5.3 原话）。</p>
+<p><strong>客观补充</strong>（本机实测，说明它锁不住真正想摸的人）：</p>
+<div class="highlight-text notranslate"><div class="highlight"><pre><span></span>名称被改写为: [&#39;_Station__deposit&#39;]
+靠 _Station__deposit 访问: 100      # 确实能摸到
+</pre></div>
+</div>
+<p><strong>解决办法</strong>：需要私有语义时，外部就别碰
+<code class="docutils literal notranslate"><span class="pre">__xxx</span></code>，提供公有的读/写方法（或
+<code class="docutils literal notranslate"><span class="pre">&#64;property</span></code>）；若只是「习惯性下划线」，用
+<code class="docutils literal notranslate"><span class="pre">_deposit</span></code>（单下划线）更贴合社区惯例。</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="k">class</span><span class="w"> </span><span class="nc">Station</span><span class="p">:</span>
+    <span class="k">def</span><span class="w"> </span><span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">station_id</span><span class="p">,</span> <span class="n">deposit</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">station_id</span> <span class="o">=</span> <span class="n">station_id</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">__deposit</span> <span class="o">=</span> <span class="n">deposit</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">get_deposit</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>                    <span class="c1"># 提供公有的读接口</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">__deposit</span>
+</pre></div>
+</div>
+<blockquote>
+<div><p><strong>气象场景一句话</strong>：观测的「仪器出借台账」标了私有，是想让外部查不到——可台站编号这扇门只是「上了把普通锁」，懂行的机务照样能撬开，别把它当绝对防线。</p>
+</div></blockquote>
+</section>
+<section id="vs">
+<span id="id15"></span><h3>5.2.5 类共享属性 vs 实例私有属性 混淆（无报错但结果不对）<a class="headerlink" href="#vs" title="Link to this heading">#</a></h3>
+<p><strong>现象 / 真实输出</strong>（实测）</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="k">class</span><span class="w"> </span><span class="nc">Station</span><span class="p">:</span>
+    <span class="n">unit</span> <span class="o">=</span> <span class="s2">&quot;℃&quot;</span>                 <span class="c1"># 类共享属性</span>
+<span class="n">s</span> <span class="o">=</span> <span class="n">Station</span><span class="p">();</span> <span class="n">s</span><span class="o">.</span><span class="n">unit</span> <span class="o">=</span> <span class="s2">&quot;K&quot;</span>     <span class="c1"># 只给 s 实例&quot;盖&quot;一个同名属性</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">s</span><span class="o">.</span><span class="n">unit</span><span class="p">,</span> <span class="n">Station</span><span class="o">.</span><span class="n">unit</span><span class="p">)</span>     <span class="c1"># K ℃</span>
+</pre></div>
+</div>
+<div class="highlight-text notranslate"><div class="highlight"><pre><span></span>K ℃
+</pre></div>
+</div>
+<p>类属性改动会全局联动；实例级赋值则只影响当前实例——正是 oop.rst
+5.7「最高频易错点 1」。</p>
+<p><strong>原因</strong> 类顶层赋值是「全站共享的温度单位」；实例用
+<code class="docutils literal notranslate"><span class="pre">self./实例.unit</span> <span class="pre">=</span> <span class="pre">值</span></code>
+会新建一个<strong>仅属于这个实例</strong>的同名属性，从此这个实例不再读类那份。</p>
+<p><strong>解决办法</strong>：想改就要清楚改的是哪一份。</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="k">class</span><span class="w"> </span><span class="nc">Station</span><span class="p">:</span>
+    <span class="n">unit</span> <span class="o">=</span> <span class="s2">&quot;℃&quot;</span>
+<span class="c1"># 全站改单位：</span>
+<span class="n">Station</span><span class="o">.</span><span class="n">unit</span> <span class="o">=</span> <span class="s2">&quot;K&quot;</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">Station</span><span class="p">(</span><span class="s2">&quot;52889&quot;</span><span class="p">)</span><span class="o">.</span><span class="n">unit</span><span class="p">)</span>     <span class="c1"># K —— 读取类共享那份</span>
+<span class="c1"># 仅某台改：只在实例上赋值</span>
+<span class="n">s</span> <span class="o">=</span> <span class="n">Station</span><span class="p">(</span><span class="s2">&quot;1&quot;</span><span class="p">);</span> <span class="n">s</span><span class="o">.</span><span class="n">unit</span> <span class="o">=</span> <span class="s2">&quot;K&quot;</span>
+</pre></div>
+</div>
+<blockquote>
+<div><p><strong>气象场景一句话</strong>：全区改写单位标准「℃→K」人人同步；可你若只对某座卫星站局部改口径，会让另一些站还用旧单位——数据口径打架最坑。</p>
+</div></blockquote>
+<hr class="docutils" />
+</section>
+</section>
+<section id="id16">
+<span id="id17"></span><h2>5.3 类的继承<a class="headerlink" href="#id16" title="Link to this heading">#</a></h2>
+<section id="init-super-init">
+<span id="id18"></span><h3>5.3.1 子类重写 <code class="docutils literal notranslate"><span class="pre">__init__</span></code> 后忘 <code class="docutils literal notranslate"><span class="pre">super().__init__</span></code> → 父类属性缺失<a class="headerlink" href="#init-super-init" title="Link to this heading">#</a></h3>
+<p><strong>现象 / 真实报错信息</strong>（实测）</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="k">class</span><span class="w"> </span><span class="nc">AutoStation</span><span class="p">(</span><span class="n">Station</span><span class="p">):</span>
+    <span class="k">def</span><span class="w"> </span><span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="o">*</span><span class="n">a</span><span class="p">,</span> <span class="n">temp</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">temperature</span> <span class="o">=</span> <span class="n">temp</span>        <span class="c1"># 忘了调用父类构造</span>
+
+<span class="n">a</span> <span class="o">=</span> <span class="n">AutoStation</span><span class="p">(</span><span class="s2">&quot;58362&quot;</span><span class="p">,</span> <span class="s2">&quot;上海&quot;</span><span class="p">,</span> <span class="mf">31.40</span><span class="p">,</span> <span class="mf">121.47</span><span class="p">,</span> <span class="mi">6</span><span class="p">,</span> <span class="mf">33.5</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">a</span><span class="o">.</span><span class="n">lat</span><span class="p">)</span>                           <span class="c1"># 父类才有的 lat</span>
+</pre></div>
+</div>
+<div class="highlight-text notranslate"><div class="highlight"><pre><span></span>AttributeError: &#39;AutoStation&#39; object has no attribute &#39;lat&#39;
+</pre></div>
+</div>
+<p><strong>原因</strong>
+继承只让子类「拥有」父类的方法，但<strong>属性是构造出来的</strong>。子类一旦自定义了
+<code class="docutils literal notranslate"><span class="pre">__init__</span></code>，父类的 <code class="docutils literal notranslate"><span class="pre">__init__</span></code> 就<strong>不再自动执行</strong>（oop.rst 5.4
+明言），父类那套 <code class="docutils literal notranslate"><span class="pre">lat/lon/altitude</span></code> 从来没人初始化，于是读取即报
+<code class="docutils literal notranslate"><span class="pre">AttributeError</span></code>。</p>
+<p><strong>解决办法</strong>：子类构造第一件事调 <code class="docutils literal notranslate"><span class="pre">super().__init__(...)</span></code>。</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="k">class</span><span class="w"> </span><span class="nc">Station</span><span class="p">:</span>
+    <span class="k">def</span><span class="w"> </span><span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">station_id</span><span class="p">,</span> <span class="n">name</span><span class="p">,</span> <span class="n">lat</span><span class="p">,</span> <span class="n">lon</span><span class="p">,</span> <span class="n">altitude</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">station_id</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">name</span> <span class="o">=</span> <span class="n">station_id</span><span class="p">,</span> <span class="n">name</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">lat</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">lon</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">altitude</span> <span class="o">=</span> <span class="n">lat</span><span class="p">,</span> <span class="n">lon</span><span class="p">,</span> <span class="n">altitude</span>
+
+<span class="k">class</span><span class="w"> </span><span class="nc">AutoStation</span><span class="p">(</span><span class="n">Station</span><span class="p">):</span>
+    <span class="k">def</span><span class="w"> </span><span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">station_id</span><span class="p">,</span> <span class="n">name</span><span class="p">,</span> <span class="n">lat</span><span class="p">,</span> <span class="n">lon</span><span class="p">,</span> <span class="n">altitude</span><span class="p">,</span> <span class="n">temperature</span><span class="p">):</span>
+        <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span><span class="n">station_id</span><span class="p">,</span> <span class="n">name</span><span class="p">,</span> <span class="n">lat</span><span class="p">,</span> <span class="n">lon</span><span class="p">,</span> <span class="n">altitude</span><span class="p">)</span>   <span class="c1"># 先&quot;喂&quot;父类建好父属性</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">temperature</span> <span class="o">=</span> <span class="n">temperature</span>
+
+<span class="n">a</span> <span class="o">=</span> <span class="n">AutoStation</span><span class="p">(</span><span class="s2">&quot;58362&quot;</span><span class="p">,</span> <span class="s2">&quot;上海&quot;</span><span class="p">,</span> <span class="mf">31.40</span><span class="p">,</span> <span class="mf">121.47</span><span class="p">,</span> <span class="mi">6</span><span class="p">,</span> <span class="mf">33.5</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">a</span><span class="o">.</span><span class="n">lat</span><span class="p">)</span>           <span class="c1"># 31.4</span>
+</pre></div>
+</div>
+<blockquote>
+<div><p>注意 <code class="docutils literal notranslate"><span class="pre">super()</span></code>
+是在父类环境里拿「下一个基类」，<code class="docutils literal notranslate"><span class="pre">super().__init__(...)</span></code> 不写
+<code class="docutils literal notranslate"><span class="pre">self</span></code>（Python 3 自动绑定）；别手滑写成
+<code class="docutils literal notranslate"><span class="pre">super().__init__(self,</span> <span class="pre">...)</span></code> 造成重复传 self（旧式写法，Python 3
+会因位置错误抛 <code class="docutils literal notranslate"><span class="pre">TypeError</span></code>）。</p>
+<p><strong>气象场景一句话</strong>：自动站「升级」时，若只把自己的新传感器（气温）接上、却不先同步父台的基础坐标（经纬/海拔），数据库那几列永远空缺，一读就
+<code class="docutils literal notranslate"><span class="pre">AttributeError</span></code>。</p>
+</div></blockquote>
+<hr class="docutils" />
+</section>
+</section>
+<section id="property-classmethod-staticmethod">
+<span id="propertyclassmethodstaticmethod"></span><h2>5.4 &#64;property、&#64;classmethod、&#64;staticmethod<a class="headerlink" href="#property-classmethod-staticmethod" title="Link to this heading">#</a></h2>
+<section id="property-attributeerror-has-no-setter">
+<span id="id19"></span><h3>5.4.1 向只读 property 赋值 → AttributeError: has no setter<a class="headerlink" href="#property-attributeerror-has-no-setter" title="Link to this heading">#</a></h3>
+<p><strong>现象 / 真实报错信息</strong>（实测）</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="k">class</span><span class="w"> </span><span class="nc">Station</span><span class="p">:</span>
+    <span class="k">def</span><span class="w"> </span><span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">name</span><span class="p">,</span> <span class="n">temps</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_temps</span> <span class="o">=</span> <span class="n">temps</span> <span class="k">if</span> <span class="n">temps</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span> <span class="k">else</span> <span class="p">[]</span>
+    <span class="nd">@property</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">mean_temp</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">return</span> <span class="nb">sum</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_temps</span><span class="p">)</span><span class="o">/</span><span class="nb">len</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_temps</span><span class="p">)</span> <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">_temps</span> <span class="k">else</span> <span class="kc">None</span>
+
+<span class="n">s9</span> <span class="o">=</span> <span class="n">Station</span><span class="p">(</span><span class="s2">&quot;兰州&quot;</span><span class="p">,</span> <span class="p">[</span><span class="mi">5</span><span class="p">,</span> <span class="mi">6</span><span class="p">,</span> <span class="mi">7</span><span class="p">])</span>
+<span class="n">s9</span><span class="o">.</span><span class="n">mean_temp</span> <span class="o">=</span> <span class="mf">6.0</span>
+</pre></div>
+</div>
+<div class="highlight-text notranslate"><div class="highlight"><pre><span></span>mean_temp= 6.0
+AttributeError: property &#39;mean_temp&#39; of &#39;Station&#39; object has no setter
+</pre></div>
+</div>
+<p><strong>原因</strong> <code class="docutils literal notranslate"><span class="pre">&#64;property</span></code> 默认<strong>只读</strong>：它的存在只是让
+<code class="docutils literal notranslate"><span class="pre">实例.mean_temp</span></code> 能像读字段一样取值（oop.rst 5.3）。一旦你想给它赋值
+<code class="docutils literal notranslate"><span class="pre">s9.mean_temp</span> <span class="pre">=</span> <span class="pre">...</span></code>，Python 发现这个属性没有配套的
+<code class="docutils literal notranslate"><span class="pre">setter</span></code>，直接拒绝。</p>
+<p><strong>解决办法</strong>：需要「赋值即校验」时补一个 <code class="docutils literal notranslate"><span class="pre">&#64;xxx.setter</span></code>。</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="k">class</span><span class="w"> </span><span class="nc">Station</span><span class="p">:</span>
+    <span class="k">def</span><span class="w"> </span><span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">name</span><span class="p">,</span> <span class="n">temperature</span><span class="o">=</span><span class="mf">0.0</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">name</span> <span class="o">=</span> <span class="n">name</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_temperature</span> <span class="o">=</span> <span class="n">temperature</span>
+    <span class="nd">@property</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">temperature</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>                 <span class="c1"># getter：读</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_temperature</span>
+    <span class="nd">@temperature</span><span class="o">.</span><span class="n">setter</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">temperature</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">value</span><span class="p">):</span>          <span class="c1"># setter：写 + 校验</span>
+        <span class="k">if</span> <span class="n">value</span> <span class="o">&lt;</span> <span class="o">-</span><span class="mf">273.15</span><span class="p">:</span>
+            <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s2">&quot;气温不能低于绝对零度 -273.15℃&quot;</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_temperature</span> <span class="o">=</span> <span class="n">value</span>
+
+<span class="n">st</span> <span class="o">=</span> <span class="n">Station</span><span class="p">(</span><span class="s2">&quot;兰州&quot;</span><span class="p">)</span>
+<span class="n">st</span><span class="o">.</span><span class="n">temperature</span> <span class="o">=</span> <span class="mf">25.0</span>                       <span class="c1"># 走 setter，OK</span>
+<span class="c1"># st.temperature = -300.0                  # 触发 ValueError，拒绝非法气象记录</span>
+</pre></div>
+</div>
+<blockquote>
+<div><p>细节坑：setter 里务必要存/读<strong>真实后备字段</strong>
+<code class="docutils literal notranslate"><span class="pre">self._temperature</span></code>，配套 getter 也读 <code class="docutils literal notranslate"><span class="pre">_temperature</span></code>——否则
+getter/setter 互相 <code class="docutils literal notranslate"><span class="pre">self.temperature</span></code> 会无限递归
+<code class="docutils literal notranslate"><span class="pre">RecursionError</span></code>。</p>
+<p><strong>气象场景一句话</strong>：只读属性像「只出不进的观测屏」——你能读当前均值，却绝不能手写改它；真要改，得先给装一个带「低于
+-273.15℃ 直接拒收」闸门的录入通道。</p>
+</div></blockquote>
+</section>
+<section id="classmethod-cls">
+<span id="id20"></span><h3>5.4.2 &#64;classmethod：少传参数 / 忘了写 cls<a class="headerlink" href="#classmethod-cls" title="Link to this heading">#</a></h3>
+<p><strong>现象 / 真实报错信息</strong>（实测）</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="k">class</span><span class="w"> </span><span class="nc">Demo</span><span class="p">:</span>
+    <span class="nd">@classmethod</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">make</span><span class="p">(</span><span class="bp">cls</span><span class="p">,</span> <span class="n">x</span><span class="p">):</span>
+        <span class="k">return</span> <span class="bp">cls</span><span class="p">()</span>
+<span class="n">Demo</span><span class="o">.</span><span class="n">make</span><span class="p">()</span>                        <span class="c1"># 缺 x</span>
+</pre></div>
+</div>
+<div class="highlight-text notranslate"><div class="highlight"><pre><span></span>TypeError: Demo.make() missing 1 required positional argument: &#39;x&#39;
+</pre></div>
+</div>
+<p>另一种：<code class="docutils literal notranslate"><span class="pre">&#64;classmethod</span></code> 方法第一个参数忘了叫
+<code class="docutils literal notranslate"><span class="pre">cls</span></code>（其实占位了，见下）：</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="k">class</span><span class="w"> </span><span class="nc">Demo2</span><span class="p">:</span>
+    <span class="nd">@classmethod</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">make</span><span class="p">(</span><span class="n">x</span><span class="p">):</span>                   <span class="c1"># 第一个参数应是 cls；这里让位给 x</span>
+        <span class="k">return</span> <span class="n">Demo2</span><span class="p">()</span>
+<span class="n">Demo2</span><span class="o">.</span><span class="n">make</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span>
+</pre></div>
+</div>
+<div class="highlight-text notranslate"><div class="highlight"><pre><span></span>TypeError: Demo2.make() takes 1 positional argument but 2 were given
+</pre></div>
+</div>
+<p><strong>原因</strong> <code class="docutils literal notranslate"><span class="pre">&#64;classmethod</span></code> 会像 self 一样自动把「类对象
+cls」塞进第一个形参位。① 参数不够时提示「missing x」；② 你删了 cls
+占位，<code class="docutils literal notranslate"><span class="pre">make(1)</span></code> 实际发送「cls + 1」两个实参，而方法只留一个槽位。</p>
+<p><strong>解决办法</strong></p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="k">class</span><span class="w"> </span><span class="nc">Demo</span><span class="p">:</span>
+    <span class="nd">@classmethod</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">make</span><span class="p">(</span><span class="bp">cls</span><span class="p">,</span> <span class="n">x</span><span class="p">):</span>              <span class="c1"># 第一个形参必须是 cls（作为类的代表）</span>
+        <span class="k">return</span> <span class="bp">cls</span><span class="o">.</span><span class="vm">__name__</span> <span class="o">+</span> <span class="sa">f</span><span class="s2">&quot;(</span><span class="si">{</span><span class="n">x</span><span class="si">}</span><span class="s2">)&quot;</span>
+
+<span class="nb">print</span><span class="p">(</span><span class="n">Demo</span><span class="o">.</span><span class="n">make</span><span class="p">(</span><span class="mi">3</span><span class="p">))</span>                <span class="c1"># Demo(3) —— cls 由 Python 自动填充</span>
+</pre></div>
+</div>
+<blockquote>
+<div><p><strong>气象场景一句话</strong>：类方法像「按台站编制批量出报表」的针——第一个针脚永远是「台站列表（cls）」本身，你若不先插它，后面每根数据针都对不齐。</p>
+</div></blockquote>
+</section>
+<section id="staticmethod">
+<span id="id21"></span><h3>5.4.3 &#64;staticmethod：实例/类两种调用都合法（对照，正常现象）<a class="headerlink" href="#staticmethod" title="Link to this heading">#</a></h3>
+<p><strong>现象 / 真实输出</strong>（本机实测，非报错，用于对照 5.4.2）</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="k">class</span><span class="w"> </span><span class="nc">Demo3</span><span class="p">:</span>
+    <span class="nd">@staticmethod</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">kelvin_to_celsius</span><span class="p">(</span><span class="n">k</span><span class="p">):</span>
+        <span class="k">return</span> <span class="n">k</span> <span class="o">-</span> <span class="mf">273.15</span>
+
+<span class="n">Demo3</span><span class="o">.</span><span class="n">kelvin_to_celsius</span><span class="p">(</span><span class="mi">300</span><span class="p">)</span>        <span class="c1"># 26.85（通过类调用）</span>
+<span class="n">Demo3</span><span class="p">()</span><span class="o">.</span><span class="n">kelvin_to_celsius</span><span class="p">(</span><span class="mi">310</span><span class="p">)</span>      <span class="c1"># 36.85（通过实例调用，同样合法）</span>
+</pre></div>
+</div>
+<div class="highlight-text notranslate"><div class="highlight"><pre><span></span>26.850000000000023
+36.85000000000002
+</pre></div>
+</div>
+<p><strong>原因</strong> <code class="docutils literal notranslate"><span class="pre">&#64;staticmethod</span></code> 不吃
+<code class="docutils literal notranslate"><span class="pre">self</span></code>/<code class="docutils literal notranslate"><span class="pre">cls</span></code>，是「寄生在类里的普通函数」，类与实例调用都能用——和
+<code class="docutils literal notranslate"><span class="pre">&#64;classmethod</span></code>（自动塞类）最大的区别就在第一个参数。</p>
+<p><strong>解决办法</strong>：函数逻辑与实例/类状态无关就用
+<code class="docutils literal notranslate"><span class="pre">&#64;staticmethod</span></code>；需要访问类状态（如读类共享属性、产生实例）就用
+<code class="docutils literal notranslate"><span class="pre">&#64;classmethod</span></code>；需要访问实例属性就用普通方法（带 self）。</p>
+<blockquote>
+<div><p><strong>气象场景一句话</strong>：开尔文转摄氏度这种「纯换算、不带任何台站的状态」公用工具，就该做成静态方法——全国各站都能直接调，互不沾染台站个性化数据。</p>
+</div></blockquote>
+<hr class="docutils" />
+</section>
+</section>
+<section id="return">
+<span id="id22"></span><h2>5.5 装饰器（&#64; 忘写 / 忘 return / 层级不足）<a class="headerlink" href="#return" title="Link to this heading">#</a></h2>
+<section id="return-inner-nonetype-object-is-not-callable">
+<span id="id23"></span><h3>5.5.1 装饰器忘写 <code class="docutils literal notranslate"><span class="pre">&#64;</span></code> / 忘 <code class="docutils literal notranslate"><span class="pre">return</span> <span class="pre">inner</span></code> → ‘NoneType’ object is not callable<a class="headerlink" href="#return-inner-nonetype-object-is-not-callable" title="Link to this heading">#</a></h3>
+<p><strong>现象 / 真实报错信息</strong>（实测）</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="k">def</span><span class="w"> </span><span class="nf">timer</span><span class="p">(</span><span class="n">func</span><span class="p">):</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">inner</span><span class="p">(</span><span class="o">*</span><span class="n">a</span><span class="p">,</span> <span class="o">**</span><span class="n">k</span><span class="p">):</span>
+        <span class="o">...</span>
+        <span class="k">return</span> <span class="n">func</span><span class="p">(</span><span class="o">*</span><span class="n">a</span><span class="p">,</span> <span class="o">**</span><span class="n">k</span><span class="p">)</span>
+<span class="c1"># 忘了 return inner</span>
+<span class="nd">@timer</span>
+<span class="k">def</span><span class="w"> </span><span class="nf">fetch</span><span class="p">():</span>
+    <span class="k">return</span> <span class="mi">42</span>
+
+<span class="nb">print</span><span class="p">(</span><span class="n">fetch</span><span class="p">())</span>
+</pre></div>
+</div>
+<div class="highlight-text notranslate"><div class="highlight"><pre><span></span>Traceback (most recent call last):
+    print(fetch())
+          ^^^^^^^
+TypeError: &#39;NoneType&#39; object is not callable
+</pre></div>
+</div>
+<p><strong>原因</strong> <code class="docutils literal notranslate"><span class="pre">&#64;timer</span></code> 的语义是
+<code class="docutils literal notranslate"><span class="pre">fetch</span> <span class="pre">=</span> <span class="pre">timer(fetch)</span></code>：装饰器的<strong>返回值</strong>就是新
+<code class="docutils literal notranslate"><span class="pre">fetch</span></code>。你的 <code class="docutils literal notranslate"><span class="pre">timer</span></code> 没 <code class="docutils literal notranslate"><span class="pre">return</span> <span class="pre">inner</span></code>，返回了
+<code class="docutils literal notranslate"><span class="pre">None</span></code>，于是 <code class="docutils literal notranslate"><span class="pre">fetch</span></code> 变成了 <code class="docutils literal notranslate"><span class="pre">None</span></code>——再把 <code class="docutils literal notranslate"><span class="pre">None</span></code>
+当函数调，就报「NoneType 不可调用」。（通用指南 0.3：<code class="docutils literal notranslate"><span class="pre">TypeError</span></code> →
+参数/类型不对。）</p>
+<p><strong>解决办法</strong>：装饰器函数内部<strong>一定要
+``return inner``</strong>（返回内层函数本身，不是调用它）。</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="k">def</span><span class="w"> </span><span class="nf">timer</span><span class="p">(</span><span class="n">func</span><span class="p">):</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">inner</span><span class="p">(</span><span class="o">*</span><span class="n">a</span><span class="p">,</span> <span class="o">**</span><span class="n">k</span><span class="p">):</span>
+        <span class="kn">import</span><span class="w"> </span><span class="nn">time</span>
+        <span class="n">t</span> <span class="o">=</span> <span class="n">time</span><span class="o">.</span><span class="n">time</span><span class="p">()</span>
+        <span class="n">r</span> <span class="o">=</span> <span class="n">func</span><span class="p">(</span><span class="o">*</span><span class="n">a</span><span class="p">,</span> <span class="o">**</span><span class="n">k</span><span class="p">)</span>
+        <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;耗时 </span><span class="si">{</span><span class="n">time</span><span class="o">.</span><span class="n">time</span><span class="p">()</span><span class="o">-</span><span class="n">t</span><span class="si">:</span><span class="s2">.3f</span><span class="si">}</span><span class="s2">s&quot;</span><span class="p">)</span>
+        <span class="k">return</span> <span class="n">r</span>
+    <span class="k">return</span> <span class="n">inner</span>                     <span class="c1"># ★ 返回内层函数</span>
+</pre></div>
+</div>
+<blockquote>
+<div><p><strong>气象场景一句话</strong>：给观测步骤装「计时套件」，套件拆开后忘了把「真正干活的台站函数」装回去，返回给你一个空壳（None）——你要再上台站号，当然扑空。</p>
+</div></blockquote>
+</section>
+<section id="return-wrapper-return-wrapper">
+<span id="id24"></span><h3>5.5.2 装饰器里写 <code class="docutils literal notranslate"><span class="pre">return</span> <span class="pre">wrapper()</span></code> 而非 <code class="docutils literal notranslate"><span class="pre">return</span> <span class="pre">wrapper</span></code><a class="headerlink" href="#return-wrapper-return-wrapper" title="Link to this heading">#</a></h3>
+<p><strong>现象 / 真实报错信息</strong>（实测）</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="k">def</span><span class="w"> </span><span class="nf">deco</span><span class="p">(</span><span class="n">func</span><span class="p">):</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">wrapper</span><span class="p">():</span>
+        <span class="k">return</span> <span class="n">func</span><span class="p">()</span> <span class="o">+</span> <span class="mi">1</span>
+    <span class="k">return</span> <span class="n">wrapper</span><span class="p">()</span>        <span class="c1"># 返回了调用结果(整数)，不是函数</span>
+
+<span class="nd">@deco</span>
+<span class="k">def</span><span class="w"> </span><span class="nf">get</span><span class="p">():</span>
+    <span class="k">return</span> <span class="mi">10</span>
+
+<span class="nb">print</span><span class="p">(</span><span class="n">get</span><span class="p">());</span> <span class="n">get</span><span class="p">()</span>         <span class="c1"># get 变成整数 11，第二次调用报错</span>
+</pre></div>
+</div>
+<div class="highlight-text notranslate"><div class="highlight"><pre><span></span>Traceback (most recent call last):
+    print(get())
+          ^^^^^^^
+TypeError: &#39;int&#39; object is not callable
+</pre></div>
+</div>
+<p><strong>原因</strong> <code class="docutils literal notranslate"><span class="pre">return</span> <span class="pre">wrapper()</span></code> 是把 wrapper 的<strong>返回值</strong>（一个整数
+11）返回出去，而非返回 wrapper 这个<strong>函数</strong>。于是
+<code class="docutils literal notranslate"><span class="pre">get</span> <span class="pre">=</span> <span class="pre">11</span></code>，把整数当函数调用即报错。</p>
+<p><strong>解决办法</strong>：返回函数本身 — <code class="docutils literal notranslate"><span class="pre">return</span> <span class="pre">wrapper</span></code>（不带括号）。</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="k">def</span><span class="w"> </span><span class="nf">deco</span><span class="p">(</span><span class="n">func</span><span class="p">):</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">wrapper</span><span class="p">():</span>
+        <span class="k">return</span> <span class="n">func</span><span class="p">()</span> <span class="o">+</span> <span class="mi">1</span>
+    <span class="k">return</span> <span class="n">wrapper</span>          <span class="c1"># ← 不带括号</span>
+</pre></div>
+</div>
+<blockquote>
+<div><p><strong>气象场景一句话</strong>：你要「上交的是整套处理流程（函数）」，却把「这一趟算出来的
+11℃」当结果交了上去——未来每次调用都只能在这个数字上撞墙。</p>
+</div></blockquote>
+</section>
+<section id="missing-func">
+<span id="id25"></span><h3>5.5.3 带参数的装饰器只写了两层 → missing … ‘func’<a class="headerlink" href="#missing-func" title="Link to this heading">#</a></h3>
+<p><strong>现象 / 真实报错信息</strong>（实测）</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="k">def</span><span class="w"> </span><span class="nf">repeat</span><span class="p">(</span><span class="n">func</span><span class="p">,</span> <span class="n">count</span><span class="p">):</span>      <span class="c1"># 带参装饰器本该再包一层，这里只有两层</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">inner</span><span class="p">(</span><span class="o">*</span><span class="n">a</span><span class="p">,</span> <span class="o">**</span><span class="n">k</span><span class="p">):</span>
+        <span class="k">return</span> <span class="p">(</span><span class="o">*</span><span class="p">[</span><span class="n">func</span><span class="p">(</span><span class="o">*</span><span class="n">a</span><span class="p">,</span> <span class="o">**</span><span class="n">k</span><span class="p">)]</span> <span class="o">*</span> <span class="n">count</span><span class="p">,)</span>
+    <span class="k">return</span> <span class="n">inner</span>
+
+<span class="k">class</span><span class="w"> </span><span class="nc">T</span><span class="p">:</span>
+    <span class="nd">@repeat</span><span class="p">(</span><span class="n">count</span><span class="o">=</span><span class="mi">3</span><span class="p">)</span>          <span class="c1"># Python 把 count=3 当成 func 调用 repeat</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">go</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">return</span> <span class="s2">&quot;go&quot;</span>
+</pre></div>
+</div>
+<div class="highlight-text notranslate"><div class="highlight"><pre><span></span>TypeError: repeat() missing 1 required positional argument: &#39;func&#39;
+</pre></div>
+</div>
+<p><strong>原因</strong> <code class="docutils literal notranslate"><span class="pre">&#64;repeat(count=3)</span></code> 实际上是先算 <code class="docutils literal notranslate"><span class="pre">repeat(count=3)</span></code>。可你的
+<code class="docutils literal notranslate"><span class="pre">repeat</span></code> 第一个参数是
+<code class="docutils literal notranslate"><span class="pre">func</span></code>（装饰器应直接收被装饰函数），现在却被塞了
+<code class="docutils literal notranslate"><span class="pre">count</span></code>——于是它要的 <code class="docutils literal notranslate"><span class="pre">func</span></code>
+缺失。带参装饰器必须<strong>三层</strong>：外层收参 → 中层返回装饰器 →
+内层真正的包装。</p>
+<p><strong>解决办法</strong>：<code class="docutils literal notranslate"><span class="pre">repeat</span></code> 需再多包一层：</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="k">def</span><span class="w"> </span><span class="nf">repeat</span><span class="p">(</span><span class="n">count</span><span class="p">):</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">decorator</span><span class="p">(</span><span class="n">func</span><span class="p">):</span>          <span class="c1"># 真正的装饰器</span>
+        <span class="k">def</span><span class="w"> </span><span class="nf">inner</span><span class="p">(</span><span class="o">*</span><span class="n">a</span><span class="p">,</span> <span class="o">**</span><span class="n">k</span><span class="p">):</span>
+            <span class="k">return</span> <span class="p">(</span><span class="o">*</span><span class="p">[</span><span class="n">func</span><span class="p">(</span><span class="o">*</span><span class="n">a</span><span class="p">,</span> <span class="o">**</span><span class="n">k</span><span class="p">)]</span> <span class="o">*</span> <span class="n">count</span><span class="p">,)</span>
+        <span class="k">return</span> <span class="n">inner</span>
+    <span class="k">return</span> <span class="n">decorator</span>
+
+<span class="nd">@repeat</span><span class="p">(</span><span class="n">count</span><span class="o">=</span><span class="mi">3</span><span class="p">)</span>
+<span class="k">def</span><span class="w"> </span><span class="nf">go</span><span class="p">():</span>
+    <span class="k">return</span> <span class="s2">&quot;go&quot;</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">go</span><span class="p">())</span>        <span class="c1"># (&#39;go&#39;, &#39;go&#39;, &#39;go&#39;)</span>
+</pre></div>
+</div>
+<blockquote>
+<div><p><strong>气象场景一句话</strong>：批量重放某站三次资料，指令需要「先指明重放次数」再套「待重放函数」——你少了一层中转，把次数误当成函数名递了过去，报错自然点名
+<code class="docutils literal notranslate"><span class="pre">func</span></code> 缺失。</p>
+</div></blockquote>
+<hr class="docutils" />
+</section>
+</section>
+<section id="yield">
+<span id="id26"></span><h2>5.6 生成器（yield 的脾气）<a class="headerlink" href="#yield" title="Link to this heading">#</a></h2>
+<section id="next-stopiteration">
+<span id="id27"></span><h3>5.6.1 <code class="docutils literal notranslate"><span class="pre">next()</span></code> 把生成器取尽 → StopIteration<a class="headerlink" href="#next-stopiteration" title="Link to this heading">#</a></h3>
+<p><strong>现象 / 真实报错信息</strong>（实测）</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="k">def</span><span class="w"> </span><span class="nf">temps</span><span class="p">():</span>
+    <span class="k">yield</span> <span class="mf">5.0</span>
+    <span class="k">yield</span> <span class="mf">6.0</span>
+<span class="n">g</span> <span class="o">=</span> <span class="n">temps</span><span class="p">()</span>
+<span class="nb">print</span><span class="p">(</span><span class="nb">next</span><span class="p">(</span><span class="n">g</span><span class="p">));</span> <span class="nb">print</span><span class="p">(</span><span class="nb">next</span><span class="p">(</span><span class="n">g</span><span class="p">))</span>
+<span class="nb">print</span><span class="p">(</span><span class="nb">next</span><span class="p">(</span><span class="n">g</span><span class="p">))</span>        <span class="c1"># 第三个 next —— 已耗尽</span>
+</pre></div>
+</div>
+<div class="highlight-text notranslate"><div class="highlight"><pre><span></span>5.0
+6.0
+StopIteration:
+</pre></div>
+</div>
+<p><strong>原因</strong> 生成器每 <code class="docutils literal notranslate"><span class="pre">next()</span></code> 一次吐一个值，<code class="docutils literal notranslate"><span class="pre">yield</span></code>
+吐完就「清零」，再 <code class="docutils literal notranslate"><span class="pre">next()</span></code> 就抛 <code class="docutils literal notranslate"><span class="pre">StopIteration</span></code>。这与通用指南 0.3
+的家谱一致——<code class="docutils literal notranslate"><span class="pre">StopIteration</span></code>
+表示「迭代器取不出下一个元素」。反过来说，<code class="docutils literal notranslate"><span class="pre">for</span></code>
+循环内部其实就是在捕获它才正常停下的。</p>
+<p><strong>解决办法</strong>：用 <code class="docutils literal notranslate"><span class="pre">for</span></code> 循环自动消费（不必手管 next 和
+StopIteration），或先判断是否耗尽：</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="k">def</span><span class="w"> </span><span class="nf">temps</span><span class="p">():</span>
+    <span class="k">yield</span> <span class="mf">5.0</span>
+    <span class="k">yield</span> <span class="mf">6.0</span>
+
+<span class="k">for</span> <span class="n">t</span> <span class="ow">in</span> <span class="n">temps</span><span class="p">():</span>           <span class="c1"># for 自动帮你吞掉结尾的 StopIteration</span>
+    <span class="nb">print</span><span class="p">(</span><span class="n">t</span><span class="p">)</span>
+</pre></div>
+</div>
+<blockquote>
+<div><p>手册级建议：只有真需要「手动控制节奏 / 前向取一个」时才显式
+<code class="docutils literal notranslate"><span class="pre">next()</span></code>，并自行捕获 <code class="docutils literal notranslate"><span class="pre">StopIteration</span></code>。</p>
+<p><strong>气象场景一句话</strong>：逐日观测值一条条吐出来的「流水线」，吞到最后一格还在喊「再来一条」，自然是末端无料的
+<code class="docutils literal notranslate"><span class="pre">StopIteration</span></code>。</p>
+</div></blockquote>
+</section>
+<section id="return-stopiteration-value">
+<span id="return-stopiterationvalue"></span><h3>5.6.2 生成器内 <code class="docutils literal notranslate"><span class="pre">return</span> <span class="pre">值</span></code> → 值藏在 StopIteration.value<a class="headerlink" href="#return-stopiteration-value" title="Link to this heading">#</a></h3>
+<p><strong>现象 / 真实输出</strong>（实测）</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="k">def</span><span class="w"> </span><span class="nf">temps_with_count</span><span class="p">():</span>
+    <span class="k">yield</span> <span class="mf">5.0</span>
+    <span class="k">yield</span> <span class="mf">6.0</span>
+    <span class="k">return</span> <span class="s2">&quot;count=2&quot;</span>          <span class="c1"># 生成器里的 return 特殊</span>
+
+<span class="n">g</span> <span class="o">=</span> <span class="n">temps_with_count</span><span class="p">()</span>
+<span class="nb">next</span><span class="p">(</span><span class="n">g</span><span class="p">);</span> <span class="nb">next</span><span class="p">(</span><span class="n">g</span><span class="p">)</span>
+<span class="k">try</span><span class="p">:</span>
+    <span class="nb">next</span><span class="p">(</span><span class="n">g</span><span class="p">)</span>
+<span class="k">except</span> <span class="ne">StopIteration</span> <span class="k">as</span> <span class="n">si</span><span class="p">:</span>
+    <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;StopIteration.value = </span><span class="si">{</span><span class="n">si</span><span class="o">.</span><span class="n">value</span><span class="si">!r}</span><span class="s2">&quot;</span><span class="p">)</span>
+</pre></div>
+</div>
+<div class="highlight-text notranslate"><div class="highlight"><pre><span></span>StopIteration.value = &#39;count=2&#39;
+</pre></div>
+</div>
+<p><strong>原因</strong> 生成器里 <code class="docutils literal notranslate"><span class="pre">return</span> <span class="pre">值</span></code>
+<strong>不会像普通函数那样返回给你</strong>，而是被转成挂载在
+<code class="docutils literal notranslate"><span class="pre">StopIteration.value</span></code> 上的「尾声」。你若是 <code class="docutils literal notranslate"><span class="pre">result</span> <span class="pre">=</span> <span class="pre">gen()</span></code>
+想拿返回值，拿到的永远是生成器对象而非那个值。</p>
+<p><strong>解决办法</strong>：别指望生成器用 <code class="docutils literal notranslate"><span class="pre">return</span> <span class="pre">返回数据</span></code>
+拿结果；需要「返回值」就别用生成器，或把值放在最后一个 <code class="docutils literal notranslate"><span class="pre">yield</span></code>
+里让调用方取。</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="k">def</span><span class="w"> </span><span class="nf">fine</span><span class="p">():</span>
+    <span class="k">yield</span> <span class="mf">5.0</span>
+    <span class="k">yield</span> <span class="mf">6.0</span>
+<span class="c1"># 想拿&quot;总条数&quot;，改成普通函数或在外部统计：</span>
+<span class="k">def</span><span class="w"> </span><span class="nf">count</span><span class="p">(</span><span class="n">gen</span><span class="p">):</span>
+    <span class="k">return</span> <span class="nb">sum</span><span class="p">(</span><span class="mi">1</span> <span class="k">for</span> <span class="n">_</span> <span class="ow">in</span> <span class="n">gen</span><span class="p">)</span>
+</pre></div>
+</div>
+<blockquote>
+<div><p><strong>气象场景一句话</strong>：观测流水线吐完最后一笔后，那条「本次共 2
+条」的统计不是丢给你，而是粘在工单最后的 <code class="docutils literal notranslate"><span class="pre">StopIteration.value</span></code>
+里——你不翻到底就看不见。</p>
+</div></blockquote>
+</section>
+<section id="yield-none">
+<span id="id28"></span><h3>5.6.3 忘 <code class="docutils literal notranslate"><span class="pre">yield</span></code> 当生成器用 → 返回 None / 不是迭代器<a class="headerlink" href="#yield-none" title="Link to this heading">#</a></h3>
+<p><strong>现象 / 真实输出</strong>（实测）</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="k">def</span><span class="w"> </span><span class="nf">fake_generator</span><span class="p">(</span><span class="n">x</span><span class="p">):</span>       <span class="c1"># 没有 yield，只是普通函数，返回 None</span>
+    <span class="n">result</span> <span class="o">=</span> <span class="n">x</span> <span class="o">*</span> <span class="mi">2</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;调用结果:&quot;</span><span class="p">,</span> <span class="n">fake_generator</span><span class="p">(</span><span class="mi">3</span><span class="p">))</span>     <span class="c1"># None</span>
+<span class="nb">next</span><span class="p">(</span><span class="n">fake_generator</span><span class="p">(</span><span class="mi">3</span><span class="p">))</span>                  <span class="c1"># 想当迭代器用</span>
+</pre></div>
+</div>
+<div class="highlight-text notranslate"><div class="highlight"><pre><span></span>调用结果: None
+TypeError: &#39;NoneType&#39; object is not an iterator
+</pre></div>
+</div>
+<p><strong>原因</strong> 一个函数里只要<strong>没有一个
+``yield``</strong>，它就不是生成器函数：调用即执行、返回 <code class="docutils literal notranslate"><span class="pre">None</span></code>（没写
+return 时）。而 <code class="docutils literal notranslate"><span class="pre">next()</span></code> 需要一个「迭代器/可迭代对象」，<code class="docutils literal notranslate"><span class="pre">None</span></code>
+当然不行。</p>
+<p><strong>解决办法</strong>：写成生成器就在函数体内加上 <code class="docutils literal notranslate"><span class="pre">yield</span></code>：</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="k">def</span><span class="w"> </span><span class="nf">temps</span><span class="p">(</span><span class="n">n</span><span class="p">):</span>
+    <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">n</span><span class="p">):</span>
+        <span class="k">yield</span> <span class="n">i</span> <span class="o">*</span> <span class="mf">1.5</span>          <span class="c1"># 有 yield，才是生成器</span>
+<span class="nb">print</span><span class="p">(</span><span class="nb">list</span><span class="p">(</span><span class="n">temps</span><span class="p">(</span><span class="mi">3</span><span class="p">)))</span>          <span class="c1"># [0.0, 1.5, 3.0]</span>
+</pre></div>
+</div>
+<blockquote>
+<div><p><strong>气象场景一句话</strong>：想造一条「逐点吐温度」的采样泵，可泵里一个吐料口（yield）都没装——抽出来自然是空的，让你去找料的调用方只能报「这不是个泵」。</p>
+</div></blockquote>
+<hr class="docutils" />
+</section>
+</section>
+<section id="id29">
+<span id="id30"></span><h2>5.7 列表推导式（作用域/命名）<a class="headerlink" href="#id29" title="Link to this heading">#</a></h2>
+<section id="nameerror">
+<span id="id31"></span><h3>5.7.1 推导式引用未定义变量 → NameError<a class="headerlink" href="#nameerror" title="Link to this heading">#</a></h3>
+<p><strong>现象 / 真实报错信息</strong>（实测）</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">temps</span> <span class="o">=</span> <span class="p">[</span><span class="mi">5</span><span class="p">,</span> <span class="mi">6</span><span class="p">,</span> <span class="mi">7</span><span class="p">,</span> <span class="mi">8</span><span class="p">]</span>
+<span class="n">mean</span> <span class="o">=</span> <span class="nb">sum</span><span class="p">(</span><span class="n">temps</span><span class="p">)</span><span class="o">/</span><span class="nb">len</span><span class="p">(</span><span class="n">temps</span><span class="p">)</span>
+<span class="n">anomalies</span> <span class="o">=</span> <span class="p">[</span><span class="n">t</span> <span class="o">-</span> <span class="n">mean_t</span> <span class="k">for</span> <span class="n">t</span> <span class="ow">in</span> <span class="n">temps</span><span class="p">]</span>    <span class="c1"># mean_t 是拼写错误</span>
+</pre></div>
+</div>
+<div class="highlight-text notranslate"><div class="highlight"><pre><span></span>NameError: name &#39;mean_t&#39; is not defined
+</pre></div>
+</div>
+<p><strong>原因</strong> 推导式里的 <code class="docutils literal notranslate"><span class="pre">mean_t</span></code> 从未定义（应为
+<code class="docutils literal notranslate"><span class="pre">mean</span></code>）。这点与通用指南 0.3 家谱中
+<code class="docutils literal notranslate"><span class="pre">NameError</span></code>（名字没定义/拼错）完全一致——推导式并没有帮你「就近猜词」。</p>
+<p><strong>解决办法</strong>：变量名要与前面定义的一致，简明起见用字面或明确定义的变量：</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">temps</span> <span class="o">=</span> <span class="p">[</span><span class="mi">5</span><span class="p">,</span> <span class="mi">6</span><span class="p">,</span> <span class="mi">7</span><span class="p">,</span> <span class="mi">8</span><span class="p">]</span>
+<span class="n">mean</span> <span class="o">=</span> <span class="nb">sum</span><span class="p">(</span><span class="n">temps</span><span class="p">)</span><span class="o">/</span><span class="nb">len</span><span class="p">(</span><span class="n">temps</span><span class="p">)</span>
+<span class="n">anomalies</span> <span class="o">=</span> <span class="p">[</span><span class="n">t</span> <span class="o">-</span> <span class="n">mean</span> <span class="k">for</span> <span class="n">t</span> <span class="ow">in</span> <span class="n">temps</span><span class="p">]</span>      <span class="c1"># 名字对上了</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">anomalies</span><span class="p">)</span>                            <span class="c1"># [-1.5, -0.5, 0.5, 1.5]</span>
+</pre></div>
+</div>
+<blockquote>
+<div><p><strong>气象场景一句话</strong>：算「距平」时，把温标里的 <code class="docutils literal notranslate"><span class="pre">mean</span></code> 错念成
+<code class="docutils literal notranslate"><span class="pre">mean_t</span></code>——台站手册里根本没这个量，气象统计自然就地停摆。</p>
+</div></blockquote>
+</section>
+<section id="nameerror-python-3">
+<span id="nameerrorpython-3"></span><h3>5.7.2 类体内推导式访问外层类属性 → NameError（Python 3 特有）<a class="headerlink" href="#nameerror-python-3" title="Link to this heading">#</a></h3>
+<p><strong>现象 / 真实报错信息</strong>（实测）</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="k">class</span><span class="w"> </span><span class="nc">Scale</span><span class="p">:</span>
+    <span class="n">base</span> <span class="o">=</span> <span class="mi">2</span>
+    <span class="n">vals</span> <span class="o">=</span> <span class="p">[</span><span class="n">base</span> <span class="o">*</span> <span class="n">k</span> <span class="k">for</span> <span class="n">k</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">3</span><span class="p">)]</span>
+</pre></div>
+</div>
+<div class="highlight-text notranslate"><div class="highlight"><pre><span></span>NameError: name &#39;base&#39; is not defined
+</pre></div>
+</div>
+<p><strong>原因</strong> Python 3 起，推导式拥有<strong>自己的局部作用域</strong>，看不到类体里
+<code class="docutils literal notranslate"><span class="pre">base</span> <span class="pre">=</span> <span class="pre">2</span></code> 这个类顶层变量（Python 2
+曾能读到，行为已改）。这就是清单里「列表推导式作用域泄漏」的典型。</p>
+<p><strong>解决办法</strong>：在类体内把需要的值先拿出来再推导，或用推导式括号外引用：</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="k">class</span><span class="w"> </span><span class="nc">Scale</span><span class="p">:</span>
+    <span class="n">base</span> <span class="o">=</span> <span class="mi">2</span>
+    <span class="n">vals</span> <span class="o">=</span> <span class="p">[(</span><span class="n">Scale</span><span class="o">.</span><span class="n">base</span><span class="p">)</span> <span class="o">*</span> <span class="n">k</span> <span class="k">for</span> <span class="n">k</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">3</span><span class="p">)]</span>   <span class="c1"># 显式经类名取</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">Scale</span><span class="o">.</span><span class="n">vals</span><span class="p">)</span>      <span class="c1"># [0, 2, 4]</span>
+</pre></div>
+</div>
+<blockquote>
+<div><p>更稳妥是在 <code class="docutils literal notranslate"><span class="pre">__init__</span></code>/方法里构造推导，避免类体作用域坑。</p>
+<p><strong>气象场景一句话</strong>：换算表格在「类 /
+台站编制」这一层想直接引用全局量程——可推算表有自己的一扇门，门不递进来它就拿不到外面那个基础常数。</p>
+</div></blockquote>
+</section>
+<section id="python-3">
+<span id="id32"></span><h3>5.7.3 推导式遮蔽外层同名变量（Python 3 行为，对照说明）<a class="headerlink" href="#python-3" title="Link to this heading">#</a></h3>
+<p><strong>现象 / 真实输出</strong>（实测）</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">x</span> <span class="o">=</span> <span class="mi">99</span>
+<span class="nb">print</span><span class="p">([</span><span class="n">x</span> <span class="k">for</span> <span class="n">x</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">3</span><span class="p">)])</span>    <span class="c1"># 推导内 x 是局部</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">x</span><span class="p">)</span>                         <span class="c1"># 外层仍是 99</span>
+</pre></div>
+</div>
+<div class="highlight-text notranslate"><div class="highlight"><pre><span></span>[0, 1, 2]
+99
+</pre></div>
+</div>
+<p><strong>原因</strong> Python 3 推导式里 <code class="docutils literal notranslate"><span class="pre">for</span> <span class="pre">x</span></code> 的 <code class="docutils literal notranslate"><span class="pre">x</span></code>
+只在推导内部可见，<strong>不会污染外层</strong>。这不是报错，而是很多人误以为会「改掉外面的
+x」——理解它有助于读懂 5.7.2。</p>
+<p><strong>解决办法</strong>：无需修复；只需知道外层变量安全，且不要依赖「推导式的 x
+会被带出去」。若确实需要在外部继续用那个值，用普通循环 + 手动收集变量。</p>
+<blockquote>
+<div><p><strong>气象场景一句话</strong>：推导式像一次独立的「小分队采样巡逻」，它自己在范围内编号（x），结束后并不会改变观测场里原来的那个编号者。</p>
+</div></blockquote>
+<hr class="docutils" />
+</section>
+</section>
+<section id="map-filter-lambda">
+<span id="id33"></span><h2>5.8 函数式：map / filter / lambda（多半「无报错但错」）<a class="headerlink" href="#map-filter-lambda" title="Link to this heading">#</a></h2>
+<section id="map-filter-list-map-object-at-0x">
+<span id="id34"></span><h3>5.8.1 <code class="docutils literal notranslate"><span class="pre">map</span></code> / <code class="docutils literal notranslate"><span class="pre">filter</span></code> 忘 <code class="docutils literal notranslate"><span class="pre">list()</span></code> → 打印 <code class="docutils literal notranslate"><span class="pre">&lt;map</span> <span class="pre">object</span> <span class="pre">at</span> <span class="pre">0x...&gt;</span></code>（惰性）<a class="headerlink" href="#map-filter-list-map-object-at-0x" title="Link to this heading">#</a></h3>
+<p><strong>现象 / 真实输出</strong>（实测）</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">ks</span> <span class="o">=</span> <span class="p">[</span><span class="mi">285</span><span class="p">,</span> <span class="mi">290</span><span class="p">,</span> <span class="mi">300</span><span class="p">]</span>
+<span class="n">r</span> <span class="o">=</span> <span class="nb">map</span><span class="p">(</span><span class="k">lambda</span> <span class="n">k</span><span class="p">:</span> <span class="n">k</span> <span class="o">-</span> <span class="mf">273.15</span><span class="p">,</span> <span class="n">ks</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">r</span><span class="p">)</span>                 <span class="c1"># 惰性：只打印对象地址</span>
+<span class="nb">print</span><span class="p">(</span><span class="nb">list</span><span class="p">(</span><span class="n">r</span><span class="p">))</span>           <span class="c1"># 消费一次后</span>
+<span class="nb">print</span><span class="p">(</span><span class="nb">list</span><span class="p">(</span><span class="n">r</span><span class="p">))</span>           <span class="c1"># 再取就是空</span>
+</pre></div>
+</div>
+<div class="highlight-text notranslate"><div class="highlight"><pre><span></span>&lt;map object at 0x0000012E310F18D0&gt;
+[11.85, 16.85, 26.85]
+[]
+</pre></div>
+</div>
+<p><strong>原因</strong> <code class="docutils literal notranslate"><span class="pre">map</span></code>/<code class="docutils literal notranslate"><span class="pre">filter</span></code> 在 Python 3 返回<strong>惰性迭代器</strong>，只有被
+<code class="docutils literal notranslate"><span class="pre">list()</span></code>/<code class="docutils literal notranslate"><span class="pre">for</span></code>/<code class="docutils literal notranslate"><span class="pre">sum</span></code> 消费时才真正算；直接 <code class="docutils literal notranslate"><span class="pre">print</span></code>
+只会看到对象地址。而且它是一次性的：取过一次就空。这正属于通用指南 0.5
+的「静默污染」——程序不报错，结果却不是你以为的「一个现成列表」。</p>
+<p><strong>解决办法</strong>：需要列表就显式 <code class="docutils literal notranslate"><span class="pre">list(...)</span></code>，且只消费一次：</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">ks</span> <span class="o">=</span> <span class="p">[</span><span class="mi">285</span><span class="p">,</span> <span class="mi">290</span><span class="p">,</span> <span class="mi">300</span><span class="p">]</span>
+<span class="n">r</span> <span class="o">=</span> <span class="nb">list</span><span class="p">(</span><span class="nb">map</span><span class="p">(</span><span class="k">lambda</span> <span class="n">k</span><span class="p">:</span> <span class="n">k</span> <span class="o">-</span> <span class="mf">273.15</span><span class="p">,</span> <span class="n">ks</span><span class="p">))</span>   <span class="c1"># 一步到位转成列表</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">r</span><span class="p">)</span>                                   <span class="c1"># [11.85, 16.85, 26.85]</span>
+</pre></div>
+</div>
+<blockquote>
+<div><p><strong>气象场景一句话</strong>：<code class="docutils literal notranslate"><span class="pre">map</span></code>
+只是给了你一份「换算的借条」而不是现成的温度表；你不把它折成现钞（list），打印的永远是借条地址。</p>
+</div></blockquote>
+</section>
+<section id="filter-none-0-nan">
+<span id="filternone-0-nan"></span><h3>5.8.2 <code class="docutils literal notranslate"><span class="pre">filter(None,</span> <span class="pre">...)</span></code> 把 0℃（及 NaN）当假值删掉 → 静默丢数据<a class="headerlink" href="#filter-none-0-nan" title="Link to this heading">#</a></h3>
+<p><strong>现象 / 真实输出</strong>（实测）</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">rows</span> <span class="o">=</span> <span class="p">[</span><span class="mf">5.0</span><span class="p">,</span> <span class="mf">0.0</span><span class="p">,</span> <span class="o">-</span><span class="mf">3.5</span><span class="p">,</span> <span class="mf">8.0</span><span class="p">]</span>          <span class="c1"># 0.0 是有效观测</span>
+<span class="nb">list</span><span class="p">(</span><span class="nb">filter</span><span class="p">(</span><span class="kc">None</span><span class="p">,</span> <span class="n">rows</span><span class="p">))</span>               <span class="c1"># 无解析的 filter(None)</span>
+</pre></div>
+</div>
+<div class="highlight-text notranslate"><div class="highlight"><pre><span></span>filter(None) 结果: [5.0, -3.5, 8.0]       # 0.0 被误删！
+filter(x is not None): [5.0, 0.0, -3.5, 8.0]   # 正确保留 0.0
+</pre></div>
+</div>
+<p><strong>原因</strong> <code class="docutils literal notranslate"><span class="pre">filter(None,</span> <span class="pre">it)</span></code>
+会删掉<strong>所有假值</strong>（<code class="docutils literal notranslate"><span class="pre">0</span></code>、<code class="docutils literal notranslate"><span class="pre">0.0</span></code>、<code class="docutils literal notranslate"><span class="pre">&quot;&quot;</span></code>、<code class="docutils literal notranslate"><span class="pre">None</span></code>、<code class="docutils literal notranslate"><span class="pre">False</span></code>、<code class="docutils literal notranslate"><span class="pre">NaN</span></code>）。气象里
+0.0℃ 是完全正常的观测，NaN 才是缺测——用 <code class="docutils literal notranslate"><span class="pre">filter(None)</span></code> 会静默把 0℃
+及有效 0
+值全部剔掉，重新返回图就可能出「看起来平滑却少了真值」的假象（呼应通用指南
+0.5）。</p>
+<p><strong>解决办法</strong>：只要「去 None」就明确写 <code class="docutils literal notranslate"><span class="pre">x</span> <span class="pre">is</span> <span class="pre">not</span> <span class="pre">None</span></code>；只要「去
+NaN」就结合 <code class="docutils literal notranslate"><span class="pre">math.isnan</span></code>。</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span><span class="w"> </span><span class="nn">math</span>
+<span class="n">rows</span> <span class="o">=</span> <span class="p">[</span><span class="mf">5.0</span><span class="p">,</span> <span class="mf">0.0</span><span class="p">,</span> <span class="n">math</span><span class="o">.</span><span class="n">nan</span><span class="p">,</span> <span class="mf">8.0</span><span class="p">]</span>
+<span class="n">cleaned</span> <span class="o">=</span> <span class="p">[</span><span class="n">x</span> <span class="k">for</span> <span class="n">x</span> <span class="ow">in</span> <span class="n">rows</span> <span class="k">if</span> <span class="n">x</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span> <span class="ow">and</span> <span class="ow">not</span> <span class="p">(</span><span class="nb">isinstance</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="nb">float</span><span class="p">)</span> <span class="ow">and</span> <span class="n">math</span><span class="o">.</span><span class="n">isnan</span><span class="p">(</span><span class="n">x</span><span class="p">))]</span>
+<span class="c1"># [5.0, 0.0, 8.0]   —— 0.0 与 8.0 保留，仅 NaN 剔除</span>
+</pre></div>
+</div>
+<blockquote>
+<div><p><strong>气象场景一句话</strong>：<code class="docutils literal notranslate"><span class="pre">filter(None)</span></code>
+像一把「看见零便拔闸」的粗筛——它把你 0℃
+的最低温真观测当成了缺测扔进废纸篓，绝对零度那关倒瞪眼放行了。</p>
+</div></blockquote>
+</section>
+<section id="lambda-late-binding">
+<span id="id35"></span><h3>5.8.3 lambda 在循环里捕获变量 → 全都取到最后值（late binding）<a class="headerlink" href="#lambda-late-binding" title="Link to this heading">#</a></h3>
+<p><strong>现象 / 真实输出</strong>（实测）</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">funcs</span> <span class="o">=</span> <span class="p">[</span><span class="k">lambda</span><span class="p">:</span> <span class="n">i</span> <span class="o">*</span> <span class="mi">1</span> <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">3</span><span class="p">)]</span>
+<span class="p">[</span><span class="n">f</span><span class="p">()</span> <span class="k">for</span> <span class="n">f</span> <span class="ow">in</span> <span class="n">funcs</span><span class="p">]</span>            <span class="c1"># [2, 2, 2] 而不是 [0, 1, 2]</span>
+</pre></div>
+</div>
+<div class="highlight-text notranslate"><div class="highlight"><pre><span></span>all lambdas: [2, 2, 2]
+snapshot   : [0, 1, 2]
+</pre></div>
+</div>
+<p><strong>原因</strong> lambda（及普通闭包）是<strong>按名字晚绑定</strong>的：它记录的是变量
+<code class="docutils literal notranslate"><span class="pre">i</span></code> 的「引用」，等你在循环结束后调用时才去取值，所以所有 lambda
+共享同一个已到终值的 <code class="docutils literal notranslate"><span class="pre">i</span></code>（=2）。spikes 不报错，纯属「0.5 静默错」。</p>
+<p><strong>解决办法</strong>：用默认参数把当前值<strong>快照</strong>进 lambda：</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">funcs</span> <span class="o">=</span> <span class="p">[</span><span class="k">lambda</span> <span class="n">i</span><span class="o">=</span><span class="n">i</span><span class="p">:</span> <span class="n">i</span> <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">3</span><span class="p">)]</span>   <span class="c1"># 默认参数在定义时求值，等于拍了快照</span>
+<span class="nb">print</span><span class="p">([</span><span class="n">f</span><span class="p">()</span> <span class="k">for</span> <span class="n">f</span> <span class="ow">in</span> <span class="n">funcs</span><span class="p">])</span>                 <span class="c1"># [0, 1, 2]</span>
+</pre></div>
+</div>
+<blockquote>
+<div><p><strong>气象场景一句话</strong>：给每个时次登记「这次该用的雨量计读数」，lambda
+却只在整点过后才去翻表——于是所有时次都记成了最后一根雨量计的示数。</p>
+</div></blockquote>
+<hr class="docutils" />
+</section>
+</section>
+<section id="match-case-3-10">
+<span id="match-case310"></span><h2>5.9 match-case（3.10+，新增语法）<a class="headerlink" href="#match-case-3-10" title="Link to this heading">#</a></h2>
+<section id="case-syntaxerror-expected">
+<span id="id36"></span><h3>5.9.1 case 缺冒号 / 缩进错 → SyntaxError: expected ‘:’<a class="headerlink" href="#case-syntaxerror-expected" title="Link to this heading">#</a></h3>
+<p><strong>现象 / 真实报错信息</strong>（本机实测，编译期语法错误）</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="k">match</span> <span class="n">level</span><span class="p">:</span>
+    <span class="k">case</span> <span class="s1">&#39;大风&#39;</span>            <span class="c1"># 忘了冒号</span>
+        <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;预警!&#39;</span><span class="p">)</span>
+</pre></div>
+</div>
+<div class="highlight-text notranslate"><div class="highlight"><pre><span></span>    case &#39;大风&#39;
+             ^
+SyntaxError: expected &#39;:&#39;
+</pre></div>
+</div>
+<p><strong>原因</strong> <code class="docutils literal notranslate"><span class="pre">case</span></code>
+子句是独立代码块，末尾<strong>必须有冒号</strong>、内部要缩进，如同
+<code class="docutils literal notranslate"><span class="pre">if/for</span></code>。忘了冒号或缩进错了，解释器编译期直接
+<code class="docutils literal notranslate"><span class="pre">SyntaxError</span></code>（通用指南 0.3 家谱的
+<code class="docutils literal notranslate"><span class="pre">SyntaxError:</span> <span class="pre">expected</span> <span class="pre">':'</span></code>）。另注意：<code class="docutils literal notranslate"><span class="pre">match</span></code>/<code class="docutils literal notranslate"><span class="pre">case</span></code>
+是「软关键字」，需 Python ≥3.10；本课程环境
+met_p312（3.12）原生支持，但若在有同学仍用 3.8/3.9 的环境跑，会直接
+<code class="docutils literal notranslate"><span class="pre">SyntaxError:</span> <span class="pre">invalid</span> <span class="pre">syntax</span></code>。</p>
+<p><strong>解决办法</strong>：每个 <code class="docutils literal notranslate"><span class="pre">case</span></code> 带冒号、子句块缩进 4 格，末尾用
+<code class="docutils literal notranslate"><span class="pre">case</span> <span class="pre">_:</span></code> 兜底：</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="k">def</span><span class="w"> </span><span class="nf">warn</span><span class="p">(</span><span class="n">level</span><span class="p">):</span>
+    <span class="k">match</span> <span class="n">level</span><span class="p">:</span>
+        <span class="k">case</span> <span class="s2">&quot;大风&quot;</span><span class="p">:</span>
+            <span class="k">return</span> <span class="s2">&quot;黄色预警&quot;</span>
+        <span class="k">case</span><span class="w"> </span><span class="k">_</span><span class="p">:</span>                      <span class="c1"># 通配分支(兜底)</span>
+            <span class="k">return</span> <span class="s2">&quot;无预警&quot;</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">warn</span><span class="p">(</span><span class="s2">&quot;大风&quot;</span><span class="p">))</span>                   <span class="c1"># 黄色预警</span>
+</pre></div>
+</div>
+<blockquote>
+<div><p><strong>气象场景一句话</strong>：汛情分级对表（match-case）里，每一档「case
+级别：」结尾的冒号就像每个预警等级的封口——漏了它，整张分级表在编译那关就被打回。</p>
+</div></blockquote>
+</section>
+<section id="id37">
+<span id="id38"></span><h3>5.9.2 旧版本环境 / 变量未定义导致的 NameError（运行期提示）<a class="headerlink" href="#id37" title="Link to this heading">#</a></h3>
+<p><strong>现象 / 真实输出</strong>（实测）</p>
+<div class="highlight-text notranslate"><div class="highlight"><pre><span></span>Python 版本: 3.12.12
+NameError: name &#39;x&#39; is not defined
+</pre></div>
+</div>
+<p>在本环境上，<code class="docutils literal notranslate"><span class="pre">match</span> <span class="pre">x:</span></code> 里的 <code class="docutils literal notranslate"><span class="pre">x</span></code> 未定义 → <code class="docutils literal notranslate"><span class="pre">NameError</span></code>；而在
+&lt;3.10 的解释器里，<code class="docutils literal notranslate"><span class="pre">match</span></code> 起步就会 <code class="docutils literal notranslate"><span class="pre">SyntaxError</span></code>（无法运行到
+NameError）。</p>
+<p><strong>原因</strong> <code class="docutils literal notranslate"><span class="pre">match</span> <span class="pre">x:</span></code> 先要<strong>求值被匹配对象 ``x``</strong>。<code class="docutils literal notranslate"><span class="pre">x</span></code>
+没定义就是 <code class="docutils literal notranslate"><span class="pre">NameError</span></code>；环境版本不够高则是 <code class="docutils literal notranslate"><span class="pre">SyntaxError</span></code>——两者都是
+match-case 新手常见的两道门槛。</p>
+<p><strong>解决办法</strong>：先定义好被匹配对象；并确认解释器 ≥3.10（本课程环境
+met_p312 满足，直接在章节所用环境运行即可）：</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">level</span> <span class="o">=</span> <span class="s2">&quot;大风&quot;</span>                 <span class="c1"># 先定义 x</span>
+<span class="k">def</span><span class="w"> </span><span class="nf">warn</span><span class="p">(</span><span class="n">level</span><span class="p">):</span>
+    <span class="k">match</span> <span class="n">level</span><span class="p">:</span>
+        <span class="k">case</span> <span class="s2">&quot;大风&quot;</span><span class="p">:</span>
+            <span class="k">return</span> <span class="s2">&quot;黄色预警&quot;</span>
+        <span class="k">case</span><span class="w"> </span><span class="k">_</span><span class="p">:</span>
+            <span class="k">return</span> <span class="s2">&quot;无预警&quot;</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">warn</span><span class="p">(</span><span class="n">level</span><span class="p">))</span>             <span class="c1"># 黄色预警</span>
+</pre></div>
+</div>
+<blockquote>
+<div><p><strong>气象场景一句话</strong>：分级判定先得手里有「当前风力等级」这张牌——没拿到观测值（x
+未定义）自然无从匹配，版本太低（&lt;3.10）更是连牌桌都上不了。</p>
+</div></blockquote>
+<hr class="docutils" />
+</section>
+</section>
+<section id="repr-str">
+<span id="id39"></span><h2>5.10 魔法方法 <strong>repr</strong> / <strong>str</strong>（无报错，但难读）<a class="headerlink" href="#repr-str" title="Link to this heading">#</a></h2>
+<section id="repr-str-station-object-at-0x">
+<span id="reprstr-station-object-at-0x"></span><h3>5.10.1 没定义 <strong>repr</strong>/<strong>str</strong> → 打印全是 <code class="docutils literal notranslate"><span class="pre">&lt;Station</span> <span class="pre">object</span> <span class="pre">at</span> <span class="pre">0x...&gt;</span></code><a class="headerlink" href="#repr-str-station-object-at-0x" title="Link to this heading">#</a></h3>
+<p><strong>现象 / 真实输出</strong>（实测）</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="k">class</span><span class="w"> </span><span class="nc">Station</span><span class="p">:</span>
+    <span class="k">def</span><span class="w"> </span><span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">station_id</span><span class="p">,</span> <span class="n">name</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">station_id</span> <span class="o">=</span> <span class="n">station_id</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">name</span> <span class="o">=</span> <span class="n">name</span>
+
+<span class="n">s</span> <span class="o">=</span> <span class="n">Station</span><span class="p">(</span><span class="s2">&quot;52889&quot;</span><span class="p">,</span> <span class="s2">&quot;兰州&quot;</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">s</span><span class="p">)</span>          <span class="c1"># &lt;__main__.Station object at 0x...&gt;</span>
+</pre></div>
+</div>
+<div class="highlight-text notranslate"><div class="highlight"><pre><span></span>打印实例: &lt;__main__.Station object at 0x000002736F437F80&gt;
+str   : &lt;__main__.Station object at 0x000002736F437F80&gt;
+repr  : &lt;__main__.Station object at 0x000002736F437F80&gt;
+</pre></div>
+</div>
+<p>列表里一堆对象也一样（实测）：</p>
+<div class="highlight-text notranslate"><div class="highlight"><pre><span></span>[&lt;__main__.Station object at 0x0000026D0D9B1130&gt;, &lt;__main__.Station object at 0x0000026D0D9B11C0&gt;]
+</pre></div>
+</div>
+<p><strong>原因</strong> <code class="docutils literal notranslate"><span class="pre">__str__</span></code>（<code class="docutils literal notranslate"><span class="pre">print</span></code>/<code class="docutils literal notranslate"><span class="pre">str</span></code> 用）与 <code class="docutils literal notranslate"><span class="pre">__repr__</span></code>（无
+<code class="docutils literal notranslate"><span class="pre">str</span></code> 时也被 <code class="docutils literal notranslate"><span class="pre">print</span></code> 兜底引用，列表/调试里用）默认都只返回「类名 +
+内存地址」。不报错，但你在气象调试里完全不知道「这是哪座站、多少度」。</p>
+<p><strong>解决办法</strong>：实现 <code class="docutils literal notranslate"><span class="pre">__str__</span></code> 与
+<code class="docutils literal notranslate"><span class="pre">__repr__</span></code>，把台站关键字段打印出来。</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="k">class</span><span class="w"> </span><span class="nc">Station</span><span class="p">:</span>
+    <span class="k">def</span><span class="w"> </span><span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">station_id</span><span class="p">,</span> <span class="n">name</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">station_id</span> <span class="o">=</span> <span class="n">station_id</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">name</span> <span class="o">=</span> <span class="n">name</span>
+    <span class="k">def</span><span class="w"> </span><span class="fm">__repr__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>                      <span class="c1"># 调试用：明确的表示</span>
+        <span class="k">return</span> <span class="sa">f</span><span class="s2">&quot;&lt;Station </span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">station_id</span><span class="si">}</span><span class="s2"> </span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">name</span><span class="si">}</span><span class="s2">&gt;&quot;</span>
+    <span class="k">def</span><span class="w"> </span><span class="fm">__str__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>                       <span class="c1"># print 用（可省略，Python 用 __repr__ 兜底）</span>
+        <span class="k">return</span> <span class="sa">f</span><span class="s2">&quot;Station(</span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">name</span><span class="si">}</span><span class="s2">, </span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">station_id</span><span class="si">}</span><span class="s2">)&quot;</span>
+
+<span class="nb">print</span><span class="p">(</span><span class="n">Station</span><span class="p">(</span><span class="s2">&quot;52889&quot;</span><span class="p">,</span> <span class="s2">&quot;兰州&quot;</span><span class="p">))</span>              <span class="c1"># Station(兰州, 52889)</span>
+</pre></div>
+</div>
+<blockquote>
+<div><p><strong>气象场景一句话</strong>：不写 <code class="docutils literal notranslate"><span class="pre">__repr__</span></code>
+的输出像一串台站「坐标纸条」只写第几帧内存地址——你看到一堆地址却认不出哪张是兰州站，排障全靠猜。</p>
+</div></blockquote>
+<hr class="docutils" />
+</section>
+</section>
+<section id="id40">
+<span id="id41"></span><h2>5.11 本章高频速查表（关键词 → 原因 → 一句话修法）<a class="headerlink" href="#id40" title="Link to this heading">#</a></h2>
+<div class="pst-scrollable-table-container"><table class="table">
+<thead>
+<tr class="row-odd"><th class="head"><p>看到的关键词</p></th>
+<th class="head"><p>多数是什么坑</p></th>
+<th class="head"><p>一句话修法</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">takes</span> <span class="pre">3</span> <span class="pre">positional</span> <span class="pre">arguments</span> <span class="pre">but</span> <span class="pre">2</span> <span class="pre">were</span> <span class="pre">given</span></code></p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">__init__</span></code>/方法忘了
+<code class="docutils literal notranslate"><span class="pre">self</span></code>（实例被自动多塞一位）</p></td>
+<td><p>第一形参补 <code class="docutils literal notranslate"><span class="pre">self</span></code></p></td>
+</tr>
+<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">missing</span> <span class="pre">1</span> <span class="pre">required</span> <span class="pre">positional</span> <span class="pre">argument:</span> <span class="pre">'self'</span></code></p></td>
+<td><p>用 <code class="docutils literal notranslate"><span class="pre">类名.方法()</span></code> 没带实例</p></td>
+<td><p>改用 <code class="docutils literal notranslate"><span class="pre">实例.方法()</span></code> 或手动
+<code class="docutils literal notranslate"><span class="pre">类名.方法(实例)</span></code></p></td>
+</tr>
+<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">takes</span> <span class="pre">0</span> <span class="pre">positional</span> <span class="pre">arguments</span> <span class="pre">but</span> <span class="pre">1</span> <span class="pre">was</span> <span class="pre">given</span></code></p></td>
+<td><p>方法忘了 self 且无参</p></td>
+<td><p>方法加 <code class="docutils literal notranslate"><span class="pre">self</span></code></p></td>
+</tr>
+<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">'Station'</span> <span class="pre">object</span> <span class="pre">has</span> <span class="pre">no</span> <span class="pre">attribute</span> <span class="pre">'temp'</span></code></p></td>
+<td><p>属性没赋值 /
+名字(大小写/下划线)不一致</p></td>
+<td><p>先 <code class="docutils literal notranslate"><span class="pre">self.xxx=...</span></code>
+初始化，统一命名</p></td>
+</tr>
+<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">Station()</span> <span class="pre">takes</span> <span class="pre">no</span> <span class="pre">arguments</span></code></p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">__init__</span></code> 拼错或只有 self
+无参却传参</p></td>
+<td><p>检查双下划线写全、参数与调用匹配</p></td>
+</tr>
+<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">property</span> <span class="pre">'...'</span> <span class="pre">has</span> <span class="pre">no</span> <span class="pre">setter</span></code></p></td>
+<td><p>给只读 property 赋值</p></td>
+<td><p>补 <code class="docutils literal notranslate"><span class="pre">&#64;xxx.setter</span></code></p></td>
+</tr>
+<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">super().__init__</span></code> 相关 <code class="docutils literal notranslate"><span class="pre">AttributeError</span></code></p></td>
+<td><p>子类忘调用父类构造</p></td>
+<td><p>子类 <code class="docutils literal notranslate"><span class="pre">__init__</span></code> 里
+<code class="docutils literal notranslate"><span class="pre">super().__init__(...)</span></code></p></td>
+</tr>
+<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">'NoneType'</span> <span class="pre">object</span> <span class="pre">is</span> <span class="pre">not</span> <span class="pre">callable</span></code></p></td>
+<td><p>装饰器没 <code class="docutils literal notranslate"><span class="pre">return</span> <span class="pre">inner</span></code></p></td>
+<td><p>装饰器返回函数本身</p></td>
+</tr>
+<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">'int'</span> <span class="pre">object</span> <span class="pre">is</span> <span class="pre">not</span> <span class="pre">callable</span></code></p></td>
+<td><p>装饰器 <code class="docutils literal notranslate"><span class="pre">return</span> <span class="pre">wrapper()</span></code></p></td>
+<td><p>去掉括号 <code class="docutils literal notranslate"><span class="pre">return</span> <span class="pre">wrapper</span></code></p></td>
+</tr>
+<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">StopIteration</span></code></p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">next()</span></code> 把迭代器/生成器取完了</p></td>
+<td><p>用 <code class="docutils literal notranslate"><span class="pre">for</span></code> 或先判断耗尽</p></td>
+</tr>
+<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">StopIteration.value</span></code></p></td>
+<td><p>生成器 <code class="docutils literal notranslate"><span class="pre">return</span> <span class="pre">值</span></code>
+的值藏在异常里</p></td>
+<td><p>需要返回值就别用生成器</p></td>
+</tr>
+<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">'NoneType'</span> <span class="pre">object</span> <span class="pre">is</span> <span class="pre">not</span> <span class="pre">an</span> <span class="pre">iterator</span></code></p></td>
+<td><p>函数里没 <code class="docutils literal notranslate"><span class="pre">yield</span></code> 却被当生成器</p></td>
+<td><p>函数体加 <code class="docutils literal notranslate"><span class="pre">yield</span></code></p></td>
+</tr>
+<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">NameError:</span> <span class="pre">name</span> <span class="pre">'...'</span> <span class="pre">is</span> <span class="pre">not</span> <span class="pre">defined</span></code></p></td>
+<td><p>推导式/代码里变量没定义或拼错</p></td>
+<td><p>核对变量名可在推导式结果处访问</p></td>
+</tr>
+<tr class="row-odd"><td><p>推印 <code class="docutils literal notranslate"><span class="pre">&lt;map</span> <span class="pre">object</span> <span class="pre">at</span> <span class="pre">0x...&gt;</span></code></p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">map</span></code>/<code class="docutils literal notranslate"><span class="pre">filter</span></code> 惰性、忘消费</p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">list(map(...))</span></code></p></td>
+</tr>
+<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">filter(None)</span></code> 结果少了 0/0.0</p></td>
+<td><p>假值误删有效观测</p></td>
+<td><p>用 <code class="docutils literal notranslate"><span class="pre">x</span> <span class="pre">is</span> <span class="pre">not</span> <span class="pre">None</span></code> 而非
+<code class="docutils literal notranslate"><span class="pre">filter(None)</span></code></p></td>
+</tr>
+<tr class="row-odd"><td><p>lambda 全取最后一个值</p></td>
+<td><p>闭包晚绑定</p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">lambda</span> <span class="pre">i=i:</span> <span class="pre">...</span></code> 默认参数快照</p></td>
+</tr>
+<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">SyntaxError:</span> <span class="pre">expected</span> <span class="pre">':'</span></code></p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">case</span></code> 忘冒号 / 缩进错</p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">case</span> <span class="pre">值:</span></code> + 子句缩进 4 格</p></td>
+</tr>
+<tr class="row-odd"><td><p>打印 <code class="docutils literal notranslate"><span class="pre">&lt;Station</span> <span class="pre">object</span> <span class="pre">at</span> <span class="pre">0x...&gt;</span></code></p></td>
+<td><p>没写 <code class="docutils literal notranslate"><span class="pre">__repr__</span></code>/<code class="docutils literal notranslate"><span class="pre">__str__</span></code></p></td>
+<td><p>定义 <code class="docutils literal notranslate"><span class="pre">__repr__</span></code>
+展示台站关键字段</p></td>
+</tr>
+</tbody>
+</table>
+</div>
+<blockquote>
+<div><p>定位小抄：<strong>先看最后一个 ``ErrorType`` 与报错行</strong>（通用指南
+0.1/0.2），<code class="docutils literal notranslate"><span class="pre">TypeError</span></code> 查参数个数与类型，<code class="docutils literal notranslate"><span class="pre">AttributeError</span></code>
+查属性/方法名，<code class="docutils literal notranslate"><span class="pre">NameError</span></code> 查名字定义，<code class="docutils literal notranslate"><span class="pre">SyntaxError</span></code>
+查标点/缩进/冒号，<code class="docutils literal notranslate"><span class="pre">StopIteration</span></code> 查迭代器是否耗尽。</p>
+</div></blockquote>
+</section>
+</section>
+
+
+                </article>
+              
+              
+              
+              
+              
+                <footer class="prev-next-footer d-print-none">
+                  
+<div class="prev-next-area">
+    <a class="left-prev"
+       href="04-%E5%87%BD%E6%95%B0%E4%BD%9C%E7%94%A8%E5%9F%9F%E6%A8%A1%E5%9D%97%E5%8C%85-QA.html"
+       title="上一页">
+      <i class="fa-solid fa-angle-left"></i>
+      <div class="prev-next-info">
+        <p class="prev-next-subtitle">上一页</p>
+        <p class="prev-next-title">函数、变量作用域、模块与包 Q&amp;A</p>
+      </div>
+    </a>
+    <a class="right-next"
+       href="../data/index.html"
+       title="下一页">
+      <div class="prev-next-info">
+        <p class="prev-next-subtitle">下一页</p>
+        <p class="prev-next-title">模块二 气象数据处理（常见问题 Q&amp;A）</p>
+      </div>
+      <i class="fa-solid fa-angle-right"></i>
+    </a>
+</div>
+                </footer>
+              
+            </div>
+            
+            
+              
+                <dialog id="pst-secondary-sidebar-modal"></dialog>
+                <div id="pst-secondary-sidebar" class="bd-sidebar-secondary bd-toc"><div class="sidebar-secondary-items sidebar-secondary__inner">
+
+
+  <div class="sidebar-secondary-item">
+<div
+    id="pst-page-navigation-heading-2"
+    class="page-toc tocsection onthispage">
+    <i class="fa-solid fa-list"></i> 当前页面
+  </div>
+  <nav id="pst-page-toc-nav" class="page-toc" aria-labelledby="pst-page-navigation-heading-2">
+    <ul class="pst-show_toc_level nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id1">5.0 本章报错总览表</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#self">5.1 self 与实例方法（本章最高频区）</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#init-self-takes-positional-arguments">5.1.1 <code class="docutils literal notranslate"><span class="pre">__init__</span></code> 忘了写 <code class="docutils literal notranslate"><span class="pre">self</span></code> → takes … positional arguments</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#self-takes-0-positional-arguments-but-1-was-given">5.1.2 普通方法忘写 <code class="docutils literal notranslate"><span class="pre">self</span></code> → takes 0 positional arguments but 1 was given</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#station-info-missing-self">5.1.3 用类名直接调方法（<code class="docutils literal notranslate"><span class="pre">Station.info()</span></code>）→ missing … ‘self’</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#id6">5.1.4 方法第一参数命名非 <code class="docutils literal notranslate"><span class="pre">self</span></code>（占了位置）→ 参数错位</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#attributeerror">5.2 属性：实例属性、命名、伪私有（多报 AttributeError）</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#self-attributeerror-has-no-attribute">5.2.1 只写 <code class="docutils literal notranslate"><span class="pre">self.属性</span></code> 却没定义 → AttributeError has no attribute</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#id10">5.2.2 属性命名：大小写 / 下划线不一致 → AttributeError</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#init-init-init-station-takes-no-arguments">5.2.3 <code class="docutils literal notranslate"><span class="pre">__init__</span></code> 拼错（写成 <code class="docutils literal notranslate"><span class="pre">__init</span></code> / <code class="docutils literal notranslate"><span class="pre">_init_</span></code>）→ Station() takes no arguments</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#id13">5.2.4 外部直接访问 <code class="docutils literal notranslate"><span class="pre">__私有属性</span></code> → AttributeError（伪私有）</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#vs">5.2.5 类共享属性 vs 实例私有属性 混淆（无报错但结果不对）</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id16">5.3 类的继承</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#init-super-init">5.3.1 子类重写 <code class="docutils literal notranslate"><span class="pre">__init__</span></code> 后忘 <code class="docutils literal notranslate"><span class="pre">super().__init__</span></code> → 父类属性缺失</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#property-classmethod-staticmethod">5.4 @property、@classmethod、@staticmethod</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#property-attributeerror-has-no-setter">5.4.1 向只读 property 赋值 → AttributeError: has no setter</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#classmethod-cls">5.4.2 @classmethod：少传参数 / 忘了写 cls</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#staticmethod">5.4.3 @staticmethod：实例/类两种调用都合法（对照，正常现象）</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#return">5.5 装饰器（@ 忘写 / 忘 return / 层级不足）</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#return-inner-nonetype-object-is-not-callable">5.5.1 装饰器忘写 <code class="docutils literal notranslate"><span class="pre">@</span></code> / 忘 <code class="docutils literal notranslate"><span class="pre">return</span> <span class="pre">inner</span></code> → ‘NoneType’ object is not callable</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#return-wrapper-return-wrapper">5.5.2 装饰器里写 <code class="docutils literal notranslate"><span class="pre">return</span> <span class="pre">wrapper()</span></code> 而非 <code class="docutils literal notranslate"><span class="pre">return</span> <span class="pre">wrapper</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#missing-func">5.5.3 带参数的装饰器只写了两层 → missing … ‘func’</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#yield">5.6 生成器（yield 的脾气）</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#next-stopiteration">5.6.1 <code class="docutils literal notranslate"><span class="pre">next()</span></code> 把生成器取尽 → StopIteration</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#return-stopiteration-value">5.6.2 生成器内 <code class="docutils literal notranslate"><span class="pre">return</span> <span class="pre">值</span></code> → 值藏在 StopIteration.value</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#yield-none">5.6.3 忘 <code class="docutils literal notranslate"><span class="pre">yield</span></code> 当生成器用 → 返回 None / 不是迭代器</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id29">5.7 列表推导式（作用域/命名）</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#nameerror">5.7.1 推导式引用未定义变量 → NameError</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#nameerror-python-3">5.7.2 类体内推导式访问外层类属性 → NameError（Python 3 特有）</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#python-3">5.7.3 推导式遮蔽外层同名变量（Python 3 行为，对照说明）</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#map-filter-lambda">5.8 函数式：map / filter / lambda（多半「无报错但错」）</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#map-filter-list-map-object-at-0x">5.8.1 <code class="docutils literal notranslate"><span class="pre">map</span></code> / <code class="docutils literal notranslate"><span class="pre">filter</span></code> 忘 <code class="docutils literal notranslate"><span class="pre">list()</span></code> → 打印 <code class="docutils literal notranslate"><span class="pre">&lt;map</span> <span class="pre">object</span> <span class="pre">at</span> <span class="pre">0x...&gt;</span></code>（惰性）</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#filter-none-0-nan">5.8.2 <code class="docutils literal notranslate"><span class="pre">filter(None,</span> <span class="pre">...)</span></code> 把 0℃（及 NaN）当假值删掉 → 静默丢数据</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#lambda-late-binding">5.8.3 lambda 在循环里捕获变量 → 全都取到最后值（late binding）</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#match-case-3-10">5.9 match-case（3.10+，新增语法）</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#case-syntaxerror-expected">5.9.1 case 缺冒号 / 缩进错 → SyntaxError: expected ‘:’</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#id37">5.9.2 旧版本环境 / 变量未定义导致的 NameError（运行期提示）</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#repr-str">5.10 魔法方法 <strong>repr</strong> / <strong>str</strong>（无报错，但难读）</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#repr-str-station-object-at-0x">5.10.1 没定义 <strong>repr</strong>/<strong>str</strong> → 打印全是 <code class="docutils literal notranslate"><span class="pre">&lt;Station</span> <span class="pre">object</span> <span class="pre">at</span> <span class="pre">0x...&gt;</span></code></a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id40">5.11 本章高频速查表（关键词 → 原因 → 一句话修法）</a></li>
+</ul>
+  </nav></div>
+
+</div></div>
+              
+            
+          </div>
+          <footer class="bd-footer-content">
+            
+          </footer>
+        
+      </main>
+    </div>
+  </div>
+  
+  <!-- Scripts loaded after <body> so the DOM is not blocked -->
+  <script defer src="../../_static/scripts/bootstrap.js?digest=90905a2f556bf617f1a9"></script>
+<script defer src="../../_static/scripts/pydata-sphinx-theme.js?digest=90905a2f556bf617f1a9"></script>
+
+  <footer class="bd-footer">
+<div class="bd-footer__inner bd-page-width">
+  
+    <div class="footer-items__start">
+      
+        <div class="footer-item">
+
+  <p class="copyright">
+    
+      © Copyright 2026, 兰州大学大气科学学院编程社区.
+      <br/>
+    
+  </p>
+</div>
+      
+        <div class="footer-item">
+
+  <p class="sphinx-version">
+    由 <a href="https://www.sphinx-doc.org/">Sphinx</a> 8.2.3创建。
+    <br/>
+  </p>
+</div>
+      
+    </div>
+  
+  
+  
+    <div class="footer-items__end">
+      
+        <div class="footer-item">
+<p class="theme-version">
+  <!-- # L10n: Setting the PST URL as an argument as this does not need to be localized -->
+  使用 <a href="https://pydata-sphinx-theme.readthedocs.io/en/stable/index.html">PyData Sphinx Theme</a> 0.20.0构建.
+</p></div>
+      
+    </div>
+  
+</div>
+
+  </footer>
+  </body>
+</html>

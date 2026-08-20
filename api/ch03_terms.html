@@ -1,0 +1,574 @@
+
+<!DOCTYPE html>
+
+
+<html lang="zh-CN" data-content_root="../" >
+
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
+    <title>第 3 章术语：分支、循环与条件 &#8212; MeteoPython</title>
+  
+  
+  
+  <script data-cfasync="false">
+    document.documentElement.dataset.mode = localStorage.getItem("mode") || "";
+    document.documentElement.dataset.theme = localStorage.getItem("theme") || "";
+  </script>
+  <!--
+    this give us a css class that will be invisible only if js is disabled
+  -->
+  <noscript>
+    <style>
+      .pst-js-only { display: none !important; }
+
+    </style>
+  </noscript>
+  
+  <!-- Loaded before other Sphinx assets -->
+  <link href="../_static/styles/theme.css?digest=90905a2f556bf617f1a9" rel="stylesheet" />
+<link href="../_static/styles/pydata-sphinx-theme.css?digest=90905a2f556bf617f1a9" rel="stylesheet" />
+
+    <link rel="stylesheet" type="text/css" href="../_static/pygments.css?v=8f2a1f02" />
+    <link rel="stylesheet" type="text/css" href="../_static/copybutton.css?v=76b2166b" />
+    <link rel="stylesheet" type="text/css" href="../_static/sg_gallery.css?v=fd6457a4" />
+    <link rel="stylesheet" type="text/css" href="../_static/sg_gallery-binder.css?v=f4aeca0c" />
+    <link rel="stylesheet" type="text/css" href="../_static/sg_gallery-dataframe.css?v=2082cf3c" />
+    <link rel="stylesheet" type="text/css" href="../_static/sg_gallery-rendered-html.css?v=1277b6f3" />
+    <link rel="stylesheet" type="text/css" href="../_static/sphinx-design.min.css?v=95c83b7e" />
+    <link rel="stylesheet" type="text/css" href="../_static/./custom.css?v=fbe1f034" />
+  
+  <!-- So that users can add custom icons -->
+  <script defer src="../_static/scripts/fontawesome.js?digest=90905a2f556bf617f1a9"></script>
+  <!-- Pre-loaded scripts that we'll load fully later -->
+  <link rel="preload" as="script" href="../_static/scripts/bootstrap.js?digest=90905a2f556bf617f1a9" />
+<link rel="preload" as="script" href="../_static/scripts/pydata-sphinx-theme.js?digest=90905a2f556bf617f1a9" />
+
+    <script src="../_static/documentation_options.js?v=9becfed8"></script>
+    <script src="../_static/doctools.js?v=9bcbadda"></script>
+    <script src="../_static/sphinx_highlight.js?v=dc90522c"></script>
+    <script src="../_static/sg-tags.js?v=d80f6fa4"></script>
+    <script src="../_static/clipboard.min.js?v=a7894cd8"></script>
+    <script src="../_static/copybutton.js?v=fd10adb8"></script>
+    <script src="../_static/translations.js?v=beaddf03"></script>
+    <script src="../_static/design-tabs.js?v=f930bc37"></script>
+    <script>DOCUMENTATION_OPTIONS.pagename = 'api/ch03_terms';</script>
+    <script>
+        DOCUMENTATION_OPTIONS.theme_version = '0.20.0';
+        DOCUMENTATION_OPTIONS.theme_switcher_json_url = '_static/switcher.json';
+        DOCUMENTATION_OPTIONS.theme_switcher_version_match = '0.1.0';
+        DOCUMENTATION_OPTIONS.show_version_warning_banner =
+            false;
+        </script>
+    <script>DOCUMENTATION_OPTIONS.search_as_you_type = false;</script>
+    <link rel="icon" href="../_static/favicon.svg"/>
+    <link rel="index" title="索引" href="../genindex.html" />
+    <link rel="search" title="搜索" href="../search.html" />
+    <link rel="next" title="第 4 章术语：函数及变量作用域、模块和包" href="ch04_terms.html" />
+    <link rel="prev" title="第 2 章术语：基本数据类型、变量和运算符" href="ch02_terms.html" />
+  <meta name="viewport" content="width=device-width, initial-scale=1"/>
+  <meta name="docsearch:language" content="zh-CN"/>
+  <meta name="docsearch:version" content="0.1" />
+    <meta name="docbuild:last-update" content="2026-08-20"/>
+  
+    
+    <script src="../_static/searchtools.js"></script>
+    <script src="../_static/language_data.js"></script>
+    <script src="../searchindex.js"></script>
+  
+  </head>
+  <body data-default-mode="">
+  
+  
+  <div id="pst-skip-link" class="skip-link d-print-none"><a href="#main-content">跳转至主要内容</a></div>
+
+  
+  <div id="pst-scroll-pixel-helper"></div>
+  
+  <button type="button" class="btn rounded-pill" id="pst-back-to-top">
+    <i class="fa-solid fa-arrow-up"></i>回到顶部</button>
+  
+  
+  
+  
+  <dialog id="pst-search-dialog">
+    
+<form class="bd-search d-flex align-items-center"
+      action="../search.html"
+      method="get">
+  <i class="fa-solid fa-magnifying-glass"></i>
+  <input type="search"
+         class="form-control"
+         name="q"
+         placeholder="搜索文档…"
+         aria-label="搜索文档…"
+         autocomplete="off"
+         autocorrect="off"
+         autocapitalize="off"
+         spellcheck="false"/>
+  <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd>K</kbd></span>
+</form>
+  </dialog>
+
+  <div class="pst-async-banner-revealer d-none">
+  <aside id="bd-header-version-warning" class="d-none d-print-none" aria-label="版本警告"></aside>
+</div>
+
+  
+    <header id="pst-header" class="bd-header navbar navbar-expand-lg bd-navbar d-print-none">
+<div class="bd-header__inner bd-page-width">
+  <button class="pst-navbar-icon sidebar-toggle primary-toggle" aria-label="网页导航">
+    <span class="fa-solid fa-bars"></span>
+  </button>
+  
+  
+  <div class="col-lg-3 navbar-header-items__start">
+    
+      <div class="navbar-item">
+
+  
+    
+  
+
+<a class="navbar-brand logo" href="../index.html">
+  
+  
+  
+  
+  
+    
+    
+      
+    
+    
+    <img src="../_static/logo.svg" class="logo__image only-light" alt="MeteoPython - Home"/>
+    <img src="../_static/logo.svg" class="logo__image only-dark pst-js-only" alt="MeteoPython - Home"/>
+  
+  
+</a></div>
+    
+  </div>
+  
+  <div class="col-lg-9 navbar-header-items">
+    
+    <div class="me-auto navbar-header-items__center">
+      
+        <div class="navbar-item">
+<nav>
+  <ul class="bd-navbar-elements navbar-nav">
+    
+<li class="nav-item ">
+  <a class="nav-link nav-internal" href="../user_guide/index.html">
+    教程
+  </a>
+</li>
+
+
+<li class="nav-item ">
+  <a class="nav-link nav-internal" href="../tutorials/index.html">
+    练习
+  </a>
+</li>
+
+
+<li class="nav-item ">
+  <a class="nav-link nav-internal" href="../gallery/index.html">
+    示例
+  </a>
+</li>
+
+
+<li class="nav-item current active">
+  <a class="nav-link nav-internal" href="index.html">
+    术语参考
+  </a>
+</li>
+
+
+<li class="nav-item ">
+  <a class="nav-link nav-internal" href="../qa/index.html">
+    常见问题 Q&A
+  </a>
+</li>
+
+  </ul>
+</nav></div>
+      
+    </div>
+    
+    
+    <div class="navbar-header-items__end">
+      
+        <div class="navbar-item navbar-persistent--container">
+          
+
+<button class="btn search-button-field search-button__button pst-js-only" title="搜索" aria-label="搜索" data-bs-placement="bottom" data-bs-toggle="tooltip">
+ <i class="fa-solid fa-magnifying-glass"></i>
+ <span class="search-button__default-text">搜索</span>
+ <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd class="kbd-shortcut__modifier">K</kbd></span>
+</button>
+        </div>
+      
+      
+        <div class="navbar-item">
+
+<div class="theme-switch-container dropdown pst-js-only" data-bs-toggle="tooltip" data-bs-placement="bottom" title="Color mode">
+  <button class="btn btn-sm nav-link pst-navbar-icon theme-switch-button dropdown-toggle" aria-label="Color mode" data-bs-toggle="dropdown">
+    <i class="theme-switch fa-solid fa-sun fa-lg fa-fw" data-mode="light" title="亮色"></i>
+    <i class="theme-switch fa-solid fa-moon fa-lg fa-fw" data-mode="dark" title="暗色"></i>
+    <i class="theme-switch fa-solid fa-circle-half-stroke fa-lg fa-fw" data-mode="auto" title="System Settings"></i>
+  </button>
+  <ul class="dropdown-menu dropdown-menu-end">
+    <li><button class="dropdown-item d-flex align-items-center theme-change-button" data-mode="auto"><i class="fa-solid fa-circle-half-stroke fa-lg fa-fw me-1"></i>System Settings</button></li>
+    <li><button class="dropdown-item d-flex align-items-center theme-change-button" data-mode="light"><i class="fa-solid fa-sun fa-lg fa-fw me-1"></i>亮色</button></li>
+    <li><button class="dropdown-item d-flex align-items-center theme-change-button" data-mode="dark"><i class="fa-solid fa-moon fa-lg fa-fw me-1"></i>暗色</button></li>
+  </ul>
+</div></div>
+      
+        <div class="navbar-item"><ul class="navbar-icon-links"
+    aria-label="Icon Links">
+</ul></div>
+      
+    </div>
+    
+  </div>
+  
+  
+    <div class="navbar-persistent--mobile">
+
+<button class="btn search-button-field search-button__button pst-js-only" title="搜索" aria-label="搜索" data-bs-placement="bottom" data-bs-toggle="tooltip">
+ <i class="fa-solid fa-magnifying-glass"></i>
+ <span class="search-button__default-text">搜索</span>
+ <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd class="kbd-shortcut__modifier">K</kbd></span>
+</button>
+    </div>
+  
+
+  
+</div>
+
+    </header>
+  
+
+  <div class="bd-container">
+    <div class="bd-container__inner bd-page-width">
+      
+      
+      
+      <dialog id="pst-primary-sidebar-modal"></dialog>
+      <div id="pst-primary-sidebar" class="bd-sidebar-primary bd-sidebar">
+        
+
+  
+  <div class="sidebar-header-items sidebar-primary__section">
+    
+    
+      <div class="sidebar-header-items__center">
+        
+          
+          
+            <div class="navbar-item">
+<nav>
+  <ul class="bd-navbar-elements navbar-nav">
+    
+<li class="nav-item ">
+  <a class="nav-link nav-internal" href="../user_guide/index.html">
+    教程
+  </a>
+</li>
+
+
+<li class="nav-item ">
+  <a class="nav-link nav-internal" href="../tutorials/index.html">
+    练习
+  </a>
+</li>
+
+
+<li class="nav-item ">
+  <a class="nav-link nav-internal" href="../gallery/index.html">
+    示例
+  </a>
+</li>
+
+
+<li class="nav-item current active">
+  <a class="nav-link nav-internal" href="index.html">
+    术语参考
+  </a>
+</li>
+
+
+<li class="nav-item ">
+  <a class="nav-link nav-internal" href="../qa/index.html">
+    常见问题 Q&A
+  </a>
+</li>
+
+  </ul>
+</nav></div>
+          
+        
+      </div>
+    
+    
+    
+      <div class="sidebar-header-items__end">
+        
+          <div class="navbar-item">
+
+<div class="theme-switch-container dropdown pst-js-only" data-bs-toggle="tooltip" data-bs-placement="bottom" title="Color mode">
+  <button class="btn btn-sm nav-link pst-navbar-icon theme-switch-button dropdown-toggle" aria-label="Color mode" data-bs-toggle="dropdown">
+    <i class="theme-switch fa-solid fa-sun fa-lg fa-fw" data-mode="light" title="亮色"></i>
+    <i class="theme-switch fa-solid fa-moon fa-lg fa-fw" data-mode="dark" title="暗色"></i>
+    <i class="theme-switch fa-solid fa-circle-half-stroke fa-lg fa-fw" data-mode="auto" title="System Settings"></i>
+  </button>
+  <ul class="dropdown-menu dropdown-menu-end">
+    <li><button class="dropdown-item d-flex align-items-center theme-change-button" data-mode="auto"><i class="fa-solid fa-circle-half-stroke fa-lg fa-fw me-1"></i>System Settings</button></li>
+    <li><button class="dropdown-item d-flex align-items-center theme-change-button" data-mode="light"><i class="fa-solid fa-sun fa-lg fa-fw me-1"></i>亮色</button></li>
+    <li><button class="dropdown-item d-flex align-items-center theme-change-button" data-mode="dark"><i class="fa-solid fa-moon fa-lg fa-fw me-1"></i>暗色</button></li>
+  </ul>
+</div></div>
+        
+          <div class="navbar-item"><ul class="navbar-icon-links"
+    aria-label="Icon Links">
+</ul></div>
+        
+      </div>
+    
+  </div>
+  
+    <div class="sidebar-primary-items__start sidebar-primary__section">
+        <div class="sidebar-primary-item pst-sidebar-collapse"><button id="pst-collapse-sidebar-button" aria-expanded="true" aria-controls="pst-primary-sidebar">
+  <svg class="pst-icon" role="img" aria-hidden="true" focusable="false" viewBox="0 0 16 16" xmlns="http://www.w3.org/2000/svg">
+    <path fill="currentColor" d="M3 15.5C2.36232 15.5 1.74874 15.2564 1.28478 14.8189C0.820828 14.3815 0.541576 13.7832 0.504167 13.1467L0.5 13L0.5 3C0.499965 2.36232 0.743605 1.74874 1.18107 1.28478C1.61854 0.820828 2.21676 0.541576 2.85333 0.504167L3 0.5L13 0.5C13.6377 0.499965 14.2513 0.743605 14.7152 1.18107C15.1792 1.61854 15.4584 2.21676 15.4958 2.85333L15.5 3L15.5 13C15.5 13.6377 15.2564 14.2513 14.8189 14.7152C14.3815 15.1792 13.7832 15.4584 13.1467 15.4958L13 15.5L3 15.5ZM3 13.8333L10.5 13.8333L10.5 2.16667L3 2.16667C2.79589 2.16669 2.59889 2.24163 2.44636 2.37726C2.29383 2.5129 2.19638 2.69979 2.1725 2.9025L2.16667 3L2.16667 13C2.16669 13.2041 2.24163 13.4011 2.37726 13.5536C2.5129 13.7062 2.69979 13.8036 2.9025 13.8275L3 13.8333ZM6.65583 10.325L6.5775 10.2558L4.91083 8.58917C4.76735 8.44567 4.68116 8.25476 4.66843 8.05223C4.65569 7.84971 4.71729 7.6495 4.84167 7.48917L4.91083 7.41083L6.5775 5.74417C6.72747 5.59471 6.9287 5.50794 7.14032 5.50148C7.35194 5.49502 7.55809 5.56935 7.7169 5.70937C7.8757 5.8494 7.97525 6.04463 7.99533 6.25539C8.01541 6.46616 7.95451 6.67667 7.825 6.84417L7.75583 6.9225L6.67917 8L7.75583 9.0775C7.89931 9.22099 7.98551 9.41191 7.99824 9.61443C8.01097 9.81695 7.94938 10.0172 7.825 10.1775L7.75583 10.2558C7.61234 10.3993 7.42142 10.4855 7.2189 10.4982C7.01638 10.511 6.81617 10.4494 6.65583 10.325Z"/>
+  </svg>
+  <span class="pst-collapse-sidebar-label">Collapse Sidebar</span>
+  <span class="pst-expand-sidebar-label">Expand Sidebar</span>
+</button></div>
+        <div class="sidebar-primary-item">
+
+<nav class="bd-docs-nav bd-links"
+     aria-label="章节导航">
+  <p class="bd-links__title" role="heading" aria-level="1">章节导航</p>
+  <div class="bd-toc-item navbar-nav"><ul class="current nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="ch01_terms.html">第 1 章术语：Python 简介及安装环境</a></li>
+<li class="toctree-l1"><a class="reference internal" href="ch02_terms.html">第 2 章术语：基本数据类型、变量和运算符</a></li>
+<li class="toctree-l1 current active"><a class="current reference internal" href="#">第 3 章术语：分支、循环与条件</a></li>
+<li class="toctree-l1"><a class="reference internal" href="ch04_terms.html">第 4 章术语：函数及变量作用域、模块和包</a></li>
+<li class="toctree-l1"><a class="reference internal" href="ch05_terms.html">第 5 章术语：面向对象与高级语法</a></li>
+<li class="toctree-l1"><a class="reference internal" href="ch06_terms.html">第 6 章术语：气象数据计算 NumPy</a></li>
+<li class="toctree-l1"><a class="reference internal" href="ch07_terms.html">第 7 章术语：气象数据分析（一）Pandas</a></li>
+<li class="toctree-l1"><a class="reference internal" href="ch08_terms.html">第 8 章术语：气象数据分析（二）Xarray</a></li>
+<li class="toctree-l1"><a class="reference internal" href="ch09_terms.html">第 9 章术语：Matplotlib 绘图</a></li>
+</ul>
+</div>
+</nav></div>
+    </div>
+  
+  
+  <div class="sidebar-primary-items__end sidebar-primary__section">
+      <div class="sidebar-primary-item">
+<div id="ethical-ad-placement"
+      class="flat"
+      data-ea-publisher="readthedocs"
+      data-ea-type="readthedocs-sidebar"
+      data-ea-manual="true">
+</div></div>
+  </div>
+
+
+      </div>
+      
+      <main id="main-content" class="bd-main" role="main">
+        
+        
+          <div class="bd-content">
+            <div class="bd-article-container">
+              
+              <div class="bd-header-article d-print-none">
+<div class="header-article-items header-article__inner">
+  
+    <div class="header-article-items__start">
+      
+        <div class="header-article-item">
+
+<nav aria-label="Breadcrumb" class="d-print-none">
+  <ul class="bd-breadcrumbs">
+    
+    <li class="breadcrumb-item breadcrumb-home">
+      <a href="../index.html" class="nav-link" aria-label="初始页面">
+        <i class="fa-solid fa-home"></i>
+      </a>
+    </li>
+    
+    <li class="breadcrumb-item"><a href="index.html" class="nav-link">术语参考</a></li>
+    
+    <li class="breadcrumb-item active" aria-current="page"><span class="ellipsis">第 3 章术语：分支、循环与条件</span></li>
+  </ul>
+</nav>
+</div>
+      
+    </div>
+  
+  
+</div>
+</div>
+              
+              
+              
+                
+<div id="searchbox"></div>
+                <article class="bd-article">
+                  
+  <section id="id1">
+<h1>第 3 章术语：分支、循环与条件<a class="headerlink" href="#id1" title="Link to this heading">#</a></h1>
+<p>配套 <a class="reference internal" href="../user_guide/basics/flow.html#tut-flow"><span class="std std-ref">分支、条件与循环</span></a> 正文使用。每个词条 = 一句话定义 + <strong>生活类比</strong> + <strong>代码示例</strong> + <strong>易混淆点</strong>。本章术语围绕&quot;让程序做选择、重复做事&quot;展开，理解它们你才能写出&quot;会思考&quot;的气象程序。</p>
+<div class="admonition seealso">
+<p class="admonition-title">参见</p>
+<p>配套正文：<a class="reference internal" href="../user_guide/basics/flow.html"><span class="doc">分支、条件与循环</span></a>　·　配套练习：<a class="reference internal" href="../tutorials/basics/ch03_practice.html"><span class="doc">第 3 章练习：分支、循环与条件</span></a></p>
+</div>
+<dl class="glossary">
+<dt id="term-0">条件表达式<a class="headerlink" href="#term-0" title="Link to this term">#</a></dt><dd><p>用于判断真假的表达式，返回布尔值 <code class="docutils literal notranslate"><span class="pre">True</span></code> / <code class="docutils literal notranslate"><span class="pre">False</span></code>，作为 <code class="docutils literal notranslate"><span class="pre">if</span></code> 分支的判断依据。它可以是比较（<code class="docutils literal notranslate"><span class="pre">temp</span> <span class="pre">&gt;=</span> <span class="pre">35</span></code>）、逻辑组合或成员判断。</p>
+<p><strong>生活类比</strong> —— &quot;如果下雨，就带伞&quot;——&quot;下雨&quot;就是条件表达式，成立就执行对应动作。防洪预警里&quot;未来 24 小时降雨量 ≥ 50 mm&quot;，也是一条条件表达式。</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">temp</span> <span class="o">=</span> <span class="mf">36.2</span>
+<span class="k">if</span> <span class="n">temp</span> <span class="o">&gt;=</span> <span class="mi">35</span><span class="p">:</span>            <span class="c1"># temp &gt;= 35 就是条件表达式</span>
+    <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;发布高温预警&quot;</span><span class="p">)</span>
+</pre></div>
+</div>
+<p><strong>易混淆点</strong> —— ① <code class="docutils literal notranslate"><span class="pre">=</span></code> 是赋值，<code class="docutils literal notranslate"><span class="pre">==</span></code> 才是相等判断，<code class="docutils literal notranslate"><span class="pre">if</span> <span class="pre">temp</span> <span class="pre">=</span> <span class="pre">35:</span></code> 会语法报错；② 条件表达式结果一定是布尔值，但 <code class="docutils literal notranslate"><span class="pre">0</span></code>、<code class="docutils literal notranslate"><span class="pre">0.0</span></code>、<code class="docutils literal notranslate"><span class="pre">&quot;&quot;</span></code>、<code class="docutils literal notranslate"><span class="pre">[]</span></code> 等空值在判断时视作假，其余视作真，所以 <code class="docutils literal notranslate"><span class="pre">if</span> <span class="pre">temps:</span></code> 表示&quot;列表非空才执行&quot;。</p>
+</dd>
+<dt id="term-1">循环变量<a class="headerlink" href="#term-1" title="Link to this term">#</a></dt><dd><p>在循环过程中不断被赋新值的变量，控制循环次数或代表当前遍历到的元素。</p>
+<p><strong>生活类比</strong> —— 上课点名用的<strong>序号</strong>：每念完一位同学序号就加 1，这个序号就是循环变量，它&quot;代表&quot;当前正在处理的那个人。</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">temps</span> <span class="o">=</span> <span class="p">[</span><span class="mi">28</span><span class="p">,</span> <span class="mi">31</span><span class="p">,</span> <span class="mi">22</span><span class="p">]</span>
+<span class="k">for</span> <span class="n">t</span> <span class="ow">in</span> <span class="n">temps</span><span class="p">:</span>           <span class="c1"># t 就是循环变量，依次取 28、31、22</span>
+    <span class="nb">print</span><span class="p">(</span><span class="n">t</span><span class="p">)</span>
+</pre></div>
+</div>
+<p><strong>易混淆点</strong> —— ① 循环结束后循环变量仍保留最后的值，<code class="docutils literal notranslate"><span class="pre">for</span> <span class="pre">t</span> <span class="pre">in</span> <span class="pre">temps:</span></code> 跑完后 <code class="docutils literal notranslate"><span class="pre">t</span></code> 仍是最后一项，不是未定义；② 变量名可任意取但要有意义，<code class="docutils literal notranslate"><span class="pre">for</span> <span class="pre">t</span> <span class="pre">in</span> <span class="pre">temps</span></code> 比 <code class="docutils literal notranslate"><span class="pre">for</span> <span class="pre">x</span> <span class="pre">in</span> <span class="pre">temps</span></code> 更能表达&quot;这是温度&quot;。</p>
+</dd>
+<dt id="term-2">迭代<a class="headerlink" href="#term-2" title="Link to this term">#</a></dt><dd><p>重复执行一段代码，逐一遍历序列中的每一个元素，完成重复处理工作。<code class="docutils literal notranslate"><span class="pre">for</span></code> 循环的本质就是迭代。</p>
+<p><strong>生活类比</strong> —— 清点货架上的全部货物，一件一件依次查看处理，这个逐个处理的过程就是迭代。气象里对 30 天逐日气温逐日求平均，就是迭代。</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">week</span> <span class="o">=</span> <span class="p">[</span><span class="mf">28.1</span><span class="p">,</span> <span class="mf">29.4</span><span class="p">,</span> <span class="mf">31.2</span><span class="p">]</span>
+<span class="n">total</span> <span class="o">=</span> <span class="mi">0</span>
+<span class="k">for</span> <span class="n">t</span> <span class="ow">in</span> <span class="n">week</span><span class="p">:</span>            <span class="c1"># 迭代列表，逐日累加</span>
+    <span class="n">total</span> <span class="o">+=</span> <span class="n">t</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">total</span><span class="p">)</span>              <span class="c1"># 88.7</span>
+</pre></div>
+</div>
+<p><strong>易混淆点</strong> —— ① 可迭代对象 vs 迭代器：列表、字符串、字典都是<strong>可迭代对象</strong>（能一次性给出元素的容器），迭代器是&quot;一次吐一个&quot;的指针，初学者掌握&quot;可迭代对象能被 <code class="docutils literal notranslate"><span class="pre">for</span></code> 遍历&quot;即可；② 迭代 ≠ 索引：迭代是&quot;逐个取元素&quot;，索引是&quot;按下标取特定元素&quot;，迭代不关心下标除非用 <code class="docutils literal notranslate"><span class="pre">enumerate</span></code>。</p>
+</dd>
+<dt id="term-3">缩进<a class="headerlink" href="#term-3" title="Link to this term">#</a></dt><dd><p>Python 用空格缩进划分代码的从属关系，标识某段代码属于循环或分支的内部。同层次的代码必须使用相同数量的缩进。</p>
+<p><strong>生活类比</strong> —— 作文段落开头空两格，代表本段内容归属于上一个主题。缩进就是告诉 Python&quot;这段代码是 <code class="docutils literal notranslate"><span class="pre">if</span></code> 里面的人&quot;还是&quot;站在外面等结果的人&quot;。</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="k">if</span> <span class="n">temp</span> <span class="o">&gt;=</span> <span class="mi">35</span><span class="p">:</span>
+    <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;高温&quot;</span><span class="p">)</span>         <span class="c1"># 缩进 4 空格：属于 if 内部</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;判断结束&quot;</span><span class="p">)</span>         <span class="c1"># 无缩进：属于 if 外部，一定会执行</span>
+</pre></div>
+</div>
+<p><strong>易混淆点</strong> —— ① 同一代码块内缩进不一致会报 <code class="docutils literal notranslate"><span class="pre">IndentationError</span></code>，VS Code 默认 Tab 转 4 空格，建议统一；② 不要混用 Tab 和空格，Python 3 中两者混用会直接报错，统一用空格缩进。</p>
+</dd>
+<dt id="term-4">代码块<a class="headerlink" href="#term-4" title="Link to this term">#</a></dt><dd><p>冒号之后、由统一缩进包裹的一组代码，是分支、循环内部要执行的整套语句。</p>
+<p><strong>生活类比</strong> —— 定下一条规则（条件）之后，配套要完成的<strong>一整套行动清单</strong>，整体归属于这条规则。比如&quot;如果发布高温预警：就发通知、启动应急、安排值班&quot;——这三件事合起来是一个代码块。</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="k">if</span> <span class="n">temp</span> <span class="o">&gt;=</span> <span class="mi">35</span><span class="p">:</span>            <span class="c1"># 冒号</span>
+    <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;发通知&quot;</span><span class="p">)</span>       <span class="c1"># ↓ 这三行</span>
+    <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;启动应急&quot;</span><span class="p">)</span>     <span class="c1"># ← 就是 temp&gt;=35 的代码块</span>
+    <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;安排值班&quot;</span><span class="p">)</span>     <span class="c1"># ↑</span>
+</pre></div>
+</div>
+<p><strong>易混淆点</strong> —— ① 代码块必须缩进，冒号后若不缩进或缩进不统一会报 <code class="docutils literal notranslate"><span class="pre">IndentationError</span></code>；② 代码块内可以嵌套代码块，<code class="docutils literal notranslate"><span class="pre">if</span></code> 里再套 <code class="docutils literal notranslate"><span class="pre">for</span></code>、<code class="docutils literal notranslate"><span class="pre">for</span></code> 里再套 <code class="docutils literal notranslate"><span class="pre">if</span></code>，缩进逐层加深形成嵌套结构。</p>
+</dd>
+</dl>
+</section>
+
+
+                </article>
+              
+              
+              
+              
+              
+                <footer class="prev-next-footer d-print-none">
+                  
+<div class="prev-next-area">
+    <a class="left-prev"
+       href="ch02_terms.html"
+       title="上一页">
+      <i class="fa-solid fa-angle-left"></i>
+      <div class="prev-next-info">
+        <p class="prev-next-subtitle">上一页</p>
+        <p class="prev-next-title">第 2 章术语：基本数据类型、变量和运算符</p>
+      </div>
+    </a>
+    <a class="right-next"
+       href="ch04_terms.html"
+       title="下一页">
+      <div class="prev-next-info">
+        <p class="prev-next-subtitle">下一页</p>
+        <p class="prev-next-title">第 4 章术语：函数及变量作用域、模块和包</p>
+      </div>
+      <i class="fa-solid fa-angle-right"></i>
+    </a>
+</div>
+                </footer>
+              
+            </div>
+            
+            
+              
+            
+          </div>
+          <footer class="bd-footer-content">
+            
+          </footer>
+        
+      </main>
+    </div>
+  </div>
+  
+  <!-- Scripts loaded after <body> so the DOM is not blocked -->
+  <script defer src="../_static/scripts/bootstrap.js?digest=90905a2f556bf617f1a9"></script>
+<script defer src="../_static/scripts/pydata-sphinx-theme.js?digest=90905a2f556bf617f1a9"></script>
+
+  <footer class="bd-footer">
+<div class="bd-footer__inner bd-page-width">
+  
+    <div class="footer-items__start">
+      
+        <div class="footer-item">
+
+  <p class="copyright">
+    
+      © Copyright 2026, 兰州大学大气科学学院编程社区.
+      <br/>
+    
+  </p>
+</div>
+      
+        <div class="footer-item">
+
+  <p class="sphinx-version">
+    由 <a href="https://www.sphinx-doc.org/">Sphinx</a> 8.2.3创建。
+    <br/>
+  </p>
+</div>
+      
+    </div>
+  
+  
+  
+    <div class="footer-items__end">
+      
+        <div class="footer-item">
+<p class="theme-version">
+  <!-- # L10n: Setting the PST URL as an argument as this does not need to be localized -->
+  使用 <a href="https://pydata-sphinx-theme.readthedocs.io/en/stable/index.html">PyData Sphinx Theme</a> 0.20.0构建.
+</p></div>
+      
+    </div>
+  
+</div>
+
+  </footer>
+  </body>
+</html>

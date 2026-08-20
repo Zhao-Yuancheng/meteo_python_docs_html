@@ -1,0 +1,1111 @@
+
+<!DOCTYPE html>
+
+
+<html lang="zh-CN" data-content_root="../../" >
+
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
+    <title>分支、条件与循环 &#8212; MeteoPython</title>
+  
+  
+  
+  <script data-cfasync="false">
+    document.documentElement.dataset.mode = localStorage.getItem("mode") || "";
+    document.documentElement.dataset.theme = localStorage.getItem("theme") || "";
+  </script>
+  <!--
+    this give us a css class that will be invisible only if js is disabled
+  -->
+  <noscript>
+    <style>
+      .pst-js-only { display: none !important; }
+
+    </style>
+  </noscript>
+  
+  <!-- Loaded before other Sphinx assets -->
+  <link href="../../_static/styles/theme.css?digest=90905a2f556bf617f1a9" rel="stylesheet" />
+<link href="../../_static/styles/pydata-sphinx-theme.css?digest=90905a2f556bf617f1a9" rel="stylesheet" />
+
+    <link rel="stylesheet" type="text/css" href="../../_static/pygments.css?v=8f2a1f02" />
+    <link rel="stylesheet" type="text/css" href="../../_static/copybutton.css?v=76b2166b" />
+    <link rel="stylesheet" type="text/css" href="../../_static/sg_gallery.css?v=fd6457a4" />
+    <link rel="stylesheet" type="text/css" href="../../_static/sg_gallery-binder.css?v=f4aeca0c" />
+    <link rel="stylesheet" type="text/css" href="../../_static/sg_gallery-dataframe.css?v=2082cf3c" />
+    <link rel="stylesheet" type="text/css" href="../../_static/sg_gallery-rendered-html.css?v=1277b6f3" />
+    <link rel="stylesheet" type="text/css" href="../../_static/sphinx-design.min.css?v=95c83b7e" />
+    <link rel="stylesheet" type="text/css" href="../../_static/./custom.css?v=fbe1f034" />
+  
+  <!-- So that users can add custom icons -->
+  <script defer src="../../_static/scripts/fontawesome.js?digest=90905a2f556bf617f1a9"></script>
+  <!-- Pre-loaded scripts that we'll load fully later -->
+  <link rel="preload" as="script" href="../../_static/scripts/bootstrap.js?digest=90905a2f556bf617f1a9" />
+<link rel="preload" as="script" href="../../_static/scripts/pydata-sphinx-theme.js?digest=90905a2f556bf617f1a9" />
+
+    <script src="../../_static/documentation_options.js?v=9becfed8"></script>
+    <script src="../../_static/doctools.js?v=9bcbadda"></script>
+    <script src="../../_static/sphinx_highlight.js?v=dc90522c"></script>
+    <script src="../../_static/sg-tags.js?v=d80f6fa4"></script>
+    <script src="../../_static/clipboard.min.js?v=a7894cd8"></script>
+    <script src="../../_static/copybutton.js?v=fd10adb8"></script>
+    <script src="../../_static/translations.js?v=beaddf03"></script>
+    <script src="../../_static/design-tabs.js?v=f930bc37"></script>
+    <script>DOCUMENTATION_OPTIONS.pagename = 'user_guide/basics/flow';</script>
+    <script>
+        DOCUMENTATION_OPTIONS.theme_version = '0.20.0';
+        DOCUMENTATION_OPTIONS.theme_switcher_json_url = '_static/switcher.json';
+        DOCUMENTATION_OPTIONS.theme_switcher_version_match = '0.1.0';
+        DOCUMENTATION_OPTIONS.show_version_warning_banner =
+            false;
+        </script>
+    <script>DOCUMENTATION_OPTIONS.search_as_you_type = false;</script>
+    <link rel="icon" href="../../_static/favicon.svg"/>
+    <link rel="index" title="索引" href="../../genindex.html" />
+    <link rel="search" title="搜索" href="../../search.html" />
+    <link rel="next" title="函数及变量作用域、模块和包" href="functions.html" />
+    <link rel="prev" title="基本数据类型、变量和运算符" href="datatypes.html" />
+  <meta name="viewport" content="width=device-width, initial-scale=1"/>
+  <meta name="docsearch:language" content="zh-CN"/>
+  <meta name="docsearch:version" content="0.1" />
+    <meta name="docbuild:last-update" content="2026-08-20"/>
+  
+    
+    <script src="../../_static/searchtools.js"></script>
+    <script src="../../_static/language_data.js"></script>
+    <script src="../../searchindex.js"></script>
+  
+  </head>
+  <body data-default-mode="">
+  
+  
+  <div id="pst-skip-link" class="skip-link d-print-none"><a href="#main-content">跳转至主要内容</a></div>
+
+  
+  <div id="pst-scroll-pixel-helper"></div>
+  
+  <button type="button" class="btn rounded-pill" id="pst-back-to-top">
+    <i class="fa-solid fa-arrow-up"></i>回到顶部</button>
+  
+  
+  
+  
+  <dialog id="pst-search-dialog">
+    
+<form class="bd-search d-flex align-items-center"
+      action="../../search.html"
+      method="get">
+  <i class="fa-solid fa-magnifying-glass"></i>
+  <input type="search"
+         class="form-control"
+         name="q"
+         placeholder="搜索文档…"
+         aria-label="搜索文档…"
+         autocomplete="off"
+         autocorrect="off"
+         autocapitalize="off"
+         spellcheck="false"/>
+  <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd>K</kbd></span>
+</form>
+  </dialog>
+
+  <div class="pst-async-banner-revealer d-none">
+  <aside id="bd-header-version-warning" class="d-none d-print-none" aria-label="版本警告"></aside>
+</div>
+
+  
+    <header id="pst-header" class="bd-header navbar navbar-expand-lg bd-navbar d-print-none">
+<div class="bd-header__inner bd-page-width">
+  <button class="pst-navbar-icon sidebar-toggle primary-toggle" aria-label="网页导航">
+    <span class="fa-solid fa-bars"></span>
+  </button>
+  
+  
+  <div class="col-lg-3 navbar-header-items__start">
+    
+      <div class="navbar-item">
+
+  
+    
+  
+
+<a class="navbar-brand logo" href="../../index.html">
+  
+  
+  
+  
+  
+    
+    
+      
+    
+    
+    <img src="../../_static/logo.svg" class="logo__image only-light" alt="MeteoPython - Home"/>
+    <img src="../../_static/logo.svg" class="logo__image only-dark pst-js-only" alt="MeteoPython - Home"/>
+  
+  
+</a></div>
+    
+  </div>
+  
+  <div class="col-lg-9 navbar-header-items">
+    
+    <div class="me-auto navbar-header-items__center">
+      
+        <div class="navbar-item">
+<nav>
+  <ul class="bd-navbar-elements navbar-nav">
+    
+<li class="nav-item current active">
+  <a class="nav-link nav-internal" href="../index.html">
+    教程
+  </a>
+</li>
+
+
+<li class="nav-item ">
+  <a class="nav-link nav-internal" href="../../tutorials/index.html">
+    练习
+  </a>
+</li>
+
+
+<li class="nav-item ">
+  <a class="nav-link nav-internal" href="../../gallery/index.html">
+    示例
+  </a>
+</li>
+
+
+<li class="nav-item ">
+  <a class="nav-link nav-internal" href="../../api/index.html">
+    术语参考
+  </a>
+</li>
+
+
+<li class="nav-item ">
+  <a class="nav-link nav-internal" href="../../qa/index.html">
+    常见问题 Q&A
+  </a>
+</li>
+
+  </ul>
+</nav></div>
+      
+    </div>
+    
+    
+    <div class="navbar-header-items__end">
+      
+        <div class="navbar-item navbar-persistent--container">
+          
+
+<button class="btn search-button-field search-button__button pst-js-only" title="搜索" aria-label="搜索" data-bs-placement="bottom" data-bs-toggle="tooltip">
+ <i class="fa-solid fa-magnifying-glass"></i>
+ <span class="search-button__default-text">搜索</span>
+ <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd class="kbd-shortcut__modifier">K</kbd></span>
+</button>
+        </div>
+      
+      
+        <div class="navbar-item">
+
+<div class="theme-switch-container dropdown pst-js-only" data-bs-toggle="tooltip" data-bs-placement="bottom" title="Color mode">
+  <button class="btn btn-sm nav-link pst-navbar-icon theme-switch-button dropdown-toggle" aria-label="Color mode" data-bs-toggle="dropdown">
+    <i class="theme-switch fa-solid fa-sun fa-lg fa-fw" data-mode="light" title="亮色"></i>
+    <i class="theme-switch fa-solid fa-moon fa-lg fa-fw" data-mode="dark" title="暗色"></i>
+    <i class="theme-switch fa-solid fa-circle-half-stroke fa-lg fa-fw" data-mode="auto" title="System Settings"></i>
+  </button>
+  <ul class="dropdown-menu dropdown-menu-end">
+    <li><button class="dropdown-item d-flex align-items-center theme-change-button" data-mode="auto"><i class="fa-solid fa-circle-half-stroke fa-lg fa-fw me-1"></i>System Settings</button></li>
+    <li><button class="dropdown-item d-flex align-items-center theme-change-button" data-mode="light"><i class="fa-solid fa-sun fa-lg fa-fw me-1"></i>亮色</button></li>
+    <li><button class="dropdown-item d-flex align-items-center theme-change-button" data-mode="dark"><i class="fa-solid fa-moon fa-lg fa-fw me-1"></i>暗色</button></li>
+  </ul>
+</div></div>
+      
+        <div class="navbar-item"><ul class="navbar-icon-links"
+    aria-label="Icon Links">
+</ul></div>
+      
+    </div>
+    
+  </div>
+  
+  
+    <div class="navbar-persistent--mobile">
+
+<button class="btn search-button-field search-button__button pst-js-only" title="搜索" aria-label="搜索" data-bs-placement="bottom" data-bs-toggle="tooltip">
+ <i class="fa-solid fa-magnifying-glass"></i>
+ <span class="search-button__default-text">搜索</span>
+ <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd class="kbd-shortcut__modifier">K</kbd></span>
+</button>
+    </div>
+  
+
+  
+    <button class="pst-navbar-icon sidebar-toggle secondary-toggle" aria-label="当前页面">
+      <span class="fa-solid fa-outdent"></span>
+    </button>
+  
+</div>
+
+    </header>
+  
+
+  <div class="bd-container">
+    <div class="bd-container__inner bd-page-width">
+      
+      
+      
+      <dialog id="pst-primary-sidebar-modal"></dialog>
+      <div id="pst-primary-sidebar" class="bd-sidebar-primary bd-sidebar">
+        
+
+  
+  <div class="sidebar-header-items sidebar-primary__section">
+    
+    
+      <div class="sidebar-header-items__center">
+        
+          
+          
+            <div class="navbar-item">
+<nav>
+  <ul class="bd-navbar-elements navbar-nav">
+    
+<li class="nav-item current active">
+  <a class="nav-link nav-internal" href="../index.html">
+    教程
+  </a>
+</li>
+
+
+<li class="nav-item ">
+  <a class="nav-link nav-internal" href="../../tutorials/index.html">
+    练习
+  </a>
+</li>
+
+
+<li class="nav-item ">
+  <a class="nav-link nav-internal" href="../../gallery/index.html">
+    示例
+  </a>
+</li>
+
+
+<li class="nav-item ">
+  <a class="nav-link nav-internal" href="../../api/index.html">
+    术语参考
+  </a>
+</li>
+
+
+<li class="nav-item ">
+  <a class="nav-link nav-internal" href="../../qa/index.html">
+    常见问题 Q&A
+  </a>
+</li>
+
+  </ul>
+</nav></div>
+          
+        
+      </div>
+    
+    
+    
+      <div class="sidebar-header-items__end">
+        
+          <div class="navbar-item">
+
+<div class="theme-switch-container dropdown pst-js-only" data-bs-toggle="tooltip" data-bs-placement="bottom" title="Color mode">
+  <button class="btn btn-sm nav-link pst-navbar-icon theme-switch-button dropdown-toggle" aria-label="Color mode" data-bs-toggle="dropdown">
+    <i class="theme-switch fa-solid fa-sun fa-lg fa-fw" data-mode="light" title="亮色"></i>
+    <i class="theme-switch fa-solid fa-moon fa-lg fa-fw" data-mode="dark" title="暗色"></i>
+    <i class="theme-switch fa-solid fa-circle-half-stroke fa-lg fa-fw" data-mode="auto" title="System Settings"></i>
+  </button>
+  <ul class="dropdown-menu dropdown-menu-end">
+    <li><button class="dropdown-item d-flex align-items-center theme-change-button" data-mode="auto"><i class="fa-solid fa-circle-half-stroke fa-lg fa-fw me-1"></i>System Settings</button></li>
+    <li><button class="dropdown-item d-flex align-items-center theme-change-button" data-mode="light"><i class="fa-solid fa-sun fa-lg fa-fw me-1"></i>亮色</button></li>
+    <li><button class="dropdown-item d-flex align-items-center theme-change-button" data-mode="dark"><i class="fa-solid fa-moon fa-lg fa-fw me-1"></i>暗色</button></li>
+  </ul>
+</div></div>
+        
+          <div class="navbar-item"><ul class="navbar-icon-links"
+    aria-label="Icon Links">
+</ul></div>
+        
+      </div>
+    
+  </div>
+  
+    <div class="sidebar-primary-items__start sidebar-primary__section">
+        <div class="sidebar-primary-item pst-sidebar-collapse"><button id="pst-collapse-sidebar-button" aria-expanded="true" aria-controls="pst-primary-sidebar">
+  <svg class="pst-icon" role="img" aria-hidden="true" focusable="false" viewBox="0 0 16 16" xmlns="http://www.w3.org/2000/svg">
+    <path fill="currentColor" d="M3 15.5C2.36232 15.5 1.74874 15.2564 1.28478 14.8189C0.820828 14.3815 0.541576 13.7832 0.504167 13.1467L0.5 13L0.5 3C0.499965 2.36232 0.743605 1.74874 1.18107 1.28478C1.61854 0.820828 2.21676 0.541576 2.85333 0.504167L3 0.5L13 0.5C13.6377 0.499965 14.2513 0.743605 14.7152 1.18107C15.1792 1.61854 15.4584 2.21676 15.4958 2.85333L15.5 3L15.5 13C15.5 13.6377 15.2564 14.2513 14.8189 14.7152C14.3815 15.1792 13.7832 15.4584 13.1467 15.4958L13 15.5L3 15.5ZM3 13.8333L10.5 13.8333L10.5 2.16667L3 2.16667C2.79589 2.16669 2.59889 2.24163 2.44636 2.37726C2.29383 2.5129 2.19638 2.69979 2.1725 2.9025L2.16667 3L2.16667 13C2.16669 13.2041 2.24163 13.4011 2.37726 13.5536C2.5129 13.7062 2.69979 13.8036 2.9025 13.8275L3 13.8333ZM6.65583 10.325L6.5775 10.2558L4.91083 8.58917C4.76735 8.44567 4.68116 8.25476 4.66843 8.05223C4.65569 7.84971 4.71729 7.6495 4.84167 7.48917L4.91083 7.41083L6.5775 5.74417C6.72747 5.59471 6.9287 5.50794 7.14032 5.50148C7.35194 5.49502 7.55809 5.56935 7.7169 5.70937C7.8757 5.8494 7.97525 6.04463 7.99533 6.25539C8.01541 6.46616 7.95451 6.67667 7.825 6.84417L7.75583 6.9225L6.67917 8L7.75583 9.0775C7.89931 9.22099 7.98551 9.41191 7.99824 9.61443C8.01097 9.81695 7.94938 10.0172 7.825 10.1775L7.75583 10.2558C7.61234 10.3993 7.42142 10.4855 7.2189 10.4982C7.01638 10.511 6.81617 10.4494 6.65583 10.325Z"/>
+  </svg>
+  <span class="pst-collapse-sidebar-label">Collapse Sidebar</span>
+  <span class="pst-expand-sidebar-label">Expand Sidebar</span>
+</button></div>
+        <div class="sidebar-primary-item">
+
+<nav class="bd-docs-nav bd-links"
+     aria-label="章节导航">
+  <p class="bd-links__title" role="heading" aria-level="1">章节导航</p>
+  <div class="bd-toc-item navbar-nav"><ul class="current nav bd-sidenav">
+<li class="toctree-l1 current active has-children"><a class="reference internal" href="index.html">模块一 Python 编程基础</a><details open="open"><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="python_conda.html">Python 与 Conda 简介</a></li>
+<li class="toctree-l2"><a class="reference internal" href="datatypes.html">基本数据类型、变量和运算符</a></li>
+<li class="toctree-l2 current active"><a class="current reference internal" href="#">分支、条件与循环</a></li>
+<li class="toctree-l2"><a class="reference internal" href="functions.html">函数及变量作用域、模块和包</a></li>
+<li class="toctree-l2"><a class="reference internal" href="oop.html">面向对象与高级语法</a></li>
+</ul>
+</details></li>
+<li class="toctree-l1 has-children"><a class="reference internal" href="../data/index.html">模块二 气象数据处理</a><details open="open"><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
+<li class="toctree-l2"><a class="reference internal" href="../data/numpy.html">气象数据计算 NumPy</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../data/pandas.html">气象数据分析（一）Pandas</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../data/xarray.html">气象数据分析（二）Xarray</a></li>
+</ul>
+</details></li>
+<li class="toctree-l1 has-children"><a class="reference internal" href="../viz/index.html">模块三 气象数据可视化</a><details open="open"><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
+<li class="toctree-l2"><a class="reference internal" href="../viz/matplotlib.html">气象数据绘图（一）Matplotlib</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../viz/cartopy.html">气象数据绘图（二）Cartopy</a></li>
+</ul>
+</details></li>
+</ul>
+</div>
+</nav></div>
+    </div>
+  
+  
+  <div class="sidebar-primary-items__end sidebar-primary__section">
+      <div class="sidebar-primary-item">
+<div id="ethical-ad-placement"
+      class="flat"
+      data-ea-publisher="readthedocs"
+      data-ea-type="readthedocs-sidebar"
+      data-ea-manual="true">
+</div></div>
+  </div>
+
+
+      </div>
+      
+      <main id="main-content" class="bd-main" role="main">
+        
+        
+          <div class="bd-content">
+            <div class="bd-article-container">
+              
+              <div class="bd-header-article d-print-none">
+<div class="header-article-items header-article__inner">
+  
+    <div class="header-article-items__start">
+      
+        <div class="header-article-item">
+
+<nav aria-label="Breadcrumb" class="d-print-none">
+  <ul class="bd-breadcrumbs">
+    
+    <li class="breadcrumb-item breadcrumb-home">
+      <a href="../../index.html" class="nav-link" aria-label="初始页面">
+        <i class="fa-solid fa-home"></i>
+      </a>
+    </li>
+    
+    <li class="breadcrumb-item"><a href="../index.html" class="nav-link">教程</a></li>
+    
+    
+    <li class="breadcrumb-item"><a href="index.html" class="nav-link">模块一 Python 编程基础</a></li>
+    
+    <li class="breadcrumb-item active" aria-current="page"><span class="ellipsis">分支、条件与循环</span></li>
+  </ul>
+</nav>
+</div>
+      
+    </div>
+  
+  
+</div>
+</div>
+              
+              
+              
+                
+<div id="searchbox"></div>
+                <article class="bd-article">
+                  
+  <section id="tut-flow">
+<span id="id1"></span><h1>分支、条件与循环<a class="headerlink" href="#tut-flow" title="Link to this heading">#</a></h1>
+<p>第 3 节 · 模块一 Python 编程基础
+贯穿项目第 3 步：对逐日气温做等级判定（寒冷 / 偏冷 / 适宜 / 炎热），统计各等级天数。</p>
+<p>前两章我们学会了&quot;存数据&quot;（变量与类型），但程序只会从头到尾线性执行。现实中的气象判断从来不是一条直线：兰州今天算不算高温？下的是小雨还是暴雨？该对哪几站发预警？——这些都需要程序<strong>根据条件做出选择</strong> （分支）、<strong>重复处理一批数据</strong> （循环）。本章就讲这两件核心武器。</p>
+<p>学完本章你将能够：</p>
+<ol class="arabic simple">
+<li><p>用 <code class="docutils literal notranslate"><span class="pre">if</span></code> / <code class="docutils literal notranslate"><span class="pre">elif</span></code> / <code class="docutils literal notranslate"><span class="pre">else</span></code> 根据条件选择执行路径；</p></li>
+<li><p>用 <code class="docutils literal notranslate"><span class="pre">for</span></code> 遍历列表、字典、字符串，用 <code class="docutils literal notranslate"><span class="pre">while</span></code> 做条件循环；</p></li>
+<li><p>用 <code class="docutils literal notranslate"><span class="pre">break</span></code> / <code class="docutils literal notranslate"><span class="pre">continue</span></code> 控制循环流程；</p></li>
+<li><p>用 <code class="docutils literal notranslate"><span class="pre">range</span></code> / <code class="docutils literal notranslate"><span class="pre">enumerate</span></code> / <code class="docutils literal notranslate"><span class="pre">zip</span></code> / 嵌套循环处理多站、多日数据。</p></li>
+</ol>
+<div class="sd-container-fluid sd-sphinx-override sd-mb-4 docutils">
+<div class="sd-row sd-row-cols-1 sd-row-cols-xs-1 sd-row-cols-sm-2 sd-row-cols-md-2 sd-row-cols-lg-3 sd-g-2 sd-g-xs-2 sd-g-sm-2 sd-g-md-2 sd-g-lg-2 docutils">
+<div class="sd-col sd-d-flex-row docutils">
+<div class="sd-card sd-sphinx-override sd-w-100 sd-shadow-sm sd-card-hover gallery-card docutils">
+<div class="sd-card-header docutils">
+</div>
+<div class="sd-card-body docutils">
+<div class="sd-card-title sd-font-weight-bold docutils">
+🎬 配套动画</div>
+<p class="sd-card-text">分支流程图与循环遍历动画</p>
+</div>
+<a class="sd-stretched-link sd-hide-link-text reference internal" href="#ch03-animation"><span class="std std-ref">配套动画（T-302）</span></a></div>
+</div>
+<div class="sd-col sd-d-flex-row docutils">
+<div class="sd-card sd-sphinx-override sd-w-100 sd-shadow-sm sd-card-hover gallery-card docutils">
+<div class="sd-card-header docutils">
+</div>
+<div class="sd-card-body docutils">
+<div class="sd-card-title sd-font-weight-bold docutils">
+✏️ 配套练习</div>
+<p class="sd-card-text">5 道气温等级与循环实战题</p>
+</div>
+<a class="sd-stretched-link sd-hide-link-text reference internal" href="../../tutorials/basics/ch03_practice.html"><span class="doc">第 3 章练习：分支、循环与条件</span></a></div>
+</div>
+<div class="sd-col sd-d-flex-row docutils">
+<div class="sd-card sd-sphinx-override sd-w-100 sd-shadow-sm sd-card-hover gallery-card docutils">
+<div class="sd-card-header docutils">
+</div>
+<div class="sd-card-body docutils">
+<div class="sd-card-title sd-font-weight-bold docutils">
+🖼 可执行示例</div>
+<p class="sd-card-text">气温等级判定与统计可视化</p>
+</div>
+<a class="sd-stretched-link sd-hide-link-text reference internal" href="../../gallery/plot_basics/plot_flow.html"><span class="doc">气温等级判定与逐日可视化</span></a></div>
+</div>
+</div>
+</div>
+<section id="t-302">
+<span id="ch03-animation"></span><h2>配套动画（T-302）<a class="headerlink" href="#t-302" title="Link to this heading">#</a></h2>
+<p>本动画把本节的三类控制流一口气演给你看：① <code class="docutils literal notranslate"><span class="pre">if-elif-else</span></code> 流程图——条件为真走这条路、为假走那条路（箭头高亮动画）；② <code class="docutils literal notranslate"><span class="pre">for</span></code> 循环遍历列表——指针逐个滑过元素；③ <code class="docutils literal notranslate"><span class="pre">while</span></code> 循环——条件检查 → 执行体 → 回到条件；④ <code class="docutils literal notranslate"><span class="pre">break</span></code>（直接跳出）与 <code class="docutils literal notranslate"><span class="pre">continue</span></code>（跳过本次）的跳转路径对比。点击播放，可暂停拖动进度条反复观看。</p>
+<div  class="sphinx-contrib-video-container align-left"><video controls="True" preload="auto" width="100%"><source src="../../_images/T302-%E5%88%86%E6%94%AF%E3%80%81%E5%BE%AA%E7%8E%AF%E3%80%81%E6%9D%A1%E4%BB%B6%E5%8A%A8%E7%94%BB_av1.webm" type="video/webm"></video></div></section>
+<section id="if-elif-else">
+<h2>条件判断：if / elif / else<a class="headerlink" href="#if-elif-else" title="Link to this heading">#</a></h2>
+<section id="id2">
+<h3>逻辑运算与运算符<a class="headerlink" href="#id2" title="Link to this heading">#</a></h3>
+<p>上一章讲过布尔值（<code class="docutils literal notranslate"><span class="pre">True</span></code> / <code class="docutils literal notranslate"><span class="pre">False</span></code>），这里展示它的用途。程序从&quot;开始&quot;走到一个判断框——&quot;温度是否大于 35 ℃&quot;，这个判断框就是一个<strong>双刀开关</strong>：</p>
+<ul class="simple">
+<li><p>若判断为 <code class="docutils literal notranslate"><span class="pre">True</span></code> （是），程序走&quot;高温天气&quot;这条路；</p></li>
+<li><p>若判断为 <code class="docutils literal notranslate"><span class="pre">False</span></code> （否），程序走&quot;天气较凉爽&quot;这条路。</p></li>
+</ul>
+<p>（完整的分支流程图见本节上方&quot;配套动画&quot;处的动画。）</p>
+<p>在这个判断框里，布尔值起到<strong>双刀开关</strong>的作用：开关拨向 <code class="docutils literal notranslate"><span class="pre">True</span></code> 走一条路，拨向 <code class="docutils literal notranslate"><span class="pre">False</span></code> 走另一条路。不同的执行路径就是<strong>分支</strong>，计算机判断 <code class="docutils literal notranslate"><span class="pre">True</span></code> / <code class="docutils literal notranslate"><span class="pre">False</span></code> 的过程就是<strong>逻辑运算</strong>。</p>
+<p>实际问题中约束条件复杂多样，所以我们用<strong>逻辑运算符</strong>来组合判据：</p>
+<div class="pst-scrollable-table-container"><table class="table">
+<colgroup>
+<col style="width: 14.0%" />
+<col style="width: 86.0%" />
+</colgroup>
+<thead>
+<tr class="row-odd"><th class="head"><p>运算符</p></th>
+<th class="head"><p>含义</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">x</span> <span class="pre">and</span> <span class="pre">y</span></code></p></td>
+<td><p>要求 x 和 y 都为 True 才执行下一步</p></td>
+</tr>
+<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">x</span> <span class="pre">or</span> <span class="pre">y</span></code></p></td>
+<td><p>只要 x 与 y 任意一个为 True 即可执行下一步</p></td>
+</tr>
+<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">not</span> <span class="pre">x</span></code></p></td>
+<td><p>与条件 x 相反（取反）</p></td>
+</tr>
+<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">x</span> <span class="pre">in</span> <span class="pre">y</span></code></p></td>
+<td><p>x 在 y 序列中，执行下一步</p></td>
+</tr>
+<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">x</span> <span class="pre">not</span> <span class="pre">in</span> <span class="pre">y</span></code></p></td>
+<td><p>x 不在 y 序列中，执行下一步</p></td>
+</tr>
+<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">x</span> <span class="pre">!=</span> <span class="pre">y</span></code></p></td>
+<td><p>x 不等于 y，执行下一步</p></td>
+</tr>
+<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">x</span> <span class="pre">==</span> <span class="pre">y</span></code></p></td>
+<td><p>x 等于 y，执行下一步</p></td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="admonition warning">
+<p class="admonition-title">警告</p>
+<p>在 Python 中，单独的等号 <code class="docutils literal notranslate"><span class="pre">=</span></code> <strong>仅仅表示赋值</strong>，判断相等必须用双等号 <code class="docutils literal notranslate"><span class="pre">==</span></code>。把 <code class="docutils literal notranslate"><span class="pre">==</span></code> 写成 <code class="docutils literal notranslate"><span class="pre">=</span></code> 是第一高频报错。</p>
+</div>
+</section>
+<section id="if">
+<h3>if 语句的一般形式<a class="headerlink" href="#if" title="Link to this heading">#</a></h3>
+<p><code class="docutils literal notranslate"><span class="pre">if</span></code> 语句根据一定条件执行不同操作，一般形式为：</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="k">if</span> <span class="n">条件1</span><span class="p">:</span>
+    <span class="n">条件1为真时执行的代码块</span>
+<span class="k">elif</span> <span class="n">条件2</span><span class="p">:</span>
+    <span class="n">条件2为真时执行的代码块</span>
+<span class="k">else</span><span class="p">:</span>
+    <span class="n">以上条件都不满足时执行的代码块</span>
+</pre></div>
+</div>
+<div class="admonition attention">
+<p class="admonition-title">注意</p>
+<p>三件事务必注意：① 条件后必须跟冒号 <code class="docutils literal notranslate"><span class="pre">:</span></code>；② 分支内部代码必须<strong>统一缩进</strong>（Python 靠缩进划分从属关系）；③ <code class="docutils literal notranslate"><span class="pre">else</span></code> 后面<strong>不跟条件</strong>，它兜底其余所有情况。</p>
+</div>
+<p>天气判断最经典的例子是<strong>雨量等级判定</strong>（中国气象局标准，单位 mm）：</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">rain</span> <span class="o">=</span> <span class="nb">float</span><span class="p">(</span><span class="nb">input</span><span class="p">(</span><span class="s2">&quot;请输入24小时降雨量(mm)：&quot;</span><span class="p">))</span>
+<span class="k">if</span> <span class="n">rain</span> <span class="o">&lt;</span> <span class="mf">0.1</span><span class="p">:</span>
+    <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;无雨&quot;</span><span class="p">)</span>
+<span class="k">elif</span> <span class="n">rain</span> <span class="o">&lt;</span> <span class="mi">10</span><span class="p">:</span>
+    <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;小雨&quot;</span><span class="p">)</span>
+<span class="k">elif</span> <span class="n">rain</span> <span class="o">&lt;</span> <span class="mi">25</span><span class="p">:</span>
+    <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;中雨&quot;</span><span class="p">)</span>
+<span class="k">elif</span> <span class="n">rain</span> <span class="o">&lt;</span> <span class="mi">50</span><span class="p">:</span>
+    <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;大雨&quot;</span><span class="p">)</span>
+<span class="k">elif</span> <span class="n">rain</span> <span class="o">&lt;</span> <span class="mi">100</span><span class="p">:</span>
+    <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;暴雨&quot;</span><span class="p">)</span>
+<span class="k">elif</span> <span class="n">rain</span> <span class="o">&lt;</span> <span class="mi">250</span><span class="p">:</span>
+    <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;大暴雨&quot;</span><span class="p">)</span>
+<span class="k">else</span><span class="p">:</span>
+    <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;特大暴雨&quot;</span><span class="p">)</span>
+</pre></div>
+</div>
+<div class="admonition tip">
+<p class="admonition-title">小技巧</p>
+<p><strong>为什么这样写更稳</strong>：分支自上而下逐个检查，<code class="docutils literal notranslate"><span class="pre">elif</span></code> 只在前一条件不满足时才判断下一个。所以&quot;小于 10&quot;自然落到小雨，无需写 <code class="docutils literal notranslate"><span class="pre">0.1</span> <span class="pre">&lt;=</span> <span class="pre">rain</span> <span class="pre">&lt;</span> <span class="pre">10</span></code> 这类又长又易留缝的区间——一连串 <code class="docutils literal notranslate"><span class="pre">&lt;</span> <span class="pre">阈值</span></code> 天然形成无缝隙、无重叠的阶梯。</p>
+</div>
+<p>遇到较为简单的条件，可以用<strong>条件表达式</strong>（三元表达式）写得更紧凑：</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">temp</span> <span class="o">=</span> <span class="nb">float</span><span class="p">(</span><span class="nb">input</span><span class="p">(</span><span class="s2">&quot;请输入气温(°C)：&quot;</span><span class="p">))</span>
+<span class="n">level</span> <span class="o">=</span> <span class="s2">&quot;高温&quot;</span> <span class="k">if</span> <span class="n">temp</span> <span class="o">&gt;=</span> <span class="mi">35</span> <span class="k">else</span> <span class="s2">&quot;正常&quot;</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">level</span><span class="p">)</span>
+</pre></div>
+</div>
+</section>
+</section>
+<section id="id3">
+<h2>循环：反复处理一批数据<a class="headerlink" href="#id3" title="Link to this heading">#</a></h2>
+<p>实际工作常要重复做相同的事——对 30 天逐日气温求平均、对 5 个站点逐一判断高温。这就用到<strong>循环结构</strong>。Python 主要有 <code class="docutils literal notranslate"><span class="pre">for</span></code> 与 <code class="docutils literal notranslate"><span class="pre">while</span></code> 两种。</p>
+<section id="for">
+<h3>for 循环<a class="headerlink" href="#for" title="Link to this heading">#</a></h3>
+<p><code class="docutils literal notranslate"><span class="pre">for</span></code> 主要用于<strong>遍历可迭代对象</strong>（列表、字典、字符串等能逐一返回元素的对象），是气象数据处理中使用频率最高的循环：</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="k">for</span> <span class="n">临时变量</span> <span class="ow">in</span> <span class="n">可迭代对象</span><span class="p">:</span>
+    <span class="n">要执行的重复代码</span>
+</pre></div>
+</div>
+<p><strong>逐站处理</strong> （最典型场景）。先看不带 <code class="docutils literal notranslate"><span class="pre">zip</span></code> 的写法：</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">stations</span> <span class="o">=</span> <span class="p">[</span><span class="s2">&quot;北京&quot;</span><span class="p">,</span> <span class="s2">&quot;上海&quot;</span><span class="p">,</span> <span class="s2">&quot;广州&quot;</span><span class="p">,</span> <span class="s2">&quot;武汉&quot;</span><span class="p">]</span>
+<span class="n">temps</span> <span class="o">=</span> <span class="p">[</span><span class="mf">36.5</span><span class="p">,</span> <span class="mf">35.2</span><span class="p">,</span> <span class="mf">38.0</span><span class="p">,</span> <span class="mf">37.5</span><span class="p">]</span>
+<span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">stations</span><span class="p">)):</span>
+    <span class="k">if</span> <span class="n">temps</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="o">&gt;=</span> <span class="mi">35</span><span class="p">:</span>
+        <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">stations</span><span class="p">[</span><span class="n">i</span><span class="p">]</span><span class="si">}</span><span class="s2"> 高温：</span><span class="si">{</span><span class="n">temps</span><span class="p">[</span><span class="n">i</span><span class="p">]</span><span class="si">}</span><span class="s2">℃&quot;</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>用 <code class="docutils literal notranslate"><span class="pre">zip</span></code> 把两个列表&quot;拉链式&quot;成对打包，更简洁：</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">stations</span> <span class="o">=</span> <span class="p">[</span><span class="s2">&quot;北京&quot;</span><span class="p">,</span> <span class="s2">&quot;上海&quot;</span><span class="p">,</span> <span class="s2">&quot;广州&quot;</span><span class="p">,</span> <span class="s2">&quot;武汉&quot;</span><span class="p">]</span>
+<span class="n">temps</span> <span class="o">=</span> <span class="p">[</span><span class="mf">36.5</span><span class="p">,</span> <span class="mf">35.2</span><span class="p">,</span> <span class="mf">38.0</span><span class="p">,</span> <span class="mf">37.5</span><span class="p">]</span>
+<span class="k">for</span> <span class="n">station</span><span class="p">,</span> <span class="n">temp</span> <span class="ow">in</span> <span class="nb">zip</span><span class="p">(</span><span class="n">stations</span><span class="p">,</span> <span class="n">temps</span><span class="p">):</span>
+    <span class="k">if</span> <span class="n">temp</span> <span class="o">&gt;=</span> <span class="mi">35</span><span class="p">:</span>
+        <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">station</span><span class="si">}</span><span class="s2"> 高温：</span><span class="si">{</span><span class="n">temp</span><span class="si">}</span><span class="s2">℃&quot;</span><span class="p">)</span>
+</pre></div>
+</div>
+<div class="admonition tip">
+<p class="admonition-title">小技巧</p>
+<p><code class="docutils literal notranslate"><span class="pre">zip(a,</span> <span class="pre">b)</span></code> 把两个序列按位置一一配对，一次循环同时拿到 <code class="docutils literal notranslate"><span class="pre">station</span></code> 和与之对应的 <code class="docutils literal notranslate"><span class="pre">temp</span></code>，比用下标 <code class="docutils literal notranslate"><span class="pre">i</span></code> 挨个取更直观。</p>
+</div>
+<p><strong>遍历字典</strong>：直接遍历拿到的是键，更推荐用 <code class="docutils literal notranslate"><span class="pre">.items()</span></code> 同时拿键和值：</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">weather</span> <span class="o">=</span> <span class="p">{</span><span class="s2">&quot;北京&quot;</span><span class="p">:</span> <span class="mf">36.5</span><span class="p">,</span> <span class="s2">&quot;上海&quot;</span><span class="p">:</span> <span class="mf">35.2</span><span class="p">,</span> <span class="s2">&quot;广州&quot;</span><span class="p">:</span> <span class="mf">38.0</span><span class="p">,</span> <span class="s2">&quot;武汉&quot;</span><span class="p">:</span> <span class="mf">37.5</span><span class="p">}</span>
+<span class="k">for</span> <span class="n">station</span><span class="p">,</span> <span class="n">temp</span> <span class="ow">in</span> <span class="n">weather</span><span class="o">.</span><span class="n">items</span><span class="p">():</span>
+    <span class="k">if</span> <span class="n">temp</span> <span class="o">&gt;=</span> <span class="mi">35</span><span class="p">:</span>
+        <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">station</span><span class="si">}</span><span class="s2"> 高温：</span><span class="si">{</span><span class="n">temp</span><span class="si">}</span><span class="s2">℃&quot;</span><span class="p">)</span>
+</pre></div>
+</div>
+<p><strong>遍历字符串</strong>：字符串也是可迭代对象，处理&quot;一串城市名&quot;这种场景推荐用 <code class="docutils literal notranslate"><span class="pre">.split()</span></code> 按空格拆成列表再遍历：</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">cities</span> <span class="o">=</span> <span class="s2">&quot;北京 上海 广州 武汉&quot;</span>
+<span class="k">for</span> <span class="n">city</span> <span class="ow">in</span> <span class="n">cities</span><span class="o">.</span><span class="n">split</span><span class="p">():</span>
+    <span class="nb">print</span><span class="p">(</span><span class="n">city</span><span class="p">)</span>          <span class="c1"># 北京 上海 广州 武汉（每行一个）</span>
+</pre></div>
+</div>
+<div class="admonition warning">
+<p class="admonition-title">警告</p>
+<p>不要用 <code class="docutils literal notranslate"><span class="pre">str</span></code> 给字符串变量命名！<code class="docutils literal notranslate"><span class="pre">str</span></code> 是内置类型名，覆盖后你就无法再调用 <code class="docutils literal notranslate"><span class="pre">str()</span></code> 做类型转换了。</p>
+</div>
+</section>
+<section id="while">
+<h3>while 循环<a class="headerlink" href="#while" title="Link to this heading">#</a></h3>
+<p><code class="docutils literal notranslate"><span class="pre">for</span></code> 在<strong>已知遍历几项</strong>时用；<code class="docutils literal notranslate"><span class="pre">while</span></code> 在<strong>只知道条件、不知道次数</strong>时用：</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="k">while</span> <span class="n">条件</span><span class="p">:</span>
+    <span class="n">要执行的重复代码</span>
+</pre></div>
+</div>
+<p><strong>代码示例</strong>：温度从 28 ℃ 起，每小时升高 0.5 ℃，问多少小时后达到 35 ℃ 触发高温预警？</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">temp</span> <span class="o">=</span> <span class="mf">28.0</span>
+<span class="n">hour</span> <span class="o">=</span> <span class="mi">0</span>
+<span class="k">while</span> <span class="n">temp</span> <span class="o">&lt;</span> <span class="mi">35</span><span class="p">:</span>
+    <span class="n">hour</span> <span class="o">+=</span> <span class="mi">1</span>
+    <span class="n">temp</span> <span class="o">+=</span> <span class="mf">0.5</span>
+    <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;第 </span><span class="si">{</span><span class="n">hour</span><span class="si">}</span><span class="s2"> 小时：温度 </span><span class="si">{</span><span class="n">temp</span><span class="si">:</span><span class="s2">.1f</span><span class="si">}</span><span class="s2">℃&quot;</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;经过 </span><span class="si">{</span><span class="n">hour</span><span class="si">}</span><span class="s2"> 小时后，温度达到 </span><span class="si">{</span><span class="n">temp</span><span class="si">:</span><span class="s2">.1f</span><span class="si">}</span><span class="s2">℃，触发高温预警！&quot;</span><span class="p">)</span>
+</pre></div>
+</div>
+<div class="admonition warning">
+<p class="admonition-title">警告</p>
+<p><strong>无限循环陷阱</strong>：<code class="docutils literal notranslate"><span class="pre">while</span></code> 循环体内必须<strong>更新条件涉及的变量</strong>（这里 <code class="docutils literal notranslate"><span class="pre">temp</span> <span class="pre">+=</span> <span class="pre">0.5</span></code>），否则条件永远为真，程序卡死。这是 <code class="docutils literal notranslate"><span class="pre">while</span></code> 的第一大坑。</p>
+</div>
+</section>
+<section id="break-continue">
+<h3>break 与 continue<a class="headerlink" href="#break-continue" title="Link to this heading">#</a></h3>
+<p><code class="docutils literal notranslate"><span class="pre">break</span></code> 用于<strong>终止整个循环</strong>，跳出后执行循环体后的代码；<code class="docutils literal notranslate"><span class="pre">continue</span></code> 用于<strong>跳过本次迭代</strong>，直接进入下一次。处理缺测数据时最常用：</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">raw_data</span> <span class="o">=</span> <span class="p">[</span><span class="mf">25.5</span><span class="p">,</span> <span class="kc">None</span><span class="p">,</span> <span class="mf">26.0</span><span class="p">,</span> <span class="kc">None</span><span class="p">,</span> <span class="mf">27.2</span><span class="p">]</span>
+
+<span class="c1"># break：遇到第一个缺测就停（数据被截断，需人工介入）</span>
+<span class="n">count</span> <span class="o">=</span> <span class="mi">0</span>
+<span class="k">for</span> <span class="n">temp</span> <span class="ow">in</span> <span class="n">raw_data</span><span class="p">:</span>
+    <span class="n">count</span> <span class="o">+=</span> <span class="mi">1</span>
+    <span class="k">if</span> <span class="n">temp</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+        <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;数据</span><span class="si">{</span><span class="n">count</span><span class="si">}</span><span class="s2">缺失！&quot;</span><span class="p">)</span>
+        <span class="k">break</span>
+<span class="c1"># 输出：数据2缺失！</span>
+
+<span class="c1"># continue：跳过缺测继续（缺测是常态，正常时段照常统计）</span>
+<span class="n">count</span> <span class="o">=</span> <span class="mi">0</span>
+<span class="k">for</span> <span class="n">temp</span> <span class="ow">in</span> <span class="n">raw_data</span><span class="p">:</span>
+    <span class="n">count</span> <span class="o">+=</span> <span class="mi">1</span>
+    <span class="k">if</span> <span class="n">temp</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+        <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;数据</span><span class="si">{</span><span class="n">count</span><span class="si">}</span><span class="s2">缺失！&quot;</span><span class="p">)</span>
+        <span class="k">continue</span>
+    <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;数据</span><span class="si">{</span><span class="n">count</span><span class="si">}</span><span class="s2">：</span><span class="si">{</span><span class="n">temp</span><span class="si">}</span><span class="s2">℃&quot;</span><span class="p">)</span>
+<span class="c1"># 输出：数据1：25.5℃ 数据2缺失！数据3：26.0℃ 数据4缺失！数据5：27.2℃</span>
+</pre></div>
+</div>
+<div class="admonition tip">
+<p class="admonition-title">小技巧</p>
+<p><strong>区别一句话</strong>：<code class="docutils literal notranslate"><span class="pre">break</span></code> 是&quot;这个循环到此为止，全都不干了&quot;；<code class="docutils literal notranslate"><span class="pre">continue</span></code> 是&quot;这一条跳过，下一条继续&quot;。</p>
+</div>
+</section>
+<section id="range-enumerate">
+<h3>range 与 enumerate<a class="headerlink" href="#range-enumerate" title="Link to this heading">#</a></h3>
+<p><code class="docutils literal notranslate"><span class="pre">range()</span></code> 生成整数序列，用于控制循环次数；<code class="docutils literal notranslate"><span class="pre">enumerate()</span></code> 在遍历时同时给出<strong>下标</strong>和<strong>值</strong>：</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">week_temps</span> <span class="o">=</span> <span class="p">[</span><span class="mf">36.9</span><span class="p">,</span> <span class="mf">35.6</span><span class="p">,</span> <span class="mf">33.2</span><span class="p">,</span> <span class="mf">31.5</span><span class="p">,</span> <span class="mf">38.6</span><span class="p">,</span> <span class="mf">37.5</span><span class="p">,</span> <span class="mf">35.8</span><span class="p">]</span>
+
+<span class="k">for</span> <span class="n">day</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">7</span><span class="p">):</span>                       <span class="c1"># 用下标取值</span>
+    <span class="n">temp</span> <span class="o">=</span> <span class="n">week_temps</span><span class="p">[</span><span class="n">day</span><span class="p">]</span>
+    <span class="k">if</span> <span class="n">temp</span> <span class="o">&gt;=</span> <span class="mi">35</span><span class="p">:</span>
+        <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;本周第 </span><span class="si">{</span><span class="n">day</span><span class="o">+</span><span class="mi">1</span><span class="si">}</span><span class="s2"> 天为高温日，温度为 </span><span class="si">{</span><span class="n">temp</span><span class="si">}</span><span class="s2">℃&quot;</span><span class="p">)</span>
+
+<span class="k">for</span> <span class="n">day</span><span class="p">,</span> <span class="n">temp</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="n">week_temps</span><span class="p">):</span>    <span class="c1"># 更优雅：同时拿下标和值</span>
+    <span class="k">if</span> <span class="n">temp</span> <span class="o">&gt;=</span> <span class="mi">35</span><span class="p">:</span>
+        <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;本周第 </span><span class="si">{</span><span class="n">day</span><span class="o">+</span><span class="mi">1</span><span class="si">}</span><span class="s2"> 天为高温日，温度为 </span><span class="si">{</span><span class="n">temp</span><span class="si">}</span><span class="s2">℃&quot;</span><span class="p">)</span>
+</pre></div>
+</div>
+</section>
+<section id="id4">
+<h3>嵌套循环<a class="headerlink" href="#id4" title="Link to this heading">#</a></h3>
+<p>外层循环走一步，内层循环完整走一遍——像时钟，时针走一小格分针走一整圈。适合处理<strong>二维数据</strong>（多站 × 多日）：</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">station_temps</span> <span class="o">=</span> <span class="p">[</span>
+    <span class="p">[</span><span class="mi">28</span><span class="p">,</span> <span class="mi">30</span><span class="p">,</span> <span class="mi">32</span><span class="p">,</span> <span class="mi">33</span><span class="p">],</span>   <span class="c1"># 北京 4 天</span>
+    <span class="p">[</span><span class="mi">27</span><span class="p">,</span> <span class="mi">29</span><span class="p">,</span> <span class="mi">31</span><span class="p">,</span> <span class="mi">32</span><span class="p">],</span>   <span class="c1"># 上海 4 天</span>
+    <span class="p">[</span><span class="mi">29</span><span class="p">,</span> <span class="mi">31</span><span class="p">,</span> <span class="mi">33</span><span class="p">,</span> <span class="mi">35</span><span class="p">]</span>    <span class="c1"># 广州 4 天</span>
+<span class="p">]</span>
+<span class="n">station_names</span> <span class="o">=</span> <span class="p">[</span><span class="s2">&quot;北京&quot;</span><span class="p">,</span> <span class="s2">&quot;上海&quot;</span><span class="p">,</span> <span class="s2">&quot;广州&quot;</span><span class="p">]</span>
+<span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">station_names</span><span class="p">)):</span>
+    <span class="n">total</span> <span class="o">=</span> <span class="mi">0</span>
+    <span class="k">for</span> <span class="n">temp</span> <span class="ow">in</span> <span class="n">station_temps</span><span class="p">[</span><span class="n">i</span><span class="p">]:</span>
+        <span class="n">total</span> <span class="o">+=</span> <span class="n">temp</span>
+    <span class="n">avg</span> <span class="o">=</span> <span class="n">total</span> <span class="o">/</span> <span class="nb">len</span><span class="p">(</span><span class="n">station_temps</span><span class="p">[</span><span class="n">i</span><span class="p">])</span>
+    <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">station_names</span><span class="p">[</span><span class="n">i</span><span class="p">]</span><span class="si">}</span><span class="s2"> 日平均温度：</span><span class="si">{</span><span class="n">avg</span><span class="si">:</span><span class="s2">.1f</span><span class="si">}</span><span class="s2">℃&quot;</span><span class="p">)</span>
+</pre></div>
+</div>
+</section>
+</section>
+<section id="id5">
+<h2>提升拓展<a class="headerlink" href="#id5" title="Link to this heading">#</a></h2>
+<section id="while-else">
+<h3>while-else：循环正常结束才执行的兜底<a class="headerlink" href="#while-else" title="Link to this heading">#</a></h3>
+<p><code class="docutils literal notranslate"><span class="pre">while</span></code> （和 <code class="docutils literal notranslate"><span class="pre">for</span></code>）后面可以跟一个 <code class="docutils literal notranslate"><span class="pre">else</span></code>，它只在循环<strong>没有被 break 中断、正常跑完</strong>时执行一次。非常适合&quot;找东西，找不到就报未出现&quot;：</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">temps</span> <span class="o">=</span> <span class="p">[</span><span class="mi">18</span><span class="p">,</span> <span class="mi">21</span><span class="p">,</span> <span class="mi">24</span><span class="p">,</span> <span class="mi">27</span><span class="p">,</span> <span class="mi">32</span><span class="p">,</span> <span class="mi">35</span><span class="p">]</span>
+<span class="n">i</span> <span class="o">=</span> <span class="mi">0</span>
+<span class="k">while</span> <span class="n">i</span> <span class="o">&lt;</span> <span class="nb">len</span><span class="p">(</span><span class="n">temps</span><span class="p">)</span> <span class="ow">and</span> <span class="n">temps</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="o">&lt;</span> <span class="mi">30</span><span class="p">:</span>
+    <span class="n">i</span> <span class="o">+=</span> <span class="mi">1</span>
+<span class="k">else</span><span class="p">:</span>
+    <span class="k">if</span> <span class="n">i</span> <span class="o">&lt;</span> <span class="nb">len</span><span class="p">(</span><span class="n">temps</span><span class="p">)</span> <span class="ow">and</span> <span class="n">temps</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="o">&gt;=</span> <span class="mi">30</span><span class="p">:</span>
+        <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;首个超阈值下标：</span><span class="si">{</span><span class="n">i</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+    <span class="k">else</span><span class="p">:</span>
+        <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;未出现&quot;</span><span class="p">)</span>
+</pre></div>
+</div>
+</section>
+<section id="id6">
+<h3>列表推导式：一行筛出符合条件的元素<a class="headerlink" href="#id6" title="Link to this heading">#</a></h3>
+<p>把&quot;新建空列表 → for 循环 → if 判断 → append&quot;压成一行（第 2 章已初见，这里正式登场）：</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">temps</span> <span class="o">=</span> <span class="p">[</span><span class="mf">36.9</span><span class="p">,</span> <span class="mf">35.6</span><span class="p">,</span> <span class="mf">33.2</span><span class="p">,</span> <span class="mf">31.5</span><span class="p">,</span> <span class="mf">38.6</span><span class="p">,</span> <span class="mf">37.5</span><span class="p">,</span> <span class="mf">35.8</span><span class="p">]</span>
+<span class="n">high_days</span> <span class="o">=</span> <span class="p">[</span><span class="n">t</span> <span class="k">for</span> <span class="n">t</span> <span class="ow">in</span> <span class="n">temps</span> <span class="k">if</span> <span class="n">t</span> <span class="o">&gt;=</span> <span class="mi">35</span><span class="p">]</span>      <span class="c1"># 只留 ≥35 °C</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">high_days</span><span class="p">)</span>                                <span class="c1"># [36.9, 35.6, 38.6, 37.5]</span>
+</pre></div>
+</div>
+</section>
+</section>
+<section id="id7">
+<h2>最佳实践：分支与循环的气象规范<a class="headerlink" href="#id7" title="Link to this heading">#</a></h2>
+<p>正文讲&quot;怎么用&quot;，这里讲&quot;怎么写才稳&quot;。以下规则来自一线数据处理踩坑经验，建议当作团队规范执行。</p>
+<section id="elif">
+<h3>气温等级判定：用&quot;阶梯式 elif&quot;代替碎片区间<a class="headerlink" href="#elif" title="Link to this heading">#</a></h3>
+<p>气象分级（雨量、风级、气温等级）本质是<strong>把连续数值切成若干区间</strong>。最稳的写法是<strong>自上而下的 ``elif`` 阶梯</strong>——每个阈值只写一边，绝不写 <code class="docutils literal notranslate"><span class="pre">10</span> <span class="pre">&lt;=</span> <span class="pre">rain</span> <span class="pre">&lt;</span> <span class="pre">25</span></code> 这类又长又容易留缝的双边区间。</p>
+<p><strong>推荐写法</strong> （雨量等级，单位 mm）：</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">rain</span> <span class="o">=</span> <span class="nb">float</span><span class="p">(</span><span class="nb">input</span><span class="p">(</span><span class="s2">&quot;请输入24小时降雨量(mm)：&quot;</span><span class="p">))</span>
+<span class="k">if</span> <span class="n">rain</span> <span class="o">&lt;</span> <span class="mf">0.1</span><span class="p">:</span>
+    <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;无雨&quot;</span><span class="p">)</span>
+<span class="k">elif</span> <span class="n">rain</span> <span class="o">&lt;</span> <span class="mi">10</span><span class="p">:</span>
+    <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;小雨&quot;</span><span class="p">)</span>
+<span class="k">elif</span> <span class="n">rain</span> <span class="o">&lt;</span> <span class="mi">25</span><span class="p">:</span>
+    <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;中雨&quot;</span><span class="p">)</span>
+<span class="k">elif</span> <span class="n">rain</span> <span class="o">&lt;</span> <span class="mi">50</span><span class="p">:</span>
+    <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;大雨&quot;</span><span class="p">)</span>
+<span class="k">elif</span> <span class="n">rain</span> <span class="o">&lt;</span> <span class="mi">100</span><span class="p">:</span>
+    <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;暴雨&quot;</span><span class="p">)</span>
+<span class="k">elif</span> <span class="n">rain</span> <span class="o">&lt;</span> <span class="mi">250</span><span class="p">:</span>
+    <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;大暴雨&quot;</span><span class="p">)</span>
+<span class="k">else</span><span class="p">:</span>
+    <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;特大暴雨&quot;</span><span class="p">)</span>
+</pre></div>
+</div>
+<p><strong>为什么这样写</strong>：<code class="docutils literal notranslate"><span class="pre">elif</span></code> 只在前面条件不满足时才继续判断，所以 <code class="docutils literal notranslate"><span class="pre">rain</span> <span class="pre">&lt;</span> <span class="pre">10</span></code> 天然意味着&quot;≥ 0.1 且 &lt; 10&quot;。这样写出的区间<strong>无缝隙、无重叠</strong>，改一个阈值只动一行，不会顾此失彼。</p>
+<p><strong>反模式</strong> （碎片区间，易留缝、难维护）：</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="k">if</span> <span class="n">rain</span> <span class="o">&lt;</span> <span class="mf">0.1</span><span class="p">:</span>
+    <span class="o">...</span>
+<span class="k">elif</span> <span class="mf">0.1</span> <span class="o">&lt;=</span> <span class="n">rain</span> <span class="o">&lt;</span> <span class="mf">9.9</span><span class="p">:</span>      <span class="c1"># ✗ 9.9 到 10 之间成&quot;真空区&quot;</span>
+    <span class="o">...</span>
+<span class="k">elif</span> <span class="mi">10</span> <span class="o">&lt;=</span> <span class="n">rain</span> <span class="o">&lt;</span> <span class="mf">24.9</span><span class="p">:</span>      <span class="c1"># ✗ 24.9 到 25 又有缝</span>
+    <span class="o">...</span>
+</pre></div>
+</div>
+<div class="admonition tip">
+<p class="admonition-title">小技巧</p>
+<p><strong>铁律</strong>：分级判断统一用&quot;阶梯式 <code class="docutils literal notranslate"><span class="pre">elif</span></code> + 单边比较&quot;，阈值写成规范的整数边界（10、25、50、100、250），不要写 9.9、24.9 这种&quot;躲缝&quot;的怪数字。</p>
+</div>
+</section>
+<section id="id8">
+<h3>遍历多站找极值：初始化 + 逐个比较<a class="headerlink" href="#id8" title="Link to this heading">#</a></h3>
+<p>在多个站点（或多天）里找最大/最小气温，是 <code class="docutils literal notranslate"><span class="pre">for</span></code> 循环的经典用法。两条铁律：</p>
+<ol class="arabic simple">
+<li><p><strong>极值变量在循环外初始化</strong>，且初始值要&quot;小到任何数据都能超过 / 大到任何数据都超不过&quot;；</p></li>
+<li><p><strong>逐站比较</strong>，一边遍历一边更新极值。</p></li>
+</ol>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">stations</span> <span class="o">=</span> <span class="p">[</span><span class="s2">&quot;北京&quot;</span><span class="p">,</span> <span class="s2">&quot;上海&quot;</span><span class="p">,</span> <span class="s2">&quot;广州&quot;</span><span class="p">]</span>
+<span class="n">temps</span> <span class="o">=</span> <span class="p">[</span><span class="mf">36.5</span><span class="p">,</span> <span class="mf">35.2</span><span class="p">,</span> <span class="mf">38.0</span><span class="p">]</span>
+
+<span class="n">max_temp</span> <span class="o">=</span> <span class="o">-</span><span class="mf">999.0</span>          <span class="c1"># 初始值：低于任何正常气温</span>
+<span class="n">max_station</span> <span class="o">=</span> <span class="s2">&quot;&quot;</span>
+<span class="k">for</span> <span class="n">station</span><span class="p">,</span> <span class="n">temp</span> <span class="ow">in</span> <span class="nb">zip</span><span class="p">(</span><span class="n">stations</span><span class="p">,</span> <span class="n">temps</span><span class="p">):</span>
+    <span class="k">if</span> <span class="n">temp</span> <span class="o">&gt;</span> <span class="n">max_temp</span><span class="p">:</span>
+        <span class="n">max_temp</span> <span class="o">=</span> <span class="n">temp</span>
+        <span class="n">max_station</span> <span class="o">=</span> <span class="n">station</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;气温最高的是 </span><span class="si">{</span><span class="n">max_station</span><span class="si">}</span><span class="s2">：</span><span class="si">{</span><span class="n">max_temp</span><span class="si">}</span><span class="s2">℃&quot;</span><span class="p">)</span>
+</pre></div>
+</div>
+<p><strong>更省事</strong>：如果只要数值、不关心是哪个站，直接用内置 <code class="docutils literal notranslate"><span class="pre">max()</span></code> / <code class="docutils literal notranslate"><span class="pre">min()</span></code>：</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">temps</span> <span class="o">=</span> <span class="p">[</span><span class="mf">36.5</span><span class="p">,</span> <span class="mf">35.2</span><span class="p">,</span> <span class="mf">38.0</span><span class="p">]</span>
+<span class="nb">print</span><span class="p">(</span><span class="nb">max</span><span class="p">(</span><span class="n">temps</span><span class="p">))</span>          <span class="c1"># 38.0</span>
+<span class="nb">print</span><span class="p">(</span><span class="nb">min</span><span class="p">(</span><span class="n">temps</span><span class="p">))</span>          <span class="c1"># 35.2</span>
+</pre></div>
+</div>
+<div class="admonition tip">
+<p class="admonition-title">小技巧</p>
+<p><strong>铁律</strong>：找最大值初始化为非常小的数（如 <code class="docutils literal notranslate"><span class="pre">-float(&quot;inf&quot;)</span></code>），找最小值初始化为非常大的数（如 <code class="docutils literal notranslate"><span class="pre">float(&quot;inf&quot;)</span></code>），这样无论数据正负都能正确更新。</p>
+</div>
+</section>
+<section id="id9">
+<h3>避免无限循环：while 三大保命习惯<a class="headerlink" href="#id9" title="Link to this heading">#</a></h3>
+<ol class="arabic simple">
+<li><p><strong>循环体内必须更新条件变量</strong>：凡是 <code class="docutils literal notranslate"><span class="pre">while</span></code> 条件里出现的变量，循环体里至少要有一处让它&quot;朝终止方向变化&quot;；</p></li>
+<li><p><strong>给循环加&quot;安全上限&quot;</strong>：处理不确定的外部数据（如等待输入、读取文件）时，用 <code class="docutils literal notranslate"><span class="pre">break</span></code> 在达到上限时强制退出；</p></li>
+<li><p><strong>优先用 ``for``</strong>：只要已知要遍历的对象，就用 <code class="docutils literal notranslate"><span class="pre">for</span></code>，它天然不会死循环。只有&quot;次数未知、只靠条件&quot;时才用 <code class="docutils literal notranslate"><span class="pre">while</span></code>。</p></li>
+</ol>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">attempts</span> <span class="o">=</span> <span class="mi">0</span>
+<span class="k">while</span> <span class="kc">True</span><span class="p">:</span>                    <span class="c1"># 看起来是死循环</span>
+    <span class="n">attempts</span> <span class="o">+=</span> <span class="mi">1</span>
+    <span class="n">data</span> <span class="o">=</span> <span class="n">read_sensor</span><span class="p">()</span>
+    <span class="k">if</span> <span class="n">data</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+        <span class="k">break</span>                  <span class="c1"># 拿到数据就退出</span>
+    <span class="k">if</span> <span class="n">attempts</span> <span class="o">&gt;=</span> <span class="mi">10</span><span class="p">:</span>         <span class="c1"># 但最多试 10 次</span>
+        <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;传感器无响应，放弃&quot;</span><span class="p">)</span>
+        <span class="k">break</span>
+</pre></div>
+</div>
+</section>
+<section id="id10">
+<h3>嵌套循环处理二维气象数据<a class="headerlink" href="#id10" title="Link to this heading">#</a></h3>
+<p>多站 × 多日的双层结构（如站点与时间），用嵌套循环：<strong>外层站、内层日</strong>。注意三点：</p>
+<ol class="arabic simple">
+<li><p>内层循环在每次外层迭代时<strong>重新初始化</strong>累加器（求每日/每站均值）；</p></li>
+<li><p>缩进层次务必清晰（外层 4 空格、内层 8 空格）；</p></li>
+<li><p>数据量很大时，优先考虑 NumPy 向量化（第 6 章），嵌套循环只适合中小规模。</p></li>
+</ol>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">station_temps</span> <span class="o">=</span> <span class="p">[[</span><span class="mi">28</span><span class="p">,</span> <span class="mi">30</span><span class="p">,</span> <span class="mi">32</span><span class="p">,</span> <span class="mi">33</span><span class="p">],</span> <span class="p">[</span><span class="mi">27</span><span class="p">,</span> <span class="mi">29</span><span class="p">,</span> <span class="mi">31</span><span class="p">,</span> <span class="mi">32</span><span class="p">]]</span>
+<span class="n">station_names</span> <span class="o">=</span> <span class="p">[</span><span class="s2">&quot;北京&quot;</span><span class="p">,</span> <span class="s2">&quot;上海&quot;</span><span class="p">]</span>
+<span class="k">for</span> <span class="n">i</span><span class="p">,</span> <span class="n">site</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="n">station_temps</span><span class="p">):</span>
+    <span class="n">total</span> <span class="o">=</span> <span class="mi">0</span>
+    <span class="k">for</span> <span class="n">t</span> <span class="ow">in</span> <span class="n">site</span><span class="p">:</span>
+        <span class="n">total</span> <span class="o">+=</span> <span class="n">t</span>
+    <span class="n">avg</span> <span class="o">=</span> <span class="n">total</span> <span class="o">/</span> <span class="nb">len</span><span class="p">(</span><span class="n">site</span><span class="p">)</span>
+    <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">station_names</span><span class="p">[</span><span class="n">i</span><span class="p">]</span><span class="si">}</span><span class="s2"> 平均 </span><span class="si">{</span><span class="n">avg</span><span class="si">:</span><span class="s2">.1f</span><span class="si">}</span><span class="s2">℃&quot;</span><span class="p">)</span>
+</pre></div>
+</div>
+</section>
+<section id="id11">
+<h3>常见反模式速查<a class="headerlink" href="#id11" title="Link to this heading">#</a></h3>
+<div class="pst-scrollable-table-container"><table class="table">
+<colgroup>
+<col style="width: 30.0%" />
+<col style="width: 40.0%" />
+<col style="width: 30.0%" />
+</colgroup>
+<thead>
+<tr class="row-odd"><th class="head"><p>反模式</p></th>
+<th class="head"><p>后果</p></th>
+<th class="head"><p>正确姿势</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">if</span> <span class="pre">temp</span> <span class="pre">=</span> <span class="pre">35:</span></code></p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">SyntaxError</span></code>，<code class="docutils literal notranslate"><span class="pre">=</span></code> 不能用于判断</p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">if</span> <span class="pre">temp</span> <span class="pre">==</span> <span class="pre">35:</span></code></p></td>
+</tr>
+<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">else</span></code> 后面跟条件</p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">SyntaxError</span></code>，<code class="docutils literal notranslate"><span class="pre">else</span></code> 不接条件</p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">else:</span></code></p></td>
+</tr>
+<tr class="row-even"><td><p>忘记冒号 <code class="docutils literal notranslate"><span class="pre">:</span></code></p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">SyntaxError</span></code></p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">if</span> <span class="pre">...:</span></code>、<code class="docutils literal notranslate"><span class="pre">for</span> <span class="pre">x</span> <span class="pre">in</span> <span class="pre">...:</span></code></p></td>
+</tr>
+<tr class="row-odd"><td><p>缩进不一致</p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">IndentationError</span></code></p></td>
+<td><p>统一 4 空格</p></td>
+</tr>
+<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">while</span></code> 内不更新条件变量</p></td>
+<td><p>死循环、程序卡死</p></td>
+<td><p>循环体更新变量 / 加安全上限</p></td>
+</tr>
+<tr class="row-odd"><td><p>用 <code class="docutils literal notranslate"><span class="pre">str</span></code> 给变量命名</p></td>
+<td><p>覆盖内置类型，<code class="docutils literal notranslate"><span class="pre">str(x)</span></code> 失效</p></td>
+<td><p>用 <code class="docutils literal notranslate"><span class="pre">cities</span></code>、<code class="docutils literal notranslate"><span class="pre">station_name</span></code></p></td>
+</tr>
+<tr class="row-even"><td><p>分级写 <code class="docutils literal notranslate"><span class="pre">0.1</span> <span class="pre">&lt;=</span> <span class="pre">rain</span> <span class="pre">&lt;</span> <span class="pre">9.9</span></code></p></td>
+<td><p>区间留缝、漏判</p></td>
+<td><p>阶梯式 <code class="docutils literal notranslate"><span class="pre">elif</span></code> + 单边比较</p></td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="admonition tip">
+<p class="admonition-title">小技巧</p>
+<p><strong>一句话总结</strong>：分级判定用阶梯 <code class="docutils literal notranslate"><span class="pre">elif</span></code>，找极值先初始化再逐个比，<code class="docutils literal notranslate"><span class="pre">while</span></code> 三件套（更新变量、安全上限、能用 <code class="docutils literal notranslate"><span class="pre">for</span></code> 就用 <code class="docutils literal notranslate"><span class="pre">for</span></code>）保平安——做到这三条，你的控制流代码就稳了。</p>
+</div>
+</section>
+</section>
+<section id="id12">
+<h2>贯穿项目 · 第 3 步：气温等级判定与统计<a class="headerlink" href="#id12" title="Link to this heading">#</a></h2>
+<p>把本章知识点组装起来，完成 <code class="docutils literal notranslate"><span class="pre">weather_project/scripts/ch03_levels.py</span></code>：</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="sd">&quot;&quot;&quot;ch03_levels.py —— 贯穿项目第 3 步：气温等级判定与统计&quot;&quot;&quot;</span>
+
+<span class="c1"># 兰州站近 7 日最高气温（°C）</span>
+<span class="n">temps</span> <span class="o">=</span> <span class="p">[</span><span class="mf">28.1</span><span class="p">,</span> <span class="mf">29.4</span><span class="p">,</span> <span class="mf">31.2</span><span class="p">,</span> <span class="mf">33.6</span><span class="p">,</span> <span class="mf">34.9</span><span class="p">,</span> <span class="mf">35.7</span><span class="p">,</span> <span class="mf">33.2</span><span class="p">]</span>
+
+<span class="c1"># 等级判定（≥30 炎热，20~30 适宜，10~20 偏冷，&lt;10 寒冷）</span>
+<span class="k">def</span><span class="w"> </span><span class="nf">temp_level</span><span class="p">(</span><span class="n">t</span><span class="p">):</span>
+    <span class="k">if</span> <span class="n">t</span> <span class="o">&gt;=</span> <span class="mi">30</span><span class="p">:</span>
+        <span class="k">return</span> <span class="s2">&quot;炎热&quot;</span>
+    <span class="k">elif</span> <span class="n">t</span> <span class="o">&gt;=</span> <span class="mi">20</span><span class="p">:</span>
+        <span class="k">return</span> <span class="s2">&quot;适宜&quot;</span>
+    <span class="k">elif</span> <span class="n">t</span> <span class="o">&gt;=</span> <span class="mi">10</span><span class="p">:</span>
+        <span class="k">return</span> <span class="s2">&quot;偏冷&quot;</span>
+    <span class="k">else</span><span class="p">:</span>
+        <span class="k">return</span> <span class="s2">&quot;寒冷&quot;</span>
+
+<span class="c1"># 统计各等级天数</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">collections</span><span class="w"> </span><span class="kn">import</span> <span class="n">Counter</span>
+
+<span class="n">counts</span> <span class="o">=</span> <span class="n">Counter</span><span class="p">(</span><span class="n">temp_level</span><span class="p">(</span><span class="n">t</span><span class="p">)</span> <span class="k">for</span> <span class="n">t</span> <span class="ow">in</span> <span class="n">temps</span><span class="p">)</span>
+
+<span class="k">for</span> <span class="n">t</span> <span class="ow">in</span> <span class="n">temps</span><span class="p">:</span>
+    <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">t</span><span class="si">:</span><span class="s2">.1f</span><span class="si">}</span><span class="s2">℃ → </span><span class="si">{</span><span class="n">temp_level</span><span class="p">(</span><span class="n">t</span><span class="p">)</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;各等级天数：&quot;</span><span class="p">,</span> <span class="nb">dict</span><span class="p">(</span><span class="n">counts</span><span class="p">))</span>
+</pre></div>
+</div>
+<p>输出：</p>
+<div class="highlight-text notranslate"><div class="highlight"><pre><span></span>28.1℃ → 适宜
+29.4℃ → 适宜
+31.2℃ → 炎热
+33.6℃ → 炎热
+34.9℃ → 炎热
+35.7℃ → 炎热
+33.2℃ → 炎热
+各等级天数： {&#39;炎热&#39;: 5, &#39;适宜&#39;: 2}
+</pre></div>
+</div>
+<p><strong>验收标准</strong>：脚本对每个温度输出等级，并统计各等级天数。可运行版本见 <a class="reference internal" href="../../gallery/plot_basics/plot_flow.html"><span class="doc">气温等级判定与逐日可视化</span></a>。</p>
+</section>
+<section id="id13">
+<h2>本章小结<a class="headerlink" href="#id13" title="Link to this heading">#</a></h2>
+<ul class="simple">
+<li><p><strong>分支</strong>：<code class="docutils literal notranslate"><span class="pre">if</span></code> / <code class="docutils literal notranslate"><span class="pre">elif</span></code> / <code class="docutils literal notranslate"><span class="pre">else</span></code> 根据条件选择执行路径；<code class="docutils literal notranslate"><span class="pre">elif</span></code> 自上而下，条件用 <code class="docutils literal notranslate"><span class="pre">==</span></code>、<code class="docutils literal notranslate"><span class="pre">!=</span></code>、<code class="docutils literal notranslate"><span class="pre">in</span></code>、<code class="docutils literal notranslate"><span class="pre">and</span></code>、<code class="docutils literal notranslate"><span class="pre">or</span></code>、<code class="docutils literal notranslate"><span class="pre">not</span></code> 组合；</p></li>
+<li><p><strong>循环</strong>：<code class="docutils literal notranslate"><span class="pre">for</span></code> 遍历可迭代对象（列表、字典、字符串），<code class="docutils literal notranslate"><span class="pre">while</span></code> 按条件循环；</p></li>
+<li><p><strong>调控</strong>：<code class="docutils literal notranslate"><span class="pre">break</span></code> 跳出循环，<code class="docutils literal notranslate"><span class="pre">continue</span></code> 跳过本次；</p></li>
+<li><p><strong>进阶</strong>：<code class="docutils literal notranslate"><span class="pre">range</span></code> / <code class="docutils literal notranslate"><span class="pre">enumerate</span></code> / <code class="docutils literal notranslate"><span class="pre">zip</span></code> / 嵌套循环处理二维数据；</p></li>
+<li><p><strong>应用</strong>：雨量等级判定、逐站高温预警、多站多日求平均，都是分支 + 循环的实战场景。</p></li>
+</ul>
+<div class="admonition seealso">
+<p class="admonition-title">参见</p>
+<ul class="simple">
+<li><p>术语详解：<a class="reference internal" href="../../api/ch03_terms.html"><span class="doc">第 3 章术语：分支、循环与条件</span></a> —— 每个名词的生活类比与易混淆点；</p></li>
+<li><p>动手练习：<a class="reference internal" href="../../tutorials/basics/ch03_practice.html"><span class="doc">第 3 章练习：分支、循环与条件</span></a> —— 5 道气温等级与循环实战题（含提示）；</p></li>
+<li><p>可执行示例：<a class="reference internal" href="../../gallery/plot_basics/plot_flow.html"><span class="doc">气温等级判定与逐日可视化</span></a> —— 气温等级判定与统计可视化。</p></li>
+</ul>
+</div>
+</section>
+</section>
+
+
+                </article>
+              
+              
+              
+              
+              
+                <footer class="prev-next-footer d-print-none">
+                  
+<div class="prev-next-area">
+    <a class="left-prev"
+       href="datatypes.html"
+       title="上一页">
+      <i class="fa-solid fa-angle-left"></i>
+      <div class="prev-next-info">
+        <p class="prev-next-subtitle">上一页</p>
+        <p class="prev-next-title">基本数据类型、变量和运算符</p>
+      </div>
+    </a>
+    <a class="right-next"
+       href="functions.html"
+       title="下一页">
+      <div class="prev-next-info">
+        <p class="prev-next-subtitle">下一页</p>
+        <p class="prev-next-title">函数及变量作用域、模块和包</p>
+      </div>
+      <i class="fa-solid fa-angle-right"></i>
+    </a>
+</div>
+                </footer>
+              
+            </div>
+            
+            
+              
+                <dialog id="pst-secondary-sidebar-modal"></dialog>
+                <div id="pst-secondary-sidebar" class="bd-sidebar-secondary bd-toc"><div class="sidebar-secondary-items sidebar-secondary__inner">
+
+
+  <div class="sidebar-secondary-item">
+<div
+    id="pst-page-navigation-heading-2"
+    class="page-toc tocsection onthispage">
+    <i class="fa-solid fa-list"></i> 当前页面
+  </div>
+  <nav id="pst-page-toc-nav" class="page-toc" aria-labelledby="pst-page-navigation-heading-2">
+    <ul class="pst-show_toc_level nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#t-302">配套动画（T-302）</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#if-elif-else">条件判断：if / elif / else</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#id2">逻辑运算与运算符</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#if">if 语句的一般形式</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id3">循环：反复处理一批数据</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#for">for 循环</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#while">while 循环</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#break-continue">break 与 continue</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#range-enumerate">range 与 enumerate</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#id4">嵌套循环</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id5">提升拓展</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#while-else">while-else：循环正常结束才执行的兜底</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#id6">列表推导式：一行筛出符合条件的元素</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id7">最佳实践：分支与循环的气象规范</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#elif">气温等级判定：用"阶梯式 elif"代替碎片区间</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#id8">遍历多站找极值：初始化 + 逐个比较</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#id9">避免无限循环：while 三大保命习惯</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#id10">嵌套循环处理二维气象数据</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#id11">常见反模式速查</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id12">贯穿项目 · 第 3 步：气温等级判定与统计</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id13">本章小结</a></li>
+</ul>
+  </nav></div>
+
+</div></div>
+              
+            
+          </div>
+          <footer class="bd-footer-content">
+            
+          </footer>
+        
+      </main>
+    </div>
+  </div>
+  
+  <!-- Scripts loaded after <body> so the DOM is not blocked -->
+  <script defer src="../../_static/scripts/bootstrap.js?digest=90905a2f556bf617f1a9"></script>
+<script defer src="../../_static/scripts/pydata-sphinx-theme.js?digest=90905a2f556bf617f1a9"></script>
+
+  <footer class="bd-footer">
+<div class="bd-footer__inner bd-page-width">
+  
+    <div class="footer-items__start">
+      
+        <div class="footer-item">
+
+  <p class="copyright">
+    
+      © Copyright 2026, 兰州大学大气科学学院编程社区.
+      <br/>
+    
+  </p>
+</div>
+      
+        <div class="footer-item">
+
+  <p class="sphinx-version">
+    由 <a href="https://www.sphinx-doc.org/">Sphinx</a> 8.2.3创建。
+    <br/>
+  </p>
+</div>
+      
+    </div>
+  
+  
+  
+    <div class="footer-items__end">
+      
+        <div class="footer-item">
+<p class="theme-version">
+  <!-- # L10n: Setting the PST URL as an argument as this does not need to be localized -->
+  使用 <a href="https://pydata-sphinx-theme.readthedocs.io/en/stable/index.html">PyData Sphinx Theme</a> 0.20.0构建.
+</p></div>
+      
+    </div>
+  
+</div>
+
+  </footer>
+  </body>
+</html>

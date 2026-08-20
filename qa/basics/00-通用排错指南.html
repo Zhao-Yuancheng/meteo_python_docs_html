@@ -1,0 +1,930 @@
+
+<!DOCTYPE html>
+
+
+<html lang="zh-CN" data-content_root="../../" >
+
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
+    <title>通用排错方法论：从「看不懂报错」到「有的放矢」 Q&amp;A &#8212; MeteoPython</title>
+  
+  
+  
+  <script data-cfasync="false">
+    document.documentElement.dataset.mode = localStorage.getItem("mode") || "";
+    document.documentElement.dataset.theme = localStorage.getItem("theme") || "";
+  </script>
+  <!--
+    this give us a css class that will be invisible only if js is disabled
+  -->
+  <noscript>
+    <style>
+      .pst-js-only { display: none !important; }
+
+    </style>
+  </noscript>
+  
+  <!-- Loaded before other Sphinx assets -->
+  <link href="../../_static/styles/theme.css?digest=90905a2f556bf617f1a9" rel="stylesheet" />
+<link href="../../_static/styles/pydata-sphinx-theme.css?digest=90905a2f556bf617f1a9" rel="stylesheet" />
+
+    <link rel="stylesheet" type="text/css" href="../../_static/pygments.css?v=8f2a1f02" />
+    <link rel="stylesheet" type="text/css" href="../../_static/copybutton.css?v=76b2166b" />
+    <link rel="stylesheet" type="text/css" href="../../_static/sg_gallery.css?v=fd6457a4" />
+    <link rel="stylesheet" type="text/css" href="../../_static/sg_gallery-binder.css?v=f4aeca0c" />
+    <link rel="stylesheet" type="text/css" href="../../_static/sg_gallery-dataframe.css?v=2082cf3c" />
+    <link rel="stylesheet" type="text/css" href="../../_static/sg_gallery-rendered-html.css?v=1277b6f3" />
+    <link rel="stylesheet" type="text/css" href="../../_static/sphinx-design.min.css?v=95c83b7e" />
+    <link rel="stylesheet" type="text/css" href="../../_static/./custom.css?v=fbe1f034" />
+  
+  <!-- So that users can add custom icons -->
+  <script defer src="../../_static/scripts/fontawesome.js?digest=90905a2f556bf617f1a9"></script>
+  <!-- Pre-loaded scripts that we'll load fully later -->
+  <link rel="preload" as="script" href="../../_static/scripts/bootstrap.js?digest=90905a2f556bf617f1a9" />
+<link rel="preload" as="script" href="../../_static/scripts/pydata-sphinx-theme.js?digest=90905a2f556bf617f1a9" />
+
+    <script src="../../_static/documentation_options.js?v=9becfed8"></script>
+    <script src="../../_static/doctools.js?v=9bcbadda"></script>
+    <script src="../../_static/sphinx_highlight.js?v=dc90522c"></script>
+    <script src="../../_static/sg-tags.js?v=d80f6fa4"></script>
+    <script src="../../_static/clipboard.min.js?v=a7894cd8"></script>
+    <script src="../../_static/copybutton.js?v=fd10adb8"></script>
+    <script src="../../_static/translations.js?v=beaddf03"></script>
+    <script src="../../_static/design-tabs.js?v=f930bc37"></script>
+    <script>DOCUMENTATION_OPTIONS.pagename = 'qa/basics/00-通用排错指南';</script>
+    <script>
+        DOCUMENTATION_OPTIONS.theme_version = '0.20.0';
+        DOCUMENTATION_OPTIONS.theme_switcher_json_url = '_static/switcher.json';
+        DOCUMENTATION_OPTIONS.theme_switcher_version_match = '0.1.0';
+        DOCUMENTATION_OPTIONS.show_version_warning_banner =
+            false;
+        </script>
+    <script>DOCUMENTATION_OPTIONS.search_as_you_type = false;</script>
+    <link rel="icon" href="../../_static/favicon.svg"/>
+    <link rel="index" title="索引" href="../../genindex.html" />
+    <link rel="search" title="搜索" href="../../search.html" />
+    <link rel="next" title="Python 简介及安装环境 Q&amp;A" href="01-Python%E7%AE%80%E4%BB%8B%E4%B8%8EConda%E7%8E%AF%E5%A2%83-QA.html" />
+    <link rel="prev" title="模块一 Python 编程基础（常见问题 Q&amp;A）" href="index.html" />
+  <meta name="viewport" content="width=device-width, initial-scale=1"/>
+  <meta name="docsearch:language" content="zh-CN"/>
+  <meta name="docsearch:version" content="0.1" />
+    <meta name="docbuild:last-update" content="2026-08-20"/>
+  
+    
+    <script src="../../_static/searchtools.js"></script>
+    <script src="../../_static/language_data.js"></script>
+    <script src="../../searchindex.js"></script>
+  
+  </head>
+  <body data-default-mode="">
+  
+  
+  <div id="pst-skip-link" class="skip-link d-print-none"><a href="#main-content">跳转至主要内容</a></div>
+
+  
+  <div id="pst-scroll-pixel-helper"></div>
+  
+  <button type="button" class="btn rounded-pill" id="pst-back-to-top">
+    <i class="fa-solid fa-arrow-up"></i>回到顶部</button>
+  
+  
+  
+  
+  <dialog id="pst-search-dialog">
+    
+<form class="bd-search d-flex align-items-center"
+      action="../../search.html"
+      method="get">
+  <i class="fa-solid fa-magnifying-glass"></i>
+  <input type="search"
+         class="form-control"
+         name="q"
+         placeholder="搜索文档…"
+         aria-label="搜索文档…"
+         autocomplete="off"
+         autocorrect="off"
+         autocapitalize="off"
+         spellcheck="false"/>
+  <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd>K</kbd></span>
+</form>
+  </dialog>
+
+  <div class="pst-async-banner-revealer d-none">
+  <aside id="bd-header-version-warning" class="d-none d-print-none" aria-label="版本警告"></aside>
+</div>
+
+  
+    <header id="pst-header" class="bd-header navbar navbar-expand-lg bd-navbar d-print-none">
+<div class="bd-header__inner bd-page-width">
+  <button class="pst-navbar-icon sidebar-toggle primary-toggle" aria-label="网页导航">
+    <span class="fa-solid fa-bars"></span>
+  </button>
+  
+  
+  <div class="col-lg-3 navbar-header-items__start">
+    
+      <div class="navbar-item">
+
+  
+    
+  
+
+<a class="navbar-brand logo" href="../../index.html">
+  
+  
+  
+  
+  
+    
+    
+      
+    
+    
+    <img src="../../_static/logo.svg" class="logo__image only-light" alt="MeteoPython - Home"/>
+    <img src="../../_static/logo.svg" class="logo__image only-dark pst-js-only" alt="MeteoPython - Home"/>
+  
+  
+</a></div>
+    
+  </div>
+  
+  <div class="col-lg-9 navbar-header-items">
+    
+    <div class="me-auto navbar-header-items__center">
+      
+        <div class="navbar-item">
+<nav>
+  <ul class="bd-navbar-elements navbar-nav">
+    
+<li class="nav-item ">
+  <a class="nav-link nav-internal" href="../../user_guide/index.html">
+    教程
+  </a>
+</li>
+
+
+<li class="nav-item ">
+  <a class="nav-link nav-internal" href="../../tutorials/index.html">
+    练习
+  </a>
+</li>
+
+
+<li class="nav-item ">
+  <a class="nav-link nav-internal" href="../../gallery/index.html">
+    示例
+  </a>
+</li>
+
+
+<li class="nav-item ">
+  <a class="nav-link nav-internal" href="../../api/index.html">
+    术语参考
+  </a>
+</li>
+
+
+<li class="nav-item current active">
+  <a class="nav-link nav-internal" href="../index.html">
+    常见问题 Q&A
+  </a>
+</li>
+
+  </ul>
+</nav></div>
+      
+    </div>
+    
+    
+    <div class="navbar-header-items__end">
+      
+        <div class="navbar-item navbar-persistent--container">
+          
+
+<button class="btn search-button-field search-button__button pst-js-only" title="搜索" aria-label="搜索" data-bs-placement="bottom" data-bs-toggle="tooltip">
+ <i class="fa-solid fa-magnifying-glass"></i>
+ <span class="search-button__default-text">搜索</span>
+ <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd class="kbd-shortcut__modifier">K</kbd></span>
+</button>
+        </div>
+      
+      
+        <div class="navbar-item">
+
+<div class="theme-switch-container dropdown pst-js-only" data-bs-toggle="tooltip" data-bs-placement="bottom" title="Color mode">
+  <button class="btn btn-sm nav-link pst-navbar-icon theme-switch-button dropdown-toggle" aria-label="Color mode" data-bs-toggle="dropdown">
+    <i class="theme-switch fa-solid fa-sun fa-lg fa-fw" data-mode="light" title="亮色"></i>
+    <i class="theme-switch fa-solid fa-moon fa-lg fa-fw" data-mode="dark" title="暗色"></i>
+    <i class="theme-switch fa-solid fa-circle-half-stroke fa-lg fa-fw" data-mode="auto" title="System Settings"></i>
+  </button>
+  <ul class="dropdown-menu dropdown-menu-end">
+    <li><button class="dropdown-item d-flex align-items-center theme-change-button" data-mode="auto"><i class="fa-solid fa-circle-half-stroke fa-lg fa-fw me-1"></i>System Settings</button></li>
+    <li><button class="dropdown-item d-flex align-items-center theme-change-button" data-mode="light"><i class="fa-solid fa-sun fa-lg fa-fw me-1"></i>亮色</button></li>
+    <li><button class="dropdown-item d-flex align-items-center theme-change-button" data-mode="dark"><i class="fa-solid fa-moon fa-lg fa-fw me-1"></i>暗色</button></li>
+  </ul>
+</div></div>
+      
+        <div class="navbar-item"><ul class="navbar-icon-links"
+    aria-label="Icon Links">
+</ul></div>
+      
+    </div>
+    
+  </div>
+  
+  
+    <div class="navbar-persistent--mobile">
+
+<button class="btn search-button-field search-button__button pst-js-only" title="搜索" aria-label="搜索" data-bs-placement="bottom" data-bs-toggle="tooltip">
+ <i class="fa-solid fa-magnifying-glass"></i>
+ <span class="search-button__default-text">搜索</span>
+ <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd class="kbd-shortcut__modifier">K</kbd></span>
+</button>
+    </div>
+  
+
+  
+    <button class="pst-navbar-icon sidebar-toggle secondary-toggle" aria-label="当前页面">
+      <span class="fa-solid fa-outdent"></span>
+    </button>
+  
+</div>
+
+    </header>
+  
+
+  <div class="bd-container">
+    <div class="bd-container__inner bd-page-width">
+      
+      
+      
+      <dialog id="pst-primary-sidebar-modal"></dialog>
+      <div id="pst-primary-sidebar" class="bd-sidebar-primary bd-sidebar">
+        
+
+  
+  <div class="sidebar-header-items sidebar-primary__section">
+    
+    
+      <div class="sidebar-header-items__center">
+        
+          
+          
+            <div class="navbar-item">
+<nav>
+  <ul class="bd-navbar-elements navbar-nav">
+    
+<li class="nav-item ">
+  <a class="nav-link nav-internal" href="../../user_guide/index.html">
+    教程
+  </a>
+</li>
+
+
+<li class="nav-item ">
+  <a class="nav-link nav-internal" href="../../tutorials/index.html">
+    练习
+  </a>
+</li>
+
+
+<li class="nav-item ">
+  <a class="nav-link nav-internal" href="../../gallery/index.html">
+    示例
+  </a>
+</li>
+
+
+<li class="nav-item ">
+  <a class="nav-link nav-internal" href="../../api/index.html">
+    术语参考
+  </a>
+</li>
+
+
+<li class="nav-item current active">
+  <a class="nav-link nav-internal" href="../index.html">
+    常见问题 Q&A
+  </a>
+</li>
+
+  </ul>
+</nav></div>
+          
+        
+      </div>
+    
+    
+    
+      <div class="sidebar-header-items__end">
+        
+          <div class="navbar-item">
+
+<div class="theme-switch-container dropdown pst-js-only" data-bs-toggle="tooltip" data-bs-placement="bottom" title="Color mode">
+  <button class="btn btn-sm nav-link pst-navbar-icon theme-switch-button dropdown-toggle" aria-label="Color mode" data-bs-toggle="dropdown">
+    <i class="theme-switch fa-solid fa-sun fa-lg fa-fw" data-mode="light" title="亮色"></i>
+    <i class="theme-switch fa-solid fa-moon fa-lg fa-fw" data-mode="dark" title="暗色"></i>
+    <i class="theme-switch fa-solid fa-circle-half-stroke fa-lg fa-fw" data-mode="auto" title="System Settings"></i>
+  </button>
+  <ul class="dropdown-menu dropdown-menu-end">
+    <li><button class="dropdown-item d-flex align-items-center theme-change-button" data-mode="auto"><i class="fa-solid fa-circle-half-stroke fa-lg fa-fw me-1"></i>System Settings</button></li>
+    <li><button class="dropdown-item d-flex align-items-center theme-change-button" data-mode="light"><i class="fa-solid fa-sun fa-lg fa-fw me-1"></i>亮色</button></li>
+    <li><button class="dropdown-item d-flex align-items-center theme-change-button" data-mode="dark"><i class="fa-solid fa-moon fa-lg fa-fw me-1"></i>暗色</button></li>
+  </ul>
+</div></div>
+        
+          <div class="navbar-item"><ul class="navbar-icon-links"
+    aria-label="Icon Links">
+</ul></div>
+        
+      </div>
+    
+  </div>
+  
+    <div class="sidebar-primary-items__start sidebar-primary__section">
+        <div class="sidebar-primary-item pst-sidebar-collapse"><button id="pst-collapse-sidebar-button" aria-expanded="true" aria-controls="pst-primary-sidebar">
+  <svg class="pst-icon" role="img" aria-hidden="true" focusable="false" viewBox="0 0 16 16" xmlns="http://www.w3.org/2000/svg">
+    <path fill="currentColor" d="M3 15.5C2.36232 15.5 1.74874 15.2564 1.28478 14.8189C0.820828 14.3815 0.541576 13.7832 0.504167 13.1467L0.5 13L0.5 3C0.499965 2.36232 0.743605 1.74874 1.18107 1.28478C1.61854 0.820828 2.21676 0.541576 2.85333 0.504167L3 0.5L13 0.5C13.6377 0.499965 14.2513 0.743605 14.7152 1.18107C15.1792 1.61854 15.4584 2.21676 15.4958 2.85333L15.5 3L15.5 13C15.5 13.6377 15.2564 14.2513 14.8189 14.7152C14.3815 15.1792 13.7832 15.4584 13.1467 15.4958L13 15.5L3 15.5ZM3 13.8333L10.5 13.8333L10.5 2.16667L3 2.16667C2.79589 2.16669 2.59889 2.24163 2.44636 2.37726C2.29383 2.5129 2.19638 2.69979 2.1725 2.9025L2.16667 3L2.16667 13C2.16669 13.2041 2.24163 13.4011 2.37726 13.5536C2.5129 13.7062 2.69979 13.8036 2.9025 13.8275L3 13.8333ZM6.65583 10.325L6.5775 10.2558L4.91083 8.58917C4.76735 8.44567 4.68116 8.25476 4.66843 8.05223C4.65569 7.84971 4.71729 7.6495 4.84167 7.48917L4.91083 7.41083L6.5775 5.74417C6.72747 5.59471 6.9287 5.50794 7.14032 5.50148C7.35194 5.49502 7.55809 5.56935 7.7169 5.70937C7.8757 5.8494 7.97525 6.04463 7.99533 6.25539C8.01541 6.46616 7.95451 6.67667 7.825 6.84417L7.75583 6.9225L6.67917 8L7.75583 9.0775C7.89931 9.22099 7.98551 9.41191 7.99824 9.61443C8.01097 9.81695 7.94938 10.0172 7.825 10.1775L7.75583 10.2558C7.61234 10.3993 7.42142 10.4855 7.2189 10.4982C7.01638 10.511 6.81617 10.4494 6.65583 10.325Z"/>
+  </svg>
+  <span class="pst-collapse-sidebar-label">Collapse Sidebar</span>
+  <span class="pst-expand-sidebar-label">Expand Sidebar</span>
+</button></div>
+        <div class="sidebar-primary-item">
+
+<nav class="bd-docs-nav bd-links"
+     aria-label="章节导航">
+  <p class="bd-links__title" role="heading" aria-level="1">章节导航</p>
+  <div class="bd-toc-item navbar-nav"><ul class="current nav bd-sidenav">
+<li class="toctree-l1 current active has-children"><a class="reference internal" href="index.html">模块一 Python 编程基础（常见问题 Q&amp;A）</a><details open="open"><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul class="current">
+<li class="toctree-l2 current active"><a class="current reference internal" href="#">通用排错方法论：从「看不懂报错」到「有的放矢」 Q&amp;A</a></li>
+<li class="toctree-l2"><a class="reference internal" href="01-Python%E7%AE%80%E4%BB%8B%E4%B8%8EConda%E7%8E%AF%E5%A2%83-QA.html">Python 简介及安装环境 Q&amp;A</a></li>
+<li class="toctree-l2"><a class="reference internal" href="02-%E6%95%B0%E6%8D%AE%E7%B1%BB%E5%9E%8B%E4%B8%8E%E8%BF%90%E7%AE%97%E7%AC%A6-QA.html">基本数据类型、变量和运算符 Q&amp;A</a></li>
+<li class="toctree-l2"><a class="reference internal" href="03-%E5%88%86%E6%94%AF%E6%9D%A1%E4%BB%B6%E5%BE%AA%E7%8E%AF-QA.html">分支、条件与循环 Q&amp;A</a></li>
+<li class="toctree-l2"><a class="reference internal" href="04-%E5%87%BD%E6%95%B0%E4%BD%9C%E7%94%A8%E5%9F%9F%E6%A8%A1%E5%9D%97%E5%8C%85-QA.html">函数、变量作用域、模块与包 Q&amp;A</a></li>
+<li class="toctree-l2"><a class="reference internal" href="05-%E9%9D%A2%E5%90%91%E5%AF%B9%E8%B1%A1%E5%87%BD%E6%95%B0%E5%BC%8F%E9%AB%98%E7%BA%A7%E8%AF%AD%E6%B3%95-QA.html">面向对象、函数式编程与高级语法 Q&amp;A</a></li>
+</ul>
+</details></li>
+<li class="toctree-l1 has-children"><a class="reference internal" href="../data/index.html">模块二 气象数据处理（常见问题 Q&amp;A）</a><details open="open"><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
+<li class="toctree-l2"><a class="reference internal" href="../data/06-NumPy%E6%B0%94%E8%B1%A1%E8%AE%A1%E7%AE%97-QA.html">气象数据计算 NumPy Q&amp;A</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../data/07-Pandas%E6%B0%94%E8%B1%A1%E5%88%86%E6%9E%90-QA.html">气象数据分析（一）Pandas Q&amp;A</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../data/08-Xarray%E6%B0%94%E8%B1%A1%E5%88%86%E6%9E%90-QA.html">Xarray 气象数据处理（二）Q&amp;A</a></li>
+</ul>
+</details></li>
+<li class="toctree-l1 has-children"><a class="reference internal" href="../viz/index.html">模块三 气象数据可视化（常见问题 Q&amp;A）</a><details open="open"><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
+<li class="toctree-l2"><a class="reference internal" href="../viz/09-Matplotlib%E6%B0%94%E8%B1%A1%E7%BB%98%E5%9B%BE-QA.html">气象数据绘图（一）Matplotlib Q&amp;A</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../viz/10-Cartopy%E6%B0%94%E8%B1%A1%E7%BB%98%E5%9B%BE-QA.html">气象数据绘图（二）Cartopy Q&amp;A</a></li>
+</ul>
+</details></li>
+</ul>
+</div>
+</nav></div>
+    </div>
+  
+  
+  <div class="sidebar-primary-items__end sidebar-primary__section">
+      <div class="sidebar-primary-item">
+<div id="ethical-ad-placement"
+      class="flat"
+      data-ea-publisher="readthedocs"
+      data-ea-type="readthedocs-sidebar"
+      data-ea-manual="true">
+</div></div>
+  </div>
+
+
+      </div>
+      
+      <main id="main-content" class="bd-main" role="main">
+        
+        
+          <div class="bd-content">
+            <div class="bd-article-container">
+              
+              <div class="bd-header-article d-print-none">
+<div class="header-article-items header-article__inner">
+  
+    <div class="header-article-items__start">
+      
+        <div class="header-article-item">
+
+<nav aria-label="Breadcrumb" class="d-print-none">
+  <ul class="bd-breadcrumbs">
+    
+    <li class="breadcrumb-item breadcrumb-home">
+      <a href="../../index.html" class="nav-link" aria-label="初始页面">
+        <i class="fa-solid fa-home"></i>
+      </a>
+    </li>
+    
+    <li class="breadcrumb-item"><a href="../index.html" class="nav-link">常见问题 Q&amp;A</a></li>
+    
+    
+    <li class="breadcrumb-item"><a href="index.html" class="nav-link">模块一 Python 编程基础（常见问题 Q&amp;A）</a></li>
+    
+    <li class="breadcrumb-item active" aria-current="page"><span class="ellipsis">通用排错方法论：从「看不懂报错」到「有的放矢」 Q&amp;A</span></li>
+  </ul>
+</nav>
+</div>
+      
+    </div>
+  
+  
+</div>
+</div>
+              
+              
+              
+                
+<div id="searchbox"></div>
+                <article class="bd-article">
+                  
+  <section id="q-a">
+<h1>通用排错方法论：从「看不懂报错」到「有的放矢」 Q&amp;A<a class="headerlink" href="#q-a" title="Link to this heading">#</a></h1>
+<blockquote>
+<div><p>面向兰州大学大气科学学院·《气象 + Python 编程》系列教程
+本篇是你读任何一章 <strong>QA（常见报错）</strong>
+之前的必读篇。它不回答「某个报错怎么修」，而是教你<strong>一套读报错、查异常、练联想</strong>的通用方法。具体到每一章的高频报错，请翻到对应章节文件。</p>
+</div></blockquote>
+<section id="id1">
+<span id="id2"></span><h2>0.1 三种「看起来不正常」的东西先分清<a class="headerlink" href="#id1" title="Link to this heading">#</a></h2>
+<p>写代码时你遇到的「意外」，其实分三类，教科书和报错文本会用不同方式提醒你。第一件要练的本领，就是<strong>一眼分清你撞上的是哪一类</strong>：</p>
+<div class="pst-scrollable-table-container"><table class="table">
+<thead>
+<tr class="row-odd"><th class="head"><p>类型</p></th>
+<th class="head"><p>英文关键词</p></th>
+<th class="head"><p>特征</p></th>
+<th class="head"><p>程序会不会停</p></th>
+<th class="head"><p>示例</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p><strong>报错 Error</strong></p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">Error</span></code>（<code class="docutils literal notranslate"><span class="pre">Exception</span></code>
+的实例）</p></td>
+<td><p>抛出异常，通常会让程序中断</p></td>
+<td><p>会停</p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">ZeroDivisionError</span></code>、<code class="docutils literal notranslate"><span class="pre">KeyError</span></code></p></td>
+</tr>
+<tr class="row-odd"><td><p><strong>警告 Warning</strong></p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">Warning</span></code>（同类，但只是提醒）</p></td>
+<td><p>打印一段提示后<strong>照常运行</strong></p></td>
+<td><p>不停</p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">RuntimeWarning:</span> <span class="pre">invalid</span> <span class="pre">value</span> <span class="pre">encountered</span></code></p></td>
+</tr>
+<tr class="row-even"><td><p><strong>异常现象（无报错）</strong></p></td>
+<td><p>无</p></td>
+<td><p>程序正常结束，但结果/产物不对</p></td>
+<td><p>不停</p></td>
+<td><p>文件里没写入内容、图里中文变方框、地图多一条白竖线</p></td>
+</tr>
+</tbody>
+</table>
+</div>
+<blockquote>
+<div><p><strong>气象类比</strong>：报错像「大风黄色预警手机推送」——它吵醒你、打断你，但你立刻知道有危险；警告像「空气质量指数
+APP
+里的小字提示」——页面上有个角落提醒，不影响你看图，可忽略久了会吃亏；异常现象最阴险，像「寒潮过后没开窗通风、屋里结露长霉」——没有任何报错，等发现时已经晚了。</p>
+</div></blockquote>
+<p>第一原则：<strong>见到 ``Error`` 不用慌，它恰恰是 Python
+在「主动告诉你哪里出问题」，比「静默出错」好排查一百倍。</strong> 最可怕的是第
+3 类——程序跑完、看着也没报错，但输出是错的。</p>
+</section>
+<section id="traceback">
+<span id="id3"></span><h2>0.2 读懂一段报错（Traceback）：先看山脚，再看山路<a class="headerlink" href="#traceback" title="Link to this heading">#</a></h2>
+<p>当你运行出错的代码，Python 会打印一大段红色文字。它的专业名称叫
+<strong>Traceback（回溯/堆栈跟踪）</strong>。拿一个经典例子：</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="c1"># 想算开尔文转摄氏度的平均</span>
+<span class="n">temps_k</span> <span class="o">=</span> <span class="p">[</span><span class="mf">285.0</span><span class="p">,</span> <span class="mf">288.2</span><span class="p">,</span> <span class="mf">290.5</span><span class="p">,</span> <span class="s2">&quot;异常值&quot;</span><span class="p">]</span>   <span class="c1"># 混进一个字符串</span>
+<span class="nb">print</span><span class="p">(</span><span class="nb">sum</span><span class="p">(</span><span class="n">temps_k</span><span class="p">))</span>
+</pre></div>
+</div>
+<p>运行输出（真实）：</p>
+<div class="highlight-text notranslate"><div class="highlight"><pre><span></span>Traceback (most recent call last):
+  File &quot;C:\\Users\\you\\weather_project\\main.py&quot;, line 3, in &lt;module&gt;
+    print(sum(temps_k))
+          ^^^^^^^^^^^^
+TypeError: unsupported operand type(s) for +: &#39;float&#39; and &#39;str&#39;
+</pre></div>
+</div>
+<p><strong>怎么读（按这个顺序）：</strong></p>
+<ol class="arabic simple">
+<li><p><strong>「Traceback (most recent call last):」</strong> ——
+一句话翻译：下面记录的是「从最外层一路追进到出错那行的调用路线」。<strong>上面是外围，下面是内核</strong>，越往下越接近真正的家。</p></li>
+<li><p><strong>中间每一行 ``File &quot;...&quot;, line 数字, in &lt;函数名&gt;``</strong>
+是<strong>一段行程</strong>：指出程序「在哪个文件、哪一行、调进了哪个函数」。</p></li>
+<li><p><strong>重点：看最后一个 ``File ... line 数字``
+那一行</strong>，它下面的代码就是<strong>真正抛错的那一行</strong>，行号往往直接指向错误现场。</p></li>
+<li><p><strong>最后一行才是「判词」</strong>：<code class="docutils literal notranslate"><span class="pre">错误类型:</span> <span class="pre">出错信息</span></code>。这一行决定了上面所有猜测的方向。</p></li>
+</ol>
+<blockquote>
+<div><p><strong>口诀：从下往上读，最后一行的 ``ErrorType`` 是主菜，``line N``
+是坐标，Traceback 前半段是你在哪一层调用栈里。</strong>
+就像看雷达回波图：先找到强度最大的回波核（ErrorType），再看它压在哪个经纬度（出错行），最后才看它是怎么从外缘翻涌进来的（调用栈）。</p>
+</div></blockquote>
+<p><strong>三类信息帮你定位：</strong></p>
+<ul class="simple">
+<li><p><strong>类型词</strong>（最后一个单词）：<code class="docutils literal notranslate"><span class="pre">NameError</span></code> / <code class="docutils literal notranslate"><span class="pre">TypeError</span></code> /
+<code class="docutils literal notranslate"><span class="pre">ValueError</span></code> / <code class="docutils literal notranslate"><span class="pre">IndexError</span></code> / <code class="docutils literal notranslate"><span class="pre">KeyError</span></code> —— 决定排查大方向。</p></li>
+<li><p><strong>行号</strong>（<code class="docutils literal notranslate"><span class="pre">line</span> <span class="pre">N</span></code>）：报错发生在这一行的<strong>运算过程中</strong>，不是这一行「写完」就错——逐字检查这一行的变量名、类型、下标、括号。</p></li>
+<li><p><strong>出错信息与 ``~^~`` 箭头</strong>：新版本 Python
+会用波浪线画出「到底是这一行的哪一段」出问题，比如上面把它画在
+<code class="docutils literal notranslate"><span class="pre">sum(temps_k)</span></code> 下面。</p></li>
+</ul>
+</section>
+<section id="python">
+<span id="id4"></span><h2>0.3 顶层异常层级：给 Python 的「家谱」搭个索引<a class="headerlink" href="#python" title="Link to this heading">#</a></h2>
+<p>Python
+里「报错」本质是<strong>抛出一个异常对象</strong>，所有异常都排在一棵继承树上。看到
+<code class="docutils literal notranslate"><span class="pre">ErrorType</span></code>，你可以顺着这个家谱反推出「它是哪一类问题的亲戚」，从而快速判断大方向。</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>BaseException（一切异常的祖先）
+├── SystemExit          # 解释器请求退出（比如 sys.exit() 主动退出）
+├── KeyboardInterrupt   # 用户按 Ctrl+C 中断执行
+├── GeneratorExit       # 生成器被关闭/结束时触发
+└── Exception           # ★常规错误基类，绝大多数能遇到的异常都挂在这里★★
+    ├── 迭代 / 断言
+    │   ├── StopIteration        # 迭代器取不出下一个元素（越界取 next）
+    │   ├── StopAsyncIteration   # 异步迭代器耗尽
+    │   └── AssertionError       # assert 断言失败
+    ├── 属性 / 缓冲区
+    │   ├── AttributeError      # 访问了不存在的属性/方法
+    │   └── BufferError
+    ├── 输入 / 输出
+    │   ├── EOFError            # 已到文件/输入末尾仍要求读（input() 读空）
+    │   └── OSError             # 操作系统级错误（通用可当&quot;系统杂项&quot;记）
+    │       ├── FileNotFoundError   # 文件不存在（路径写错最常见）
+    │       ├── PermissionError     # 权限不足（只读/占用/文件夹当文件）
+    │       └── TimeoutError        # 超时（网络/资源）
+    ├── 数值计算（ArithmeticError 派生）
+    │   ├── ZeroDivisionError   # 除以 0
+    │   ├── OverflowError       # 数值超出类型能表示的范围
+    │   └── FloatingPointError
+    ├── 导入 / 查找
+    │   ├── ImportError         # 导入模块失败
+    │   │   └── ModuleNotFoundError  # ★没装这个包 / 名字打错★
+    │   └── LookupError
+    │       ├── IndexError      # 索引越界（list 下标超范围）
+    │       └── KeyError        # 键不存在（dict 用错 key / 列名写错）
+    ├── 名称 / 引用
+    │   ├── NameError           # ★变量名没定义/拼错★
+    │   │   └── UnboundLocalError   # 引用了尚未赋值的局部变量
+    │   └── ReferenceError
+    ├── 运行时
+    │   ├── RuntimeError
+    │   │   ├── NotImplementedError  # 调用了只声明未实现的抽象方法
+    │   │   └── RecursionError       # 递归深度超限（常因缺少递归出口）
+    ├── 语法 / 缩进
+    │   ├── SyntaxError         # ★语法错误：括号没配对/漏引号/标点不对★
+    │   │   ├── IndentationError    # ★缩进错误：该缩进没缩进★
+    │   │   │   └── TabError        # Tab 与空格混用
+    ├── 类型 / 数值
+    │   ├── TypeError           # ★类型不对/参数个数不对★
+    │   └── ValueError          # ★值不对（类型对但值非法）★
+    │       └── UnicodeError    # 编码/解码相关
+    │           ├── UnicodeDecodeError  # 读文件时编码不匹配（中文乱码元凶）
+    │           └── UnicodeEncodeError
+
+Warning（警告体系，另一支，不中断程序）
+├── DeprecationWarning   # 函数已/将被弃用（&quot;即将遗弃&quot;）
+├── FutureWarning        # 未来版本行为会变
+├── UserWarning          # 一般用户提醒
+├── RuntimeWarning       # 运行时数值风险（如遇到 NaN 算出奇怪值）
+├── SyntaxWarning
+├── ImportWarning
+├── UnicodeWarning
+├── BytesWarning
+└── ResourceWarning      # 资源没释放
+</pre></div>
+</div>
+<p><strong>这张家谱的用法</strong>（训练「关键词 → 联想」）：</p>
+<div class="pst-scrollable-table-container"><table class="table">
+<thead>
+<tr class="row-odd"><th class="head"><p>看到的报错类型</p></th>
+<th class="head"><p>脑子里立刻冒出的怀疑</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">NameError</span></code> /
+<code class="docutils literal notranslate"><span class="pre">TyError</span></code>一看有 <code class="docutils literal notranslate"><span class="pre">Name</span></code></p></td>
+<td><p>变量名没定义或拼写不一致 → 回查 <code class="docutils literal notranslate"><span class="pre">=</span></code>
+左边和用它的地方</p></td>
+</tr>
+<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">TypeError</span></code></p></td>
+<td><p>类型/参数个数/关键字不匹配 →
+是不是给函数传错类型或漏参数</p></td>
+</tr>
+<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">ValueError</span></code></p></td>
+<td><p>类型对、值非法 →
+是不是超出合理范围（如负长度、空输入）</p></td>
+</tr>
+<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">IndexError</span></code> / <code class="docutils literal notranslate"><span class="pre">KeyError</span></code></p></td>
+<td><p>越界 / 键名写错 → list 下标 or dict/df
+的列名错</p></td>
+</tr>
+<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">ImportError</span></code> /
+<code class="docutils literal notranslate"><span class="pre">ModuleNotFoundError</span></code></p></td>
+<td><p>没装包 / 没 activate 到装了包的环境 /
+名字拼错</p></td>
+</tr>
+<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">FileNotFoundError</span></code> /
+<code class="docutils literal notranslate"><span class="pre">UnicodeDecodeError</span></code></p></td>
+<td><p>文件路径错 or
+读文件编码不对（中文乱码）</p></td>
+</tr>
+<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">SyntaxError</span></code> /
+<code class="docutils literal notranslate"><span class="pre">IndentationError</span></code></p></td>
+<td><p>引号、括号、冒号、缩进、中英文标点混用</p></td>
+</tr>
+<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">AttributeError</span></code></p></td>
+<td><p>对象没有这个 <code class="docutils literal notranslate"><span class="pre">方法/属性</span></code> →
+是不是调错对象、拼错方法名</p></td>
+</tr>
+<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">PermissionError</span></code></p></td>
+<td><p>权限/占用 → 文件被占用、目录当作文件</p></td>
+</tr>
+<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">RecursionError</span></code></p></td>
+<td><p>递归没出口 / 间接自调用 →
+查递归终止条件</p></td>
+</tr>
+<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">DeprecationWarning</span></code></p></td>
+<td><p>旧写法 → 看提示里给出的新写法国省略</p></td>
+</tr>
+</tbody>
+</table>
+</div>
+<blockquote>
+<div><p>小技巧：很多新手把 <code class="docutils literal notranslate"><span class="pre">ValueError</span></code> 和 <code class="docutils literal notranslate"><span class="pre">TypeError</span></code>
+混淆。一句话区分——<strong>``TypeError``
+是「种类不对」（拿字符串去求和），``ValueError``
+是「种类对但内容离谱」（要求 1~12 的月份，你给 0）</strong>。</p>
+</div></blockquote>
+</section>
+<section id="sop">
+<span id="id5"></span><h2>0.4 通用排查七招（SOP：出了问题按这个顺序过一遍）<a class="headerlink" href="#sop" title="Link to this heading">#</a></h2>
+<p>一套不依赖具体章节的排查流程，遇到任何问题照做：</p>
+<ol class="arabic simple">
+<li><p><strong>先看清「到底是什么」</strong>：完整复制最后一行 +
+出错行。别只记「报错了」。把 Traceback
+原文记下来（或截图），再去找关键词。</p></li>
+<li><p><strong>看行号</strong>：报错行在哪、<code class="docutils literal notranslate"><span class="pre">line</span> <span class="pre">N</span></code>
+是几。先把这一行「表演一遍」——把它要的变量一个个打印出来，看类型对不对。</p></li>
+<li><p><strong>反向读 Traceback</strong>：从最后一个 <code class="docutils literal notranslate"><span class="pre">File</span></code>
+往上看，确认是不是「库内部」出错还是「你自己代码」出错。若卡片堆栈里出现你家代码
+<code class="docutils literal notranslate"><span class="pre">main.py</span></code> / <code class="docutils literal notranslate"><span class="pre">utils.py</span></code>，那才是你要查的地方。</p></li>
+<li><p><strong>二分注释法</strong>：不知道哪段出问题时，把代码<strong>两半一半</strong>注释掉分别跑，定位到最小复现片段（Minimal
+Reproducible Example）。能把问题缩小到 3~5 行，答案通常立刻浮现。</p></li>
+<li><p><strong>翻译并搜索</strong>：把最后一行 <code class="docutils literal notranslate"><span class="pre">ErrorType:</span> <span class="pre">message</span></code> 复制到搜索引擎 /
+官方文档。<strong>优先找「这个错误英文名 + 你用的库」</strong>（如
+<code class="docutils literal notranslate"><span class="pre">KeyError</span> <span class="pre">pandas</span></code>），比整段报错更精准。</p></li>
+<li><p><strong>自查「三
+R」</strong>：<strong>Read</strong>（重新读一遍刚写的那行，标点/大小写/括号）、<strong>Reproduce</strong>（精简后重跑一次）、<strong>Refactor</strong>（换一种更简单的写法绕开歧义）。</p></li>
+<li><p><strong>对照参考</strong>：本项目每章有配套练习与用户指南；遇到“报错名 +
+我们的库场景”，先翻本章 QA 对应条目，再翻官网示例。</p></li>
+</ol>
+</section>
+<section id="id6">
+<span id="id7"></span><h2>0.5 没有报错，但结果不对？——追查「静默污染」<a class="headerlink" href="#id6" title="Link to this heading">#</a></h2>
+<p>第 0.1
+节说过最阴险的是「无报错但错」。这类问题特征是<strong>程序绿灯到底，输出却荒腔走板</strong>。排查方向很固定，先自查这几类：</p>
+<ul class="simple">
+<li><p><strong>数据被悄悄改了</strong>：切片返回的是视图（view）而非副本 →
+你改了切片，原数组/DataFrame 也变了（NumPy 切片、pandas
+<code class="docutils literal notranslate"><span class="pre">SettingWithCopyWarning</span></code>）。</p></li>
+<li><p><strong>资源没释放 / 没提交</strong>：<code class="docutils literal notranslate"><span class="pre">f.write()</span></code> 后没 <code class="docutils literal notranslate"><span class="pre">f.close()</span></code>/没用
+<code class="docutils literal notranslate"><span class="pre">with</span></code> → 内容滞留在缓冲区，文件里啥都没有；改文件没用 <code class="docutils literal notranslate"><span class="pre">forcat控制</span></code>
+保存。</p></li>
+<li><p><strong>编码不对</strong>：中文存成 <code class="docutils literal notranslate"><span class="pre">gbk</span></code> 读出是乱码、写入没加
+<code class="docutils literal notranslate"><span class="pre">encoding=&quot;utf-8-sig&quot;</span></code>。</p></li>
+<li><p><strong>数值污染</strong>：<code class="docutils literal notranslate"><span class="pre">NaN</span></code> 混进计算当成了 0 或正常数；<code class="docutils literal notranslate"><span class="pre">9999</span></code>
+缺测标识没转 <code class="docutils literal notranslate"><span class="pre">NaN</span></code> 就求平均。</p></li>
+<li><p><strong>状态被保留</strong>：没 <code class="docutils literal notranslate"><span class="pre">fig.savefig()</span></code> 却以为图已存盘；交互式 shell
+里变量被上一格污染（例如 <code class="docutils literal notranslate"><span class="pre">x</span></code> 上一次赋值残留）。</p></li>
+<li><p><strong>坐标/单位错位</strong>：数据列顺序与标签错位、<code class="docutils literal notranslate"><span class="pre">transpose</span></code> 后
+<code class="docutils literal notranslate"><span class="pre">shape</span></code> 没对、<code class="docutils literal notranslate"><span class="pre">axis</span></code> 方向写反。</p></li>
+</ul>
+<blockquote>
+<div><p>这类「静默错误」在气象里格外危险——你画出一张「看似平滑的气温场」，其实是
+<code class="docutils literal notranslate"><span class="pre">NaN</span></code> 被 <code class="docutils literal notranslate"><span class="pre">fillna(0)</span></code> 填成了赤道 0 K
+的假图。<strong>只要结果异常，先怀疑数据，再怀疑代码。</strong></p>
+</div></blockquote>
+</section>
+<section id="id8">
+<span id="id9"></span><h2>0.6 把「英文关键词 → 原因联想」练成肌肉记忆<a class="headerlink" href="#id8" title="Link to this heading">#</a></h2>
+<p>本 QA
+系列的每一章条目都刻意训练一件事：<strong>让你看到报错文本里某一句关键英文，就能立刻把矛头指向某一类原因。</strong>
+读每一条时，请带着这个习惯：</p>
+<ul class="simple">
+<li><p>先不看「解决办法」，只看<strong>报错信息原文</strong>，试着只说一遍「这大概是什么问题」；</p></li>
+<li><p>再对答案，记下「关键词 ↔ 原因」这对关系；</p></li>
+<li><p>最后把「报错原文 + 一句话原因」抄进自己的速查笔记。</p></li>
+</ul>
+<p>举本栏目前 3 个高频「关键词→联想」示范：</p>
+<div class="pst-scrollable-table-container"><table class="table">
+<thead>
+<tr class="row-odd"><th class="head"><p>报错里的英文片段</p></th>
+<th class="head"><p>立刻联想</p></th>
+<th class="head"><p>所属章</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">command</span> <span class="pre">not</span> <span class="pre">found</span></code> /
+<code class="docutils literal notranslate"><span class="pre">not</span> <span class="pre">recognized</span> <span class="pre">as</span> <span class="pre">a</span> <span class="pre">command</span></code></p></td>
+<td><p>没 <code class="docutils literal notranslate"><span class="pre">conda</span> <span class="pre">activate</span></code>
+到装了包的环境 / 没装该命令</p></td>
+<td><p>第 1 章</p></td>
+</tr>
+<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">SyntaxError:</span> <span class="pre">unexpected</span> <span class="pre">EOF</span> <span class="pre">while</span> <span class="pre">parsing</span></code></p></td>
+<td><p>引号或括号没闭合，到下个空行才报</p></td>
+<td><p>第 2 章</p></td>
+</tr>
+<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">SettingWithCopyWarning</span></code></p></td>
+<td><p>筛选结果没
+<code class="docutils literal notranslate"><span class="pre">.copy()</span></code>，改的是临时视图</p></td>
+<td><p>第 7 章</p></td>
+</tr>
+</tbody>
+</table>
+</div>
+</section>
+<section id="qa">
+<span id="id10"></span><h2>0.7 本套 QA 怎么用（导航）<a class="headerlink" href="#qa" title="Link to this heading">#</a></h2>
+<div class="pst-scrollable-table-container"><table class="table" id="id11">
+<caption><span class="caption-text">各章节 QA 导航</span><a class="headerlink" href="#id11" title="Link to this table">#</a></caption>
+<colgroup>
+<col style="width: 15.0%" />
+<col style="width: 50.0%" />
+<col style="width: 35.0%" />
+</colgroup>
+<thead>
+<tr class="row-odd"><th class="head"><p>章节</p></th>
+<th class="head"><p>常见报错浓度最高的主题</p></th>
+<th class="head"><p>文件</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p>第 1 章</p></td>
+<td><p>Conda 环境、PATH、Jupyter、包安装</p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">01-Python简介与Conda环境-QA.rst</span></code></p></td>
+</tr>
+<tr class="row-odd"><td><p>第 2 章</p></td>
+<td><p>引号/标点/类型/索引/方法混用</p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">02-数据类型与运算符-QA.rst</span></code></p></td>
+</tr>
+<tr class="row-even"><td><p>第 3 章</p></td>
+<td><p>缩进、冒号、循环与迭代</p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">03-分支条件循环-QA.rst</span></code></p></td>
+</tr>
+<tr class="row-odd"><td><p>第 4 章</p></td>
+<td><p>NameError、作用域、导入</p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">04-函数作用域模块包-QA.rst</span></code></p></td>
+</tr>
+<tr class="row-even"><td><p>第 5 章</p></td>
+<td><p>self 遗漏、属性命名、继承/装饰器</p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">05-面向对象函数式高级语法-QA.rst</span></code></p></td>
+</tr>
+<tr class="row-odd"><td><p>第 6 章</p></td>
+<td><p>索引越界静默、广播、reshape、NaN</p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">06-NumPy气象计算-QA.rst</span></code></p></td>
+</tr>
+<tr class="row-even"><td><p>第 7 章</p></td>
+<td><p>loc/iloc、SettingWithCopy、NaN、datetime64</p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">07-Pandas气象分析-QA.rst</span></code></p></td>
+</tr>
+<tr class="row-odd"><td><p>第 8 章</p></td>
+<td><p>打开文件缺引擎、sel/isel/groupby 混淆</p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">08-Xarray气象分析-QA.rst</span></code></p></td>
+</tr>
+<tr class="row-even"><td><p>第 9 章</p></td>
+<td><p>中文乱码、figure 未保存、子图/刻度</p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">09-Matplotlib气象绘图-QA.rst</span></code></p></td>
+</tr>
+<tr class="row-odd"><td><p>第 10 章</p></td>
+<td><p>白竖线、transform 遗漏、投影</p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">10-Cartopy气象绘图-QA.rst</span></code></p></td>
+</tr>
+</tbody>
+</table>
+</div>
+<blockquote>
+<div><p>通用方法论到此结束。从下一篇 <code class="docutils literal notranslate"><span class="pre">01-...</span></code> 起，每章都进入「具体报错 +
+可复现代码 + 真实报错信息」的实战清单。</p>
+</div></blockquote>
+</section>
+</section>
+
+
+                </article>
+              
+              
+              
+              
+              
+                <footer class="prev-next-footer d-print-none">
+                  
+<div class="prev-next-area">
+    <a class="left-prev"
+       href="index.html"
+       title="上一页">
+      <i class="fa-solid fa-angle-left"></i>
+      <div class="prev-next-info">
+        <p class="prev-next-subtitle">上一页</p>
+        <p class="prev-next-title">模块一 Python 编程基础（常见问题 Q&amp;A）</p>
+      </div>
+    </a>
+    <a class="right-next"
+       href="01-Python%E7%AE%80%E4%BB%8B%E4%B8%8EConda%E7%8E%AF%E5%A2%83-QA.html"
+       title="下一页">
+      <div class="prev-next-info">
+        <p class="prev-next-subtitle">下一页</p>
+        <p class="prev-next-title">Python 简介及安装环境 Q&amp;A</p>
+      </div>
+      <i class="fa-solid fa-angle-right"></i>
+    </a>
+</div>
+                </footer>
+              
+            </div>
+            
+            
+              
+                <dialog id="pst-secondary-sidebar-modal"></dialog>
+                <div id="pst-secondary-sidebar" class="bd-sidebar-secondary bd-toc"><div class="sidebar-secondary-items sidebar-secondary__inner">
+
+
+  <div class="sidebar-secondary-item">
+<div
+    id="pst-page-navigation-heading-2"
+    class="page-toc tocsection onthispage">
+    <i class="fa-solid fa-list"></i> 当前页面
+  </div>
+  <nav id="pst-page-toc-nav" class="page-toc" aria-labelledby="pst-page-navigation-heading-2">
+    <ul class="pst-show_toc_level nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id1">0.1 三种「看起来不正常」的东西先分清</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#traceback">0.2 读懂一段报错（Traceback）：先看山脚，再看山路</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#python">0.3 顶层异常层级：给 Python 的「家谱」搭个索引</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#sop">0.4 通用排查七招（SOP：出了问题按这个顺序过一遍）</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id6">0.5 没有报错，但结果不对？——追查「静默污染」</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id8">0.6 把「英文关键词 → 原因联想」练成肌肉记忆</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#qa">0.7 本套 QA 怎么用（导航）</a></li>
+</ul>
+  </nav></div>
+
+</div></div>
+              
+            
+          </div>
+          <footer class="bd-footer-content">
+            
+          </footer>
+        
+      </main>
+    </div>
+  </div>
+  
+  <!-- Scripts loaded after <body> so the DOM is not blocked -->
+  <script defer src="../../_static/scripts/bootstrap.js?digest=90905a2f556bf617f1a9"></script>
+<script defer src="../../_static/scripts/pydata-sphinx-theme.js?digest=90905a2f556bf617f1a9"></script>
+
+  <footer class="bd-footer">
+<div class="bd-footer__inner bd-page-width">
+  
+    <div class="footer-items__start">
+      
+        <div class="footer-item">
+
+  <p class="copyright">
+    
+      © Copyright 2026, 兰州大学大气科学学院编程社区.
+      <br/>
+    
+  </p>
+</div>
+      
+        <div class="footer-item">
+
+  <p class="sphinx-version">
+    由 <a href="https://www.sphinx-doc.org/">Sphinx</a> 8.2.3创建。
+    <br/>
+  </p>
+</div>
+      
+    </div>
+  
+  
+  
+    <div class="footer-items__end">
+      
+        <div class="footer-item">
+<p class="theme-version">
+  <!-- # L10n: Setting the PST URL as an argument as this does not need to be localized -->
+  使用 <a href="https://pydata-sphinx-theme.readthedocs.io/en/stable/index.html">PyData Sphinx Theme</a> 0.20.0构建.
+</p></div>
+      
+    </div>
+  
+</div>
+
+  </footer>
+  </body>
+</html>

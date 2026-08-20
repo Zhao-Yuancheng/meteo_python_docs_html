@@ -1,0 +1,744 @@
+
+<!DOCTYPE html>
+
+
+<html lang="zh-CN" data-content_root="../../" >
+
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
+    <title>第 8 章练习：气象数据分析（二）Xarray &#8212; MeteoPython</title>
+  
+  
+  
+  <script data-cfasync="false">
+    document.documentElement.dataset.mode = localStorage.getItem("mode") || "";
+    document.documentElement.dataset.theme = localStorage.getItem("theme") || "";
+  </script>
+  <!--
+    this give us a css class that will be invisible only if js is disabled
+  -->
+  <noscript>
+    <style>
+      .pst-js-only { display: none !important; }
+
+    </style>
+  </noscript>
+  
+  <!-- Loaded before other Sphinx assets -->
+  <link href="../../_static/styles/theme.css?digest=90905a2f556bf617f1a9" rel="stylesheet" />
+<link href="../../_static/styles/pydata-sphinx-theme.css?digest=90905a2f556bf617f1a9" rel="stylesheet" />
+
+    <link rel="stylesheet" type="text/css" href="../../_static/pygments.css?v=8f2a1f02" />
+    <link rel="stylesheet" type="text/css" href="../../_static/copybutton.css?v=76b2166b" />
+    <link rel="stylesheet" type="text/css" href="../../_static/sg_gallery.css?v=fd6457a4" />
+    <link rel="stylesheet" type="text/css" href="../../_static/sg_gallery-binder.css?v=f4aeca0c" />
+    <link rel="stylesheet" type="text/css" href="../../_static/sg_gallery-dataframe.css?v=2082cf3c" />
+    <link rel="stylesheet" type="text/css" href="../../_static/sg_gallery-rendered-html.css?v=1277b6f3" />
+    <link rel="stylesheet" type="text/css" href="../../_static/sphinx-design.min.css?v=95c83b7e" />
+    <link rel="stylesheet" type="text/css" href="../../_static/./custom.css?v=fbe1f034" />
+  
+  <!-- So that users can add custom icons -->
+  <script defer src="../../_static/scripts/fontawesome.js?digest=90905a2f556bf617f1a9"></script>
+  <!-- Pre-loaded scripts that we'll load fully later -->
+  <link rel="preload" as="script" href="../../_static/scripts/bootstrap.js?digest=90905a2f556bf617f1a9" />
+<link rel="preload" as="script" href="../../_static/scripts/pydata-sphinx-theme.js?digest=90905a2f556bf617f1a9" />
+
+    <script src="../../_static/documentation_options.js?v=9becfed8"></script>
+    <script src="../../_static/doctools.js?v=9bcbadda"></script>
+    <script src="../../_static/sphinx_highlight.js?v=dc90522c"></script>
+    <script src="../../_static/sg-tags.js?v=d80f6fa4"></script>
+    <script src="../../_static/clipboard.min.js?v=a7894cd8"></script>
+    <script src="../../_static/copybutton.js?v=fd10adb8"></script>
+    <script src="../../_static/translations.js?v=beaddf03"></script>
+    <script src="../../_static/design-tabs.js?v=f930bc37"></script>
+    <script>DOCUMENTATION_OPTIONS.pagename = 'tutorials/data/ch08_practice';</script>
+    <script>
+        DOCUMENTATION_OPTIONS.theme_version = '0.20.0';
+        DOCUMENTATION_OPTIONS.theme_switcher_json_url = '_static/switcher.json';
+        DOCUMENTATION_OPTIONS.theme_switcher_version_match = '0.1.0';
+        DOCUMENTATION_OPTIONS.show_version_warning_banner =
+            false;
+        </script>
+    <script>DOCUMENTATION_OPTIONS.search_as_you_type = false;</script>
+    <link rel="icon" href="../../_static/favicon.svg"/>
+    <link rel="index" title="索引" href="../../genindex.html" />
+    <link rel="search" title="搜索" href="../../search.html" />
+    <link rel="next" title="模块三 气象数据可视化（配套练习）" href="../viz/index.html" />
+    <link rel="prev" title="第 7 章练习：气象数据分析（一）Pandas" href="ch07_practice.html" />
+  <meta name="viewport" content="width=device-width, initial-scale=1"/>
+  <meta name="docsearch:language" content="zh-CN"/>
+  <meta name="docsearch:version" content="0.1" />
+    <meta name="docbuild:last-update" content="2026-08-20"/>
+  
+    
+    <script src="../../_static/searchtools.js"></script>
+    <script src="../../_static/language_data.js"></script>
+    <script src="../../searchindex.js"></script>
+  
+  </head>
+  <body data-default-mode="">
+  
+  
+  <div id="pst-skip-link" class="skip-link d-print-none"><a href="#main-content">跳转至主要内容</a></div>
+
+  
+  <div id="pst-scroll-pixel-helper"></div>
+  
+  <button type="button" class="btn rounded-pill" id="pst-back-to-top">
+    <i class="fa-solid fa-arrow-up"></i>回到顶部</button>
+  
+  
+  
+  
+  <dialog id="pst-search-dialog">
+    
+<form class="bd-search d-flex align-items-center"
+      action="../../search.html"
+      method="get">
+  <i class="fa-solid fa-magnifying-glass"></i>
+  <input type="search"
+         class="form-control"
+         name="q"
+         placeholder="搜索文档…"
+         aria-label="搜索文档…"
+         autocomplete="off"
+         autocorrect="off"
+         autocapitalize="off"
+         spellcheck="false"/>
+  <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd>K</kbd></span>
+</form>
+  </dialog>
+
+  <div class="pst-async-banner-revealer d-none">
+  <aside id="bd-header-version-warning" class="d-none d-print-none" aria-label="版本警告"></aside>
+</div>
+
+  
+    <header id="pst-header" class="bd-header navbar navbar-expand-lg bd-navbar d-print-none">
+<div class="bd-header__inner bd-page-width">
+  <button class="pst-navbar-icon sidebar-toggle primary-toggle" aria-label="网页导航">
+    <span class="fa-solid fa-bars"></span>
+  </button>
+  
+  
+  <div class="col-lg-3 navbar-header-items__start">
+    
+      <div class="navbar-item">
+
+  
+    
+  
+
+<a class="navbar-brand logo" href="../../index.html">
+  
+  
+  
+  
+  
+    
+    
+      
+    
+    
+    <img src="../../_static/logo.svg" class="logo__image only-light" alt="MeteoPython - Home"/>
+    <img src="../../_static/logo.svg" class="logo__image only-dark pst-js-only" alt="MeteoPython - Home"/>
+  
+  
+</a></div>
+    
+  </div>
+  
+  <div class="col-lg-9 navbar-header-items">
+    
+    <div class="me-auto navbar-header-items__center">
+      
+        <div class="navbar-item">
+<nav>
+  <ul class="bd-navbar-elements navbar-nav">
+    
+<li class="nav-item ">
+  <a class="nav-link nav-internal" href="../../user_guide/index.html">
+    教程
+  </a>
+</li>
+
+
+<li class="nav-item current active">
+  <a class="nav-link nav-internal" href="../index.html">
+    练习
+  </a>
+</li>
+
+
+<li class="nav-item ">
+  <a class="nav-link nav-internal" href="../../gallery/index.html">
+    示例
+  </a>
+</li>
+
+
+<li class="nav-item ">
+  <a class="nav-link nav-internal" href="../../api/index.html">
+    术语参考
+  </a>
+</li>
+
+
+<li class="nav-item ">
+  <a class="nav-link nav-internal" href="../../qa/index.html">
+    常见问题 Q&A
+  </a>
+</li>
+
+  </ul>
+</nav></div>
+      
+    </div>
+    
+    
+    <div class="navbar-header-items__end">
+      
+        <div class="navbar-item navbar-persistent--container">
+          
+
+<button class="btn search-button-field search-button__button pst-js-only" title="搜索" aria-label="搜索" data-bs-placement="bottom" data-bs-toggle="tooltip">
+ <i class="fa-solid fa-magnifying-glass"></i>
+ <span class="search-button__default-text">搜索</span>
+ <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd class="kbd-shortcut__modifier">K</kbd></span>
+</button>
+        </div>
+      
+      
+        <div class="navbar-item">
+
+<div class="theme-switch-container dropdown pst-js-only" data-bs-toggle="tooltip" data-bs-placement="bottom" title="Color mode">
+  <button class="btn btn-sm nav-link pst-navbar-icon theme-switch-button dropdown-toggle" aria-label="Color mode" data-bs-toggle="dropdown">
+    <i class="theme-switch fa-solid fa-sun fa-lg fa-fw" data-mode="light" title="亮色"></i>
+    <i class="theme-switch fa-solid fa-moon fa-lg fa-fw" data-mode="dark" title="暗色"></i>
+    <i class="theme-switch fa-solid fa-circle-half-stroke fa-lg fa-fw" data-mode="auto" title="System Settings"></i>
+  </button>
+  <ul class="dropdown-menu dropdown-menu-end">
+    <li><button class="dropdown-item d-flex align-items-center theme-change-button" data-mode="auto"><i class="fa-solid fa-circle-half-stroke fa-lg fa-fw me-1"></i>System Settings</button></li>
+    <li><button class="dropdown-item d-flex align-items-center theme-change-button" data-mode="light"><i class="fa-solid fa-sun fa-lg fa-fw me-1"></i>亮色</button></li>
+    <li><button class="dropdown-item d-flex align-items-center theme-change-button" data-mode="dark"><i class="fa-solid fa-moon fa-lg fa-fw me-1"></i>暗色</button></li>
+  </ul>
+</div></div>
+      
+        <div class="navbar-item"><ul class="navbar-icon-links"
+    aria-label="Icon Links">
+</ul></div>
+      
+    </div>
+    
+  </div>
+  
+  
+    <div class="navbar-persistent--mobile">
+
+<button class="btn search-button-field search-button__button pst-js-only" title="搜索" aria-label="搜索" data-bs-placement="bottom" data-bs-toggle="tooltip">
+ <i class="fa-solid fa-magnifying-glass"></i>
+ <span class="search-button__default-text">搜索</span>
+ <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd class="kbd-shortcut__modifier">K</kbd></span>
+</button>
+    </div>
+  
+
+  
+    <button class="pst-navbar-icon sidebar-toggle secondary-toggle" aria-label="当前页面">
+      <span class="fa-solid fa-outdent"></span>
+    </button>
+  
+</div>
+
+    </header>
+  
+
+  <div class="bd-container">
+    <div class="bd-container__inner bd-page-width">
+      
+      
+      
+      <dialog id="pst-primary-sidebar-modal"></dialog>
+      <div id="pst-primary-sidebar" class="bd-sidebar-primary bd-sidebar">
+        
+
+  
+  <div class="sidebar-header-items sidebar-primary__section">
+    
+    
+      <div class="sidebar-header-items__center">
+        
+          
+          
+            <div class="navbar-item">
+<nav>
+  <ul class="bd-navbar-elements navbar-nav">
+    
+<li class="nav-item ">
+  <a class="nav-link nav-internal" href="../../user_guide/index.html">
+    教程
+  </a>
+</li>
+
+
+<li class="nav-item current active">
+  <a class="nav-link nav-internal" href="../index.html">
+    练习
+  </a>
+</li>
+
+
+<li class="nav-item ">
+  <a class="nav-link nav-internal" href="../../gallery/index.html">
+    示例
+  </a>
+</li>
+
+
+<li class="nav-item ">
+  <a class="nav-link nav-internal" href="../../api/index.html">
+    术语参考
+  </a>
+</li>
+
+
+<li class="nav-item ">
+  <a class="nav-link nav-internal" href="../../qa/index.html">
+    常见问题 Q&A
+  </a>
+</li>
+
+  </ul>
+</nav></div>
+          
+        
+      </div>
+    
+    
+    
+      <div class="sidebar-header-items__end">
+        
+          <div class="navbar-item">
+
+<div class="theme-switch-container dropdown pst-js-only" data-bs-toggle="tooltip" data-bs-placement="bottom" title="Color mode">
+  <button class="btn btn-sm nav-link pst-navbar-icon theme-switch-button dropdown-toggle" aria-label="Color mode" data-bs-toggle="dropdown">
+    <i class="theme-switch fa-solid fa-sun fa-lg fa-fw" data-mode="light" title="亮色"></i>
+    <i class="theme-switch fa-solid fa-moon fa-lg fa-fw" data-mode="dark" title="暗色"></i>
+    <i class="theme-switch fa-solid fa-circle-half-stroke fa-lg fa-fw" data-mode="auto" title="System Settings"></i>
+  </button>
+  <ul class="dropdown-menu dropdown-menu-end">
+    <li><button class="dropdown-item d-flex align-items-center theme-change-button" data-mode="auto"><i class="fa-solid fa-circle-half-stroke fa-lg fa-fw me-1"></i>System Settings</button></li>
+    <li><button class="dropdown-item d-flex align-items-center theme-change-button" data-mode="light"><i class="fa-solid fa-sun fa-lg fa-fw me-1"></i>亮色</button></li>
+    <li><button class="dropdown-item d-flex align-items-center theme-change-button" data-mode="dark"><i class="fa-solid fa-moon fa-lg fa-fw me-1"></i>暗色</button></li>
+  </ul>
+</div></div>
+        
+          <div class="navbar-item"><ul class="navbar-icon-links"
+    aria-label="Icon Links">
+</ul></div>
+        
+      </div>
+    
+  </div>
+  
+    <div class="sidebar-primary-items__start sidebar-primary__section">
+        <div class="sidebar-primary-item pst-sidebar-collapse"><button id="pst-collapse-sidebar-button" aria-expanded="true" aria-controls="pst-primary-sidebar">
+  <svg class="pst-icon" role="img" aria-hidden="true" focusable="false" viewBox="0 0 16 16" xmlns="http://www.w3.org/2000/svg">
+    <path fill="currentColor" d="M3 15.5C2.36232 15.5 1.74874 15.2564 1.28478 14.8189C0.820828 14.3815 0.541576 13.7832 0.504167 13.1467L0.5 13L0.5 3C0.499965 2.36232 0.743605 1.74874 1.18107 1.28478C1.61854 0.820828 2.21676 0.541576 2.85333 0.504167L3 0.5L13 0.5C13.6377 0.499965 14.2513 0.743605 14.7152 1.18107C15.1792 1.61854 15.4584 2.21676 15.4958 2.85333L15.5 3L15.5 13C15.5 13.6377 15.2564 14.2513 14.8189 14.7152C14.3815 15.1792 13.7832 15.4584 13.1467 15.4958L13 15.5L3 15.5ZM3 13.8333L10.5 13.8333L10.5 2.16667L3 2.16667C2.79589 2.16669 2.59889 2.24163 2.44636 2.37726C2.29383 2.5129 2.19638 2.69979 2.1725 2.9025L2.16667 3L2.16667 13C2.16669 13.2041 2.24163 13.4011 2.37726 13.5536C2.5129 13.7062 2.69979 13.8036 2.9025 13.8275L3 13.8333ZM6.65583 10.325L6.5775 10.2558L4.91083 8.58917C4.76735 8.44567 4.68116 8.25476 4.66843 8.05223C4.65569 7.84971 4.71729 7.6495 4.84167 7.48917L4.91083 7.41083L6.5775 5.74417C6.72747 5.59471 6.9287 5.50794 7.14032 5.50148C7.35194 5.49502 7.55809 5.56935 7.7169 5.70937C7.8757 5.8494 7.97525 6.04463 7.99533 6.25539C8.01541 6.46616 7.95451 6.67667 7.825 6.84417L7.75583 6.9225L6.67917 8L7.75583 9.0775C7.89931 9.22099 7.98551 9.41191 7.99824 9.61443C8.01097 9.81695 7.94938 10.0172 7.825 10.1775L7.75583 10.2558C7.61234 10.3993 7.42142 10.4855 7.2189 10.4982C7.01638 10.511 6.81617 10.4494 6.65583 10.325Z"/>
+  </svg>
+  <span class="pst-collapse-sidebar-label">Collapse Sidebar</span>
+  <span class="pst-expand-sidebar-label">Expand Sidebar</span>
+</button></div>
+        <div class="sidebar-primary-item">
+
+<nav class="bd-docs-nav bd-links"
+     aria-label="章节导航">
+  <p class="bd-links__title" role="heading" aria-level="1">章节导航</p>
+  <div class="bd-toc-item navbar-nav"><ul class="current nav bd-sidenav">
+<li class="toctree-l1 has-children"><a class="reference internal" href="../basics/index.html">模块一 Python 编程基础（配套练习）</a><details open="open"><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
+<li class="toctree-l2"><a class="reference internal" href="../basics/ch01_practice.html">第 1 章练习：Python 简介及安装环境</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../basics/ch02_practice.html">第 2 章配套练习：站点信息与气温数据</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../basics/ch03_practice.html">第 3 章练习：分支、循环与条件</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../basics/ch04_practice.html">第 4 章练习：函数及变量作用域、模块和包</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../basics/ch05_practice.html">第 5 章练习：面向对象与高级语法</a></li>
+</ul>
+</details></li>
+<li class="toctree-l1 current active has-children"><a class="reference internal" href="index.html">模块二 气象数据处理（配套练习）</a><details open="open"><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="ch06_practice.html">第 6 章练习：气象数据计算 NumPy</a></li>
+<li class="toctree-l2"><a class="reference internal" href="ch07_practice.html">第 7 章练习：气象数据分析（一）Pandas</a></li>
+<li class="toctree-l2 current active"><a class="current reference internal" href="#">第 8 章练习：气象数据分析（二）Xarray</a></li>
+</ul>
+</details></li>
+<li class="toctree-l1 has-children"><a class="reference internal" href="../viz/index.html">模块三 气象数据可视化（配套练习）</a><details open="open"><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
+<li class="toctree-l2"><a class="reference internal" href="../viz/ch09_practice.html">第 9 章练习：Matplotlib 气象绘图</a></li>
+</ul>
+</details></li>
+</ul>
+</div>
+</nav></div>
+    </div>
+  
+  
+  <div class="sidebar-primary-items__end sidebar-primary__section">
+      <div class="sidebar-primary-item">
+<div id="ethical-ad-placement"
+      class="flat"
+      data-ea-publisher="readthedocs"
+      data-ea-type="readthedocs-sidebar"
+      data-ea-manual="true">
+</div></div>
+  </div>
+
+
+      </div>
+      
+      <main id="main-content" class="bd-main" role="main">
+        
+        
+          <div class="bd-content">
+            <div class="bd-article-container">
+              
+              <div class="bd-header-article d-print-none">
+<div class="header-article-items header-article__inner">
+  
+    <div class="header-article-items__start">
+      
+        <div class="header-article-item">
+
+<nav aria-label="Breadcrumb" class="d-print-none">
+  <ul class="bd-breadcrumbs">
+    
+    <li class="breadcrumb-item breadcrumb-home">
+      <a href="../../index.html" class="nav-link" aria-label="初始页面">
+        <i class="fa-solid fa-home"></i>
+      </a>
+    </li>
+    
+    <li class="breadcrumb-item"><a href="../index.html" class="nav-link">练习</a></li>
+    
+    
+    <li class="breadcrumb-item"><a href="index.html" class="nav-link">模块二 气象数据处理（配套练习）</a></li>
+    
+    <li class="breadcrumb-item active" aria-current="page"><span class="ellipsis">第 8 章练习：气象数据分析（二）Xarray</span></li>
+  </ul>
+</nav>
+</div>
+      
+    </div>
+  
+  
+</div>
+</div>
+              
+              
+              
+                
+<div id="searchbox"></div>
+                <article class="bd-article">
+                  
+  <section id="xarray">
+<h1>第 8 章练习：气象数据分析（二）Xarray<a class="headerlink" href="#xarray" title="Link to this heading">#</a></h1>
+<p>配套 <a class="reference internal" href="../../user_guide/data/xarray.html#tut-xarray"><span class="std std-ref">气象数据分析（二）Xarray</span></a> 正文使用。第 1–2 题为入门题，第 3–4 题为提升题。试题沿着贯穿项目推进——从「给数字贴上经纬度标签」起步，到区域平均、按坐标取数，最后落到时间重采样。</p>
+<div class="admonition seealso">
+<p class="admonition-title">参见</p>
+<p>配套正文：<a class="reference internal" href="../../user_guide/data/xarray.html"><span class="doc">气象数据分析（二）Xarray</span></a>　·　术语参考：<a class="reference internal" href="../../api/ch08_terms.html"><span class="doc">第 8 章术语：气象数据分析（二）Xarray</span></a>　·　示例画廊 <a class="reference internal" href="../../gallery/plot_numpy/index.html"><span class="doc">NumPy 计算示例</span></a></p>
+</div>
+<p>💡 <strong>通用提示</strong>：</p>
+<ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">sel()</span></code> 按<strong>坐标值</strong>取数，<code class="docutils literal notranslate"><span class="pre">isel()</span></code> 按<strong>数组序号</strong>取数，Met 到维度名错配立刻报错；</p></li>
+<li><p>坐标是浮点数时，直接写整数值可能因浮点精度匹配失败（如 31 找不到 <code class="docutils literal notranslate"><span class="pre">31.0000001</span></code>），拿不准就用 <code class="docutils literal notranslate"><span class="pre">method=&quot;nearest&quot;</span></code> 取最近格点。</p></li>
+</ul>
+<section id="id1">
+<h2>入门题<a class="headerlink" href="#id1" title="Link to this heading">#</a></h2>
+<section id="dataarray">
+<h3>第 1 题（实操）创建 DataArray 并添加坐标属性<a class="headerlink" href="#dataarray" title="Link to this heading">#</a></h3>
+<p>创建一个名为 <code class="docutils literal notranslate"><span class="pre">temperature</span></code> 的 DataArray：数据是 3×2 的随机数组（温度值范围 280~300 K），维度为 <code class="docutils literal notranslate"><span class="pre">(lat,</span> <span class="pre">lon)</span></code>。要求：</p>
+<ol class="arabic simple">
+<li><p>纬度坐标 <code class="docutils literal notranslate"><span class="pre">[30,</span> <span class="pre">31,</span> <span class="pre">32]</span></code> （单位 degrees_north），经度坐标 <code class="docutils literal notranslate"><span class="pre">[120,</span> <span class="pre">121]</span></code> （单位 degrees_east）；</p></li>
+<li><p>给数组添加长名称属性 <code class="docutils literal notranslate"><span class="pre">long_name:</span> <span class="pre">&quot;air_temperature&quot;</span></code>；</p></li>
+<li><p>用 <code class="docutils literal notranslate"><span class="pre">sel</span></code> 提取纬度 31°N、经度 121°E 处的温度值（标量）。</p></li>
+</ol>
+<div class="admonition- admonition">
+<p class="admonition-title">提示</p>
+<ol class="arabic simple">
+<li><p>随机数可用 <code class="docutils literal notranslate"><span class="pre">np.random.randint(280,</span> <span class="pre">300,</span> <span class="pre">size=(3,</span> <span class="pre">2))</span></code>；</p></li>
+<li><p>提取标量用 <code class="docutils literal notranslate"><span class="pre">.sel(lat=31,</span> <span class="pre">lon=121)</span></code>，拿不到精确值时记得 <code class="docutils literal notranslate"><span class="pre">method=&quot;nearest&quot;</span></code>、要纯数字加 <code class="docutils literal notranslate"><span class="pre">.values</span></code>；</p></li>
+<li><p>纬度、经度坐标的 <code class="docutils literal notranslate"><span class="pre">units</span></code> 建议记进坐标属性（<code class="docutils literal notranslate"><span class="pre">coords</span></code> 里可加 <code class="docutils literal notranslate"><span class="pre">attrs</span></code>），保证「自解释」。</p></li>
+</ol>
+</div>
+<p><strong>参考答案</strong>：</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span><span class="w"> </span><span class="nn">numpy</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">np</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">xarray</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">xr</span>
+
+<span class="n">data</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">randint</span><span class="p">(</span><span class="mi">280</span><span class="p">,</span> <span class="mi">300</span><span class="p">,</span> <span class="n">size</span><span class="o">=</span><span class="p">(</span><span class="mi">3</span><span class="p">,</span> <span class="mi">2</span><span class="p">))</span><span class="o">.</span><span class="n">astype</span><span class="p">(</span><span class="nb">float</span><span class="p">)</span>
+<span class="n">da</span> <span class="o">=</span> <span class="n">xr</span><span class="o">.</span><span class="n">DataArray</span><span class="p">(</span>
+    <span class="n">data</span><span class="p">,</span>
+    <span class="n">dims</span><span class="o">=</span><span class="p">[</span><span class="s2">&quot;lat&quot;</span><span class="p">,</span> <span class="s2">&quot;lon&quot;</span><span class="p">],</span>
+    <span class="n">coords</span><span class="o">=</span><span class="p">{</span>
+        <span class="s2">&quot;lat&quot;</span><span class="p">:</span> <span class="p">(</span><span class="s2">&quot;lat&quot;</span><span class="p">,</span> <span class="p">[</span><span class="mi">30</span><span class="p">,</span> <span class="mi">31</span><span class="p">,</span> <span class="mi">32</span><span class="p">],</span> <span class="p">{</span><span class="s2">&quot;units&quot;</span><span class="p">:</span> <span class="s2">&quot;degrees_north&quot;</span><span class="p">}),</span>
+        <span class="s2">&quot;lon&quot;</span><span class="p">:</span> <span class="p">(</span><span class="s2">&quot;lon&quot;</span><span class="p">,</span> <span class="p">[</span><span class="mi">120</span><span class="p">,</span> <span class="mi">121</span><span class="p">],</span> <span class="p">{</span><span class="s2">&quot;units&quot;</span><span class="p">:</span> <span class="s2">&quot;degrees_east&quot;</span><span class="p">}),</span>
+    <span class="p">},</span>
+    <span class="n">attrs</span><span class="o">=</span><span class="p">{</span><span class="s2">&quot;long_name&quot;</span><span class="p">:</span> <span class="s2">&quot;air_temperature&quot;</span><span class="p">,</span> <span class="s2">&quot;units&quot;</span><span class="p">:</span> <span class="s2">&quot;K&quot;</span><span class="p">},</span>
+<span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">da</span><span class="p">)</span>
+
+<span class="n">temp_value</span> <span class="o">=</span> <span class="n">da</span><span class="o">.</span><span class="n">sel</span><span class="p">(</span><span class="n">lat</span><span class="o">=</span><span class="mi">31</span><span class="p">,</span> <span class="n">lon</span><span class="o">=</span><span class="mi">121</span><span class="p">,</span> <span class="n">method</span><span class="o">=</span><span class="s2">&quot;nearest&quot;</span><span class="p">)</span><span class="o">.</span><span class="n">values</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;31°N, 121°E 处温度：</span><span class="si">{</span><span class="n">temp_value</span><span class="si">}</span><span class="s2"> K&quot;</span><span class="p">)</span>
+</pre></div>
+</div>
+</section>
+<section id="id2">
+<h3>第 2 题（实操）简单矩形区域平均<a class="headerlink" href="#id2" title="Link to this heading">#</a></h3>
+<p>创建一个 5×5 的 DataArray（经度 100~120°E，纬度 30~40°N），数据为随机温度（单位 K）。要求：</p>
+<ol class="arabic simple">
+<li><p>计算整个区域的平均温度；</p></li>
+<li><p>计算子区域（经度 105~115°E，纬度 32~38°N）的平均温度；</p></li>
+<li><p>计算该子区域的最大值。</p></li>
+</ol>
+<div class="admonition- admonition">
+<p class="admonition-title">提示</p>
+<ol class="arabic simple">
+<li><p>用 <code class="docutils literal notranslate"><span class="pre">.sel(lat=slice(32,</span> <span class="pre">38),</span> <span class="pre">lon=slice(105,</span> <span class="pre">115))</span></code> 选取子区域；</p></li>
+<li><p>不指定 <code class="docutils literal notranslate"><span class="pre">dim</span></code> 时，<code class="docutils literal notranslate"><span class="pre">.mean()</span></code> 默认压缩所有维度、返回标量；</p></li>
+<li><p>若只想沿某个维度平均，务必指定 <code class="docutils literal notranslate"><span class="pre">dim</span></code> 参数。</p></li>
+</ol>
+</div>
+<p><strong>参考答案</strong>：</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span><span class="w"> </span><span class="nn">numpy</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">np</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">xarray</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">xr</span>
+
+<span class="n">lat</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">linspace</span><span class="p">(</span><span class="mi">30</span><span class="p">,</span> <span class="mi">40</span><span class="p">,</span> <span class="mi">5</span><span class="p">)</span>
+<span class="n">lon</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">linspace</span><span class="p">(</span><span class="mi">100</span><span class="p">,</span> <span class="mi">120</span><span class="p">,</span> <span class="mi">5</span><span class="p">)</span>
+<span class="n">da</span> <span class="o">=</span> <span class="n">xr</span><span class="o">.</span><span class="n">DataArray</span><span class="p">(</span>
+    <span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">uniform</span><span class="p">(</span><span class="mi">280</span><span class="p">,</span> <span class="mi">300</span><span class="p">,</span> <span class="n">size</span><span class="o">=</span><span class="p">(</span><span class="mi">5</span><span class="p">,</span> <span class="mi">5</span><span class="p">)),</span>
+    <span class="n">dims</span><span class="o">=</span><span class="p">[</span><span class="s2">&quot;lat&quot;</span><span class="p">,</span> <span class="s2">&quot;lon&quot;</span><span class="p">],</span>
+    <span class="n">coords</span><span class="o">=</span><span class="p">{</span><span class="s2">&quot;lat&quot;</span><span class="p">:</span> <span class="n">lat</span><span class="p">,</span> <span class="s2">&quot;lon&quot;</span><span class="p">:</span> <span class="n">lon</span><span class="p">},</span>
+    <span class="n">attrs</span><span class="o">=</span><span class="p">{</span><span class="s2">&quot;units&quot;</span><span class="p">:</span> <span class="s2">&quot;K&quot;</span><span class="p">},</span>
+<span class="p">)</span>
+
+<span class="n">global_mean</span> <span class="o">=</span> <span class="n">da</span><span class="o">.</span><span class="n">mean</span><span class="p">()</span>                                   <span class="c1"># 1. 全区域平均</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;全区域平均温度：</span><span class="si">{</span><span class="n">global_mean</span><span class="o">.</span><span class="n">values</span><span class="si">:</span><span class="s2">.2f</span><span class="si">}</span><span class="s2"> K&quot;</span><span class="p">)</span>
+
+<span class="n">sub</span> <span class="o">=</span> <span class="n">da</span><span class="o">.</span><span class="n">sel</span><span class="p">(</span><span class="n">lat</span><span class="o">=</span><span class="nb">slice</span><span class="p">(</span><span class="mi">32</span><span class="p">,</span> <span class="mi">38</span><span class="p">),</span> <span class="n">lon</span><span class="o">=</span><span class="nb">slice</span><span class="p">(</span><span class="mi">105</span><span class="p">,</span> <span class="mi">115</span><span class="p">))</span>      <span class="c1"># 2. 子区域平均</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;子区域平均温度：</span><span class="si">{</span><span class="n">sub</span><span class="o">.</span><span class="n">mean</span><span class="p">()</span><span class="o">.</span><span class="n">values</span><span class="si">:</span><span class="s2">.2f</span><span class="si">}</span><span class="s2"> K&quot;</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;子区域最大温度：</span><span class="si">{</span><span class="n">sub</span><span class="o">.</span><span class="n">max</span><span class="p">()</span><span class="o">.</span><span class="n">values</span><span class="si">:</span><span class="s2">.2f</span><span class="si">}</span><span class="s2"> K&quot;</span><span class="p">)</span>        <span class="c1"># 3. 子区域最大值</span>
+</pre></div>
+</div>
+</section>
+</section>
+<section id="id3">
+<h2>提升题<a class="headerlink" href="#id3" title="Link to this heading">#</a></h2>
+<section id="sel-isel">
+<h3>第 3 题（实操）sel 与 isel：按坐标值与按位置取数<a class="headerlink" href="#sel-isel" title="Link to this heading">#</a></h3>
+<p>沿用第 1 题的 <code class="docutils literal notranslate"><span class="pre">da</span></code> （尺寸 3×2），完成以下操作：</p>
+<ol class="arabic simple">
+<li><p>用 <code class="docutils literal notranslate"><span class="pre">isel</span></code> 提取<strong>第 2 行</strong> （纬度索引 <code class="docutils literal notranslate"><span class="pre">1</span></code>）、<strong>第 1 列</strong> （经度索引 <code class="docutils literal notranslate"><span class="pre">0</span></code>）的温度；</p></li>
+<li><p>用 <code class="docutils literal notranslate"><span class="pre">sel</span></code> 提取纬度在 30~31.5、经度在 120~120.8 之间的所有数据；</p></li>
+<li><p>用 <code class="docutils literal notranslate"><span class="pre">sel</span></code> 提取最接近 (31.8°N, 120.6°E) 的格点值。</p></li>
+</ol>
+<div class="admonition- admonition">
+<p class="admonition-title">提示</p>
+<ol class="arabic simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">isel</span></code> 按整数位置，<code class="docutils literal notranslate"><span class="pre">sel</span></code> 按坐标值——两者对应 pandas 的 <code class="docutils literal notranslate"><span class="pre">iloc</span></code> 与 <code class="docutils literal notranslate"><span class="pre">loc</span></code>；</p></li>
+<li><p>切片语法：<code class="docutils literal notranslate"><span class="pre">sel(lat=slice(30,</span> <span class="pre">31.5),</span> <span class="pre">lon=slice(120,</span> <span class="pre">120.8))</span></code>；</p></li>
+<li><p>邻近查找：<code class="docutils literal notranslate"><span class="pre">sel(lat=31.8,</span> <span class="pre">lon=120.6,</span> <span class="pre">method=&quot;nearest&quot;)</span></code>；</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">method=&quot;nearest&quot;</span></code> 返回单个值的 DataArray，想拿纯数字记得 <code class="docutils literal notranslate"><span class="pre">.values</span></code>。</p></li>
+</ol>
+</div>
+<p><strong>参考答案</strong>：</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="c1"># 1. isel：取第 2 行、第 1 列</span>
+<span class="n">val_isel</span> <span class="o">=</span> <span class="n">da</span><span class="o">.</span><span class="n">isel</span><span class="p">(</span><span class="n">lat</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span> <span class="n">lon</span><span class="o">=</span><span class="mi">0</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;isel 取值：</span><span class="si">{</span><span class="n">val_isel</span><span class="o">.</span><span class="n">values</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+
+<span class="c1"># 2. sel 区域切片</span>
+<span class="n">region</span> <span class="o">=</span> <span class="n">da</span><span class="o">.</span><span class="n">sel</span><span class="p">(</span><span class="n">lat</span><span class="o">=</span><span class="nb">slice</span><span class="p">(</span><span class="mi">30</span><span class="p">,</span> <span class="mf">31.5</span><span class="p">),</span> <span class="n">lon</span><span class="o">=</span><span class="nb">slice</span><span class="p">(</span><span class="mi">120</span><span class="p">,</span> <span class="mf">120.8</span><span class="p">))</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;切片区域：</span><span class="se">\n</span><span class="s2">&quot;</span><span class="p">,</span> <span class="n">region</span><span class="p">)</span>
+
+<span class="c1"># 3. sel 最近邻</span>
+<span class="n">nearest_val</span> <span class="o">=</span> <span class="n">da</span><span class="o">.</span><span class="n">sel</span><span class="p">(</span><span class="n">lat</span><span class="o">=</span><span class="mf">31.8</span><span class="p">,</span> <span class="n">lon</span><span class="o">=</span><span class="mf">120.6</span><span class="p">,</span> <span class="n">method</span><span class="o">=</span><span class="s2">&quot;nearest&quot;</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;最近格点温度：</span><span class="si">{</span><span class="n">nearest_val</span><span class="o">.</span><span class="n">values</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+</pre></div>
+</div>
+</section>
+<section id="id4">
+<h3>第 4 题（实操）时间重采样与分组聚合<a class="headerlink" href="#id4" title="Link to this heading">#</a></h3>
+<p>生成一个逐小时温度数据集：时间范围 2026-08-01 00:00 至 2026-08-03 23:00（共 72 个小时），温度由下面公式给出（<code class="docutils literal notranslate"><span class="pre">hour</span></code> 为一天内的小时数 0~23）：</p>
+<div class="highlight-text notranslate"><div class="highlight"><pre><span></span>T = 20 + 5 * sin(hour / 24 * 2π)
+</pre></div>
+</div>
+<p>要求：</p>
+<ol class="arabic simple">
+<li><p>计算<strong>逐日平均温度</strong>；</p></li>
+<li><p>得到<strong>每日最高温度出现的时间</strong>（时次）；</p></li>
+<li><p>将结果保存为新的 DataArray，维度为 <code class="docutils literal notranslate"><span class="pre">(day,)</span></code>。</p></li>
+</ol>
+<div class="admonition- admonition">
+<p class="admonition-title">提示</p>
+<ol class="arabic simple">
+<li><p>用 <code class="docutils literal notranslate"><span class="pre">pd.date_range(&quot;2026-08-01&quot;,</span> <span class="pre">periods=72,</span> <span class="pre">freq=&quot;H&quot;)</span></code> 生成时间坐标；</p></li>
+<li><p>重采样：<code class="docutils literal notranslate"><span class="pre">da.resample(time=&quot;D&quot;).mean()</span></code> （按天聚合）；</p></li>
+<li><p>找每日最高温对应的时次：<code class="docutils literal notranslate"><span class="pre">da.groupby(&quot;time.day&quot;).idxmax()</span></code>。</p></li>
+</ol>
+</div>
+<div class="admonition- admonition">
+<p class="admonition-title">易错点</p>
+<ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">time=&quot;D&quot;</span></code> 按天分组后结果的 <code class="docutils literal notranslate"><span class="pre">time</span></code> 坐标默认是<strong>每天的开始时刻</strong>（如 <code class="docutils literal notranslate"><span class="pre">2026-08-01</span> <span class="pre">00:00</span></code>）；想保留其它标签需用 <code class="docutils literal notranslate"><span class="pre">label</span></code> 参数；</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">da.idxmax()</span></code> 返回的是<strong>坐标标签</strong>（时间戳），不是位置索引——用它对 <code class="docutils literal notranslate"><span class="pre">da.sel</span></code> 选出的才是「最高温出现的那一时次」。</p></li>
+</ul>
+</div>
+<p><strong>参考答案</strong>：</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span><span class="w"> </span><span class="nn">numpy</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">np</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">pandas</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">pd</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">xarray</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">xr</span>
+
+<span class="c1"># 1. 生成逐时数据（72 小时 = 3 天）</span>
+<span class="n">times</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">date_range</span><span class="p">(</span><span class="s2">&quot;2026-08-01 00:00&quot;</span><span class="p">,</span> <span class="n">periods</span><span class="o">=</span><span class="mi">72</span><span class="p">,</span> <span class="n">freq</span><span class="o">=</span><span class="s2">&quot;H&quot;</span><span class="p">)</span>
+<span class="n">temps</span> <span class="o">=</span> <span class="mi">20</span> <span class="o">+</span> <span class="mi">5</span> <span class="o">*</span> <span class="n">np</span><span class="o">.</span><span class="n">sin</span><span class="p">(</span><span class="n">times</span><span class="o">.</span><span class="n">hour</span> <span class="o">/</span> <span class="mi">24</span> <span class="o">*</span> <span class="mi">2</span> <span class="o">*</span> <span class="n">np</span><span class="o">.</span><span class="n">pi</span><span class="p">)</span>   <span class="c1"># 温度公式</span>
+<span class="n">da</span> <span class="o">=</span> <span class="n">xr</span><span class="o">.</span><span class="n">DataArray</span><span class="p">(</span><span class="n">temps</span><span class="p">,</span> <span class="n">dims</span><span class="o">=</span><span class="p">[</span><span class="s2">&quot;time&quot;</span><span class="p">],</span> <span class="n">coords</span><span class="o">=</span><span class="p">{</span><span class="s2">&quot;time&quot;</span><span class="p">:</span> <span class="n">times</span><span class="p">},</span>
+                  <span class="n">attrs</span><span class="o">=</span><span class="p">{</span><span class="s2">&quot;units&quot;</span><span class="p">:</span> <span class="s2">&quot;℃&quot;</span><span class="p">})</span>
+
+<span class="c1"># 2. 逐日平均</span>
+<span class="n">daily_mean</span> <span class="o">=</span> <span class="n">da</span><span class="o">.</span><span class="n">resample</span><span class="p">(</span><span class="n">time</span><span class="o">=</span><span class="s2">&quot;D&quot;</span><span class="p">)</span><span class="o">.</span><span class="n">mean</span><span class="p">()</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;逐日平均温度：</span><span class="se">\n</span><span class="s2">&quot;</span><span class="p">,</span> <span class="n">daily_mean</span><span class="p">)</span>
+
+<span class="c1"># 3. 每日最高温出现时次（groupby + idxmax 找回原始时间戳，再 sel）</span>
+<span class="n">max_idx</span> <span class="o">=</span> <span class="n">da</span><span class="o">.</span><span class="n">groupby</span><span class="p">(</span><span class="s2">&quot;time.day&quot;</span><span class="p">)</span><span class="o">.</span><span class="n">idxmax</span><span class="p">()</span>
+<span class="n">max_time</span> <span class="o">=</span> <span class="n">da</span><span class="o">.</span><span class="n">sel</span><span class="p">(</span><span class="n">time</span><span class="o">=</span><span class="n">max_idx</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;每日最高温出现时间：</span><span class="se">\n</span><span class="s2">&quot;</span><span class="p">,</span> <span class="n">max_time</span><span class="p">)</span>
+</pre></div>
+</div>
+</section>
+</section>
+<section id="tips">
+<h2>练习 tips 汇总<a class="headerlink" href="#tips" title="Link to this heading">#</a></h2>
+<p>📌 <strong>重要提示 1：维度名错配</strong></p>
+<p><code class="docutils literal notranslate"><span class="pre">sel</span></code> / <code class="docutils literal notranslate"><span class="pre">isel</span></code> 的键必须与维度名一致。如果数据维度叫 <code class="docutils literal notranslate"><span class="pre">latitude</span></code>，你写 <code class="docutils literal notranslate"><span class="pre">sel(lat=36)</span></code> 会立刻报 <code class="docutils literal notranslate"><span class="pre">KeyError</span></code>。先 <code class="docutils literal notranslate"><span class="pre">print(ds.dims)</span></code> 看清楚维度名再写。</p>
+<p>📌 <strong>重要提示 2：method 参数</strong></p>
+<p>按坐标取数而坐标里没有精确值时，普通 <code class="docutils literal notranslate"><span class="pre">sel</span></code> 会报错；加 <code class="docutils literal notranslate"><span class="pre">method=&quot;nearest&quot;</span></code> 取<strong>最近的格点</strong>，只精确匹配时才省略。</p>
+<p>📌 <strong>重要提示 3：resample 的坐标含义</strong></p>
+<p>按天重采样后 <code class="docutils literal notranslate"><span class="pre">time</span></code> 坐标默认落在每天开始时刻，必要时用 <code class="docutils literal notranslate"><span class="pre">label=&quot;right&quot;</span></code> / <code class="docutils literal notranslate"><span class="pre">offset</span></code> 调整，避免把「末日 00 时」误当成「当天 24 时」。</p>
+</section>
+</section>
+
+
+                </article>
+              
+              
+              
+              
+              
+                <footer class="prev-next-footer d-print-none">
+                  
+<div class="prev-next-area">
+    <a class="left-prev"
+       href="ch07_practice.html"
+       title="上一页">
+      <i class="fa-solid fa-angle-left"></i>
+      <div class="prev-next-info">
+        <p class="prev-next-subtitle">上一页</p>
+        <p class="prev-next-title">第 7 章练习：气象数据分析（一）Pandas</p>
+      </div>
+    </a>
+    <a class="right-next"
+       href="../viz/index.html"
+       title="下一页">
+      <div class="prev-next-info">
+        <p class="prev-next-subtitle">下一页</p>
+        <p class="prev-next-title">模块三 气象数据可视化（配套练习）</p>
+      </div>
+      <i class="fa-solid fa-angle-right"></i>
+    </a>
+</div>
+                </footer>
+              
+            </div>
+            
+            
+              
+                <dialog id="pst-secondary-sidebar-modal"></dialog>
+                <div id="pst-secondary-sidebar" class="bd-sidebar-secondary bd-toc"><div class="sidebar-secondary-items sidebar-secondary__inner">
+
+
+  <div class="sidebar-secondary-item">
+<div
+    id="pst-page-navigation-heading-2"
+    class="page-toc tocsection onthispage">
+    <i class="fa-solid fa-list"></i> 当前页面
+  </div>
+  <nav id="pst-page-toc-nav" class="page-toc" aria-labelledby="pst-page-navigation-heading-2">
+    <ul class="pst-show_toc_level nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id1">入门题</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#dataarray">第 1 题（实操）创建 DataArray 并添加坐标属性</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#id2">第 2 题（实操）简单矩形区域平均</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id3">提升题</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#sel-isel">第 3 题（实操）sel 与 isel：按坐标值与按位置取数</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#id4">第 4 题（实操）时间重采样与分组聚合</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#tips">练习 tips 汇总</a></li>
+</ul>
+  </nav></div>
+
+</div></div>
+              
+            
+          </div>
+          <footer class="bd-footer-content">
+            
+          </footer>
+        
+      </main>
+    </div>
+  </div>
+  
+  <!-- Scripts loaded after <body> so the DOM is not blocked -->
+  <script defer src="../../_static/scripts/bootstrap.js?digest=90905a2f556bf617f1a9"></script>
+<script defer src="../../_static/scripts/pydata-sphinx-theme.js?digest=90905a2f556bf617f1a9"></script>
+
+  <footer class="bd-footer">
+<div class="bd-footer__inner bd-page-width">
+  
+    <div class="footer-items__start">
+      
+        <div class="footer-item">
+
+  <p class="copyright">
+    
+      © Copyright 2026, 兰州大学大气科学学院编程社区.
+      <br/>
+    
+  </p>
+</div>
+      
+        <div class="footer-item">
+
+  <p class="sphinx-version">
+    由 <a href="https://www.sphinx-doc.org/">Sphinx</a> 8.2.3创建。
+    <br/>
+  </p>
+</div>
+      
+    </div>
+  
+  
+  
+    <div class="footer-items__end">
+      
+        <div class="footer-item">
+<p class="theme-version">
+  <!-- # L10n: Setting the PST URL as an argument as this does not need to be localized -->
+  使用 <a href="https://pydata-sphinx-theme.readthedocs.io/en/stable/index.html">PyData Sphinx Theme</a> 0.20.0构建.
+</p></div>
+      
+    </div>
+  
+</div>
+
+  </footer>
+  </body>
+</html>

@@ -1,0 +1,907 @@
+
+<!DOCTYPE html>
+
+
+<html lang="zh-CN" data-content_root="../../" >
+
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
+    <title>面向对象与高级语法 &#8212; MeteoPython</title>
+  
+  
+  
+  <script data-cfasync="false">
+    document.documentElement.dataset.mode = localStorage.getItem("mode") || "";
+    document.documentElement.dataset.theme = localStorage.getItem("theme") || "";
+  </script>
+  <!--
+    this give us a css class that will be invisible only if js is disabled
+  -->
+  <noscript>
+    <style>
+      .pst-js-only { display: none !important; }
+
+    </style>
+  </noscript>
+  
+  <!-- Loaded before other Sphinx assets -->
+  <link href="../../_static/styles/theme.css?digest=90905a2f556bf617f1a9" rel="stylesheet" />
+<link href="../../_static/styles/pydata-sphinx-theme.css?digest=90905a2f556bf617f1a9" rel="stylesheet" />
+
+    <link rel="stylesheet" type="text/css" href="../../_static/pygments.css?v=8f2a1f02" />
+    <link rel="stylesheet" type="text/css" href="../../_static/copybutton.css?v=76b2166b" />
+    <link rel="stylesheet" type="text/css" href="../../_static/sg_gallery.css?v=fd6457a4" />
+    <link rel="stylesheet" type="text/css" href="../../_static/sg_gallery-binder.css?v=f4aeca0c" />
+    <link rel="stylesheet" type="text/css" href="../../_static/sg_gallery-dataframe.css?v=2082cf3c" />
+    <link rel="stylesheet" type="text/css" href="../../_static/sg_gallery-rendered-html.css?v=1277b6f3" />
+    <link rel="stylesheet" type="text/css" href="../../_static/sphinx-design.min.css?v=95c83b7e" />
+    <link rel="stylesheet" type="text/css" href="../../_static/./custom.css?v=fbe1f034" />
+  
+  <!-- So that users can add custom icons -->
+  <script defer src="../../_static/scripts/fontawesome.js?digest=90905a2f556bf617f1a9"></script>
+  <!-- Pre-loaded scripts that we'll load fully later -->
+  <link rel="preload" as="script" href="../../_static/scripts/bootstrap.js?digest=90905a2f556bf617f1a9" />
+<link rel="preload" as="script" href="../../_static/scripts/pydata-sphinx-theme.js?digest=90905a2f556bf617f1a9" />
+
+    <script src="../../_static/documentation_options.js?v=9becfed8"></script>
+    <script src="../../_static/doctools.js?v=9bcbadda"></script>
+    <script src="../../_static/sphinx_highlight.js?v=dc90522c"></script>
+    <script src="../../_static/sg-tags.js?v=d80f6fa4"></script>
+    <script src="../../_static/clipboard.min.js?v=a7894cd8"></script>
+    <script src="../../_static/copybutton.js?v=fd10adb8"></script>
+    <script src="../../_static/translations.js?v=beaddf03"></script>
+    <script src="../../_static/design-tabs.js?v=f930bc37"></script>
+    <script>DOCUMENTATION_OPTIONS.pagename = 'user_guide/basics/oop';</script>
+    <script>
+        DOCUMENTATION_OPTIONS.theme_version = '0.20.0';
+        DOCUMENTATION_OPTIONS.theme_switcher_json_url = '_static/switcher.json';
+        DOCUMENTATION_OPTIONS.theme_switcher_version_match = '0.1.0';
+        DOCUMENTATION_OPTIONS.show_version_warning_banner =
+            false;
+        </script>
+    <script>DOCUMENTATION_OPTIONS.search_as_you_type = false;</script>
+    <link rel="icon" href="../../_static/favicon.svg"/>
+    <link rel="index" title="索引" href="../../genindex.html" />
+    <link rel="search" title="搜索" href="../../search.html" />
+    <link rel="next" title="模块二 气象数据处理" href="../data/index.html" />
+    <link rel="prev" title="函数及变量作用域、模块和包" href="functions.html" />
+  <meta name="viewport" content="width=device-width, initial-scale=1"/>
+  <meta name="docsearch:language" content="zh-CN"/>
+  <meta name="docsearch:version" content="0.1" />
+    <meta name="docbuild:last-update" content="2026-08-20"/>
+  
+    
+    <script src="../../_static/searchtools.js"></script>
+    <script src="../../_static/language_data.js"></script>
+    <script src="../../searchindex.js"></script>
+  
+  </head>
+  <body data-default-mode="">
+  
+  
+  <div id="pst-skip-link" class="skip-link d-print-none"><a href="#main-content">跳转至主要内容</a></div>
+
+  
+  <div id="pst-scroll-pixel-helper"></div>
+  
+  <button type="button" class="btn rounded-pill" id="pst-back-to-top">
+    <i class="fa-solid fa-arrow-up"></i>回到顶部</button>
+  
+  
+  
+  
+  <dialog id="pst-search-dialog">
+    
+<form class="bd-search d-flex align-items-center"
+      action="../../search.html"
+      method="get">
+  <i class="fa-solid fa-magnifying-glass"></i>
+  <input type="search"
+         class="form-control"
+         name="q"
+         placeholder="搜索文档…"
+         aria-label="搜索文档…"
+         autocomplete="off"
+         autocorrect="off"
+         autocapitalize="off"
+         spellcheck="false"/>
+  <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd>K</kbd></span>
+</form>
+  </dialog>
+
+  <div class="pst-async-banner-revealer d-none">
+  <aside id="bd-header-version-warning" class="d-none d-print-none" aria-label="版本警告"></aside>
+</div>
+
+  
+    <header id="pst-header" class="bd-header navbar navbar-expand-lg bd-navbar d-print-none">
+<div class="bd-header__inner bd-page-width">
+  <button class="pst-navbar-icon sidebar-toggle primary-toggle" aria-label="网页导航">
+    <span class="fa-solid fa-bars"></span>
+  </button>
+  
+  
+  <div class="col-lg-3 navbar-header-items__start">
+    
+      <div class="navbar-item">
+
+  
+    
+  
+
+<a class="navbar-brand logo" href="../../index.html">
+  
+  
+  
+  
+  
+    
+    
+      
+    
+    
+    <img src="../../_static/logo.svg" class="logo__image only-light" alt="MeteoPython - Home"/>
+    <img src="../../_static/logo.svg" class="logo__image only-dark pst-js-only" alt="MeteoPython - Home"/>
+  
+  
+</a></div>
+    
+  </div>
+  
+  <div class="col-lg-9 navbar-header-items">
+    
+    <div class="me-auto navbar-header-items__center">
+      
+        <div class="navbar-item">
+<nav>
+  <ul class="bd-navbar-elements navbar-nav">
+    
+<li class="nav-item current active">
+  <a class="nav-link nav-internal" href="../index.html">
+    教程
+  </a>
+</li>
+
+
+<li class="nav-item ">
+  <a class="nav-link nav-internal" href="../../tutorials/index.html">
+    练习
+  </a>
+</li>
+
+
+<li class="nav-item ">
+  <a class="nav-link nav-internal" href="../../gallery/index.html">
+    示例
+  </a>
+</li>
+
+
+<li class="nav-item ">
+  <a class="nav-link nav-internal" href="../../api/index.html">
+    术语参考
+  </a>
+</li>
+
+
+<li class="nav-item ">
+  <a class="nav-link nav-internal" href="../../qa/index.html">
+    常见问题 Q&A
+  </a>
+</li>
+
+  </ul>
+</nav></div>
+      
+    </div>
+    
+    
+    <div class="navbar-header-items__end">
+      
+        <div class="navbar-item navbar-persistent--container">
+          
+
+<button class="btn search-button-field search-button__button pst-js-only" title="搜索" aria-label="搜索" data-bs-placement="bottom" data-bs-toggle="tooltip">
+ <i class="fa-solid fa-magnifying-glass"></i>
+ <span class="search-button__default-text">搜索</span>
+ <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd class="kbd-shortcut__modifier">K</kbd></span>
+</button>
+        </div>
+      
+      
+        <div class="navbar-item">
+
+<div class="theme-switch-container dropdown pst-js-only" data-bs-toggle="tooltip" data-bs-placement="bottom" title="Color mode">
+  <button class="btn btn-sm nav-link pst-navbar-icon theme-switch-button dropdown-toggle" aria-label="Color mode" data-bs-toggle="dropdown">
+    <i class="theme-switch fa-solid fa-sun fa-lg fa-fw" data-mode="light" title="亮色"></i>
+    <i class="theme-switch fa-solid fa-moon fa-lg fa-fw" data-mode="dark" title="暗色"></i>
+    <i class="theme-switch fa-solid fa-circle-half-stroke fa-lg fa-fw" data-mode="auto" title="System Settings"></i>
+  </button>
+  <ul class="dropdown-menu dropdown-menu-end">
+    <li><button class="dropdown-item d-flex align-items-center theme-change-button" data-mode="auto"><i class="fa-solid fa-circle-half-stroke fa-lg fa-fw me-1"></i>System Settings</button></li>
+    <li><button class="dropdown-item d-flex align-items-center theme-change-button" data-mode="light"><i class="fa-solid fa-sun fa-lg fa-fw me-1"></i>亮色</button></li>
+    <li><button class="dropdown-item d-flex align-items-center theme-change-button" data-mode="dark"><i class="fa-solid fa-moon fa-lg fa-fw me-1"></i>暗色</button></li>
+  </ul>
+</div></div>
+      
+        <div class="navbar-item"><ul class="navbar-icon-links"
+    aria-label="Icon Links">
+</ul></div>
+      
+    </div>
+    
+  </div>
+  
+  
+    <div class="navbar-persistent--mobile">
+
+<button class="btn search-button-field search-button__button pst-js-only" title="搜索" aria-label="搜索" data-bs-placement="bottom" data-bs-toggle="tooltip">
+ <i class="fa-solid fa-magnifying-glass"></i>
+ <span class="search-button__default-text">搜索</span>
+ <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd class="kbd-shortcut__modifier">K</kbd></span>
+</button>
+    </div>
+  
+
+  
+    <button class="pst-navbar-icon sidebar-toggle secondary-toggle" aria-label="当前页面">
+      <span class="fa-solid fa-outdent"></span>
+    </button>
+  
+</div>
+
+    </header>
+  
+
+  <div class="bd-container">
+    <div class="bd-container__inner bd-page-width">
+      
+      
+      
+      <dialog id="pst-primary-sidebar-modal"></dialog>
+      <div id="pst-primary-sidebar" class="bd-sidebar-primary bd-sidebar">
+        
+
+  
+  <div class="sidebar-header-items sidebar-primary__section">
+    
+    
+      <div class="sidebar-header-items__center">
+        
+          
+          
+            <div class="navbar-item">
+<nav>
+  <ul class="bd-navbar-elements navbar-nav">
+    
+<li class="nav-item current active">
+  <a class="nav-link nav-internal" href="../index.html">
+    教程
+  </a>
+</li>
+
+
+<li class="nav-item ">
+  <a class="nav-link nav-internal" href="../../tutorials/index.html">
+    练习
+  </a>
+</li>
+
+
+<li class="nav-item ">
+  <a class="nav-link nav-internal" href="../../gallery/index.html">
+    示例
+  </a>
+</li>
+
+
+<li class="nav-item ">
+  <a class="nav-link nav-internal" href="../../api/index.html">
+    术语参考
+  </a>
+</li>
+
+
+<li class="nav-item ">
+  <a class="nav-link nav-internal" href="../../qa/index.html">
+    常见问题 Q&A
+  </a>
+</li>
+
+  </ul>
+</nav></div>
+          
+        
+      </div>
+    
+    
+    
+      <div class="sidebar-header-items__end">
+        
+          <div class="navbar-item">
+
+<div class="theme-switch-container dropdown pst-js-only" data-bs-toggle="tooltip" data-bs-placement="bottom" title="Color mode">
+  <button class="btn btn-sm nav-link pst-navbar-icon theme-switch-button dropdown-toggle" aria-label="Color mode" data-bs-toggle="dropdown">
+    <i class="theme-switch fa-solid fa-sun fa-lg fa-fw" data-mode="light" title="亮色"></i>
+    <i class="theme-switch fa-solid fa-moon fa-lg fa-fw" data-mode="dark" title="暗色"></i>
+    <i class="theme-switch fa-solid fa-circle-half-stroke fa-lg fa-fw" data-mode="auto" title="System Settings"></i>
+  </button>
+  <ul class="dropdown-menu dropdown-menu-end">
+    <li><button class="dropdown-item d-flex align-items-center theme-change-button" data-mode="auto"><i class="fa-solid fa-circle-half-stroke fa-lg fa-fw me-1"></i>System Settings</button></li>
+    <li><button class="dropdown-item d-flex align-items-center theme-change-button" data-mode="light"><i class="fa-solid fa-sun fa-lg fa-fw me-1"></i>亮色</button></li>
+    <li><button class="dropdown-item d-flex align-items-center theme-change-button" data-mode="dark"><i class="fa-solid fa-moon fa-lg fa-fw me-1"></i>暗色</button></li>
+  </ul>
+</div></div>
+        
+          <div class="navbar-item"><ul class="navbar-icon-links"
+    aria-label="Icon Links">
+</ul></div>
+        
+      </div>
+    
+  </div>
+  
+    <div class="sidebar-primary-items__start sidebar-primary__section">
+        <div class="sidebar-primary-item pst-sidebar-collapse"><button id="pst-collapse-sidebar-button" aria-expanded="true" aria-controls="pst-primary-sidebar">
+  <svg class="pst-icon" role="img" aria-hidden="true" focusable="false" viewBox="0 0 16 16" xmlns="http://www.w3.org/2000/svg">
+    <path fill="currentColor" d="M3 15.5C2.36232 15.5 1.74874 15.2564 1.28478 14.8189C0.820828 14.3815 0.541576 13.7832 0.504167 13.1467L0.5 13L0.5 3C0.499965 2.36232 0.743605 1.74874 1.18107 1.28478C1.61854 0.820828 2.21676 0.541576 2.85333 0.504167L3 0.5L13 0.5C13.6377 0.499965 14.2513 0.743605 14.7152 1.18107C15.1792 1.61854 15.4584 2.21676 15.4958 2.85333L15.5 3L15.5 13C15.5 13.6377 15.2564 14.2513 14.8189 14.7152C14.3815 15.1792 13.7832 15.4584 13.1467 15.4958L13 15.5L3 15.5ZM3 13.8333L10.5 13.8333L10.5 2.16667L3 2.16667C2.79589 2.16669 2.59889 2.24163 2.44636 2.37726C2.29383 2.5129 2.19638 2.69979 2.1725 2.9025L2.16667 3L2.16667 13C2.16669 13.2041 2.24163 13.4011 2.37726 13.5536C2.5129 13.7062 2.69979 13.8036 2.9025 13.8275L3 13.8333ZM6.65583 10.325L6.5775 10.2558L4.91083 8.58917C4.76735 8.44567 4.68116 8.25476 4.66843 8.05223C4.65569 7.84971 4.71729 7.6495 4.84167 7.48917L4.91083 7.41083L6.5775 5.74417C6.72747 5.59471 6.9287 5.50794 7.14032 5.50148C7.35194 5.49502 7.55809 5.56935 7.7169 5.70937C7.8757 5.8494 7.97525 6.04463 7.99533 6.25539C8.01541 6.46616 7.95451 6.67667 7.825 6.84417L7.75583 6.9225L6.67917 8L7.75583 9.0775C7.89931 9.22099 7.98551 9.41191 7.99824 9.61443C8.01097 9.81695 7.94938 10.0172 7.825 10.1775L7.75583 10.2558C7.61234 10.3993 7.42142 10.4855 7.2189 10.4982C7.01638 10.511 6.81617 10.4494 6.65583 10.325Z"/>
+  </svg>
+  <span class="pst-collapse-sidebar-label">Collapse Sidebar</span>
+  <span class="pst-expand-sidebar-label">Expand Sidebar</span>
+</button></div>
+        <div class="sidebar-primary-item">
+
+<nav class="bd-docs-nav bd-links"
+     aria-label="章节导航">
+  <p class="bd-links__title" role="heading" aria-level="1">章节导航</p>
+  <div class="bd-toc-item navbar-nav"><ul class="current nav bd-sidenav">
+<li class="toctree-l1 current active has-children"><a class="reference internal" href="index.html">模块一 Python 编程基础</a><details open="open"><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="python_conda.html">Python 与 Conda 简介</a></li>
+<li class="toctree-l2"><a class="reference internal" href="datatypes.html">基本数据类型、变量和运算符</a></li>
+<li class="toctree-l2"><a class="reference internal" href="flow.html">分支、条件与循环</a></li>
+<li class="toctree-l2"><a class="reference internal" href="functions.html">函数及变量作用域、模块和包</a></li>
+<li class="toctree-l2 current active"><a class="current reference internal" href="#">面向对象与高级语法</a></li>
+</ul>
+</details></li>
+<li class="toctree-l1 has-children"><a class="reference internal" href="../data/index.html">模块二 气象数据处理</a><details open="open"><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
+<li class="toctree-l2"><a class="reference internal" href="../data/numpy.html">气象数据计算 NumPy</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../data/pandas.html">气象数据分析（一）Pandas</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../data/xarray.html">气象数据分析（二）Xarray</a></li>
+</ul>
+</details></li>
+<li class="toctree-l1 has-children"><a class="reference internal" href="../viz/index.html">模块三 气象数据可视化</a><details open="open"><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
+<li class="toctree-l2"><a class="reference internal" href="../viz/matplotlib.html">气象数据绘图（一）Matplotlib</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../viz/cartopy.html">气象数据绘图（二）Cartopy</a></li>
+</ul>
+</details></li>
+</ul>
+</div>
+</nav></div>
+    </div>
+  
+  
+  <div class="sidebar-primary-items__end sidebar-primary__section">
+      <div class="sidebar-primary-item">
+<div id="ethical-ad-placement"
+      class="flat"
+      data-ea-publisher="readthedocs"
+      data-ea-type="readthedocs-sidebar"
+      data-ea-manual="true">
+</div></div>
+  </div>
+
+
+      </div>
+      
+      <main id="main-content" class="bd-main" role="main">
+        
+        
+          <div class="bd-content">
+            <div class="bd-article-container">
+              
+              <div class="bd-header-article d-print-none">
+<div class="header-article-items header-article__inner">
+  
+    <div class="header-article-items__start">
+      
+        <div class="header-article-item">
+
+<nav aria-label="Breadcrumb" class="d-print-none">
+  <ul class="bd-breadcrumbs">
+    
+    <li class="breadcrumb-item breadcrumb-home">
+      <a href="../../index.html" class="nav-link" aria-label="初始页面">
+        <i class="fa-solid fa-home"></i>
+      </a>
+    </li>
+    
+    <li class="breadcrumb-item"><a href="../index.html" class="nav-link">教程</a></li>
+    
+    
+    <li class="breadcrumb-item"><a href="index.html" class="nav-link">模块一 Python 编程基础</a></li>
+    
+    <li class="breadcrumb-item active" aria-current="page"><span class="ellipsis">面向对象与高级语法</span></li>
+  </ul>
+</nav>
+</div>
+      
+    </div>
+  
+  
+</div>
+</div>
+              
+              
+              
+                
+<div id="searchbox"></div>
+                <article class="bd-article">
+                  
+  <section id="tut-oop">
+<span id="id1"></span><h1>面向对象与高级语法<a class="headerlink" href="#tut-oop" title="Link to this heading">#</a></h1>
+<p>第 5 节 · 模块一 Python 编程基础
+贯穿项目第 5 步：设计 <code class="docutils literal notranslate"><span class="pre">Station</span></code> 类，封装站点信息与气温记录，支持均值/极值统计。</p>
+<p>Python 编程可以粗略分为两种思路：<strong>面向过程</strong> 与 <strong>面向对象</strong>。前面各章讲的变量、列表、循环、函数，都是面向过程的写法——它把任务拆成一串&quot;步骤&quot;，用函数做最小单元，数据和处理数据的函数彼此分开，适合小脚本。而<strong>面向对象（OOP）</strong>聚焦&quot;事物（对象）&quot;，把描述事物的数据（属性）和操作数据的功能（方法）整合成一个整体，代码高内聚、低耦合，是现代大型项目、框架和工具库的主流范式。</p>
+<p>本课程的目标是：掌握 Python 类与对象、封装、继承等核心语法，能独立设计业务类，并结合文件读写完成气象数据统计的综合案例。需要说明的是，面向对象并非 Python 的必用语法——小工具脚本只用面向过程也完全没问题；但爬虫、数据分析系统、Web 项目、大型工具库几乎都优先采用面向对象，因为它的代码复用性强、更易维护。</p>
+<p>请带着一个贯穿始终的比喻来读本章：<strong>气象站就是一座&quot;对象&quot;</strong>。它有区站号、经纬度、海拔这些&quot;属性&quot;，也能&quot;做事&quot;——记录气温、算平均、算极值。把气象站抽象成类，正是本章做的大事情。</p>
+<p>下面按「基础概念 → 类定义 → 属性与方法（封装）→ 继承复用 → 模块中的类 → 综合实战 → 小结拓展」的顺序层层推进。</p>
+<section id="id2">
+<h2>5.1 初识面向对象<a class="headerlink" href="#id2" title="Link to this heading">#</a></h2>
+<div class="admonition note">
+<p class="admonition-title">备注</p>
+<p>本章标题虽为&quot;面向对象与高级语法&quot;，但装饰器、生成器等高级语法是建立在对&quot;类与对象&quot;的直觉之上的。把 5.1 的气象比喻读透，后面的 &#64;property、装饰器都会顺理成章。</p>
+</div>
+<p><strong>面向过程与面向对象的思想对比</strong></p>
+<ul class="simple">
+<li><p><strong>面向过程</strong>：聚焦&quot;步骤&quot;，按照执行顺序拆分代码，以函数为最小单元；数据和操作数据的函数相互分离。</p></li>
+<li><p><strong>面向对象</strong>：聚焦&quot;事物（对象）&quot;，将描述事物的数据（属性）与操作数据的功能（方法）整合为整体。</p></li>
+</ul>
+<p><strong>Python 核心特性：一切皆对象</strong>。数字、字符串、列表、字典，甚至函数本身，全部是对象，每个对象都属于某个类。例如数字 <code class="docutils literal notranslate"><span class="pre">5</span></code> 属于 <code class="docutils literal notranslate"><span class="pre">int</span></code> 类，列表 <code class="docutils literal notranslate"><span class="pre">[]</span></code> 属于 <code class="docutils literal notranslate"><span class="pre">list</span></code> 类。对象有两大固定组成部分：</p>
+<ul class="simple">
+<li><p><strong>属性（attribute）</strong>：描述对象状态、特征的数据；</p></li>
+<li><p><strong>方法（method）</strong>：对象自带、用于修改 / 查询自身属性的函数。</p></li>
+</ul>
+<p><strong>类与实例的逻辑关系</strong></p>
+<ul class="simple">
+<li><p><strong>类（Class）</strong>：对象的通用模板，定义一类事物统一拥有的属性类别与可用方法；</p></li>
+<li><p><strong>实例（Instance）</strong>：根据类模板创建出的具体个体，同一个类可以生成无数实例；</p></li>
+<li><p><strong>共性与差异</strong>：同一类的所有实例拥有相同结构的属性、相同方法，但每个实例的属性值相互独立。</p></li>
+</ul>
+<p><strong>生活化案例：把气象站拆成&quot;学生小明&quot;模型</strong></p>
+<p>以&quot;小明，12 岁学生，存款 1000 元&quot;为例，对应面向对象封装中公有、私有成员的概念：</p>
+<ul class="simple">
+<li><p><strong>公有属性</strong>（外部可直接访问）：姓名（小明）、年龄（12）；</p></li>
+<li><p><strong>私有属性</strong>（外部无法直接查询、修改）：存款（1000 元，他人不能随便查看）；</p></li>
+<li><p><strong>公有方法</strong>（外部可主动调用）：写作业（对外公开的行为）、洗碗（每洗一个碗存款加 10 元，外部可以安排他洗碗）；</p></li>
+<li><p><strong>私有方法</strong>（仅对象内部可调用，对外隐藏）：珠心算（小明仅写作业时内部使用，不在外人面前展示）。</p></li>
+</ul>
+<p>抽象成类就是：<code class="docutils literal notranslate"><span class="pre">Student</span></code>（学生类）定义所有学生统一具备的姓名、年龄、存款属性，以及写作业、洗碗、珠心算三种方法。它对应到气象界，就像定义&quot;台站说明书&quot;<code class="docutils literal notranslate"><span class="pre">Station</span></code>，规定所有站都有的区站号、经纬度、海拔和通用统计方法——这是图纸，不是某一座真站。</p>
+<p><strong>Python 的两类对象：类对象、实例对象</strong></p>
+<ul class="simple">
+<li><p><strong>类对象</strong>：执行 <code class="docutils literal notranslate"><span class="pre">class</span></code> 定义语句时自动生成，全局仅存在唯一一个；存放类顶层共享的属性与全部方法函数。访问用 <code class="docutils literal notranslate"><span class="pre">类名.属性</span></code>、<code class="docutils literal notranslate"><span class="pre">类名.方法</span></code>，而方法调用的 <code class="docutils literal notranslate"><span class="pre">self</span></code> 参数存在限制（见 5.3）。</p></li>
+<li><p><strong>实例对象</strong>：调用类名（类似 <code class="docutils literal notranslate"><span class="pre">类名()</span></code>）创建，可创建任意多个；每个实例有独立命名空间，存放仅属于自己的实例属性；所有实例共享类对象中的方法，并不单独复制，从而省内存。</p></li>
+</ul>
+<p>命名空间规则也很关键：类对象与每个实例对象各自拥有独立命名空间，修改某实例自身的属性，不会影响类和其他实例。</p>
+<p><strong>Python 面向对象语言的独有特性</strong></p>
+<ul class="simple">
+<li><p>类拥有独立命名空间，变量、方法仅在类内部生效；</p></li>
+<li><p>原生支持单继承与多重继承，实现代码复用；</p></li>
+<li><p>支持运算符重载，自定义类对象可直接使用加、减、乘、除等运算符；</p></li>
+<li><p>Python 3 中所有类都是 <code class="docutils literal notranslate"><span class="pre">type</span></code> 类的实例，统一采用新式类规范；</p></li>
+<li><p>与 C++/Java 不同，Python 没有严格的编译期访问控制，仅靠双下划线实现&quot;伪私有&quot;，无强制语法级私有隔离。</p></li>
+</ul>
+</section>
+<section id="id3">
+<h2>5.2 定义和使用类<a class="headerlink" href="#id3" title="Link to this heading">#</a></h2>
+<p><strong>类的基础定义语法</strong>。用 <code class="docutils literal notranslate"><span class="pre">class</span></code> 关键字定义类：</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="k">class</span><span class="w"> </span><span class="nc">类名</span><span class="p">:</span>
+    <span class="c1"># 类共享属性</span>
+    <span class="n">变量</span> <span class="o">=</span> <span class="n">值</span>
+    <span class="c1"># 定义实例方法</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">方法名</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">参数</span><span class="p">):</span>
+        <span class="n">方法逻辑</span>
+</pre></div>
+</div>
+<p><strong>类内语句的执行规则</strong></p>
+<ul class="simple">
+<li><p>类内顶层赋值语句生成类共享属性；<code class="docutils literal notranslate"><span class="pre">def</span></code> 语句定义类的方法；</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">class</span></code> 是可执行语句：在交互模式或导入模块时，会自动执行类内顶层代码（比如类内直接写 <code class="docutils literal notranslate"><span class="pre">print</span></code> 会在定义类那一刻打印出来）；</p></li>
+<li><p>语句顺序没有强制约束，属性与方法定义先后不影响类的使用。</p></li>
+</ul>
+<p><strong>类对象的基础操作与限制</strong></p>
+<ul class="simple">
+<li><p><strong>访问类共享属性</strong>：直接用 <code class="docutils literal notranslate"><span class="pre">类名.属性名</span></code> 读写，修改后所有实例读取该类属性都会同步变化；</p></li>
+<li><p><strong>类方法调用限制</strong>：类对象无法直接调用带 <code class="docutils literal notranslate"><span class="pre">self</span></code> 的实例方法；<code class="docutils literal notranslate"><span class="pre">self</span></code> 需要在调用时传入一个实例对象作为第一个参数，只有通过实例调用时 Python 才会自动填充。</p></li>
+</ul>
+<p><strong>实例对象的创建与操作</strong></p>
+<ul class="simple">
+<li><p><strong>实例化语法</strong>：<code class="docutils literal notranslate"><span class="pre">实例变量</span> <span class="pre">=</span> <span class="pre">类名()</span></code>，每执行一次生成全新独立实例；</p></li>
+<li><p><strong>调用方法的底层逻辑</strong>：调用 <code class="docutils literal notranslate"><span class="pre">实例.方法()</span></code> 时，Python 自动把当前实例作为第一个实参传给方法的 <code class="docutils literal notranslate"><span class="pre">self</span></code> 形参；不同实例调用同一方法，<code class="docutils literal notranslate"><span class="pre">self</span></code> 分别指向各自对象，属性互不干扰。</p></li>
+</ul>
+<p>下面用一个可交互的完整例子体会&quot;多实例隔离&quot;。定义 <code class="docutils literal notranslate"><span class="pre">testclass</span></code>，含类共享属性 <code class="docutils literal notranslate"><span class="pre">data=100</span></code> 与两个实例方法：</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="k">class</span><span class="w"> </span><span class="nc">testclass</span><span class="p">:</span>
+    <span class="n">data</span> <span class="o">=</span> <span class="mi">100</span>                      <span class="c1"># 类共享属性</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">setpdata</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">value</span><span class="p">):</span>      <span class="c1"># 给当前实例写入价格</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">price</span> <span class="o">=</span> <span class="n">value</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">showpdata</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>            <span class="c1"># 显示当前实例的价格</span>
+        <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;price =&quot;</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">price</span><span class="p">)</span>
+    <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;类 testclass 加载完成！&quot;</span><span class="p">)</span>  <span class="c1"># 定义类时立即执行</span>
+</pre></div>
+</div>
+<p>在这里，&quot;类 testclass 加载完成！&quot;会在定义类的那一行被执行并打印——这正是&quot;类是可执行语句&quot;的直观体现。接着分别用 <code class="docutils literal notranslate"><span class="pre">x</span></code>、<code class="docutils literal notranslate"><span class="pre">y</span></code> 两个实例赋值：</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">x</span> <span class="o">=</span> <span class="n">testclass</span><span class="p">()</span>        <span class="c1"># 创建实例 x</span>
+<span class="n">x</span><span class="o">.</span><span class="n">setpdata</span><span class="p">(</span><span class="mi">120</span><span class="p">)</span>        <span class="c1"># 给 x 写入 price=120</span>
+<span class="n">y</span> <span class="o">=</span> <span class="n">testclass</span><span class="p">()</span>        <span class="c1"># 创建实例 y</span>
+<span class="n">y</span><span class="o">.</span><span class="n">setpdata</span><span class="p">(</span><span class="mi">90</span><span class="p">)</span>         <span class="c1"># 给 y 写入 price=90</span>
+<span class="n">x</span><span class="o">.</span><span class="n">showpdata</span><span class="p">()</span>          <span class="c1"># price = 120：x 的属性</span>
+<span class="n">y</span><span class="o">.</span><span class="n">showpdata</span><span class="p">()</span>          <span class="c1"># price = 90：y 的属性，互不干扰</span>
+</pre></div>
+</div>
+<p>输出 <code class="docutils literal notranslate"><span class="pre">price</span> <span class="pre">=</span> <span class="pre">120</span></code> 与 <code class="docutils literal notranslate"><span class="pre">price</span> <span class="pre">=</span> <span class="pre">90</span></code>，说明两个实例的私有属性相互隔离，印证了&quot;各实例拥有独立命名空间&quot;。</p>
+</section>
+<section id="id4">
+<h2>5.3 对象的属性和方法（封装）<a class="headerlink" href="#id4" title="Link to this heading">#</a></h2>
+<p>本节是封装的<strong>核心章节</strong>。我们仍然站在&quot;气象站&quot;的立场上，把类内部的数据与行为打理清楚。</p>
+<p><strong>对象属性的分类、特性与访问规则</strong></p>
+<ul class="simple">
+<li><p><strong>类共享属性</strong>：定义在 <code class="docutils literal notranslate"><span class="pre">class</span></code> 顶层直接赋值；所有实例、类对象共用同一份数据。修改差异很关键：<code class="docutils literal notranslate"><span class="pre">类名.属性</span> <span class="pre">=</span> <span class="pre">值</span></code> 会对所有实例全局更新；而 <code class="docutils literal notranslate"><span class="pre">实例.属性</span> <span class="pre">=</span> <span class="pre">值</span></code> 只会在<strong>当前实例</strong>新建同名属性，此后该实例不再读取类共享属性。</p></li>
+<li><p><strong>实例私有属性</strong>：只能在类内部方法中通过 <code class="docutils literal notranslate"><span class="pre">self.属性名</span> <span class="pre">=</span> <span class="pre">值</span></code> 生成；实例刚创建时为空，只有调用方法赋值后才生成对应属性；仅当前实例可见，其他实例无法读取、修改。</p></li>
+<li><p><strong>属性动态创建特性</strong>：Python 变量赋值即创建，类与实例都支持运行时动态新增属性——<code class="docutils literal notranslate"><span class="pre">类名.新属性</span> <span class="pre">=</span> <span class="pre">值</span></code> 给类新增共享属性，<code class="docutils literal notranslate"><span class="pre">实例.新属性</span> <span class="pre">=</span> <span class="pre">值</span></code> 给单个实例新增私有属性。可传入 <code class="docutils literal notranslate"><span class="pre">dir()</span></code> 查看类/实例的全部内置与自定义属性、方法，用于调试对象结构。</p></li>
+</ul>
+<p><strong>对象方法的底层运行原理</strong>。所有方法统一保存在类对象中，实例不会复制方法，仅通过引用调用，节约内存。</p>
+<p><code class="docutils literal notranslate"><span class="pre">self</span></code> 参数深度解析：<code class="docutils literal notranslate"><span class="pre">self</span></code> 只是约定俗成的名字，可以换成任意单词（<code class="docutils literal notranslate"><span class="pre">this</span></code>、<code class="docutils literal notranslate"><span class="pre">obj</span></code> 等），核心在于它是<strong>第一个形参</strong>的位置；作用是在方法内部代表调用该方法的实例对象，用于读写自身属性。</p>
+<p>对比&quot;有无 self&quot;的区别：</p>
+<ul class="simple">
+<li><p><strong>无 ``self`` 的普通函数</strong>：只能在类里当普通函数，仅能通过类名手动传参调用，用实例调用会报错；</p></li>
+<li><p><strong>带 ``self`` 的实例方法</strong>：实例调用时自动填充 <code class="docutils literal notranslate"><span class="pre">self</span></code>，是开发中的标准写法。</p></li>
+</ul>
+<p><strong>Python 的伪私有机制（封装手段）</strong>。属性 / 方法名以双下划线 <code class="docutils literal notranslate"><span class="pre">__</span></code> 开头即为&quot;私有&quot;，例如 <code class="docutils literal notranslate"><span class="pre">__data2</span></code>、<code class="docutils literal notranslate"><span class="pre">__sub()</span></code>。在类外部直接写 <code class="docutils literal notranslate"><span class="pre">类名.__属性</span></code>、<code class="docutils literal notranslate"><span class="pre">实例.__方法()</span></code> 会触发 <code class="docutils literal notranslate"><span class="pre">AttributeError</span></code>，提示不存在该属性。但它的本质并非语法级加密：Python 底层会自动把名称改写为 <code class="docutils literal notranslate"><span class="pre">_类名__属性</span></code>，只是阻止常规的直接访问，属开发层面的隐藏规范。</p>
+<p><strong>内置特殊魔法方法：构造函数、析构函数</strong></p>
+<ul class="simple">
+<li><p><strong>构造函数 ``__init__``</strong>：实例化 <code class="docutils literal notranslate"><span class="pre">类名(参数)</span></code> 时自动触发，无需手动调用；核心作用是把实例属性初始化——例如把兰州站（区站号 52889）的站名、经纬度、海拔在创建对象时一次性写入；传入的参数会全部传递给 <code class="docutils literal notranslate"><span class="pre">__init__</span></code> 中除 <code class="docutils literal notranslate"><span class="pre">self</span></code> 以外的形参。</p></li>
+<li><p><strong>析构函数 ``__del__``</strong>：实例被删除、程序结束内存回收时自动调用；适合关闭文件、释放连接等资源收尾操作；但无法精确控制执行时间，不适合强依赖它的释放逻辑。</p></li>
+</ul>
+<p>下面是一个带 <code class="docutils literal notranslate"><span class="pre">__init__</span></code> 与 <code class="docutils literal notranslate"><span class="pre">__del__</span></code> 的演示类，实例化、赋值、删除对象时，两段打印会依次自动触发：</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="k">class</span><span class="w"> </span><span class="nc">Data</span><span class="p">:</span>
+    <span class="k">def</span><span class="w"> </span><span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">value</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">value</span> <span class="o">=</span> <span class="n">value</span>
+        <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;构造实例，value =&quot;</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">value</span><span class="p">)</span>
+    <span class="k">def</span><span class="w"> </span><span class="fm">__del__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;析构实例，value =&quot;</span><span class="p">,</span> <span class="nb">getattr</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="s2">&quot;value&quot;</span><span class="p">,</span> <span class="kc">None</span><span class="p">))</span>
+
+<span class="n">d</span> <span class="o">=</span> <span class="n">Data</span><span class="p">(</span><span class="mi">42</span><span class="p">)</span>    <span class="c1"># 构造实例，value = 42</span>
+<span class="k">del</span> <span class="n">d</span>           <span class="c1"># 析构实例，value = 42</span>
+</pre></div>
+</div>
+<p><strong>&#64;property 属性装饰器（封装数据、优雅取值）</strong></p>
+<p>它的作用是把&quot;由其它数据推算出的结果&quot;伪装成普通属性来读取。外部只需写 <code class="docutils literal notranslate"><span class="pre">实例.属性名</span></code> 即可取到由方法计算的数值，不必加括号，又保护了内部求值逻辑。气象示例：给 <code class="docutils literal notranslate"><span class="pre">Station</span></code> 类加一个 <code class="docutils literal notranslate"><span class="pre">&#64;property</span></code> 属性 <code class="docutils literal notranslate"><span class="pre">mean_temp</span></code>，返回该站近期逐日气温序列的平均值。调用方写 <code class="docutils literal notranslate"><span class="pre">zhou_station.mean_temp</span></code> 即可，像读普通字段一样直观，而求平均的过程被隐藏在方法内部。</p>
+<p><code class="docutils literal notranslate"><span class="pre">&#64;property</span></code> 默认只读；配合 <code class="docutils literal notranslate"><span class="pre">&#64;xxx.setter</span></code> 可在赋值时做校验。例如气温不能低于绝对零度 <code class="docutils literal notranslate"><span class="pre">-273.15℃</span></code>，否则抛出 <code class="docutils literal notranslate"><span class="pre">ValueError</span></code> 拒绝非法气象记录：</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="k">class</span><span class="w"> </span><span class="nc">Station</span><span class="p">:</span>
+    <span class="k">def</span><span class="w"> </span><span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">name</span><span class="p">,</span> <span class="n">temps</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">name</span> <span class="o">=</span> <span class="n">name</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_temps</span> <span class="o">=</span> <span class="n">temps</span> <span class="k">if</span> <span class="n">temps</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span> <span class="k">else</span> <span class="p">[]</span>
+
+    <span class="nd">@property</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">mean_temp</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>                     <span class="c1"># 只读：像字段一样读</span>
+        <span class="k">return</span> <span class="nb">sum</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_temps</span><span class="p">)</span> <span class="o">/</span> <span class="nb">len</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_temps</span><span class="p">)</span> <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">_temps</span> <span class="k">else</span> <span class="kc">None</span>
+
+    <span class="nd">@property</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">temperature</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_temperature</span>
+
+    <span class="nd">@temperature</span><span class="o">.</span><span class="n">setter</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">temperature</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">value</span><span class="p">):</span>            <span class="c1"># 赋值时校验</span>
+        <span class="k">if</span> <span class="n">value</span> <span class="o">&lt;</span> <span class="o">-</span><span class="mf">273.15</span><span class="p">:</span>
+            <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s2">&quot;气温不能低于绝对零度 -273.15℃&quot;</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_temperature</span> <span class="o">=</span> <span class="n">value</span>
+</pre></div>
+</div>
+</section>
+<section id="id5">
+<h2>5.4 类的继承<a class="headerlink" href="#id5" title="Link to this heading">#</a></h2>
+<p><strong>继承基础概念与语法</strong>。</p>
+<ul class="simple">
+<li><p><strong>父类 / 超类（super class）</strong>：被继承的原有类，包含通用属性、通用方法；</p></li>
+<li><p><strong>子类 / 派生类（sub class / derived class）</strong>：继承父类生成的新类，复用父类代码并扩展自有功能。</p></li>
+</ul>
+<p>继承的核心价值在于：无须重复编写通用代码，子类直接拥有父类全部公有属性、公有方法，降低冗余、便于统一维护。气象场景举例：父类 <code class="docutils literal notranslate"><span class="pre">Station</span></code> 负责站点基础信息（区站号、经纬度、海拔），子类 <code class="docutils literal notranslate"><span class="pre">AutoStation</span></code> 只需额外补写气温、湿度、气压，不必把父类属性重新写一遍。</p>
+<p><strong>单继承标准语法</strong>：</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="k">class</span><span class="w"> </span><span class="nc">子类名</span><span class="p">(</span><span class="n">父类名</span><span class="p">):</span>
+    <span class="k">pass</span>  <span class="c1"># 空实现，完整继承父类所有内容</span>
+</pre></div>
+</div>
+<p>空继承案例里，定义父类 <code class="docutils literal notranslate"><span class="pre">supper_class</span></code>（含共享属性、普通方法、私有方法），再定义空子类 <code class="docutils literal notranslate"><span class="pre">sub_class</span></code>，会发现子类实例可直接调用父类公有成员，而私有成员依旧无法外部访问。</p>
+<p><strong>子类扩展、属性与方法重写</strong></p>
+<ul class="simple">
+<li><p><strong>新增自有内容</strong>：子类内可定义全新的实例属性、全新方法，仅属于子类，父类无法使用；</p></li>
+<li><p><strong>同名重写覆盖</strong>：若子类定义了与父类同名的属性 / 方法，子类实例优先使用子类自身定义，屏蔽父类同名成员；</p></li>
+<li><p><strong>主动调用父类方法</strong>：重写后若想复用父类原有逻辑，用 <code class="docutils literal notranslate"><span class="pre">父类名.方法(self)</span></code> 手动调用，同时保留子类新增逻辑。</p></li>
+</ul>
+<p><strong>子类构造函数调用父类构造函数</strong></p>
+<ul class="simple">
+<li><p>默认规则：子类自定义 <code class="docutils literal notranslate"><span class="pre">__init__</span></code> 后，不会自动执行父类构造函数，父类属性无法自动初始化；</p></li>
+<li><p>手动调用语法：在子类 <code class="docutils literal notranslate"><span class="pre">__init__</span></code> 内部执行 <code class="docutils literal notranslate"><span class="pre">父类名.__init__(self,</span> <span class="pre">所需参数)</span></code>；</p></li>
+<li><p>案例：父类构造初始化 <code class="docutils literal notranslate"><span class="pre">supper_data</span></code>，子类构造新增 <code class="docutils literal notranslate"><span class="pre">sub_data</span></code>，同时调用父类构造完成全部属性初始化。</p></li>
+</ul>
+<p><strong>多重继承</strong>。语法为 <code class="docutils literal notranslate"><span class="pre">class</span> <span class="pre">子类(父类1,</span> <span class="pre">父类2):</span></code>。当多个父类存在同名属性/方法时，Python 按子类定义括号内从左到右的顺序查找，找到第一个匹配项即停止。实操里定义 <code class="docutils literal notranslate"><span class="pre">supper1</span></code>、<code class="docutils literal notranslate"><span class="pre">supper2</span></code> 两个父类，都存在同名 <code class="docutils literal notranslate"><span class="pre">show2</span></code> 方法；子类同时继承两者，调用 <code class="docutils literal notranslate"><span class="pre">show2</span></code> 时优先执行左侧第一个父类的逻辑。</p>
+<p>下面用继承把&quot;普通站&quot;升级为&quot;自动站&quot;：</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="k">class</span><span class="w"> </span><span class="nc">Station</span><span class="p">:</span>
+    <span class="k">def</span><span class="w"> </span><span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">station_id</span><span class="p">,</span> <span class="n">name</span><span class="p">,</span> <span class="n">lat</span><span class="p">,</span> <span class="n">lon</span><span class="p">,</span> <span class="n">altitude</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">station_id</span> <span class="o">=</span> <span class="n">station_id</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">name</span> <span class="o">=</span> <span class="n">name</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">lat</span> <span class="o">=</span> <span class="n">lat</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">lon</span> <span class="o">=</span> <span class="n">lon</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">altitude</span> <span class="o">=</span> <span class="n">altitude</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">info</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">return</span> <span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">station_id</span><span class="si">}</span><span class="s2"> </span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">name</span><span class="si">}</span><span class="s2">&quot;</span>
+
+<span class="k">class</span><span class="w"> </span><span class="nc">AutoStation</span><span class="p">(</span><span class="n">Station</span><span class="p">):</span>          <span class="c1"># 继承父类</span>
+    <span class="k">def</span><span class="w"> </span><span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">station_id</span><span class="p">,</span> <span class="n">name</span><span class="p">,</span> <span class="n">lat</span><span class="p">,</span> <span class="n">lon</span><span class="p">,</span> <span class="n">altitude</span><span class="p">,</span>
+                 <span class="n">temperature</span><span class="p">,</span> <span class="n">humidity</span><span class="p">,</span> <span class="n">pressure</span><span class="p">):</span>
+        <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span><span class="n">station_id</span><span class="p">,</span> <span class="n">name</span><span class="p">,</span> <span class="n">lat</span><span class="p">,</span> <span class="n">lon</span><span class="p">,</span> <span class="n">altitude</span><span class="p">)</span>  <span class="c1"># 先调父类</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">temperature</span> <span class="o">=</span> <span class="n">temperature</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">humidity</span> <span class="o">=</span> <span class="n">humidity</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">pressure</span> <span class="o">=</span> <span class="n">pressure</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">info</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>                  <span class="c1"># 重写，先取父类再补内容</span>
+        <span class="k">return</span> <span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="n">info</span><span class="p">()</span><span class="si">}</span><span class="s2"> | </span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">temperature</span><span class="si">}</span><span class="s2">℃ </span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">humidity</span><span class="si">}</span><span class="s2">%&quot;</span>
+
+<span class="n">shanghai</span> <span class="o">=</span> <span class="n">AutoStation</span><span class="p">(</span><span class="s2">&quot;58362&quot;</span><span class="p">,</span> <span class="s2">&quot;上海&quot;</span><span class="p">,</span> <span class="mf">31.40</span><span class="p">,</span> <span class="mf">121.47</span><span class="p">,</span> <span class="mi">6</span><span class="p">,</span> <span class="mf">33.5</span><span class="p">,</span> <span class="mi">78</span><span class="p">,</span> <span class="mf">1008.1</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">shanghai</span><span class="o">.</span><span class="n">info</span><span class="p">())</span>   <span class="c1"># 58362 上海 | 33.5℃ 78%</span>
+</pre></div>
+</div>
+<p><code class="docutils literal notranslate"><span class="pre">AutoStation</span></code> 自动继承了 <code class="docutils literal notranslate"><span class="pre">Station</span></code> 的区站号、经纬度、海拔与 <code class="docutils literal notranslate"><span class="pre">info()</span></code>，只需补写 <code class="docutils literal notranslate"><span class="pre">temperature</span></code>、<code class="docutils literal notranslate"><span class="pre">humidity</span></code>、<code class="docutils literal notranslate"><span class="pre">pressure</span></code>——这正是典型的&quot;站与自动站&quot;继承关系，也是同名方法重写（多态）的雏形。</p>
+</section>
+<section id="id6">
+<h2>5.5 模块中的类<a class="headerlink" href="#id6" title="Link to this heading">#</a></h2>
+<p><strong>在独立模块文件中定义类</strong>。规范做法是把 <code class="docutils literal notranslate"><span class="pre">class</span></code> 写进单独的 <code class="docutils literal notranslate"><span class="pre">.py</span></code> 文件（如 <code class="docutils literal notranslate"><span class="pre">classlib.py</span></code>）。模块自测代码使用 <code class="docutils literal notranslate"><span class="pre">if</span> <span class="pre">__name__</span> <span class="pre">==</span> <span class="pre">'__main__':</span></code> 分支，仅当文件被单独运行时才执行测试代码，被 <code class="docutils literal notranslate"><span class="pre">import</span></code> 时不执行。案例：<code class="docutils literal notranslate"><span class="pre">classlib.py</span></code> 中定义 <code class="docutils literal notranslate"><span class="pre">test</span></code> 类，内置 <code class="docutils literal notranslate"><span class="pre">set</span></code>、<code class="docutils literal notranslate"><span class="pre">show</span></code> 方法，自测代码创建实例并打印属性——代码结构如下。</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="c1"># classlib.py</span>
+<span class="k">class</span><span class="w"> </span><span class="nc">test</span><span class="p">:</span>
+    <span class="k">def</span><span class="w"> </span><span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">value</span> <span class="o">=</span> <span class="mi">0</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">set</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">v</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">value</span> <span class="o">=</span> <span class="n">v</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">show</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;value =&quot;</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">value</span><span class="p">)</span>
+
+<span class="k">if</span> <span class="vm">__name__</span> <span class="o">==</span> <span class="s1">&#39;__main__&#39;</span><span class="p">:</span>
+    <span class="n">t</span> <span class="o">=</span> <span class="n">test</span><span class="p">()</span>
+    <span class="n">t</span><span class="o">.</span><span class="n">set</span><span class="p">(</span><span class="mi">7</span><span class="p">)</span>
+    <span class="n">t</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>            <span class="c1"># 仅直接运行 classlib.py 时才执行</span>
+</pre></div>
+</div>
+<p><strong>两种导入类的方式与区别</strong></p>
+<ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">import</span> <span class="pre">模块名</span></code>：使用时必须前缀模块名 <code class="docutils literal notranslate"><span class="pre">模块名.类名</span></code>，适合模块内存在多个类的场景：</p></li>
+</ul>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span><span class="w"> </span><span class="nn">classlib</span>
+<span class="n">obj</span> <span class="o">=</span> <span class="n">classlib</span><span class="o">.</span><span class="n">test</span><span class="p">()</span>        <span class="c1"># 前缀模块名</span>
+<span class="n">obj</span><span class="o">.</span><span class="n">set</span><span class="p">(</span><span class="mi">1</span><span class="p">);</span> <span class="n">obj</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
+</pre></div>
+</div>
+<ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">from</span> <span class="pre">模块名</span> <span class="pre">import</span> <span class="pre">类名</span></code>：直接使用类名实例化，代码更简洁，适合只使用单一类的场景：</p></li>
+</ul>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span><span class="w"> </span><span class="nn">classlib</span><span class="w"> </span><span class="kn">import</span> <span class="n">test</span>
+<span class="n">obj</span> <span class="o">=</span> <span class="n">test</span><span class="p">()</span>                 <span class="c1"># 直接用类名</span>
+<span class="n">obj</span><span class="o">.</span><span class="n">set</span><span class="p">(</span><span class="mi">2</span><span class="p">);</span> <span class="n">obj</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
+</pre></div>
+</div>
+<p>两种方式均可对模块中的类做属性读写与方法调用，选择取决于你的代码组织习惯与模块内类的数量。</p>
+</section>
+<section id="meteostation">
+<h2>5.6 综合实战：MeteoStation 气象类<a class="headerlink" href="#meteostation" title="Link to this heading">#</a></h2>
+<p>前面五节把概念讲透了，这一节动真格：用面向对象封装一个能读 CSV、能统计的气象类。</p>
+<p><strong>业务需求</strong>：封装一个 <code class="docutils literal notranslate"><span class="pre">MeteoStation</span></code> 类，它读取兰州站 2024 年逐日气温 CSV，实现按月筛选气温序列、计算月平均气温、月最高温、月最低温，并返回站点基础信息。</p>
+<p><strong>CSV 数据文件字段解析</strong>：文件含 <code class="docutils literal notranslate"><span class="pre">date,</span> <span class="pre">year,</span> <span class="pre">month,</span> <span class="pre">day,</span> <span class="pre">temp</span></code> 五个字段，分别代表日期、年、月、日、气温。</p>
+<p><strong>MeteoStation 类的结构设计</strong></p>
+<ul class="simple">
+<li><p>构造函数 <code class="docutils literal notranslate"><span class="pre">__init__(self,</span> <span class="pre">csv_file_path)</span></code>：接收 CSV 文件路径，内部读取 CSV，把全部逐日数据存入实例属性；</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">get_month_data(self,</span> <span class="pre">target_month)</span></code>：根据传入月份，筛选返回该月全部气温列表；</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">calc_month_mean(self,</span> <span class="pre">target_month)</span></code>：计算指定月份平均气温；</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">calc_month_max(self,</span> <span class="pre">target_month)</span></code>：计算指定月份最高气温；</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">calc_month_min(self,</span> <span class="pre">target_month)</span></code>：计算指定月份最低气温。</p></li>
+</ul>
+<p>完整实现如下——它以真实的气象文件读写为骨架，把&quot;数据 + 统计行为&quot;一并封装进了类：</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span><span class="w"> </span><span class="nn">csv</span>
+
+<span class="k">class</span><span class="w"> </span><span class="nc">MeteoStation</span><span class="p">:</span>
+    <span class="k">def</span><span class="w"> </span><span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">csv_file_path</span><span class="p">):</span>
+        <span class="c1"># 读取 csv，全部逐日数据存入 self.data</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">data</span> <span class="o">=</span> <span class="p">[]</span>
+        <span class="k">with</span> <span class="nb">open</span><span class="p">(</span><span class="n">csv_file_path</span><span class="p">,</span> <span class="n">encoding</span><span class="o">=</span><span class="s2">&quot;utf-8&quot;</span><span class="p">)</span> <span class="k">as</span> <span class="n">f</span><span class="p">:</span>
+            <span class="k">for</span> <span class="n">row</span> <span class="ow">in</span> <span class="n">csv</span><span class="o">.</span><span class="n">DictReader</span><span class="p">(</span><span class="n">f</span><span class="p">):</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">data</span><span class="o">.</span><span class="n">append</span><span class="p">({</span>
+                    <span class="s2">&quot;date&quot;</span><span class="p">:</span> <span class="n">row</span><span class="p">[</span><span class="s2">&quot;date&quot;</span><span class="p">],</span> <span class="s2">&quot;year&quot;</span><span class="p">:</span> <span class="nb">int</span><span class="p">(</span><span class="n">row</span><span class="p">[</span><span class="s2">&quot;year&quot;</span><span class="p">]),</span>
+                    <span class="s2">&quot;month&quot;</span><span class="p">:</span> <span class="nb">int</span><span class="p">(</span><span class="n">row</span><span class="p">[</span><span class="s2">&quot;month&quot;</span><span class="p">]),</span> <span class="s2">&quot;day&quot;</span><span class="p">:</span> <span class="nb">int</span><span class="p">(</span><span class="n">row</span><span class="p">[</span><span class="s2">&quot;day&quot;</span><span class="p">]),</span>
+                    <span class="s2">&quot;temp&quot;</span><span class="p">:</span> <span class="nb">float</span><span class="p">(</span><span class="n">row</span><span class="p">[</span><span class="s2">&quot;temp&quot;</span><span class="p">]),</span>
+                <span class="p">})</span>
+
+    <span class="k">def</span><span class="w"> </span><span class="nf">get_month_data</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">target_month</span><span class="p">):</span>
+        <span class="c1"># 筛选指定月份所有气温</span>
+        <span class="k">return</span> <span class="p">[</span><span class="n">d</span><span class="p">[</span><span class="s2">&quot;temp&quot;</span><span class="p">]</span> <span class="k">for</span> <span class="n">d</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">data</span> <span class="k">if</span> <span class="n">d</span><span class="p">[</span><span class="s2">&quot;month&quot;</span><span class="p">]</span> <span class="o">==</span> <span class="n">target_month</span><span class="p">]</span>
+
+    <span class="k">def</span><span class="w"> </span><span class="nf">calc_month_mean</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">target_month</span><span class="p">):</span>
+        <span class="n">temps</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">get_month_data</span><span class="p">(</span><span class="n">target_month</span><span class="p">)</span>
+        <span class="k">return</span> <span class="nb">sum</span><span class="p">(</span><span class="n">temps</span><span class="p">)</span> <span class="o">/</span> <span class="nb">len</span><span class="p">(</span><span class="n">temps</span><span class="p">)</span>
+
+    <span class="k">def</span><span class="w"> </span><span class="nf">calc_month_max</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">target_month</span><span class="p">):</span>
+        <span class="k">return</span> <span class="nb">max</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">get_month_data</span><span class="p">(</span><span class="n">target_month</span><span class="p">))</span>
+
+    <span class="k">def</span><span class="w"> </span><span class="nf">calc_month_min</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">target_month</span><span class="p">):</span>
+        <span class="k">return</span> <span class="nb">min</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">get_month_data</span><span class="p">(</span><span class="n">target_month</span><span class="p">))</span>
+
+<span class="c1"># 主程序测试：假定文件&quot;兰州站2024年逐日气温.csv&quot;已就位</span>
+<span class="n">station</span> <span class="o">=</span> <span class="n">MeteoStation</span><span class="p">(</span><span class="s2">&quot;兰州站2024年逐日气温.csv&quot;</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;7 月平均气温:&quot;</span><span class="p">,</span> <span class="n">station</span><span class="o">.</span><span class="n">calc_month_mean</span><span class="p">(</span><span class="mi">7</span><span class="p">))</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;7 月最高气温:&quot;</span><span class="p">,</span> <span class="n">station</span><span class="o">.</span><span class="n">calc_month_max</span><span class="p">(</span><span class="mi">7</span><span class="p">))</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;7 月最低气温:&quot;</span><span class="p">,</span> <span class="n">station</span><span class="o">.</span><span class="n">calc_month_min</span><span class="p">(</span><span class="mi">7</span><span class="p">))</span>
+</pre></div>
+</div>
+<p>一句话，<code class="docutils literal notranslate"><span class="pre">MeteoStation</span></code> 把&quot;从哪里读、怎么算、算什么&quot;全部包进类，外部只需创建对象、选月份、拿结果——这就是面向对象在气象工程实践里的真实价值。</p>
+<p><strong>让对象打印出来一眼可读：``__repr__``</strong>。默认 <code class="docutils literal notranslate"><span class="pre">print(station)</span></code> 输出的是 <code class="docutils literal notranslate"><span class="pre">&lt;__main__.MeteoStation</span> <span class="pre">object</span> <span class="pre">at</span> <span class="pre">0x...&gt;</span></code>，一串地址对查数据没有帮助。给类补一个 <code class="docutils literal notranslate"><span class="pre">__repr__</span></code>，返回构造该对象所需的关键字段，打印和排错都会舒适很多：</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="k">class</span><span class="w"> </span><span class="nc">MeteoStation</span><span class="p">:</span>
+    <span class="k">def</span><span class="w"> </span><span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">csv_file_path</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">csv_file_path</span> <span class="o">=</span> <span class="n">csv_file_path</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">data</span> <span class="o">=</span> <span class="p">[]</span>
+        <span class="c1"># ……读取 csv，填充 self.data……</span>
+
+    <span class="k">def</span><span class="w"> </span><span class="fm">__repr__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">return</span> <span class="sa">f</span><span class="s2">&quot;MeteoStation(csv=</span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">csv_file_path</span><span class="si">!r}</span><span class="s2">, 记录数=</span><span class="si">{</span><span class="nb">len</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">data</span><span class="p">)</span><span class="si">}</span><span class="s2">)&quot;</span>
+
+<span class="n">station</span> <span class="o">=</span> <span class="n">MeteoStation</span><span class="p">(</span><span class="s2">&quot;兰州站2024年逐日气温.csv&quot;</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">station</span><span class="p">)</span>                    <span class="c1"># MeteoStation(csv=&#39;兰州站2024年逐日气温.csv&#39;, 记录数=365)</span>
+<span class="nb">print</span><span class="p">([</span><span class="n">station</span><span class="p">])</span>                  <span class="c1"># 容器里的元素也走 __repr__</span>
+</pre></div>
+</div>
+<p><code class="docutils literal notranslate"><span class="pre">print(对象)</span></code> 先找 <code class="docutils literal notranslate"><span class="pre">__str__</span></code>，没有才退到 <code class="docutils literal notranslate"><span class="pre">__repr__</span></code>；而列表等容器里的元素<strong>一定走 ``__repr__``</strong>。所以只写 <code class="docutils literal notranslate"><span class="pre">__str__</span></code> 时，<code class="docutils literal notranslate"><span class="pre">print([station])</span></code> 仍是地址。<code class="docutils literal notranslate"><span class="pre">!r</span></code> 让字符串带引号；<code class="docutils literal notranslate"><span class="pre">__repr__</span></code> 里不要跑可能失败的统计（比如 <code class="docutils literal notranslate"><span class="pre">mean_temp</span></code> 是 <code class="docutils literal notranslate"><span class="pre">None</span></code>），只放身份字段即可。</p>
+<p><strong>（选做）继承实现格点数据子类</strong>：利用继承机制，让父类 <code class="docutils literal notranslate"><span class="pre">MeteoStation</span></code> 实现通用统计逻辑，再写子类 <code class="docutils literal notranslate"><span class="pre">NetCDFMeteo(MeteoStation)</span></code>：① 子类重写数据读取方法，读取 NetCDF 格点气温数据；② 复用父类 <code class="docutils literal notranslate"><span class="pre">calc_month_mean</span></code> / <code class="docutils literal notranslate"><span class="pre">calc_month_max</span></code> / <code class="docutils literal notranslate"><span class="pre">calc_month_min</span></code> 统计方法；③ 新增子类独有的方法 <code class="docutils literal notranslate"><span class="pre">get_latlon_subset()</span></code> 完成经纬度区域裁剪。无论数据源是逐日 CSV 还是格点 NetCDF，统一的统计接口不变——这是继承与多态最优雅的体现。</p>
+</section>
+<section id="id7">
+<h2>5.7 课程小结与拓展<a class="headerlink" href="#id7" title="Link to this heading">#</a></h2>
+<p><strong>核心知识点梳理</strong></p>
+<ul class="simple">
+<li><p><strong>封装</strong>：类整合属性与方法、公有私有成员、构造 / 析构函数；</p></li>
+<li><p><strong>继承</strong>：单继承、多重继承、方法重写、父类构造调用；</p></li>
+<li><p><strong>基础使用</strong>：类定义、实例化、<code class="docutils literal notranslate"><span class="pre">self</span></code> 参数、动态属性、模块导入类；</p></li>
+<li><p><strong>气象工程实践</strong>：使用面向对象封装 CSV、NetCDF 气象数据的读写与统计。</p></li>
+</ul>
+<p><strong>高频易错点汇总</strong></p>
+<ol class="arabic simple">
+<li><p>混淆类共享属性与实例私有属性，修改类属性后预期效果不符；</p></li>
+<li><p>定义实例方法遗漏 <code class="docutils literal notranslate"><span class="pre">self</span></code> 第一个参数，调用时报错；</p></li>
+<li><p>子类重写 <code class="docutils literal notranslate"><span class="pre">__init__</span></code> 后忘记调用父类构造，缺失父类属性；</p></li>
+<li><p>混淆私有成员访问规则，在外部直接使用 <code class="docutils literal notranslate"><span class="pre">__属性名</span></code> 访问；</p></li>
+<li><p>分不清类对象、实例对象的命名空间隔离关系；</p></li>
+<li><p>处理文件时忘记在析构函数里关闭 CSV、NetCDF 句柄，造成资源泄露。</p></li>
+</ol>
+<p><strong>拓展学习方向</strong></p>
+<ul class="simple">
+<li><p>Sphinx 补充语法：装饰器、生成器、列表推导式进阶、<code class="docutils literal notranslate"><span class="pre">match-case</span></code> 语法；</p></li>
+<li><p>OOP 进阶：<code class="docutils literal notranslate"><span class="pre">&#64;property</span></code> 属性装饰器、运算符重载、类方法 <code class="docutils literal notranslate"><span class="pre">&#64;classmethod</span></code>、静态方法 <code class="docutils literal notranslate"><span class="pre">&#64;staticmethod</span></code>；</p></li>
+<li><p>气象开发：基于类封装批量气象文件处理（如一次性统计西北 8 站逐日气温并输出表格），开发面向对象的数据分析脚本。</p></li>
+</ul>
+<p>至此，&quot;把气象站抽象成类&quot;的整条主线走完了——从一张&quot;台站说明书&quot;（类），到一座座活灵活现的真站（实例），再到站与自动站的继承接力。拿到配套练习，把 <code class="docutils literal notranslate"><span class="pre">Station</span></code>、<code class="docutils literal notranslate"><span class="pre">AutoStation</span></code>、<code class="docutils literal notranslate"><span class="pre">MeteoStation</span></code> 亲手实现一遍，本章就稳了。</p>
+<div class="admonition seealso">
+<p class="admonition-title">参见</p>
+<p>配套练习：<a class="reference internal" href="../../tutorials/basics/ch05_practice.html"><span class="doc">第 5 章练习：面向对象与高级语法</span></a>　·　术语参考：<a class="reference internal" href="../../api/ch05_terms.html"><span class="doc">第 5 章术语：面向对象与高级语法</span></a>　·　示例画廊 <a class="reference internal" href="../../gallery/plot_basics/index.html"><span class="doc">基础绘图示例</span></a></p>
+</div>
+</section>
+</section>
+
+
+                </article>
+              
+              
+              
+              
+              
+                <footer class="prev-next-footer d-print-none">
+                  
+<div class="prev-next-area">
+    <a class="left-prev"
+       href="functions.html"
+       title="上一页">
+      <i class="fa-solid fa-angle-left"></i>
+      <div class="prev-next-info">
+        <p class="prev-next-subtitle">上一页</p>
+        <p class="prev-next-title">函数及变量作用域、模块和包</p>
+      </div>
+    </a>
+    <a class="right-next"
+       href="../data/index.html"
+       title="下一页">
+      <div class="prev-next-info">
+        <p class="prev-next-subtitle">下一页</p>
+        <p class="prev-next-title">模块二 气象数据处理</p>
+      </div>
+      <i class="fa-solid fa-angle-right"></i>
+    </a>
+</div>
+                </footer>
+              
+            </div>
+            
+            
+              
+                <dialog id="pst-secondary-sidebar-modal"></dialog>
+                <div id="pst-secondary-sidebar" class="bd-sidebar-secondary bd-toc"><div class="sidebar-secondary-items sidebar-secondary__inner">
+
+
+  <div class="sidebar-secondary-item">
+<div
+    id="pst-page-navigation-heading-2"
+    class="page-toc tocsection onthispage">
+    <i class="fa-solid fa-list"></i> 当前页面
+  </div>
+  <nav id="pst-page-toc-nav" class="page-toc" aria-labelledby="pst-page-navigation-heading-2">
+    <ul class="pst-show_toc_level nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id2">5.1 初识面向对象</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id3">5.2 定义和使用类</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id4">5.3 对象的属性和方法（封装）</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id5">5.4 类的继承</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id6">5.5 模块中的类</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#meteostation">5.6 综合实战：MeteoStation 气象类</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id7">5.7 课程小结与拓展</a></li>
+</ul>
+  </nav></div>
+
+</div></div>
+              
+            
+          </div>
+          <footer class="bd-footer-content">
+            
+          </footer>
+        
+      </main>
+    </div>
+  </div>
+  
+  <!-- Scripts loaded after <body> so the DOM is not blocked -->
+  <script defer src="../../_static/scripts/bootstrap.js?digest=90905a2f556bf617f1a9"></script>
+<script defer src="../../_static/scripts/pydata-sphinx-theme.js?digest=90905a2f556bf617f1a9"></script>
+
+  <footer class="bd-footer">
+<div class="bd-footer__inner bd-page-width">
+  
+    <div class="footer-items__start">
+      
+        <div class="footer-item">
+
+  <p class="copyright">
+    
+      © Copyright 2026, 兰州大学大气科学学院编程社区.
+      <br/>
+    
+  </p>
+</div>
+      
+        <div class="footer-item">
+
+  <p class="sphinx-version">
+    由 <a href="https://www.sphinx-doc.org/">Sphinx</a> 8.2.3创建。
+    <br/>
+  </p>
+</div>
+      
+    </div>
+  
+  
+  
+    <div class="footer-items__end">
+      
+        <div class="footer-item">
+<p class="theme-version">
+  <!-- # L10n: Setting the PST URL as an argument as this does not need to be localized -->
+  使用 <a href="https://pydata-sphinx-theme.readthedocs.io/en/stable/index.html">PyData Sphinx Theme</a> 0.20.0构建.
+</p></div>
+      
+    </div>
+  
+</div>
+
+  </footer>
+  </body>
+</html>

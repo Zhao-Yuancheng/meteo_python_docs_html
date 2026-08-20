@@ -1,0 +1,1166 @@
+
+<!DOCTYPE html>
+
+
+<html lang="zh-CN" data-content_root="../../" >
+
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
+    <title>气象数据计算 NumPy &#8212; MeteoPython</title>
+  
+  
+  
+  <script data-cfasync="false">
+    document.documentElement.dataset.mode = localStorage.getItem("mode") || "";
+    document.documentElement.dataset.theme = localStorage.getItem("theme") || "";
+  </script>
+  <!--
+    this give us a css class that will be invisible only if js is disabled
+  -->
+  <noscript>
+    <style>
+      .pst-js-only { display: none !important; }
+
+    </style>
+  </noscript>
+  
+  <!-- Loaded before other Sphinx assets -->
+  <link href="../../_static/styles/theme.css?digest=90905a2f556bf617f1a9" rel="stylesheet" />
+<link href="../../_static/styles/pydata-sphinx-theme.css?digest=90905a2f556bf617f1a9" rel="stylesheet" />
+
+    <link rel="stylesheet" type="text/css" href="../../_static/pygments.css?v=8f2a1f02" />
+    <link rel="stylesheet" type="text/css" href="../../_static/copybutton.css?v=76b2166b" />
+    <link rel="stylesheet" type="text/css" href="../../_static/sg_gallery.css?v=fd6457a4" />
+    <link rel="stylesheet" type="text/css" href="../../_static/sg_gallery-binder.css?v=f4aeca0c" />
+    <link rel="stylesheet" type="text/css" href="../../_static/sg_gallery-dataframe.css?v=2082cf3c" />
+    <link rel="stylesheet" type="text/css" href="../../_static/sg_gallery-rendered-html.css?v=1277b6f3" />
+    <link rel="stylesheet" type="text/css" href="../../_static/sphinx-design.min.css?v=95c83b7e" />
+    <link rel="stylesheet" type="text/css" href="../../_static/./custom.css?v=fbe1f034" />
+  
+  <!-- So that users can add custom icons -->
+  <script defer src="../../_static/scripts/fontawesome.js?digest=90905a2f556bf617f1a9"></script>
+  <!-- Pre-loaded scripts that we'll load fully later -->
+  <link rel="preload" as="script" href="../../_static/scripts/bootstrap.js?digest=90905a2f556bf617f1a9" />
+<link rel="preload" as="script" href="../../_static/scripts/pydata-sphinx-theme.js?digest=90905a2f556bf617f1a9" />
+
+    <script src="../../_static/documentation_options.js?v=9becfed8"></script>
+    <script src="../../_static/doctools.js?v=9bcbadda"></script>
+    <script src="../../_static/sphinx_highlight.js?v=dc90522c"></script>
+    <script src="../../_static/sg-tags.js?v=d80f6fa4"></script>
+    <script src="../../_static/clipboard.min.js?v=a7894cd8"></script>
+    <script src="../../_static/copybutton.js?v=fd10adb8"></script>
+    <script src="../../_static/translations.js?v=beaddf03"></script>
+    <script src="../../_static/design-tabs.js?v=f930bc37"></script>
+    <script>DOCUMENTATION_OPTIONS.pagename = 'user_guide/data/numpy';</script>
+    <script>
+        DOCUMENTATION_OPTIONS.theme_version = '0.20.0';
+        DOCUMENTATION_OPTIONS.theme_switcher_json_url = '_static/switcher.json';
+        DOCUMENTATION_OPTIONS.theme_switcher_version_match = '0.1.0';
+        DOCUMENTATION_OPTIONS.show_version_warning_banner =
+            false;
+        </script>
+    <script>DOCUMENTATION_OPTIONS.search_as_you_type = false;</script>
+    <link rel="icon" href="../../_static/favicon.svg"/>
+    <link rel="index" title="索引" href="../../genindex.html" />
+    <link rel="search" title="搜索" href="../../search.html" />
+    <link rel="next" title="气象数据分析（一）Pandas" href="pandas.html" />
+    <link rel="prev" title="模块二 气象数据处理" href="index.html" />
+  <meta name="viewport" content="width=device-width, initial-scale=1"/>
+  <meta name="docsearch:language" content="zh-CN"/>
+  <meta name="docsearch:version" content="0.1" />
+    <meta name="docbuild:last-update" content="2026-08-20"/>
+  
+    
+    <script src="../../_static/searchtools.js"></script>
+    <script src="../../_static/language_data.js"></script>
+    <script src="../../searchindex.js"></script>
+  
+  </head>
+  <body data-default-mode="">
+  
+  
+  <div id="pst-skip-link" class="skip-link d-print-none"><a href="#main-content">跳转至主要内容</a></div>
+
+  
+  <div id="pst-scroll-pixel-helper"></div>
+  
+  <button type="button" class="btn rounded-pill" id="pst-back-to-top">
+    <i class="fa-solid fa-arrow-up"></i>回到顶部</button>
+  
+  
+  
+  
+  <dialog id="pst-search-dialog">
+    
+<form class="bd-search d-flex align-items-center"
+      action="../../search.html"
+      method="get">
+  <i class="fa-solid fa-magnifying-glass"></i>
+  <input type="search"
+         class="form-control"
+         name="q"
+         placeholder="搜索文档…"
+         aria-label="搜索文档…"
+         autocomplete="off"
+         autocorrect="off"
+         autocapitalize="off"
+         spellcheck="false"/>
+  <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd>K</kbd></span>
+</form>
+  </dialog>
+
+  <div class="pst-async-banner-revealer d-none">
+  <aside id="bd-header-version-warning" class="d-none d-print-none" aria-label="版本警告"></aside>
+</div>
+
+  
+    <header id="pst-header" class="bd-header navbar navbar-expand-lg bd-navbar d-print-none">
+<div class="bd-header__inner bd-page-width">
+  <button class="pst-navbar-icon sidebar-toggle primary-toggle" aria-label="网页导航">
+    <span class="fa-solid fa-bars"></span>
+  </button>
+  
+  
+  <div class="col-lg-3 navbar-header-items__start">
+    
+      <div class="navbar-item">
+
+  
+    
+  
+
+<a class="navbar-brand logo" href="../../index.html">
+  
+  
+  
+  
+  
+    
+    
+      
+    
+    
+    <img src="../../_static/logo.svg" class="logo__image only-light" alt="MeteoPython - Home"/>
+    <img src="../../_static/logo.svg" class="logo__image only-dark pst-js-only" alt="MeteoPython - Home"/>
+  
+  
+</a></div>
+    
+  </div>
+  
+  <div class="col-lg-9 navbar-header-items">
+    
+    <div class="me-auto navbar-header-items__center">
+      
+        <div class="navbar-item">
+<nav>
+  <ul class="bd-navbar-elements navbar-nav">
+    
+<li class="nav-item current active">
+  <a class="nav-link nav-internal" href="../index.html">
+    教程
+  </a>
+</li>
+
+
+<li class="nav-item ">
+  <a class="nav-link nav-internal" href="../../tutorials/index.html">
+    练习
+  </a>
+</li>
+
+
+<li class="nav-item ">
+  <a class="nav-link nav-internal" href="../../gallery/index.html">
+    示例
+  </a>
+</li>
+
+
+<li class="nav-item ">
+  <a class="nav-link nav-internal" href="../../api/index.html">
+    术语参考
+  </a>
+</li>
+
+
+<li class="nav-item ">
+  <a class="nav-link nav-internal" href="../../qa/index.html">
+    常见问题 Q&A
+  </a>
+</li>
+
+  </ul>
+</nav></div>
+      
+    </div>
+    
+    
+    <div class="navbar-header-items__end">
+      
+        <div class="navbar-item navbar-persistent--container">
+          
+
+<button class="btn search-button-field search-button__button pst-js-only" title="搜索" aria-label="搜索" data-bs-placement="bottom" data-bs-toggle="tooltip">
+ <i class="fa-solid fa-magnifying-glass"></i>
+ <span class="search-button__default-text">搜索</span>
+ <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd class="kbd-shortcut__modifier">K</kbd></span>
+</button>
+        </div>
+      
+      
+        <div class="navbar-item">
+
+<div class="theme-switch-container dropdown pst-js-only" data-bs-toggle="tooltip" data-bs-placement="bottom" title="Color mode">
+  <button class="btn btn-sm nav-link pst-navbar-icon theme-switch-button dropdown-toggle" aria-label="Color mode" data-bs-toggle="dropdown">
+    <i class="theme-switch fa-solid fa-sun fa-lg fa-fw" data-mode="light" title="亮色"></i>
+    <i class="theme-switch fa-solid fa-moon fa-lg fa-fw" data-mode="dark" title="暗色"></i>
+    <i class="theme-switch fa-solid fa-circle-half-stroke fa-lg fa-fw" data-mode="auto" title="System Settings"></i>
+  </button>
+  <ul class="dropdown-menu dropdown-menu-end">
+    <li><button class="dropdown-item d-flex align-items-center theme-change-button" data-mode="auto"><i class="fa-solid fa-circle-half-stroke fa-lg fa-fw me-1"></i>System Settings</button></li>
+    <li><button class="dropdown-item d-flex align-items-center theme-change-button" data-mode="light"><i class="fa-solid fa-sun fa-lg fa-fw me-1"></i>亮色</button></li>
+    <li><button class="dropdown-item d-flex align-items-center theme-change-button" data-mode="dark"><i class="fa-solid fa-moon fa-lg fa-fw me-1"></i>暗色</button></li>
+  </ul>
+</div></div>
+      
+        <div class="navbar-item"><ul class="navbar-icon-links"
+    aria-label="Icon Links">
+</ul></div>
+      
+    </div>
+    
+  </div>
+  
+  
+    <div class="navbar-persistent--mobile">
+
+<button class="btn search-button-field search-button__button pst-js-only" title="搜索" aria-label="搜索" data-bs-placement="bottom" data-bs-toggle="tooltip">
+ <i class="fa-solid fa-magnifying-glass"></i>
+ <span class="search-button__default-text">搜索</span>
+ <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd class="kbd-shortcut__modifier">K</kbd></span>
+</button>
+    </div>
+  
+
+  
+    <button class="pst-navbar-icon sidebar-toggle secondary-toggle" aria-label="当前页面">
+      <span class="fa-solid fa-outdent"></span>
+    </button>
+  
+</div>
+
+    </header>
+  
+
+  <div class="bd-container">
+    <div class="bd-container__inner bd-page-width">
+      
+      
+      
+      <dialog id="pst-primary-sidebar-modal"></dialog>
+      <div id="pst-primary-sidebar" class="bd-sidebar-primary bd-sidebar">
+        
+
+  
+  <div class="sidebar-header-items sidebar-primary__section">
+    
+    
+      <div class="sidebar-header-items__center">
+        
+          
+          
+            <div class="navbar-item">
+<nav>
+  <ul class="bd-navbar-elements navbar-nav">
+    
+<li class="nav-item current active">
+  <a class="nav-link nav-internal" href="../index.html">
+    教程
+  </a>
+</li>
+
+
+<li class="nav-item ">
+  <a class="nav-link nav-internal" href="../../tutorials/index.html">
+    练习
+  </a>
+</li>
+
+
+<li class="nav-item ">
+  <a class="nav-link nav-internal" href="../../gallery/index.html">
+    示例
+  </a>
+</li>
+
+
+<li class="nav-item ">
+  <a class="nav-link nav-internal" href="../../api/index.html">
+    术语参考
+  </a>
+</li>
+
+
+<li class="nav-item ">
+  <a class="nav-link nav-internal" href="../../qa/index.html">
+    常见问题 Q&A
+  </a>
+</li>
+
+  </ul>
+</nav></div>
+          
+        
+      </div>
+    
+    
+    
+      <div class="sidebar-header-items__end">
+        
+          <div class="navbar-item">
+
+<div class="theme-switch-container dropdown pst-js-only" data-bs-toggle="tooltip" data-bs-placement="bottom" title="Color mode">
+  <button class="btn btn-sm nav-link pst-navbar-icon theme-switch-button dropdown-toggle" aria-label="Color mode" data-bs-toggle="dropdown">
+    <i class="theme-switch fa-solid fa-sun fa-lg fa-fw" data-mode="light" title="亮色"></i>
+    <i class="theme-switch fa-solid fa-moon fa-lg fa-fw" data-mode="dark" title="暗色"></i>
+    <i class="theme-switch fa-solid fa-circle-half-stroke fa-lg fa-fw" data-mode="auto" title="System Settings"></i>
+  </button>
+  <ul class="dropdown-menu dropdown-menu-end">
+    <li><button class="dropdown-item d-flex align-items-center theme-change-button" data-mode="auto"><i class="fa-solid fa-circle-half-stroke fa-lg fa-fw me-1"></i>System Settings</button></li>
+    <li><button class="dropdown-item d-flex align-items-center theme-change-button" data-mode="light"><i class="fa-solid fa-sun fa-lg fa-fw me-1"></i>亮色</button></li>
+    <li><button class="dropdown-item d-flex align-items-center theme-change-button" data-mode="dark"><i class="fa-solid fa-moon fa-lg fa-fw me-1"></i>暗色</button></li>
+  </ul>
+</div></div>
+        
+          <div class="navbar-item"><ul class="navbar-icon-links"
+    aria-label="Icon Links">
+</ul></div>
+        
+      </div>
+    
+  </div>
+  
+    <div class="sidebar-primary-items__start sidebar-primary__section">
+        <div class="sidebar-primary-item pst-sidebar-collapse"><button id="pst-collapse-sidebar-button" aria-expanded="true" aria-controls="pst-primary-sidebar">
+  <svg class="pst-icon" role="img" aria-hidden="true" focusable="false" viewBox="0 0 16 16" xmlns="http://www.w3.org/2000/svg">
+    <path fill="currentColor" d="M3 15.5C2.36232 15.5 1.74874 15.2564 1.28478 14.8189C0.820828 14.3815 0.541576 13.7832 0.504167 13.1467L0.5 13L0.5 3C0.499965 2.36232 0.743605 1.74874 1.18107 1.28478C1.61854 0.820828 2.21676 0.541576 2.85333 0.504167L3 0.5L13 0.5C13.6377 0.499965 14.2513 0.743605 14.7152 1.18107C15.1792 1.61854 15.4584 2.21676 15.4958 2.85333L15.5 3L15.5 13C15.5 13.6377 15.2564 14.2513 14.8189 14.7152C14.3815 15.1792 13.7832 15.4584 13.1467 15.4958L13 15.5L3 15.5ZM3 13.8333L10.5 13.8333L10.5 2.16667L3 2.16667C2.79589 2.16669 2.59889 2.24163 2.44636 2.37726C2.29383 2.5129 2.19638 2.69979 2.1725 2.9025L2.16667 3L2.16667 13C2.16669 13.2041 2.24163 13.4011 2.37726 13.5536C2.5129 13.7062 2.69979 13.8036 2.9025 13.8275L3 13.8333ZM6.65583 10.325L6.5775 10.2558L4.91083 8.58917C4.76735 8.44567 4.68116 8.25476 4.66843 8.05223C4.65569 7.84971 4.71729 7.6495 4.84167 7.48917L4.91083 7.41083L6.5775 5.74417C6.72747 5.59471 6.9287 5.50794 7.14032 5.50148C7.35194 5.49502 7.55809 5.56935 7.7169 5.70937C7.8757 5.8494 7.97525 6.04463 7.99533 6.25539C8.01541 6.46616 7.95451 6.67667 7.825 6.84417L7.75583 6.9225L6.67917 8L7.75583 9.0775C7.89931 9.22099 7.98551 9.41191 7.99824 9.61443C8.01097 9.81695 7.94938 10.0172 7.825 10.1775L7.75583 10.2558C7.61234 10.3993 7.42142 10.4855 7.2189 10.4982C7.01638 10.511 6.81617 10.4494 6.65583 10.325Z"/>
+  </svg>
+  <span class="pst-collapse-sidebar-label">Collapse Sidebar</span>
+  <span class="pst-expand-sidebar-label">Expand Sidebar</span>
+</button></div>
+        <div class="sidebar-primary-item">
+
+<nav class="bd-docs-nav bd-links"
+     aria-label="章节导航">
+  <p class="bd-links__title" role="heading" aria-level="1">章节导航</p>
+  <div class="bd-toc-item navbar-nav"><ul class="current nav bd-sidenav">
+<li class="toctree-l1 has-children"><a class="reference internal" href="../basics/index.html">模块一 Python 编程基础</a><details open="open"><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
+<li class="toctree-l2"><a class="reference internal" href="../basics/python_conda.html">Python 与 Conda 简介</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../basics/datatypes.html">基本数据类型、变量和运算符</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../basics/flow.html">分支、条件与循环</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../basics/functions.html">函数及变量作用域、模块和包</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../basics/oop.html">面向对象与高级语法</a></li>
+</ul>
+</details></li>
+<li class="toctree-l1 current active has-children"><a class="reference internal" href="index.html">模块二 气象数据处理</a><details open="open"><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul class="current">
+<li class="toctree-l2 current active"><a class="current reference internal" href="#">气象数据计算 NumPy</a></li>
+<li class="toctree-l2"><a class="reference internal" href="pandas.html">气象数据分析（一）Pandas</a></li>
+<li class="toctree-l2"><a class="reference internal" href="xarray.html">气象数据分析（二）Xarray</a></li>
+</ul>
+</details></li>
+<li class="toctree-l1 has-children"><a class="reference internal" href="../viz/index.html">模块三 气象数据可视化</a><details open="open"><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
+<li class="toctree-l2"><a class="reference internal" href="../viz/matplotlib.html">气象数据绘图（一）Matplotlib</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../viz/cartopy.html">气象数据绘图（二）Cartopy</a></li>
+</ul>
+</details></li>
+</ul>
+</div>
+</nav></div>
+    </div>
+  
+  
+  <div class="sidebar-primary-items__end sidebar-primary__section">
+      <div class="sidebar-primary-item">
+<div id="ethical-ad-placement"
+      class="flat"
+      data-ea-publisher="readthedocs"
+      data-ea-type="readthedocs-sidebar"
+      data-ea-manual="true">
+</div></div>
+  </div>
+
+
+      </div>
+      
+      <main id="main-content" class="bd-main" role="main">
+        
+        
+          <div class="bd-content">
+            <div class="bd-article-container">
+              
+              <div class="bd-header-article d-print-none">
+<div class="header-article-items header-article__inner">
+  
+    <div class="header-article-items__start">
+      
+        <div class="header-article-item">
+
+<nav aria-label="Breadcrumb" class="d-print-none">
+  <ul class="bd-breadcrumbs">
+    
+    <li class="breadcrumb-item breadcrumb-home">
+      <a href="../../index.html" class="nav-link" aria-label="初始页面">
+        <i class="fa-solid fa-home"></i>
+      </a>
+    </li>
+    
+    <li class="breadcrumb-item"><a href="../index.html" class="nav-link">教程</a></li>
+    
+    
+    <li class="breadcrumb-item"><a href="index.html" class="nav-link">模块二 气象数据处理</a></li>
+    
+    <li class="breadcrumb-item active" aria-current="page"><span class="ellipsis">气象数据计算 NumPy</span></li>
+  </ul>
+</nav>
+</div>
+      
+    </div>
+  
+  
+</div>
+</div>
+              
+              
+              
+                
+<div id="searchbox"></div>
+                <article class="bd-article">
+                  
+  <section id="numpy">
+<span id="tut-numpy"></span><h1>气象数据计算 NumPy<a class="headerlink" href="#numpy" title="Link to this heading">#</a></h1>
+<p>第 6 节 · 模块二 气象数据处理
+贯穿项目第 6 步：用 NumPy 数组存储多站气温矩阵，做向量化计算与标准化。</p>
+<p>本章目标：掌握 NumPy 数组基础，能够处理气象站点、简单格点数据。NumPy 是 Python 做科学计算最基础的库，气象里面的温度场、气压场、站点观测记录，底层几乎都依靠 <code class="docutils literal notranslate"><span class="pre">ndarray</span></code>（多维数组）存储与计算。</p>
+<p>&gt; 为什么功夫要在 NumPy 上？给你一张「西北 8 站 × 30 天的气温表」，用 Python 普通列表去求每个站的平均气温，你要手写三层 <code class="docutils literal notranslate"><span class="pre">for</span></code> 循环；用 NumPy，一行 <code class="docutils literal notranslate"><span class="pre">mean(axis=0)</span></code> 搞定——而且它把数据连续存放在内存、用 C 语言在底层做运算，快出几十上百倍。这就是气象数据处理的第一块敲门砖。</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="c1"># 使用 NumPy 第一步，导入库（习惯起别名 np）</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">numpy</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">np</span>
+</pre></div>
+</div>
+<section id="ndarray">
+<h2>6.1 ndarray 数组的创建<a class="headerlink" href="#ndarray" title="Link to this heading">#</a></h2>
+<p><code class="docutils literal notranslate"><span class="pre">ndarray</span></code> 是 NumPy 的核心对象，中文叫<strong>多维数组</strong>。</p>
+<div class="admonition warning">
+<p class="admonition-title">警告</p>
+<p>重要特点：一个数组里所有元素必须是<strong>同一个数据类型</strong>，要么全部是整数，要么全部是浮点数。它不像 Python 普通列表那样可以混杂数字、字符串。这在气象上反而成了优点——同一张气温表里不可能「温度旁边还站着一个苹果」。</p>
+</div>
+<section id="python">
+<h3>6.1.1 从 Python 列表生成数组<a class="headerlink" href="#python" title="Link to this heading">#</a></h3>
+<p><code class="docutils literal notranslate"><span class="pre">np.array()</span></code> 可以把我们已经熟悉的 Python 列表转成 <code class="docutils literal notranslate"><span class="pre">ndarray</span></code> 数组。</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="c1"># 一维数组：模拟沿河西走廊某条剖面上 5 个站点的瞬时气温（℃）</span>
+<span class="n">temp_list</span> <span class="o">=</span> <span class="p">[</span><span class="mf">15.2</span><span class="p">,</span> <span class="mf">16.1</span><span class="p">,</span> <span class="mf">14.8</span><span class="p">,</span> <span class="mf">17.3</span><span class="p">,</span> <span class="mf">15.9</span><span class="p">]</span>
+<span class="n">arr1</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">(</span><span class="n">temp_list</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">arr1</span><span class="p">)</span>
+<span class="c1"># 输出：array([15.2, 16.1, 14.8, 17.3, 15.9])</span>
+
+<span class="c1"># 二维数组：行代表不同时刻（天），列代表不同站点</span>
+<span class="c1"># 3 天 × 3 站的气温矩阵</span>
+<span class="n">arr2</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([</span>
+    <span class="p">[</span><span class="mf">12.0</span><span class="p">,</span> <span class="mf">13.0</span><span class="p">,</span> <span class="mf">14.0</span><span class="p">],</span>   <span class="c1"># 第 1 天：兰州、张掖、武威</span>
+    <span class="p">[</span><span class="mf">14.5</span><span class="p">,</span> <span class="mf">15.2</span><span class="p">,</span> <span class="mf">13.8</span><span class="p">],</span>   <span class="c1"># 第 2 天</span>
+    <span class="p">[</span><span class="mf">13.0</span><span class="p">,</span> <span class="mf">12.4</span><span class="p">,</span> <span class="mf">15.1</span><span class="p">],</span>   <span class="c1"># 第 3 天</span>
+<span class="p">])</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">arr2</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>查看数组基础属性（初学者务必记住这四个「身份证号」）：</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="nb">print</span><span class="p">(</span><span class="n">arr2</span><span class="o">.</span><span class="n">ndim</span><span class="p">)</span>    <span class="c1"># ndim  维度：二维数组返回 2（行、列两个轴）</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">arr2</span><span class="o">.</span><span class="n">shape</span><span class="p">)</span>   <span class="c1"># shape 形状：(行数, 列数)，气象里经常看 shape 判断数据对不对</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">arr2</span><span class="o">.</span><span class="n">dtype</span><span class="p">)</span>   <span class="c1"># dtype 数组内元素的数据类型</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">arr2</span><span class="o">.</span><span class="n">size</span><span class="p">)</span>    <span class="c1"># size  数组总元素个数</span>
+<span class="c1"># 输出：2  (3, 3)  float64  9</span>
+</pre></div>
+</div>
+<p>气象场景：拿到一张格点温度场，先 <code class="docutils literal notranslate"><span class="pre">print(shape)</span></code>，看到 <code class="docutils literal notranslate"><span class="pre">(181,</span> <span class="pre">360)</span></code>，你就知道这是一张 1°×1° 的全球网格（纬度 0–180、经度 0–360），而不是 360×181——shape 的顺序乱了，后面的计算全盘皆输。</p>
+</section>
+<section id="id1">
+<h3>6.1.2 快速生成常用数组<a class="headerlink" href="#id1" title="Link to this heading">#</a></h3>
+<p>实际处理气象数据，很多时候不需要手动写列表，直接调用函数生成。</p>
+<p><strong>1. ``np.zeros(shape)``</strong>：生成全部为 0 的数组，常用于初始化存放结果的「空容器」。</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">arr_zero</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">zeros</span><span class="p">((</span><span class="mi">3</span><span class="p">,</span> <span class="mi">4</span><span class="p">))</span>   <span class="c1"># 3 行 4 列，全部填 0</span>
+</pre></div>
+</div>
+<p><strong>2. ``np.ones(shape)``</strong>：生成全部为 1 的数组。</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">arr_one</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">ones</span><span class="p">((</span><span class="mi">2</span><span class="p">,</span> <span class="mi">5</span><span class="p">))</span>
+</pre></div>
+</div>
+<p><strong>3. ``np.arange(start, stop, step)``</strong>：按步长生成一维数组，<strong>左闭右开</strong>，不包含 stop。</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">arr_ar</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">arange</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">10</span><span class="p">,</span> <span class="mi">2</span><span class="p">)</span>   <span class="c1"># [0 2 4 6 8]</span>
+</pre></div>
+</div>
+<p><strong>4. ``np.linspace(start, stop, num)``</strong>：在起止区间，生成指定个数、均匀间隔的数据，<strong>包含</strong> stop。</p>
+<p>气象常用：生成经度、纬度序列。把 0–360° 经度均匀切成 19 个格点：</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">lon</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">linspace</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">360</span><span class="p">,</span> <span class="mi">19</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">lon</span><span class="p">)</span>
+<span class="c1"># 输出：[  0.  20.  40. ... 340. 360.]</span>
+</pre></div>
+</div>
+<div class="admonition note">
+<p class="admonition-title">备注</p>
+<ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">arange</span></code> 控制<strong>步长</strong>（间隔多大）；<code class="docutils literal notranslate"><span class="pre">linspace</span></code> 控制<strong>总点数</strong>（切多少份）。</p></li>
+<li><p>传入形状时一定要写括号：<code class="docutils literal notranslate"><span class="pre">np.zeros((3,</span> <span class="pre">4))</span></code>，而不是 <code class="docutils literal notranslate"><span class="pre">np.zeros(3,</span> <span class="pre">4)</span></code>。</p></li>
+</ul>
+</div>
+<p>本动画把 ndarray 的「变身术」一口气演给你看：① <code class="docutils literal notranslate"><span class="pre">reshape</span></code> 重排形状——把一维列表摆成多维矩阵；② <code class="docutils literal notranslate"><span class="pre">transpose</span></code>/<code class="docutils literal notranslate"><span class="pre">.T</span></code> 转置——行列互换；③ <code class="docutils literal notranslate"><span class="pre">ravel</span></code> 展平——多维压回一维。形状怎么变，底层数据始终是同一份，就像一张可以折叠、翻面、摊平的气温网格。点击播放，配合后面 6.2 的索引与切片逐步消化。</p>
+<div  class="sphinx-contrib-video-container align-left"><video controls="True" preload="auto" width="100%"><source src="../../_images/T602_1_Numpy%E6%95%B0%E7%BB%84%E5%8F%98%E6%8D%A2_av1.webm" type="video/webm"></video></div></section>
+</section>
+<section id="id2">
+<h2>6.2 数组索引与切片<a class="headerlink" href="#id2" title="Link to this heading">#</a></h2>
+<p><strong>索引</strong>：取出数组某一个元素；<strong>切片</strong>：取出数组的一整块子数组。</p>
+<p>二维数组书写格式：<code class="docutils literal notranslate"><span class="pre">数组[行,</span> <span class="pre">列]</span></code>。</p>
+<p>本动画把 NumPy 的索引与切片讲透：① 下标从 0 开始——你要找的「第 3 个站」写成 <code class="docutils literal notranslate"><span class="pre">[2]</span></code>；② 用 <code class="docutils literal notranslate"><span class="pre">[行,</span> <span class="pre">列]</span></code> 精确定位单个元素；③ 切片 <code class="docutils literal notranslate"><span class="pre">[start:end:step]</span></code> <strong>左闭右开</strong>，能整块取出子数组；④ 切片返回的是原数组的<strong>视图</strong>，改名为新变量后改动仍会连带原数组。点击播放，反复拖看高亮的那一格／那一片最直观。</p>
+<div  class="sphinx-contrib-video-container align-left"><video controls="True" preload="auto" width="100%"><source src="../../_images/T602_2_Numpy%E6%95%B0%E7%BB%84%E7%B4%A2%E5%BC%95%E5%92%8C%E5%88%87%E7%89%87%E6%93%8D%E4%BD%9C_av1.webm" type="video/webm"></video></div><section id="id3">
+<h3>6.2.1 基础索引<a class="headerlink" href="#id3" title="Link to this heading">#</a></h3>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">arr</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([</span>
+    <span class="p">[</span><span class="mi">10</span><span class="p">,</span> <span class="mi">20</span><span class="p">,</span> <span class="mi">30</span><span class="p">],</span>
+    <span class="p">[</span><span class="mi">40</span><span class="p">,</span> <span class="mi">50</span><span class="p">,</span> <span class="mi">60</span><span class="p">],</span>
+    <span class="p">[</span><span class="mi">70</span><span class="p">,</span> <span class="mi">80</span><span class="p">,</span> <span class="mi">90</span><span class="p">]</span>
+<span class="p">])</span>
+
+<span class="nb">print</span><span class="p">(</span><span class="n">arr</span><span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">])</span>   <span class="c1"># 第 0 行、第 1 列，值 20</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">arr</span><span class="p">[</span><span class="mi">2</span><span class="p">,</span> <span class="mi">0</span><span class="p">])</span>   <span class="c1"># 第 2 行、第 0 列，值 70</span>
+</pre></div>
+</div>
+<div class="admonition warning">
+<p class="admonition-title">警告</p>
+<p>计算机下标从 0 开始：第一行是 0 号，不是 1 号。气象小哥的「第 81 个站」在代码里是下标 <code class="docutils literal notranslate"><span class="pre">80</span></code>。</p>
+</div>
+</section>
+<section id="id4">
+<h3>6.2.2 切片语法<a class="headerlink" href="#id4" title="Link to this heading">#</a></h3>
+<p>切片格式：<code class="docutils literal notranslate"><span class="pre">start:end:step</span></code>，<strong>左闭右开</strong>，end 位置不取。</p>
+<p><code class="docutils literal notranslate"><span class="pre">start</span></code> 省略默认从 0 开始；<code class="docutils literal notranslate"><span class="pre">end</span></code> 省略默认到末尾；<code class="docutils literal notranslate"><span class="pre">step</span></code> 省略默认步长为 1。</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="c1"># 取前两行、全部列</span>
+<span class="n">s1</span> <span class="o">=</span> <span class="n">arr</span><span class="p">[</span><span class="mi">0</span><span class="p">:</span><span class="mi">2</span><span class="p">,</span> <span class="p">:]</span>
+
+<span class="c1"># 全部行、第 1 列到末尾</span>
+<span class="n">s2</span> <span class="o">=</span> <span class="n">arr</span><span class="p">[:,</span> <span class="mi">1</span><span class="p">:]</span>
+
+<span class="c1"># 隔行取，步长 2</span>
+<span class="n">s3</span> <span class="o">=</span> <span class="n">arr</span><span class="p">[::</span><span class="mi">2</span><span class="p">,</span> <span class="p">:]</span>
+</pre></div>
+</div>
+<div class="admonition warning">
+<p class="admonition-title">警告</p>
+<p>初学者高频坑：NumPy 切片返回的是<strong>原数组的视图（view）</strong>，不是独立拷贝。修改切片得到的变量，原始数组的数据也会跟着改变！这就好比你把复印纸批改后，发现原稿也一起被改了。</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">sub</span> <span class="o">=</span> <span class="n">arr</span><span class="p">[</span><span class="mi">0</span><span class="p">:</span><span class="mi">2</span><span class="p">,</span> <span class="p">:]</span><span class="o">.</span><span class="n">copy</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+</section>
+</section>
+<section id="id5">
+<h2>6.3 向量化运算<a class="headerlink" href="#id5" title="Link to this heading">#</a></h2>
+<p><strong>向量化运算</strong>：数组直接参与加减乘除，不需要写 for 循环，运算作用到数组的每一个元素。</p>
+<p>这是 NumPy 最高频的功能，处理气象格点数据几乎全部依赖它。</p>
+<p><strong>数组和标量运算</strong>：数组每一个元素统一和数字计算。比如气象中开尔文温标转摄氏度：<code class="docutils literal notranslate"><span class="pre">T_c</span> <span class="pre">=</span> <span class="pre">T_k</span> <span class="pre">−</span> <span class="pre">273.15</span></code>。</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="c1"># 开尔文温度数组（三个格点的温度）</span>
+<span class="n">T_k</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([</span><span class="mf">285.0</span><span class="p">,</span> <span class="mf">288.2</span><span class="p">,</span> <span class="mf">290.5</span><span class="p">])</span>
+<span class="n">T_c</span> <span class="o">=</span> <span class="n">T_k</span> <span class="o">-</span> <span class="mf">273.15</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">T_c</span><span class="p">)</span>
+<span class="c1"># 输出：[11.85 15.05 17.35]</span>
+</pre></div>
+</div>
+<p><strong>数组与数组逐元素运算</strong>：两个形状一样的数组，<code class="docutils literal notranslate"><span class="pre">+</span> <span class="pre">-</span> <span class="pre">*</span> <span class="pre">/</span> <span class="pre">**</span></code> 全部是对应位置元素两两计算，<strong>不是矩阵乘法</strong>。</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">a</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">])</span>
+<span class="n">b</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([</span><span class="mi">10</span><span class="p">,</span> <span class="mi">20</span><span class="p">,</span> <span class="mi">30</span><span class="p">])</span>
+<span class="n">c</span> <span class="o">=</span> <span class="n">a</span> <span class="o">+</span> <span class="n">b</span>      <span class="c1"># [11 22 33]</span>
+<span class="n">d</span> <span class="o">=</span> <span class="n">a</span> <span class="o">*</span> <span class="n">b</span>      <span class="c1"># [10 40 90]</span>
+</pre></div>
+</div>
+<div class="admonition note">
+<p class="admonition-title">备注</p>
+<p>重要区分：</p>
+<ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">*</span></code>：逐元素相乘；</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">&#64;</span></code> / <code class="docutils literal notranslate"><span class="pre">np.dot()</span></code>：矩阵乘法。初学者不要搞混！</p></li>
+</ul>
+</div>
+<p>对比：如果用普通 Python 列表，实现上面的求和必须写循环；NumPy 向量化底层用 C 语言实现，速度会快几十上百倍。这就是「一块算一整片」与「一个格子一个格子用手抠」的天壤之别。</p>
+</section>
+<section id="id6">
+<h2>6.4 广播机制<a class="headerlink" href="#id6" title="Link to this heading">#</a></h2>
+<p><strong>广播（broadcasting）</strong>：当两个数组形状不完全一样时，NumPy 自动把数组进行<strong>虚拟扩展</strong>，完成运算，但不会复制真实数据，节省内存。</p>
+<p>气象场景例子：二维温度场（西北 8 站 × 5 天），给每一天加一个相同的订正偏差（比如每个站点对某天的仪器误差校正是 0.5℃）时，我们就可以用小的一维数组和大的二维数组直接相加。</p>
+<p><strong>广播三条规则（初学者熟读）：</strong></p>
+<ol class="arabic simple">
+<li><p>从<strong>最右侧</strong>维度开始对齐两个数组的维度；</p></li>
+<li><p>对应维度大小相等，<strong>或者其中一个维度等于 1</strong>，就可以广播；</p></li>
+<li><p>如果不满足上面条件，直接报错，不能运算。</p></li>
+</ol>
+<p><strong>示例：</strong> <code class="docutils literal notranslate"><span class="pre">a</span></code> 形状 <code class="docutils literal notranslate"><span class="pre">(8,</span> <span class="pre">5)</span></code>，<code class="docutils literal notranslate"><span class="pre">b</span></code> 形状 <code class="docutils literal notranslate"><span class="pre">(5,)</span></code></p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="c1"># 西北 8 站 × 5 天的气温场</span>
+<span class="n">a</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">ones</span><span class="p">((</span><span class="mi">8</span><span class="p">,</span> <span class="mi">5</span><span class="p">))</span>
+
+<span class="c1"># 逐天订正偏差向量（5 个元素，对应 5 天）</span>
+<span class="n">b</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([</span><span class="mf">0.5</span><span class="p">,</span> <span class="mf">0.2</span><span class="p">,</span> <span class="o">-</span><span class="mf">0.3</span><span class="p">,</span> <span class="mf">0.1</span><span class="p">,</span> <span class="mf">0.0</span><span class="p">])</span>
+
+<span class="n">res</span> <span class="o">=</span> <span class="n">a</span> <span class="o">+</span> <span class="n">b</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">res</span><span class="o">.</span><span class="n">shape</span><span class="p">)</span>
+<span class="c1"># 输出：(8, 5)</span>
+</pre></div>
+</div>
+<p><code class="docutils literal notranslate"><span class="pre">b</span></code> 这个一维数组会自动虚拟扩展为 <code class="docutils literal notranslate"><span class="pre">(8,</span> <span class="pre">5)</span></code>，再和 <code class="docutils literal notranslate"><span class="pre">a</span></code> 相加，内存并没有真正生成一份 <code class="docutils literal notranslate"><span class="pre">(8,</span> <span class="pre">5)</span></code> 的数组。</p>
+<div class="admonition warning">
+<p class="admonition-title">警告</p>
+<p>易错提醒：维度对齐从<strong>尾巴往前</strong>，不是从开头。把 <code class="docutils literal notranslate"><span class="pre">a</span></code> 看作一排排站好的士兵，<code class="docutils literal notranslate"><span class="pre">b</span></code> 那个小向量就是「号令」，最后面的号令对齐到最右侧那一列，然后往前广播。</p>
+</div>
+</section>
+<section id="id7">
+<h2>6.5 数组常用统计函数<a class="headerlink" href="#id7" title="Link to this heading">#</a></h2>
+<p>统计函数用来求数组均值、最大值、总和等。关键参数 <code class="docutils literal notranslate"><span class="pre">axis</span></code>，控制<strong>沿着哪一个轴做运算</strong>。</p>
+<div class="pst-scrollable-table-container"><table class="table" id="id20">
+<caption><span class="caption-text">常用统计函数</span><a class="headerlink" href="#id20" title="Link to this table">#</a></caption>
+<thead>
+<tr class="row-odd"><th class="head"><p>函数</p></th>
+<th class="head"><p>作用</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">np.mean()</span></code></p></td>
+<td><p>求平均值</p></td>
+</tr>
+<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">np.sum()</span></code></p></td>
+<td><p>求和</p></td>
+</tr>
+<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">np.max()</span></code></p></td>
+<td><p>最大值</p></td>
+</tr>
+<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">np.min()</span></code></p></td>
+<td><p>最小值</p></td>
+</tr>
+<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">np.std()</span></code></p></td>
+<td><p>标准差</p></td>
+</tr>
+</tbody>
+</table>
+</div>
+<p>用「3 站 × 5 天」的气温矩阵来理解 <code class="docutils literal notranslate"><span class="pre">axis</span></code>：</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="c1"># 行 = 3 天，列 = 5 个站点</span>
+<span class="n">data</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([</span>
+    <span class="p">[</span><span class="mi">12</span><span class="p">,</span> <span class="mi">14</span><span class="p">,</span> <span class="mi">16</span><span class="p">,</span> <span class="mi">13</span><span class="p">,</span> <span class="mi">15</span><span class="p">],</span>
+    <span class="p">[</span><span class="mi">18</span><span class="p">,</span> <span class="mi">20</span><span class="p">,</span> <span class="mi">22</span><span class="p">,</span> <span class="mi">19</span><span class="p">,</span> <span class="mi">21</span><span class="p">],</span>
+    <span class="p">[</span><span class="mi">15</span><span class="p">,</span> <span class="mi">17</span><span class="p">,</span> <span class="mi">19</span><span class="p">,</span> <span class="mi">16</span><span class="p">,</span> <span class="mi">18</span><span class="p">]</span>
+<span class="p">])</span>
+</pre></div>
+</div>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="c1"># 不写 axis：全部元素当成一个整体计算</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">data</span><span class="o">.</span><span class="n">mean</span><span class="p">())</span>
+<span class="c1"># 输出：所有 15 个数的整体平均</span>
+
+<span class="c1"># axis=0：沿着行方向运算，压缩行，得到每一列的结果</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">data</span><span class="o">.</span><span class="n">mean</span><span class="p">(</span><span class="n">axis</span><span class="o">=</span><span class="mi">0</span><span class="p">))</span>
+<span class="c1"># 每个值 = 某个站点所有天的平均</span>
+
+<span class="c1"># axis=1：沿着列方向运算，压缩列，得到每一行的结果</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">data</span><span class="o">.</span><span class="n">mean</span><span class="p">(</span><span class="n">axis</span><span class="o">=</span><span class="mi">1</span><span class="p">))</span>
+<span class="c1"># 每个值 = 某一天所有站点的平均</span>
+</pre></div>
+</div>
+<div class="admonition note">
+<p class="admonition-title">备注</p>
+<p>记忆口诀：</p>
+<ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">axis=0</span></code> → 消掉<strong>行</strong>，输出<strong>每一列</strong>；</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">axis=1</span></code> → 消掉<strong>列</strong>，输出<strong>每一行</strong>。</p></li>
+</ul>
+<p>用坐标系想：把数组铺在纸上，<code class="docutils literal notranslate"><span class="pre">axis=0</span></code> 是竖直方向（从上往下消行），<code class="docutils literal notranslate"><span class="pre">axis=1</span></code> 是水平方向（从左往右消列）。</p>
+</div>
+<p>气象格点求<strong>纬向平均</strong>、<strong>经向平均</strong>，就是修改 <code class="docutils literal notranslate"><span class="pre">axis</span></code> 参数——对一张 <code class="docutils literal notranslate"><span class="pre">(纬度,</span> <span class="pre">经度)</span></code> 的温度场，<code class="docutils literal notranslate"><span class="pre">mean(axis=0)</span></code> 得到沿经度的平均（每个纬带的平均值），<code class="docutils literal notranslate"><span class="pre">mean(axis=1)</span></code> 得到沿纬度的平均（每个经圈的平均值）。</p>
+<section id="id8">
+<h3>提升拓展部分（选学，难度更高）<a class="headerlink" href="#id8" title="Link to this heading">#</a></h3>
+</section>
+<section id="mask">
+<h3>6.6 布尔索引（掩码 mask）<a class="headerlink" href="#mask" title="Link to this heading">#</a></h3>
+<p>布尔索引使用布尔数组筛选数据，气象超级常用：筛选大于某阈值温度、过滤缺测值等。</p>
+<p>布尔索引返回数组<strong>副本</strong>，修改结果不会改动原数组。</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">temp</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([</span><span class="mi">22</span><span class="p">,</span> <span class="mi">25</span><span class="p">,</span> <span class="mi">28</span><span class="p">,</span> <span class="mi">31</span><span class="p">,</span> <span class="mi">33</span><span class="p">])</span>
+
+<span class="c1"># 生成布尔掩码，满足条件为 True，不满足为 False</span>
+<span class="n">mask</span> <span class="o">=</span> <span class="n">temp</span> <span class="o">&gt;</span> <span class="mi">28</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">mask</span><span class="p">)</span>
+<span class="c1"># 输出：[False False False  True  True]</span>
+
+<span class="n">result</span> <span class="o">=</span> <span class="n">temp</span><span class="p">[</span><span class="n">mask</span><span class="p">]</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">result</span><span class="p">)</span>
+<span class="c1"># 输出：[31 33]</span>
+</pre></div>
+</div>
+<p>只有 <code class="docutils literal notranslate"><span class="pre">mask</span></code> 为 <code class="docutils literal notranslate"><span class="pre">True</span></code> 的位置，对应元素被保留。</p>
+<p>气象示例：把观测值中明显异常的高温（比如超过 45℃ 的假数据）过滤掉：</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">temp</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([</span><span class="mf">25.0</span><span class="p">,</span> <span class="mf">30.2</span><span class="p">,</span> <span class="mf">47.8</span><span class="p">,</span> <span class="mf">28.1</span><span class="p">,</span> <span class="mf">32.0</span><span class="p">])</span>
+<span class="n">clean</span> <span class="o">=</span> <span class="n">temp</span><span class="p">[</span><span class="n">temp</span> <span class="o">&lt;=</span> <span class="mf">45.0</span><span class="p">]</span>      <span class="c1"># 只保留 ≤45℃ 的正常值</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">clean</span><span class="p">)</span>
+<span class="c1"># 输出：[25.0 30.2 28.1 32.0]</span>
+</pre></div>
+</div>
+</section>
+<section id="id9">
+<h3>6.7 花式索引<a class="headerlink" href="#id9" title="Link to this heading">#</a></h3>
+<p>通过传入整数列表/数组，选取<strong>不连续</strong>的下标，可以自由挑取任意位置的元素，同样返回副本。</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">arr</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([</span><span class="mi">10</span><span class="p">,</span> <span class="mi">20</span><span class="p">,</span> <span class="mi">30</span><span class="p">,</span> <span class="mi">40</span><span class="p">,</span> <span class="mi">50</span><span class="p">])</span>
+<span class="n">idx</span> <span class="o">=</span> <span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">4</span><span class="p">]</span>        <span class="c1"># 需要取出元素的下标</span>
+<span class="n">res</span> <span class="o">=</span> <span class="n">arr</span><span class="p">[</span><span class="n">idx</span><span class="p">]</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">res</span><span class="p">)</span>
+<span class="c1"># 输出：[10 30 50]</span>
+</pre></div>
+</div>
+<p>和切片区别：切片只能取连续片段；花式索引可以「跳着取」。比如从一长串观测里只挑出每天 0 点、6 点、12 点、18 点作 4 时次采样。</p>
+</section>
+<section id="np-concatenate">
+<h3>6.8 数组拼接 np.concatenate<a class="headerlink" href="#np-concatenate" title="Link to this heading">#</a></h3>
+<p>把多个数组拼在一起，<code class="docutils literal notranslate"><span class="pre">axis</span></code> 决定拼接方向。</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">a</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">zeros</span><span class="p">((</span><span class="mi">2</span><span class="p">,</span> <span class="mi">2</span><span class="p">))</span>
+<span class="n">b</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">ones</span><span class="p">((</span><span class="mi">2</span><span class="p">,</span> <span class="mi">2</span><span class="p">))</span>
+
+<span class="c1"># axis=0：上下堆叠（行拼接），行数增加</span>
+<span class="n">res_vert</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">concatenate</span><span class="p">([</span><span class="n">a</span><span class="p">,</span> <span class="n">b</span><span class="p">],</span> <span class="n">axis</span><span class="o">=</span><span class="mi">0</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">res_vert</span><span class="o">.</span><span class="n">shape</span><span class="p">)</span>   <span class="c1"># (4, 2)</span>
+
+<span class="c1"># axis=1：左右拼接，列数增加</span>
+<span class="n">res_hori</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">concatenate</span><span class="p">([</span><span class="n">a</span><span class="p">,</span> <span class="n">b</span><span class="p">],</span> <span class="n">axis</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">res_hori</span><span class="o">.</span><span class="n">shape</span><span class="p">)</span>   <span class="c1"># (2, 4)</span>
+</pre></div>
+</div>
+<div class="admonition warning">
+<p class="admonition-title">警告</p>
+<p>拼接要保证<strong>非拼接维度</strong>的大小一致，不然会报错。这就好比把两段铁轨首尾相连，接口处的尺寸必须严丝合缝。</p>
+</div>
+</section>
+<section id="id10">
+<h3>6.9 结构化数组<a class="headerlink" href="#id10" title="Link to this heading">#</a></h3>
+<p>普通 <code class="docutils literal notranslate"><span class="pre">ndarray</span></code> 全部元素同一类型；结构化数组可以定义多个不同类型字段，模拟表格，适合存储站点观测：站点编号（整数）、温度（浮点数）、气压（浮点数）。</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="c1"># 定义字段：字段名 + 数据类型</span>
+<span class="n">dtype_obs</span> <span class="o">=</span> <span class="p">[(</span><span class="s2">&quot;sid&quot;</span><span class="p">,</span> <span class="s2">&quot;i4&quot;</span><span class="p">),</span> <span class="p">(</span><span class="s2">&quot;temp&quot;</span><span class="p">,</span> <span class="s2">&quot;f8&quot;</span><span class="p">),</span> <span class="p">(</span><span class="s2">&quot;press&quot;</span><span class="p">,</span> <span class="s2">&quot;f8&quot;</span><span class="p">)]</span>
+
+<span class="n">obs</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([</span>
+    <span class="p">(</span><span class="mi">54511</span><span class="p">,</span> <span class="mf">23.2</span><span class="p">,</span> <span class="mf">1002.5</span><span class="p">),</span>   <span class="c1"># 西北某站：温度 23.2℃，海平面气压 1002.5 hPa</span>
+    <span class="p">(</span><span class="mi">54512</span><span class="p">,</span> <span class="mf">21.8</span><span class="p">,</span> <span class="mf">1004.1</span><span class="p">),</span>
+    <span class="p">(</span><span class="mi">54718</span><span class="p">,</span> <span class="mf">19.6</span><span class="p">,</span> <span class="mf">1007.3</span><span class="p">),</span>
+<span class="p">],</span> <span class="n">dtype</span><span class="o">=</span><span class="n">dtype_obs</span><span class="p">)</span>
+
+<span class="c1"># 使用字段名字取出整列数据</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">obs</span><span class="p">[</span><span class="s2">&quot;temp&quot;</span><span class="p">])</span>       <span class="c1"># [23.2 21.8 19.6]</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">obs</span><span class="p">[</span><span class="s2">&quot;sid&quot;</span><span class="p">])</span>        <span class="c1"># [54511 54512 54718]</span>
+</pre></div>
+</div>
+<p>小提示：实际气象项目更多用 pandas 表格来做这类事，结构化数组了解一下即可。</p>
+</section>
+<section id="id11">
+<h3>初学者本章小结<a class="headerlink" href="#id11" title="Link to this heading">#</a></h3>
+<ol class="arabic simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">ndarray</span></code> 是<strong>同类型</strong>多维数组，用 <code class="docutils literal notranslate"><span class="pre">shape</span></code> 看形状、<code class="docutils literal notranslate"><span class="pre">dtype</span></code> 看类型；</p></li>
+<li><p>切片返回<strong>视图</strong>，修改会影响原数组，需要独立数据用 <code class="docutils literal notranslate"><span class="pre">.copy()</span></code>；</p></li>
+<li><p><strong>向量化</strong>运算代替循环，效率高；</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">axis=0</span></code> 压缩行、<code class="docutils literal notranslate"><span class="pre">axis=1</span></code> 压缩列（消行输出列、消列输出行）；</p></li>
+<li><p><strong>广播</strong>从最右侧维度对齐，维度相等或其一为 1 才能运算；</p></li>
+<li><p><strong>布尔索引</strong> <code class="docutils literal notranslate"><span class="pre">mask</span></code> 用于气象筛选与过滤异常数据。</p></li>
+</ol>
+</section>
+</section>
+<section id="id12">
+<h2>6.10 最佳实践：多站气温矩阵与安全统计<a class="headerlink" href="#id12" title="Link to this heading">#</a></h2>
+<p>本节把上面的知识点全部串成一条能给真实气象项目用的生产线：<strong>多站气温矩阵计算（逐站均值 / 逐日极值）、标准化（Z-score）处理、NaN 安全运算</strong>，并逐点给出 ✅ 最佳实践与 ⚠️ 风险点。</p>
+<p>在正式看代码前，先立好一张<strong>矩阵地图</strong>：</p>
+<ul class="simple">
+<li><p><strong>行 = 时间（天）</strong>，<strong>列 = 站点</strong>。以「西北 8 站 × 5 天」为例，shape 就是 <code class="docutils literal notranslate"><span class="pre">(5,</span> <span class="pre">8)</span></code>。</p></li>
+<li><p>想要求<strong>每个站</strong>的平均气温 → 沿站点这一维压缩 → <code class="docutils literal notranslate"><span class="pre">axis=0</span></code>（列方向）；</p></li>
+<li><p>想要求<strong>每天</strong>的区域极值 → 沿时间这一维压缩 → <code class="docutils literal notranslate"><span class="pre">axis=1</span></code>（行方向）。</p></li>
+</ul>
+<p><code class="docutils literal notranslate"><span class="pre">axis</span></code> 写反，是这类任务最高频的开关错误，务必对照这张地图来检查。</p>
+<section id="id13">
+<h3>6.10.1 完整标准化工作流程<a class="headerlink" href="#id13" title="Link to this heading">#</a></h3>
+<ol class="arabic simple">
+<li><p>导入 numpy/pandas，读取（或构造）多站气温矩阵数据；</p></li>
+<li><p>缺测预处理：气象缺测标记转换为 <code class="docutils literal notranslate"><span class="pre">NaN</span></code>，校验矩阵维度（时间行 × 站点列）；</p></li>
+<li><p>逐站统计：按站点列计算各站均值、标准差、有效样本数；</p></li>
+<li><p>逐日统计：按时间行计算逐日区域极大、极小值；</p></li>
+<li><p>标准化处理（Z-score）：<strong>逐站</strong>做标准化，规避 NaN 破坏计算；</p></li>
+<li><p>NaN 安全原则：运算全程保留缺测标记，不强行填充无效值；</p></li>
+<li><p>输出统计结果与标准化矩阵，保存文件。</p></li>
+</ol>
+</section>
+<section id="id14">
+<h3>6.10.2 构造 / 读取多站气温矩阵<a class="headerlink" href="#id14" title="Link to this heading">#</a></h3>
+<p>✅ <strong>最佳实践</strong></p>
+<ol class="arabic simple">
+<li><p>多站矩阵一般约定：<strong>行 = 时间，列 = 各个观测站点</strong>；</p></li>
+<li><p>将气象缺测标识 <code class="docutils literal notranslate"><span class="pre">9999</span></code>、<code class="docutils literal notranslate"><span class="pre">-999.0</span></code> 读取时转为 <code class="docutils literal notranslate"><span class="pre">np.nan</span></code>；</p></li>
+<li><p>读取完成后打印行列维度，确认「时间 × 站点」矩阵形状正确。</p></li>
+</ol>
+<p>为了让本讲可以<strong>直接复现</strong>，下面先用固定随机种子构造一张「西北 8 站 × 10 天」的气温矩阵（含故意埋入的 <code class="docutils literal notranslate"><span class="pre">9999</span></code> 缺测）。真实业务里，这一步换成 <code class="docutils literal notranslate"><span class="pre">pd.read_csv(...)</span></code> 即可，两种写法都列出：</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span><span class="w"> </span><span class="nn">numpy</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">np</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">pandas</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">pd</span>
+
+<span class="c1"># —— 方案 A：直接用 np.random 构造内存中可复现的样例数据 ——</span>
+<span class="n">rng</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">default_rng</span><span class="p">(</span><span class="mi">20260817</span><span class="p">)</span>
+<span class="n">sites</span> <span class="o">=</span> <span class="p">[</span><span class="s2">&quot;兰州&quot;</span><span class="p">,</span> <span class="s2">&quot;张掖&quot;</span><span class="p">,</span> <span class="s2">&quot;武威&quot;</span><span class="p">,</span> <span class="s2">&quot;敦煌&quot;</span><span class="p">,</span> <span class="s2">&quot;酒泉&quot;</span><span class="p">,</span> <span class="s2">&quot;金昌&quot;</span><span class="p">,</span> <span class="s2">&quot;嘉峪关&quot;</span><span class="p">,</span> <span class="s2">&quot;临夏&quot;</span><span class="p">]</span>
+
+<span class="c1"># 8 站 × 10 天气温矩阵（℃），先填 0 再叠加各站均值 + 随机扰动</span>
+<span class="n">raw</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">zeros</span><span class="p">((</span><span class="mi">10</span><span class="p">,</span> <span class="nb">len</span><span class="p">(</span><span class="n">sites</span><span class="p">)))</span>
+<span class="k">for</span> <span class="n">j</span><span class="p">,</span> <span class="n">base</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">([</span><span class="mf">16.2</span><span class="p">,</span> <span class="mf">13.5</span><span class="p">,</span> <span class="mf">14.0</span><span class="p">,</span> <span class="mf">18.6</span><span class="p">,</span> <span class="mf">12.8</span><span class="p">,</span> <span class="mf">15.4</span><span class="p">,</span> <span class="mf">13.9</span><span class="p">,</span> <span class="mf">14.6</span><span class="p">]):</span>
+    <span class="n">raw</span><span class="p">[:,</span> <span class="n">j</span><span class="p">]</span> <span class="o">=</span> <span class="n">base</span> <span class="o">+</span> <span class="n">rng</span><span class="o">.</span><span class="n">normal</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mf">1.5</span><span class="p">,</span> <span class="mi">10</span><span class="p">)</span>
+<span class="n">raw</span><span class="p">[</span><span class="mi">3</span><span class="p">,</span> <span class="mi">2</span><span class="p">]</span> <span class="o">=</span> <span class="mf">9999.0</span>    <span class="c1"># 埋一个异常缺测，测试缺测识别</span>
+<span class="n">raw</span><span class="p">[</span><span class="mi">8</span><span class="p">,</span> <span class="mi">5</span><span class="p">]</span> <span class="o">=</span> <span class="o">-</span><span class="mf">999.0</span>    <span class="c1"># 再埋一个</span>
+
+<span class="n">df</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">(</span><span class="n">raw</span><span class="p">,</span> <span class="n">columns</span><span class="o">=</span><span class="n">sites</span><span class="p">,</span>
+                  <span class="n">index</span><span class="o">=</span><span class="n">pd</span><span class="o">.</span><span class="n">to_datetime</span><span class="p">(</span><span class="s2">&quot;2026-07-01&quot;</span><span class="p">)</span> <span class="o">+</span> <span class="n">pd</span><span class="o">.</span><span class="n">TimedeltaIndex</span><span class="p">(</span><span class="nb">range</span><span class="p">(</span><span class="mi">10</span><span class="p">),</span> <span class="n">unit</span><span class="o">=</span><span class="s2">&quot;D&quot;</span><span class="p">))</span>
+<span class="n">df</span><span class="o">.</span><span class="n">index</span><span class="o">.</span><span class="n">name</span> <span class="o">=</span> <span class="s2">&quot;date&quot;</span>
+
+<span class="c1"># —— 方案 B：真实业务读取 CSV（缺测标识转 NaN）——</span>
+<span class="c1"># df = pd.read_csv(</span>
+<span class="c1">#     &quot;multi_station_temp.csv&quot;,</span>
+<span class="c1">#     parse_dates=[&quot;date&quot;],</span>
+<span class="c1">#     encoding=&quot;utf-8-sig&quot;,</span>
+<span class="c1">#     na_values=[&quot;9999&quot;, &quot;-999.0&quot;],</span>
+<span class="c1">#     index_col=&quot;date&quot;,</span>
+<span class="c1"># )</span>
+
+<span class="c1"># 缺测标识 9999 / -999.0 → NaN</span>
+<span class="n">df</span> <span class="o">=</span> <span class="n">df</span><span class="o">.</span><span class="n">replace</span><span class="p">([</span><span class="mf">9999.0</span><span class="p">,</span> <span class="o">-</span><span class="mf">999.0</span><span class="p">],</span> <span class="n">np</span><span class="o">.</span><span class="n">nan</span><span class="p">)</span>
+
+<span class="c1"># 核查矩阵结构：行 = 时间，列 = 站点</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;矩阵形状(时间, 站点):&quot;</span><span class="p">,</span> <span class="n">df</span><span class="o">.</span><span class="n">shape</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">df</span><span class="o">.</span><span class="n">head</span><span class="p">())</span>
+</pre></div>
+</div>
+<p>⚠️ <strong>风险点</strong></p>
+<ul class="simple">
+<li><p><strong>行列搞反</strong>：把站点当行、时间当列，全部统计结果错乱；</p></li>
+<li><p><strong>缺测 9999 未转为 NaN</strong>：它会被当成真实气温参与均值、标准化计算，污染整个统计。</p></li>
+</ul>
+</section>
+<section id="id15">
+<h3>6.10.3 逐站均值 / 标准差统计（按列）<a class="headerlink" href="#id15" title="Link to this heading">#</a></h3>
+<p>✅ <strong>最佳实践</strong></p>
+<p><code class="docutils literal notranslate"><span class="pre">pandas</span></code> 的 <code class="docutils literal notranslate"><span class="pre">.mean()</span></code>、<code class="docutils literal notranslate"><span class="pre">.std()</span></code> 默认 <code class="docutils literal notranslate"><span class="pre">skipna=True</span></code>，自动跳过 <code class="docutils literal notranslate"><span class="pre">NaN</span></code>，非常适合气象多站数据。得到每个站点一段时间内的平均气温与气温标准差。</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="c1"># 逐站：各站均值、各站标准差、有效样本数</span>
+<span class="n">station_mean</span> <span class="o">=</span> <span class="n">df</span><span class="o">.</span><span class="n">mean</span><span class="p">(</span><span class="n">axis</span><span class="o">=</span><span class="mi">0</span><span class="p">)</span>      <span class="c1"># axis=0 → 按列 = 每个站</span>
+<span class="n">station_std</span>  <span class="o">=</span> <span class="n">df</span><span class="o">.</span><span class="n">std</span><span class="p">(</span><span class="n">axis</span><span class="o">=</span><span class="mi">0</span><span class="p">)</span>       <span class="c1"># ddof 默认 1（样本标准差）</span>
+<span class="n">valid_count</span>  <span class="o">=</span> <span class="n">df</span><span class="o">.</span><span class="n">count</span><span class="p">(</span><span class="n">axis</span><span class="o">=</span><span class="mi">0</span><span class="p">)</span>     <span class="c1"># 每个站的有效观测数</span>
+
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;各站点平均气温：&quot;</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">station_mean</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;各站点有效观测数：&quot;</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">valid_count</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>⚠️ <strong>风险点</strong></p>
+<ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">axis=0</span></code> 按列（站点）；如果写成 <code class="docutils literal notranslate"><span class="pre">axis=1</span></code> 会按时间行，逻辑彻底颠倒；</p></li>
+<li><p>某站点如果大量缺测，均值依旧会输出一个数字，业务上必须结合 <code class="docutils literal notranslate"><span class="pre">valid_count</span></code> 评估该均值可信度。</p></li>
+</ul>
+</section>
+<section id="id16">
+<h3>6.10.4 逐日区域极值统计（按行）<a class="headerlink" href="#id16" title="Link to this heading">#</a></h3>
+<p>✅ <strong>最佳实践</strong></p>
+<p><code class="docutils literal notranslate"><span class="pre">axis=1</span></code> 跨站点按行运算：每一天，对全部站点求当日<strong>区域最高、区域最低</strong>气温。</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="c1"># 逐日区域极值：每一天全部站点的最大、最小气温</span>
+<span class="n">df</span><span class="p">[</span><span class="s2">&quot;day_area_max&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">df</span><span class="o">.</span><span class="n">max</span><span class="p">(</span><span class="n">axis</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
+<span class="n">df</span><span class="p">[</span><span class="s2">&quot;day_area_min&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">df</span><span class="o">.</span><span class="n">min</span><span class="p">(</span><span class="n">axis</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
+
+<span class="nb">print</span><span class="p">(</span><span class="n">df</span><span class="p">[[</span><span class="s2">&quot;day_area_max&quot;</span><span class="p">,</span> <span class="s2">&quot;day_area_min&quot;</span><span class="p">]]</span><span class="o">.</span><span class="n">head</span><span class="p">())</span>
+</pre></div>
+</div>
+<p>⚠️ <strong>风险点</strong></p>
+<ul class="simple">
+<li><p>若某一天所有站点均为 <code class="docutils literal notranslate"><span class="pre">NaN</span></code>，<code class="docutils literal notranslate"><span class="pre">max</span></code>/<code class="docutils literal notranslate"><span class="pre">min</span></code> 返回 <code class="docutils literal notranslate"><span class="pre">NaN</span></code>，代表该日无有效观测，<strong>不可强行填充</strong>；</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">axis</span></code> 参数写反，会变成在每天内计算某个站点的极值序列，而不是逐日区域极值。</p></li>
+</ul>
+</section>
+<section id="z-score-nan">
+<h3>6.10.5 逐站 Z-score 标准化，NaN 安全运算【核心】<a class="headerlink" href="#z-score-nan" title="Link to this heading">#</a></h3>
+<div class="admonition note">
+<p class="admonition-title">备注</p>
+<p><strong>Z-score 公式</strong>：<code class="docutils literal notranslate"><span class="pre">z</span> <span class="pre">=</span> <span class="pre">(x</span> <span class="pre">−</span> <span class="pre">μ)</span> <span class="pre">/</span> <span class="pre">σ</span></code>，其中 μ 是站点均值、σ 是站点标准差。关键是：<strong>按站点分别标准化，不能全局整体标准化</strong>。</p>
+</div>
+<p>✅ <strong>最佳实践</strong></p>
+<p>逐列（按站点）做标准化；存在 <code class="docutils literal notranslate"><span class="pre">NaN</span></code> 的位置，结果依旧保留 <code class="docutils literal notranslate"><span class="pre">NaN</span></code>，不污染矩阵。<code class="docutils literal notranslate"><span class="pre">NaN</span></code> 是「占位符」不是「错误」，让它原样传下去即可。</p>
+<div class="admonition note">
+<p class="admonition-title">备注</p>
+<p><strong>不能</strong>直接拿整个 numpy 数组做整体运算，那样会把全局的值一起算进去；<code class="docutils literal notranslate"><span class="pre">pandas</span></code> 逐列运算天然按列、天然 <code class="docutils literal notranslate"><span class="pre">skipna</span></code>，是安全的选择。</p>
+</div>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="c1"># 逐站 Z-score 标准化（σ 用样本标准差，与上方 station_std 一致）</span>
+<span class="n">temp_zscore</span> <span class="o">=</span> <span class="p">(</span><span class="n">df</span> <span class="o">-</span> <span class="n">station_mean</span><span class="p">)</span> <span class="o">/</span> <span class="n">station_std</span>
+
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;标准化矩阵形状：&quot;</span><span class="p">,</span> <span class="n">temp_zscore</span><span class="o">.</span><span class="n">shape</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">temp_zscore</span><span class="o">.</span><span class="n">head</span><span class="p">())</span>
+</pre></div>
+</div>
+<p>⚠️ <strong>风险点</strong></p>
+<ol class="arabic simple">
+<li><p><strong>全局标准化（错误）</strong>：全部数据用同一个总均值、总标准差，抹杀了站点间气候本底差异，气象多站分析中<strong>严禁</strong>这样做；</p></li>
+<li><p>某站点标准差接近 0（例如事件期内气温几乎不变），会出现<strong>除零/溢出</strong>：<code class="docutils literal notranslate"><span class="pre">z</span></code> 被放大到 ±∞，业务代码应增加判断过滤；</p></li>
+<li><p>手动把 <code class="docutils literal notranslate"><span class="pre">NaN</span></code> 填充为 0，会彻底破坏标准化结果。</p></li>
+</ol>
+<p>若站点标准差极小，可做保护：</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">eps</span> <span class="o">=</span> <span class="mf">1e-8</span>
+<span class="n">safe_std</span> <span class="o">=</span> <span class="n">station_std</span><span class="o">.</span><span class="n">replace</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="n">np</span><span class="o">.</span><span class="n">nan</span><span class="p">)</span><span class="o">.</span><span class="n">fillna</span><span class="p">(</span><span class="n">eps</span><span class="p">)</span>   <span class="c1"># 或直接判断过滤</span>
+<span class="n">temp_zscore</span> <span class="o">=</span> <span class="p">(</span><span class="n">df</span> <span class="o">-</span> <span class="n">station_mean</span><span class="p">)</span> <span class="o">/</span> <span class="n">safe_std</span>
+</pre></div>
+</div>
+</section>
+<section id="nan">
+<h3>6.10.6 NaN 安全运算最佳实践<a class="headerlink" href="#nan" title="Link to this heading">#</a></h3>
+<p>✅ <strong>最佳实践</strong></p>
+<ol class="arabic simple">
+<li><p>气象数据：缺测优先<strong>保留 NaN</strong>，不随意填充 0、均值；</p></li>
+<li><p>numpy 函数优先使用 <code class="docutils literal notranslate"><span class="pre">np.nanmean</span></code>、<code class="docutils literal notranslate"><span class="pre">np.nanstd</span></code> 系列，自动跳过 <code class="docutils literal notranslate"><span class="pre">NaN</span></code>；普通 <code class="docutils literal notranslate"><span class="pre">np.mean</span></code> 遇到 <code class="docutils literal notranslate"><span class="pre">NaN</span></code> 直接输出 <code class="docutils literal notranslate"><span class="pre">NaN</span></code>；</p></li>
+<li><p>统计完成输出每个站点的有效观测计数，用于判断统计结果可靠性。</p></li>
+</ol>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="c1"># 示例：用 numpy 的 NaN 安全函数求整体逐站均值（对比）</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;np.nanmean 逐列（站点）均值：&quot;</span><span class="p">,</span> <span class="n">np</span><span class="o">.</span><span class="n">nanmean</span><span class="p">(</span><span class="n">df</span><span class="o">.</span><span class="n">values</span><span class="p">,</span> <span class="n">axis</span><span class="o">=</span><span class="mi">0</span><span class="p">))</span>
+</pre></div>
+</div>
+<p>⚠️ <strong>风险点</strong></p>
+<p>直接使用 <code class="docutils literal notranslate"><span class="pre">df.fillna(0)</span></code>，会把缺测当成 0 度气温，所有统计、标准化全部失效。缺测信息一旦被「填平」就再也找不回来，务必先想清楚缺测怎么处理再动手填充。</p>
+</section>
+<section id="id17">
+<h3>6.10.7 结果保存输出<a class="headerlink" href="#id17" title="Link to this heading">#</a></h3>
+<p>✅ <strong>最佳实践</strong></p>
+<p>保存时保持矩阵行列结构不变，用 <code class="docutils literal notranslate"><span class="pre">utf-8-sig</span></code> 编码；<code class="docutils literal notranslate"><span class="pre">NaN</span></code> 在 csv 中保留为空单元格。</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="c1"># 保存站点统计（含中文站点名的指标表）</span>
+<span class="n">station_stats</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">({</span>
+    <span class="s2">&quot;站点均值&quot;</span><span class="p">:</span> <span class="n">station_mean</span><span class="p">,</span>
+    <span class="s2">&quot;站点标准差&quot;</span><span class="p">:</span> <span class="n">station_std</span><span class="p">,</span>
+    <span class="s2">&quot;有效观测数&quot;</span><span class="p">:</span> <span class="n">valid_count</span><span class="p">,</span>
+<span class="p">})</span>
+<span class="n">station_stats</span><span class="o">.</span><span class="n">to_csv</span><span class="p">(</span><span class="s2">&quot;station_stats.csv&quot;</span><span class="p">,</span> <span class="n">encoding</span><span class="o">=</span><span class="s2">&quot;utf-8-sig&quot;</span><span class="p">)</span>
+
+<span class="c1"># 保存标准化矩阵</span>
+<span class="n">temp_zscore</span><span class="o">.</span><span class="n">to_csv</span><span class="p">(</span><span class="s2">&quot;temp_zscore.csv&quot;</span><span class="p">,</span> <span class="n">encoding</span><span class="o">=</span><span class="s2">&quot;utf-8-sig&quot;</span><span class="p">)</span>
+
+<span class="c1"># 保存逐日区域极值结果</span>
+<span class="n">df</span><span class="p">[[</span><span class="s2">&quot;day_area_max&quot;</span><span class="p">,</span> <span class="s2">&quot;day_area_min&quot;</span><span class="p">]]</span><span class="o">.</span><span class="n">to_csv</span><span class="p">(</span><span class="s2">&quot;day_area_extreme.csv&quot;</span><span class="p">,</span> <span class="n">encoding</span><span class="o">=</span><span class="s2">&quot;utf-8-sig&quot;</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>⚠️ <strong>风险点</strong>：不设置编码参数（<code class="docutils literal notranslate"><span class="pre">encoding=&quot;utf-8-sig&quot;</span></code>），中文站点名会乱码。</p>
+</section>
+<section id="id18">
+<h3>6.10.8 完整可运行最佳实践总代码<a class="headerlink" href="#id18" title="Link to this heading">#</a></h3>
+<p>运行后会在当前目录生成三个 csv 文件：<code class="docutils literal notranslate"><span class="pre">station_stats.csv</span></code>、<code class="docutils literal notranslate"><span class="pre">temp_zscore.csv</span></code>、<code class="docutils literal notranslate"><span class="pre">day_area_extreme.csv</span></code>。</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span><span class="w"> </span><span class="nn">numpy</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">np</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">pandas</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">pd</span>
+
+<span class="n">rng</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">default_rng</span><span class="p">(</span><span class="mi">20260817</span><span class="p">)</span>
+<span class="n">sites</span> <span class="o">=</span> <span class="p">[</span><span class="s2">&quot;兰州&quot;</span><span class="p">,</span> <span class="s2">&quot;张掖&quot;</span><span class="p">,</span> <span class="s2">&quot;武威&quot;</span><span class="p">,</span> <span class="s2">&quot;敦煌&quot;</span><span class="p">,</span> <span class="s2">&quot;酒泉&quot;</span><span class="p">,</span> <span class="s2">&quot;金昌&quot;</span><span class="p">,</span> <span class="s2">&quot;嘉峪关&quot;</span><span class="p">,</span> <span class="s2">&quot;临夏&quot;</span><span class="p">]</span>
+
+<span class="c1"># 构造并识别缺测，构造 8 站 × 10 天气温矩阵</span>
+<span class="n">raw</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">zeros</span><span class="p">((</span><span class="mi">10</span><span class="p">,</span> <span class="nb">len</span><span class="p">(</span><span class="n">sites</span><span class="p">)))</span>
+<span class="k">for</span> <span class="n">j</span><span class="p">,</span> <span class="n">base</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">([</span><span class="mf">16.2</span><span class="p">,</span> <span class="mf">13.5</span><span class="p">,</span> <span class="mf">14.0</span><span class="p">,</span> <span class="mf">18.6</span><span class="p">,</span> <span class="mf">12.8</span><span class="p">,</span> <span class="mf">15.4</span><span class="p">,</span> <span class="mf">13.9</span><span class="p">,</span> <span class="mf">14.6</span><span class="p">]):</span>
+    <span class="n">raw</span><span class="p">[:,</span> <span class="n">j</span><span class="p">]</span> <span class="o">=</span> <span class="n">base</span> <span class="o">+</span> <span class="n">rng</span><span class="o">.</span><span class="n">normal</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mf">1.5</span><span class="p">,</span> <span class="mi">10</span><span class="p">)</span>
+<span class="n">raw</span><span class="p">[</span><span class="mi">3</span><span class="p">,</span> <span class="mi">2</span><span class="p">]</span> <span class="o">=</span> <span class="mf">9999.0</span>
+<span class="n">raw</span><span class="p">[</span><span class="mi">8</span><span class="p">,</span> <span class="mi">5</span><span class="p">]</span> <span class="o">=</span> <span class="o">-</span><span class="mf">999.0</span>
+
+<span class="n">df</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">(</span><span class="n">raw</span><span class="p">,</span> <span class="n">columns</span><span class="o">=</span><span class="n">sites</span><span class="p">,</span>
+                  <span class="n">index</span><span class="o">=</span><span class="n">pd</span><span class="o">.</span><span class="n">to_datetime</span><span class="p">(</span><span class="s2">&quot;2026-07-01&quot;</span><span class="p">)</span> <span class="o">+</span> <span class="n">pd</span><span class="o">.</span><span class="n">TimedeltaIndex</span><span class="p">(</span><span class="nb">range</span><span class="p">(</span><span class="mi">10</span><span class="p">),</span> <span class="n">unit</span><span class="o">=</span><span class="s2">&quot;D&quot;</span><span class="p">))</span>
+<span class="n">df</span><span class="o">.</span><span class="n">index</span><span class="o">.</span><span class="n">name</span> <span class="o">=</span> <span class="s2">&quot;date&quot;</span>
+<span class="n">df</span> <span class="o">=</span> <span class="n">df</span><span class="o">.</span><span class="n">replace</span><span class="p">([</span><span class="mf">9999.0</span><span class="p">,</span> <span class="o">-</span><span class="mf">999.0</span><span class="p">],</span> <span class="n">np</span><span class="o">.</span><span class="n">nan</span><span class="p">)</span>
+
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;原始矩阵形状(时间, 站点):&quot;</span><span class="p">,</span> <span class="n">df</span><span class="o">.</span><span class="n">shape</span><span class="p">)</span>
+
+<span class="c1"># 1) 逐站统计：各站均值、标准差、有效样本数</span>
+<span class="n">station_mean</span> <span class="o">=</span> <span class="n">df</span><span class="o">.</span><span class="n">mean</span><span class="p">(</span><span class="n">axis</span><span class="o">=</span><span class="mi">0</span><span class="p">)</span>
+<span class="n">station_std</span>  <span class="o">=</span> <span class="n">df</span><span class="o">.</span><span class="n">std</span><span class="p">(</span><span class="n">axis</span><span class="o">=</span><span class="mi">0</span><span class="p">)</span>
+<span class="n">valid_count</span>  <span class="o">=</span> <span class="n">df</span><span class="o">.</span><span class="n">count</span><span class="p">(</span><span class="n">axis</span><span class="o">=</span><span class="mi">0</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;</span><span class="se">\n</span><span class="s2">====逐站统计结果====&quot;</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;站点平均气温:</span><span class="se">\n</span><span class="s2">&quot;</span><span class="p">,</span> <span class="n">station_mean</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;站点有效观测数:</span><span class="se">\n</span><span class="s2">&quot;</span><span class="p">,</span> <span class="n">valid_count</span><span class="p">)</span>
+
+<span class="c1"># 2) 逐日区域极值：每日全部站点的区域最大、最小气温</span>
+<span class="n">df</span><span class="p">[</span><span class="s2">&quot;day_area_max&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">df</span><span class="o">.</span><span class="n">max</span><span class="p">(</span><span class="n">axis</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
+<span class="n">df</span><span class="p">[</span><span class="s2">&quot;day_area_min&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">df</span><span class="o">.</span><span class="n">min</span><span class="p">(</span><span class="n">axis</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;</span><span class="se">\n</span><span class="s2">====逐日区域极值示例====&quot;</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">df</span><span class="p">[[</span><span class="s2">&quot;day_area_max&quot;</span><span class="p">,</span> <span class="s2">&quot;day_area_min&quot;</span><span class="p">]]</span><span class="o">.</span><span class="n">head</span><span class="p">())</span>
+
+<span class="c1"># 3) 逐站 Z-score 标准化（NaN 安全，逐列）</span>
+<span class="n">temp_zscore</span> <span class="o">=</span> <span class="p">(</span><span class="n">df</span><span class="o">.</span><span class="n">drop</span><span class="p">(</span><span class="n">columns</span><span class="o">=</span><span class="p">[</span><span class="s2">&quot;day_area_max&quot;</span><span class="p">,</span> <span class="s2">&quot;day_area_min&quot;</span><span class="p">])</span> <span class="o">-</span> <span class="n">station_mean</span><span class="p">)</span> <span class="o">/</span> <span class="n">station_std</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;</span><span class="se">\n</span><span class="s2">标准化矩阵形状：&quot;</span><span class="p">,</span> <span class="n">temp_zscore</span><span class="o">.</span><span class="n">shape</span><span class="p">)</span>
+
+<span class="c1"># 4) 文件输出（utf-8-sig，避免中文乱码）</span>
+<span class="n">station_stats</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">({</span>
+    <span class="s2">&quot;站点均值&quot;</span><span class="p">:</span> <span class="n">station_mean</span><span class="p">,</span>
+    <span class="s2">&quot;站点标准差&quot;</span><span class="p">:</span> <span class="n">station_std</span><span class="p">,</span>
+    <span class="s2">&quot;有效观测数&quot;</span><span class="p">:</span> <span class="n">valid_count</span><span class="p">,</span>
+<span class="p">})</span>
+<span class="n">station_stats</span><span class="o">.</span><span class="n">to_csv</span><span class="p">(</span><span class="s2">&quot;station_stats.csv&quot;</span><span class="p">,</span> <span class="n">encoding</span><span class="o">=</span><span class="s2">&quot;utf-8-sig&quot;</span><span class="p">)</span>
+<span class="n">temp_zscore</span><span class="o">.</span><span class="n">to_csv</span><span class="p">(</span><span class="s2">&quot;temp_zscore.csv&quot;</span><span class="p">,</span> <span class="n">encoding</span><span class="o">=</span><span class="s2">&quot;utf-8-sig&quot;</span><span class="p">)</span>
+<span class="n">df</span><span class="p">[[</span><span class="s2">&quot;day_area_max&quot;</span><span class="p">,</span> <span class="s2">&quot;day_area_min&quot;</span><span class="p">]]</span><span class="o">.</span><span class="n">to_csv</span><span class="p">(</span><span class="s2">&quot;day_area_extreme.csv&quot;</span><span class="p">,</span> <span class="n">encoding</span><span class="o">=</span><span class="s2">&quot;utf-8-sig&quot;</span><span class="p">)</span>
+</pre></div>
+</div>
+</section>
+<section id="id19">
+<h3>6.10.9 核心最佳实践总结<a class="headerlink" href="#id19" title="Link to this heading">#</a></h3>
+<ol class="arabic simple">
+<li><p><strong>矩阵维度分清</strong>：行代表时间，列代表站点；<code class="docutils literal notranslate"><span class="pre">axis=0</span></code> 逐站（列）运算，<code class="docutils literal notranslate"><span class="pre">axis=1</span></code> 逐日（行）运算，<code class="docutils literal notranslate"><span class="pre">axis</span></code> 写反是高频错误。</p></li>
+<li><p><strong>统计逻辑</strong>：均值、Z-score 标准化必须<strong>按站点分别计算</strong>，禁止对全部站点做全局统一标准化——那样会抹平站点气候本底差异。</p></li>
+<li><p><strong>NaN 安全原则</strong>：气象缺测优先保留 <code class="docutils literal notranslate"><span class="pre">NaN</span></code>，禁止随意 <code class="docutils literal notranslate"><span class="pre">fillna(0)</span></code>；使用 <code class="docutils literal notranslate"><span class="pre">skipna=True</span></code> 系列函数自动跳过缺测；同时统计每个站点有效观测数量，评估统计结果可靠性。</p></li>
+<li><p><strong>异常保护</strong>：站点标准差趋近 0 时会发生除零/溢出，业务代码应增加判断或小量 <code class="docutils literal notranslate"><span class="pre">eps</span></code> 保护。</p></li>
+<li><p><strong>输出编码</strong>：读写 csv 统一 <code class="docutils literal notranslate"><span class="pre">utf-8-sig</span></code>，避免站点中文名乱码。随机数据务必固定 <code class="docutils literal notranslate"><span class="pre">seed</span></code>，保证结果可复现。</p></li>
+</ol>
+<div class="admonition note">
+<p class="admonition-title">备注</p>
+<p>补充：NumPy 的<strong>视图 vs 复制</strong>。切片返回视图（改切片会同时改原数组，需要独立数据用 <code class="docutils literal notranslate"><span class="pre">.copy()</span></code>），而布尔索引、花式索引返回副本。多站叠加列（如 <code class="docutils literal notranslate"><span class="pre">df[&quot;day_area_max&quot;]</span> <span class="pre">=</span> <span class="pre">...</span></code>）按列对齐时也要留意：永远先 <code class="docutils literal notranslate"><span class="pre">print(shape)</span></code>、用<code class="docutils literal notranslate"><span class="pre">.copy()</span></code>，再进入计算，才能避免&quot;改了拷贝、原表也变了&quot;的隐性 bug。</p>
+</div>
+<div class="admonition seealso">
+<p class="admonition-title">参见</p>
+<p>配套练习：第 6 章练习《NumPy 基础》将在随后交付后上线（链接到时补全）　·　术语参考：<a class="reference internal" href="../../api/ch06_terms.html"><span class="doc">第 6 章术语：气象数据计算 NumPy</span></a>　·　示例画廊 <a class="reference internal" href="../../gallery/plot_numpy/index.html"><span class="doc">NumPy 计算示例</span></a></p>
+</div>
+</section>
+</section>
+</section>
+
+
+                </article>
+              
+              
+              
+              
+              
+                <footer class="prev-next-footer d-print-none">
+                  
+<div class="prev-next-area">
+    <a class="left-prev"
+       href="index.html"
+       title="上一页">
+      <i class="fa-solid fa-angle-left"></i>
+      <div class="prev-next-info">
+        <p class="prev-next-subtitle">上一页</p>
+        <p class="prev-next-title">模块二 气象数据处理</p>
+      </div>
+    </a>
+    <a class="right-next"
+       href="pandas.html"
+       title="下一页">
+      <div class="prev-next-info">
+        <p class="prev-next-subtitle">下一页</p>
+        <p class="prev-next-title">气象数据分析（一）Pandas</p>
+      </div>
+      <i class="fa-solid fa-angle-right"></i>
+    </a>
+</div>
+                </footer>
+              
+            </div>
+            
+            
+              
+                <dialog id="pst-secondary-sidebar-modal"></dialog>
+                <div id="pst-secondary-sidebar" class="bd-sidebar-secondary bd-toc"><div class="sidebar-secondary-items sidebar-secondary__inner">
+
+
+  <div class="sidebar-secondary-item">
+<div
+    id="pst-page-navigation-heading-2"
+    class="page-toc tocsection onthispage">
+    <i class="fa-solid fa-list"></i> 当前页面
+  </div>
+  <nav id="pst-page-toc-nav" class="page-toc" aria-labelledby="pst-page-navigation-heading-2">
+    <ul class="pst-show_toc_level nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#ndarray">6.1 ndarray 数组的创建</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#python">6.1.1 从 Python 列表生成数组</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#id1">6.1.2 快速生成常用数组</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id2">6.2 数组索引与切片</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#id3">6.2.1 基础索引</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#id4">6.2.2 切片语法</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id5">6.3 向量化运算</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id6">6.4 广播机制</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id7">6.5 数组常用统计函数</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#id8">提升拓展部分（选学，难度更高）</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#mask">6.6 布尔索引（掩码 mask）</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#id9">6.7 花式索引</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#np-concatenate">6.8 数组拼接 np.concatenate</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#id10">6.9 结构化数组</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#id11">初学者本章小结</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id12">6.10 最佳实践：多站气温矩阵与安全统计</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#id13">6.10.1 完整标准化工作流程</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#id14">6.10.2 构造 / 读取多站气温矩阵</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#id15">6.10.3 逐站均值 / 标准差统计（按列）</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#id16">6.10.4 逐日区域极值统计（按行）</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#z-score-nan">6.10.5 逐站 Z-score 标准化，NaN 安全运算【核心】</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#nan">6.10.6 NaN 安全运算最佳实践</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#id17">6.10.7 结果保存输出</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#id18">6.10.8 完整可运行最佳实践总代码</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#id19">6.10.9 核心最佳实践总结</a></li>
+</ul>
+</li>
+</ul>
+  </nav></div>
+
+</div></div>
+              
+            
+          </div>
+          <footer class="bd-footer-content">
+            
+          </footer>
+        
+      </main>
+    </div>
+  </div>
+  
+  <!-- Scripts loaded after <body> so the DOM is not blocked -->
+  <script defer src="../../_static/scripts/bootstrap.js?digest=90905a2f556bf617f1a9"></script>
+<script defer src="../../_static/scripts/pydata-sphinx-theme.js?digest=90905a2f556bf617f1a9"></script>
+
+  <footer class="bd-footer">
+<div class="bd-footer__inner bd-page-width">
+  
+    <div class="footer-items__start">
+      
+        <div class="footer-item">
+
+  <p class="copyright">
+    
+      © Copyright 2026, 兰州大学大气科学学院编程社区.
+      <br/>
+    
+  </p>
+</div>
+      
+        <div class="footer-item">
+
+  <p class="sphinx-version">
+    由 <a href="https://www.sphinx-doc.org/">Sphinx</a> 8.2.3创建。
+    <br/>
+  </p>
+</div>
+      
+    </div>
+  
+  
+  
+    <div class="footer-items__end">
+      
+        <div class="footer-item">
+<p class="theme-version">
+  <!-- # L10n: Setting the PST URL as an argument as this does not need to be localized -->
+  使用 <a href="https://pydata-sphinx-theme.readthedocs.io/en/stable/index.html">PyData Sphinx Theme</a> 0.20.0构建.
+</p></div>
+      
+    </div>
+  
+</div>
+
+  </footer>
+  </body>
+</html>

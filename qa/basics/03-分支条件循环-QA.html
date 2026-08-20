@@ -1,0 +1,1795 @@
+
+<!DOCTYPE html>
+
+
+<html lang="zh-CN" data-content_root="../../" >
+
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
+    <title>分支、条件与循环 Q&amp;A &#8212; MeteoPython</title>
+  
+  
+  
+  <script data-cfasync="false">
+    document.documentElement.dataset.mode = localStorage.getItem("mode") || "";
+    document.documentElement.dataset.theme = localStorage.getItem("theme") || "";
+  </script>
+  <!--
+    this give us a css class that will be invisible only if js is disabled
+  -->
+  <noscript>
+    <style>
+      .pst-js-only { display: none !important; }
+
+    </style>
+  </noscript>
+  
+  <!-- Loaded before other Sphinx assets -->
+  <link href="../../_static/styles/theme.css?digest=90905a2f556bf617f1a9" rel="stylesheet" />
+<link href="../../_static/styles/pydata-sphinx-theme.css?digest=90905a2f556bf617f1a9" rel="stylesheet" />
+
+    <link rel="stylesheet" type="text/css" href="../../_static/pygments.css?v=8f2a1f02" />
+    <link rel="stylesheet" type="text/css" href="../../_static/copybutton.css?v=76b2166b" />
+    <link rel="stylesheet" type="text/css" href="../../_static/sg_gallery.css?v=fd6457a4" />
+    <link rel="stylesheet" type="text/css" href="../../_static/sg_gallery-binder.css?v=f4aeca0c" />
+    <link rel="stylesheet" type="text/css" href="../../_static/sg_gallery-dataframe.css?v=2082cf3c" />
+    <link rel="stylesheet" type="text/css" href="../../_static/sg_gallery-rendered-html.css?v=1277b6f3" />
+    <link rel="stylesheet" type="text/css" href="../../_static/sphinx-design.min.css?v=95c83b7e" />
+    <link rel="stylesheet" type="text/css" href="../../_static/./custom.css?v=fbe1f034" />
+  
+  <!-- So that users can add custom icons -->
+  <script defer src="../../_static/scripts/fontawesome.js?digest=90905a2f556bf617f1a9"></script>
+  <!-- Pre-loaded scripts that we'll load fully later -->
+  <link rel="preload" as="script" href="../../_static/scripts/bootstrap.js?digest=90905a2f556bf617f1a9" />
+<link rel="preload" as="script" href="../../_static/scripts/pydata-sphinx-theme.js?digest=90905a2f556bf617f1a9" />
+
+    <script src="../../_static/documentation_options.js?v=9becfed8"></script>
+    <script src="../../_static/doctools.js?v=9bcbadda"></script>
+    <script src="../../_static/sphinx_highlight.js?v=dc90522c"></script>
+    <script src="../../_static/sg-tags.js?v=d80f6fa4"></script>
+    <script src="../../_static/clipboard.min.js?v=a7894cd8"></script>
+    <script src="../../_static/copybutton.js?v=fd10adb8"></script>
+    <script src="../../_static/translations.js?v=beaddf03"></script>
+    <script src="../../_static/design-tabs.js?v=f930bc37"></script>
+    <script>DOCUMENTATION_OPTIONS.pagename = 'qa/basics/03-分支条件循环-QA';</script>
+    <script>
+        DOCUMENTATION_OPTIONS.theme_version = '0.20.0';
+        DOCUMENTATION_OPTIONS.theme_switcher_json_url = '_static/switcher.json';
+        DOCUMENTATION_OPTIONS.theme_switcher_version_match = '0.1.0';
+        DOCUMENTATION_OPTIONS.show_version_warning_banner =
+            false;
+        </script>
+    <script>DOCUMENTATION_OPTIONS.search_as_you_type = false;</script>
+    <link rel="icon" href="../../_static/favicon.svg"/>
+    <link rel="index" title="索引" href="../../genindex.html" />
+    <link rel="search" title="搜索" href="../../search.html" />
+    <link rel="next" title="函数、变量作用域、模块与包 Q&amp;A" href="04-%E5%87%BD%E6%95%B0%E4%BD%9C%E7%94%A8%E5%9F%9F%E6%A8%A1%E5%9D%97%E5%8C%85-QA.html" />
+    <link rel="prev" title="基本数据类型、变量和运算符 Q&amp;A" href="02-%E6%95%B0%E6%8D%AE%E7%B1%BB%E5%9E%8B%E4%B8%8E%E8%BF%90%E7%AE%97%E7%AC%A6-QA.html" />
+  <meta name="viewport" content="width=device-width, initial-scale=1"/>
+  <meta name="docsearch:language" content="zh-CN"/>
+  <meta name="docsearch:version" content="0.1" />
+    <meta name="docbuild:last-update" content="2026-08-20"/>
+  
+    
+    <script src="../../_static/searchtools.js"></script>
+    <script src="../../_static/language_data.js"></script>
+    <script src="../../searchindex.js"></script>
+  
+  </head>
+  <body data-default-mode="">
+  
+  
+  <div id="pst-skip-link" class="skip-link d-print-none"><a href="#main-content">跳转至主要内容</a></div>
+
+  
+  <div id="pst-scroll-pixel-helper"></div>
+  
+  <button type="button" class="btn rounded-pill" id="pst-back-to-top">
+    <i class="fa-solid fa-arrow-up"></i>回到顶部</button>
+  
+  
+  
+  
+  <dialog id="pst-search-dialog">
+    
+<form class="bd-search d-flex align-items-center"
+      action="../../search.html"
+      method="get">
+  <i class="fa-solid fa-magnifying-glass"></i>
+  <input type="search"
+         class="form-control"
+         name="q"
+         placeholder="搜索文档…"
+         aria-label="搜索文档…"
+         autocomplete="off"
+         autocorrect="off"
+         autocapitalize="off"
+         spellcheck="false"/>
+  <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd>K</kbd></span>
+</form>
+  </dialog>
+
+  <div class="pst-async-banner-revealer d-none">
+  <aside id="bd-header-version-warning" class="d-none d-print-none" aria-label="版本警告"></aside>
+</div>
+
+  
+    <header id="pst-header" class="bd-header navbar navbar-expand-lg bd-navbar d-print-none">
+<div class="bd-header__inner bd-page-width">
+  <button class="pst-navbar-icon sidebar-toggle primary-toggle" aria-label="网页导航">
+    <span class="fa-solid fa-bars"></span>
+  </button>
+  
+  
+  <div class="col-lg-3 navbar-header-items__start">
+    
+      <div class="navbar-item">
+
+  
+    
+  
+
+<a class="navbar-brand logo" href="../../index.html">
+  
+  
+  
+  
+  
+    
+    
+      
+    
+    
+    <img src="../../_static/logo.svg" class="logo__image only-light" alt="MeteoPython - Home"/>
+    <img src="../../_static/logo.svg" class="logo__image only-dark pst-js-only" alt="MeteoPython - Home"/>
+  
+  
+</a></div>
+    
+  </div>
+  
+  <div class="col-lg-9 navbar-header-items">
+    
+    <div class="me-auto navbar-header-items__center">
+      
+        <div class="navbar-item">
+<nav>
+  <ul class="bd-navbar-elements navbar-nav">
+    
+<li class="nav-item ">
+  <a class="nav-link nav-internal" href="../../user_guide/index.html">
+    教程
+  </a>
+</li>
+
+
+<li class="nav-item ">
+  <a class="nav-link nav-internal" href="../../tutorials/index.html">
+    练习
+  </a>
+</li>
+
+
+<li class="nav-item ">
+  <a class="nav-link nav-internal" href="../../gallery/index.html">
+    示例
+  </a>
+</li>
+
+
+<li class="nav-item ">
+  <a class="nav-link nav-internal" href="../../api/index.html">
+    术语参考
+  </a>
+</li>
+
+
+<li class="nav-item current active">
+  <a class="nav-link nav-internal" href="../index.html">
+    常见问题 Q&A
+  </a>
+</li>
+
+  </ul>
+</nav></div>
+      
+    </div>
+    
+    
+    <div class="navbar-header-items__end">
+      
+        <div class="navbar-item navbar-persistent--container">
+          
+
+<button class="btn search-button-field search-button__button pst-js-only" title="搜索" aria-label="搜索" data-bs-placement="bottom" data-bs-toggle="tooltip">
+ <i class="fa-solid fa-magnifying-glass"></i>
+ <span class="search-button__default-text">搜索</span>
+ <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd class="kbd-shortcut__modifier">K</kbd></span>
+</button>
+        </div>
+      
+      
+        <div class="navbar-item">
+
+<div class="theme-switch-container dropdown pst-js-only" data-bs-toggle="tooltip" data-bs-placement="bottom" title="Color mode">
+  <button class="btn btn-sm nav-link pst-navbar-icon theme-switch-button dropdown-toggle" aria-label="Color mode" data-bs-toggle="dropdown">
+    <i class="theme-switch fa-solid fa-sun fa-lg fa-fw" data-mode="light" title="亮色"></i>
+    <i class="theme-switch fa-solid fa-moon fa-lg fa-fw" data-mode="dark" title="暗色"></i>
+    <i class="theme-switch fa-solid fa-circle-half-stroke fa-lg fa-fw" data-mode="auto" title="System Settings"></i>
+  </button>
+  <ul class="dropdown-menu dropdown-menu-end">
+    <li><button class="dropdown-item d-flex align-items-center theme-change-button" data-mode="auto"><i class="fa-solid fa-circle-half-stroke fa-lg fa-fw me-1"></i>System Settings</button></li>
+    <li><button class="dropdown-item d-flex align-items-center theme-change-button" data-mode="light"><i class="fa-solid fa-sun fa-lg fa-fw me-1"></i>亮色</button></li>
+    <li><button class="dropdown-item d-flex align-items-center theme-change-button" data-mode="dark"><i class="fa-solid fa-moon fa-lg fa-fw me-1"></i>暗色</button></li>
+  </ul>
+</div></div>
+      
+        <div class="navbar-item"><ul class="navbar-icon-links"
+    aria-label="Icon Links">
+</ul></div>
+      
+    </div>
+    
+  </div>
+  
+  
+    <div class="navbar-persistent--mobile">
+
+<button class="btn search-button-field search-button__button pst-js-only" title="搜索" aria-label="搜索" data-bs-placement="bottom" data-bs-toggle="tooltip">
+ <i class="fa-solid fa-magnifying-glass"></i>
+ <span class="search-button__default-text">搜索</span>
+ <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd class="kbd-shortcut__modifier">K</kbd></span>
+</button>
+    </div>
+  
+
+  
+    <button class="pst-navbar-icon sidebar-toggle secondary-toggle" aria-label="当前页面">
+      <span class="fa-solid fa-outdent"></span>
+    </button>
+  
+</div>
+
+    </header>
+  
+
+  <div class="bd-container">
+    <div class="bd-container__inner bd-page-width">
+      
+      
+      
+      <dialog id="pst-primary-sidebar-modal"></dialog>
+      <div id="pst-primary-sidebar" class="bd-sidebar-primary bd-sidebar">
+        
+
+  
+  <div class="sidebar-header-items sidebar-primary__section">
+    
+    
+      <div class="sidebar-header-items__center">
+        
+          
+          
+            <div class="navbar-item">
+<nav>
+  <ul class="bd-navbar-elements navbar-nav">
+    
+<li class="nav-item ">
+  <a class="nav-link nav-internal" href="../../user_guide/index.html">
+    教程
+  </a>
+</li>
+
+
+<li class="nav-item ">
+  <a class="nav-link nav-internal" href="../../tutorials/index.html">
+    练习
+  </a>
+</li>
+
+
+<li class="nav-item ">
+  <a class="nav-link nav-internal" href="../../gallery/index.html">
+    示例
+  </a>
+</li>
+
+
+<li class="nav-item ">
+  <a class="nav-link nav-internal" href="../../api/index.html">
+    术语参考
+  </a>
+</li>
+
+
+<li class="nav-item current active">
+  <a class="nav-link nav-internal" href="../index.html">
+    常见问题 Q&A
+  </a>
+</li>
+
+  </ul>
+</nav></div>
+          
+        
+      </div>
+    
+    
+    
+      <div class="sidebar-header-items__end">
+        
+          <div class="navbar-item">
+
+<div class="theme-switch-container dropdown pst-js-only" data-bs-toggle="tooltip" data-bs-placement="bottom" title="Color mode">
+  <button class="btn btn-sm nav-link pst-navbar-icon theme-switch-button dropdown-toggle" aria-label="Color mode" data-bs-toggle="dropdown">
+    <i class="theme-switch fa-solid fa-sun fa-lg fa-fw" data-mode="light" title="亮色"></i>
+    <i class="theme-switch fa-solid fa-moon fa-lg fa-fw" data-mode="dark" title="暗色"></i>
+    <i class="theme-switch fa-solid fa-circle-half-stroke fa-lg fa-fw" data-mode="auto" title="System Settings"></i>
+  </button>
+  <ul class="dropdown-menu dropdown-menu-end">
+    <li><button class="dropdown-item d-flex align-items-center theme-change-button" data-mode="auto"><i class="fa-solid fa-circle-half-stroke fa-lg fa-fw me-1"></i>System Settings</button></li>
+    <li><button class="dropdown-item d-flex align-items-center theme-change-button" data-mode="light"><i class="fa-solid fa-sun fa-lg fa-fw me-1"></i>亮色</button></li>
+    <li><button class="dropdown-item d-flex align-items-center theme-change-button" data-mode="dark"><i class="fa-solid fa-moon fa-lg fa-fw me-1"></i>暗色</button></li>
+  </ul>
+</div></div>
+        
+          <div class="navbar-item"><ul class="navbar-icon-links"
+    aria-label="Icon Links">
+</ul></div>
+        
+      </div>
+    
+  </div>
+  
+    <div class="sidebar-primary-items__start sidebar-primary__section">
+        <div class="sidebar-primary-item pst-sidebar-collapse"><button id="pst-collapse-sidebar-button" aria-expanded="true" aria-controls="pst-primary-sidebar">
+  <svg class="pst-icon" role="img" aria-hidden="true" focusable="false" viewBox="0 0 16 16" xmlns="http://www.w3.org/2000/svg">
+    <path fill="currentColor" d="M3 15.5C2.36232 15.5 1.74874 15.2564 1.28478 14.8189C0.820828 14.3815 0.541576 13.7832 0.504167 13.1467L0.5 13L0.5 3C0.499965 2.36232 0.743605 1.74874 1.18107 1.28478C1.61854 0.820828 2.21676 0.541576 2.85333 0.504167L3 0.5L13 0.5C13.6377 0.499965 14.2513 0.743605 14.7152 1.18107C15.1792 1.61854 15.4584 2.21676 15.4958 2.85333L15.5 3L15.5 13C15.5 13.6377 15.2564 14.2513 14.8189 14.7152C14.3815 15.1792 13.7832 15.4584 13.1467 15.4958L13 15.5L3 15.5ZM3 13.8333L10.5 13.8333L10.5 2.16667L3 2.16667C2.79589 2.16669 2.59889 2.24163 2.44636 2.37726C2.29383 2.5129 2.19638 2.69979 2.1725 2.9025L2.16667 3L2.16667 13C2.16669 13.2041 2.24163 13.4011 2.37726 13.5536C2.5129 13.7062 2.69979 13.8036 2.9025 13.8275L3 13.8333ZM6.65583 10.325L6.5775 10.2558L4.91083 8.58917C4.76735 8.44567 4.68116 8.25476 4.66843 8.05223C4.65569 7.84971 4.71729 7.6495 4.84167 7.48917L4.91083 7.41083L6.5775 5.74417C6.72747 5.59471 6.9287 5.50794 7.14032 5.50148C7.35194 5.49502 7.55809 5.56935 7.7169 5.70937C7.8757 5.8494 7.97525 6.04463 7.99533 6.25539C8.01541 6.46616 7.95451 6.67667 7.825 6.84417L7.75583 6.9225L6.67917 8L7.75583 9.0775C7.89931 9.22099 7.98551 9.41191 7.99824 9.61443C8.01097 9.81695 7.94938 10.0172 7.825 10.1775L7.75583 10.2558C7.61234 10.3993 7.42142 10.4855 7.2189 10.4982C7.01638 10.511 6.81617 10.4494 6.65583 10.325Z"/>
+  </svg>
+  <span class="pst-collapse-sidebar-label">Collapse Sidebar</span>
+  <span class="pst-expand-sidebar-label">Expand Sidebar</span>
+</button></div>
+        <div class="sidebar-primary-item">
+
+<nav class="bd-docs-nav bd-links"
+     aria-label="章节导航">
+  <p class="bd-links__title" role="heading" aria-level="1">章节导航</p>
+  <div class="bd-toc-item navbar-nav"><ul class="current nav bd-sidenav">
+<li class="toctree-l1 current active has-children"><a class="reference internal" href="index.html">模块一 Python 编程基础（常见问题 Q&amp;A）</a><details open="open"><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="00-%E9%80%9A%E7%94%A8%E6%8E%92%E9%94%99%E6%8C%87%E5%8D%97.html">通用排错方法论：从「看不懂报错」到「有的放矢」 Q&amp;A</a></li>
+<li class="toctree-l2"><a class="reference internal" href="01-Python%E7%AE%80%E4%BB%8B%E4%B8%8EConda%E7%8E%AF%E5%A2%83-QA.html">Python 简介及安装环境 Q&amp;A</a></li>
+<li class="toctree-l2"><a class="reference internal" href="02-%E6%95%B0%E6%8D%AE%E7%B1%BB%E5%9E%8B%E4%B8%8E%E8%BF%90%E7%AE%97%E7%AC%A6-QA.html">基本数据类型、变量和运算符 Q&amp;A</a></li>
+<li class="toctree-l2 current active"><a class="current reference internal" href="#">分支、条件与循环 Q&amp;A</a></li>
+<li class="toctree-l2"><a class="reference internal" href="04-%E5%87%BD%E6%95%B0%E4%BD%9C%E7%94%A8%E5%9F%9F%E6%A8%A1%E5%9D%97%E5%8C%85-QA.html">函数、变量作用域、模块与包 Q&amp;A</a></li>
+<li class="toctree-l2"><a class="reference internal" href="05-%E9%9D%A2%E5%90%91%E5%AF%B9%E8%B1%A1%E5%87%BD%E6%95%B0%E5%BC%8F%E9%AB%98%E7%BA%A7%E8%AF%AD%E6%B3%95-QA.html">面向对象、函数式编程与高级语法 Q&amp;A</a></li>
+</ul>
+</details></li>
+<li class="toctree-l1 has-children"><a class="reference internal" href="../data/index.html">模块二 气象数据处理（常见问题 Q&amp;A）</a><details open="open"><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
+<li class="toctree-l2"><a class="reference internal" href="../data/06-NumPy%E6%B0%94%E8%B1%A1%E8%AE%A1%E7%AE%97-QA.html">气象数据计算 NumPy Q&amp;A</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../data/07-Pandas%E6%B0%94%E8%B1%A1%E5%88%86%E6%9E%90-QA.html">气象数据分析（一）Pandas Q&amp;A</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../data/08-Xarray%E6%B0%94%E8%B1%A1%E5%88%86%E6%9E%90-QA.html">Xarray 气象数据处理（二）Q&amp;A</a></li>
+</ul>
+</details></li>
+<li class="toctree-l1 has-children"><a class="reference internal" href="../viz/index.html">模块三 气象数据可视化（常见问题 Q&amp;A）</a><details open="open"><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
+<li class="toctree-l2"><a class="reference internal" href="../viz/09-Matplotlib%E6%B0%94%E8%B1%A1%E7%BB%98%E5%9B%BE-QA.html">气象数据绘图（一）Matplotlib Q&amp;A</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../viz/10-Cartopy%E6%B0%94%E8%B1%A1%E7%BB%98%E5%9B%BE-QA.html">气象数据绘图（二）Cartopy Q&amp;A</a></li>
+</ul>
+</details></li>
+</ul>
+</div>
+</nav></div>
+    </div>
+  
+  
+  <div class="sidebar-primary-items__end sidebar-primary__section">
+      <div class="sidebar-primary-item">
+<div id="ethical-ad-placement"
+      class="flat"
+      data-ea-publisher="readthedocs"
+      data-ea-type="readthedocs-sidebar"
+      data-ea-manual="true">
+</div></div>
+  </div>
+
+
+      </div>
+      
+      <main id="main-content" class="bd-main" role="main">
+        
+        
+          <div class="bd-content">
+            <div class="bd-article-container">
+              
+              <div class="bd-header-article d-print-none">
+<div class="header-article-items header-article__inner">
+  
+    <div class="header-article-items__start">
+      
+        <div class="header-article-item">
+
+<nav aria-label="Breadcrumb" class="d-print-none">
+  <ul class="bd-breadcrumbs">
+    
+    <li class="breadcrumb-item breadcrumb-home">
+      <a href="../../index.html" class="nav-link" aria-label="初始页面">
+        <i class="fa-solid fa-home"></i>
+      </a>
+    </li>
+    
+    <li class="breadcrumb-item"><a href="../index.html" class="nav-link">常见问题 Q&amp;A</a></li>
+    
+    
+    <li class="breadcrumb-item"><a href="index.html" class="nav-link">模块一 Python 编程基础（常见问题 Q&amp;A）</a></li>
+    
+    <li class="breadcrumb-item active" aria-current="page"><span class="ellipsis">分支、条件与循环 Q&amp;A</span></li>
+  </ul>
+</nav>
+</div>
+      
+    </div>
+  
+  
+</div>
+</div>
+              
+              
+              
+                
+<div id="searchbox"></div>
+                <article class="bd-article">
+                  
+  <section id="q-a">
+<h1>分支、条件与循环 Q&amp;A<a class="headerlink" href="#q-a" title="Link to this heading">#</a></h1>
+<blockquote>
+<div><p><strong>章节定位</strong>：第 3 章（模块一）· 对应用户指南
+<code class="docutils literal notranslate"><span class="pre">user_guide/basics/flow.rst</span></code></p>
+<p><strong>通用排错方法论</strong>见
+<a class="reference internal" href="00-%E9%80%9A%E7%94%A8%E6%8E%92%E9%94%99%E6%8C%87%E5%8D%97.html"><span class="doc">00-通用排错指南</span></a>——尤其要先读它的 <strong>0.3
+顶层异常层级树</strong>：本章绝大多数报错都挂在那棵树的
+<code class="docutils literal notranslate"><span class="pre">SyntaxError</span> <span class="pre">→</span> <span class="pre">IndentationError</span> <span class="pre">→</span> <span class="pre">TabError</span></code>
+这一串（语法/缩进家族）以及
+<code class="docutils literal notranslate"><span class="pre">ValueError</span></code>、<code class="docutils literal notranslate"><span class="pre">IndexError</span></code>、<code class="docutils literal notranslate"><span class="pre">KeyboardInterrupt</span></code>
+几个分支上。</p>
+<p><strong>实测声明</strong>：本文每一条报错均在本机真实运行验证、Traceback
+原文照录；两条「死循环」现象用后台线程模拟用户按 <code class="docutils literal notranslate"><span class="pre">Ctrl+C</span></code> 触发真实
+<code class="docutils literal notranslate"><span class="pre">KeyboardInterrupt</span></code> 复现。</p>
+<p><strong>对齐说明</strong>：条目标题与正文小节对应，报错角度覆盖正文 + 配套 PPT
+中的典型易错点。</p>
+</div></blockquote>
+<hr class="docutils" />
+<section id="id1">
+<span id="id2"></span><h2>3.0 本章报错总览表<a class="headerlink" href="#id1" title="Link to this heading">#</a></h2>
+<div class="pst-scrollable-table-container"><table class="table">
+<thead>
+<tr class="row-odd"><th class="head"><p>#</p></th>
+<th class="head"><p>报错关键词（搜索用）</p></th>
+<th class="head"><p>一句话原因</p></th>
+<th class="head"><p>对应条目</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p>1</p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">SyntaxError:</span> <span class="pre">expected</span> <span class="pre">':'</span></code> / <code class="docutils literal notranslate"><span class="pre">invalid</span> <span class="pre">syntax</span></code>（<code class="docutils literal notranslate"><span class="pre">if</span></code>
+缺冒号）</p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">if/elif/else/for/while</span></code>
+条件后忘了冒号</p></td>
+<td><p>§3.1.1</p></td>
+</tr>
+<tr class="row-odd"><td><p>2</p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">IndentationError:</span> <span class="pre">expected</span> <span class="pre">an</span> <span class="pre">indented</span> <span class="pre">block</span></code></p></td>
+<td><p>冒号后面的分支/循环体忘了缩进</p></td>
+<td><p>§3.1.2 · §3.1.5</p></td>
+</tr>
+<tr class="row-even"><td><p>3</p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">IndentationError:</span> <span class="pre">unexpected</span> <span class="pre">indent</span></code></p></td>
+<td><p>多了不该有的缩进</p></td>
+<td><p>§3.1.3</p></td>
+</tr>
+<tr class="row-odd"><td><p>4</p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">TabError:</span> <span class="pre">inconsistent</span> <span class="pre">use</span> <span class="pre">of</span> <span class="pre">tabs</span> <span class="pre">and</span> <span class="pre">spaces</span> <span class="pre">in</span> <span class="pre">indentation</span></code></p></td>
+<td><p>Tab 与空格混用</p></td>
+<td><p>§3.1.4</p></td>
+</tr>
+<tr class="row-even"><td><p>5</p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">SyntaxError</span></code>（条件里 <code class="docutils literal notranslate"><span class="pre">=</span></code> 写成 <code class="docutils literal notranslate"><span class="pre">==</span></code>）</p></td>
+<td><p>判断相等误写成赋值</p></td>
+<td><p>§3.2.1</p></td>
+</tr>
+<tr class="row-odd"><td><p>6</p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">SyntaxError</span></code>（<code class="docutils literal notranslate"><span class="pre">elif</span></code> 单独 / <code class="docutils literal notranslate"><span class="pre">else</span></code> 带条件 / <code class="docutils literal notranslate"><span class="pre">else</span></code>
+孤立）</p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">if/elif/else</span></code> 结构残缺</p></td>
+<td><p>§3.2.2</p></td>
+</tr>
+<tr class="row-even"><td><p>7</p></td>
+<td><p>无报错但判断总不对</p></td>
+<td><p>拿 <code class="docutils literal notranslate"><span class="pre">list</span> <span class="pre">==</span> <span class="pre">True</span></code>
+比较空列表等</p></td>
+<td><p>§3.2.3</p></td>
+</tr>
+<tr class="row-odd"><td><p>8</p></td>
+<td><p>链式比较 vs <code class="docutils literal notranslate"><span class="pre">and</span></code></p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">20</span> <span class="pre">&lt;</span> <span class="pre">t</span> <span class="pre">&lt;</span> <span class="pre">35</span></code> 与 <code class="docutils literal notranslate"><span class="pre">and</span></code>
+的等价与别用错</p></td>
+<td><p>§3.2.4</p></td>
+</tr>
+<tr class="row-even"><td><p>9</p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">or/and</span></code> 短路返回值</p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">or</span></code>
+返回「先碰到的真值」，不是
+<code class="docutils literal notranslate"><span class="pre">True</span></code></p></td>
+<td><p>§3.2.5</p></td>
+</tr>
+<tr class="row-odd"><td><p>10</p></td>
+<td><p>遍历时修改列表（无报错但跳过元素）</p></td>
+<td><p>边 <code class="docutils literal notranslate"><span class="pre">for</span></code> 边 <code class="docutils literal notranslate"><span class="pre">remove</span></code>
+索引错位</p></td>
+<td><p>§3.3.1</p></td>
+</tr>
+<tr class="row-even"><td><p>11</p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">IndexError:</span> <span class="pre">list</span> <span class="pre">index</span> <span class="pre">out</span> <span class="pre">of</span> <span class="pre">range</span></code></p></td>
+<td><p>用 <code class="docutils literal notranslate"><span class="pre">range(len(x)+1)</span></code>
+取下标越界</p></td>
+<td><p>§3.3.2</p></td>
+</tr>
+<tr class="row-odd"><td><p>12</p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">ValueError:</span> <span class="pre">not</span> <span class="pre">enough/too</span> <span class="pre">many</span> <span class="pre">values</span> <span class="pre">to</span> <span class="pre">unpack</span></code></p></td>
+<td><p>循环里解包个数与元素个数不匹配</p></td>
+<td><p>§3.3.3</p></td>
+</tr>
+<tr class="row-even"><td><p>13</p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">for…else</span></code> 行为误判</p></td>
+<td><p>把 <code class="docutils literal notranslate"><span class="pre">for</span></code> 的 <code class="docutils literal notranslate"><span class="pre">else</span></code> 当成
+<code class="docutils literal notranslate"><span class="pre">if</span></code> 的兜底</p></td>
+<td><p>§3.3.4</p></td>
+</tr>
+<tr class="row-odd"><td><p>14</p></td>
+<td><p>死循环（程序卡住）</p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">while</span></code> 忘了更新条件变量</p></td>
+<td><p>§3.4.1</p></td>
+</tr>
+<tr class="row-even"><td><p>15</p></td>
+<td><p>死循环（<code class="docutils literal notranslate"><span class="pre">continue</span></code> 跳过计数更新）</p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">continue</span></code> 跳过了 <code class="docutils literal notranslate"><span class="pre">i</span> <span class="pre">+=</span> <span class="pre">1</span></code></p></td>
+<td><p>§3.4.2</p></td>
+</tr>
+<tr class="row-odd"><td><p>16</p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">SyntaxError:</span> <span class="pre">'break'</span> <span class="pre">outside</span> <span class="pre">loop</span></code></p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">break</span></code> 写在循环外</p></td>
+<td><p>§3.5.1</p></td>
+</tr>
+<tr class="row-even"><td><p>17</p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">SyntaxError:</span> <span class="pre">'continue'</span> <span class="pre">not</span> <span class="pre">properly</span> <span class="pre">in</span> <span class="pre">loop</span></code></p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">continue</span></code> 写在循环外</p></td>
+<td><p>§3.5.2</p></td>
+</tr>
+<tr class="row-odd"><td><p>18</p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">SyntaxError:</span> <span class="pre">'return'</span> <span class="pre">outside</span> <span class="pre">function</span></code></p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">return</span></code>
+写在函数外（进阶延伸）</p></td>
+<td><p>§3.5.3</p></td>
+</tr>
+<tr class="row-even"><td><p>19</p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">ValueError:</span> <span class="pre">range()</span> <span class="pre">arg</span> <span class="pre">3</span> <span class="pre">must</span> <span class="pre">not</span> <span class="pre">be</span> <span class="pre">zero</span></code> / <code class="docutils literal notranslate"><span class="pre">TypeError</span></code></p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">range</span></code> 步长为 0 / 参数不足</p></td>
+<td><p>§3.6.1</p></td>
+</tr>
+</tbody>
+</table>
+</div>
+<blockquote>
+<div><p>家族归属速记（对读 0.3 层级树）：<strong>#2、#3、#4</strong> 都是
+<code class="docutils literal notranslate"><span class="pre">SyntaxError</span></code> 的子孙——<code class="docutils literal notranslate"><span class="pre">IndentationError</span></code>、再往下是
+<code class="docutils literal notranslate"><span class="pre">TabError</span></code>；<strong>#1 / #5 / #6 / #16 / #17 / #18</strong> 是
+<code class="docutils literal notranslate"><span class="pre">SyntaxError</span></code> 本尊；<strong>#11</strong> 是
+<code class="docutils literal notranslate"><span class="pre">IndexError</span></code>（<code class="docutils literal notranslate"><span class="pre">LookupError</span></code> 子孙）；<strong>#12 / #19</strong> 是
+<code class="docutils literal notranslate"><span class="pre">ValueError</span></code>；<strong>#14 / #15</strong> 的本质是
+<code class="docutils literal notranslate"><span class="pre">KeyboardInterrupt</span></code>（<code class="docutils literal notranslate"><span class="pre">BaseException</span></code> 直系，不是
+<code class="docutils literal notranslate"><span class="pre">Exception</span></code>）。</p>
+</div></blockquote>
+<hr class="docutils" />
+</section>
+<section id="id3">
+<span id="id4"></span><h2>3.1 分支与缩进基础<a class="headerlink" href="#id3" title="Link to this heading">#</a></h2>
+<blockquote>
+<div><p>气象类比一句话：<strong>缩进和冒号就是 Python
+的「分界线上的红绿灯」</strong>。真实气象分布图上，冷暖气团的分界面用一条等值线就能标清；而
+Python 里「哪几行属于某个 <code class="docutils literal notranslate"><span class="pre">if</span></code>
+分支」完全靠缩进划分。红绿灯没立起来（忘了
+<code class="docutils literal notranslate"><span class="pre">:</span></code>）、或者白线画歪（缩进错乱），整片天气系统就崩了。</p>
+</div></blockquote>
+<section id="syntaxerror-expected">
+<span id="id5"></span><h3>3.1.1 忘写冒号 —— <code class="docutils literal notranslate"><span class="pre">SyntaxError:</span> <span class="pre">expected</span> <span class="pre">':'</span></code><a class="headerlink" href="#syntaxerror-expected" title="Link to this heading">#</a></h3>
+<p><strong>现象 / 真实报错信息</strong>（CPython 3.12）</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">temp</span> <span class="o">=</span> <span class="mi">32</span>
+<span class="k">if</span> <span class="n">temp</span> <span class="o">&gt;</span> <span class="mi">30</span>
+    <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;今天最高气温超过 30℃，高温日&quot;</span><span class="p">)</span>
+</pre></div>
+</div>
+<div class="highlight-text notranslate"><div class="highlight"><pre><span></span>  File &quot;...\sim\ch03\s1_missing_colon.py&quot;, line 4
+    if temp &gt; 30
+                ^
+SyntaxError: expected &#39;:&#39;
+</pre></div>
+</div>
+<blockquote>
+<div><p>注意：报错的<strong>光标（``^``）点在 ``if temp &gt; 30``
+那一行末尾</strong>，而<strong>报错行号往往标的是「``if``
+的下一行」</strong>（这里是 line 4，即缩进的 <code class="docutils literal notranslate"><span class="pre">print</span></code>
+那行）。因为解释器要等读到下一行才知道你漏了冒号。</p>
+</div></blockquote>
+<p><strong>原因</strong>：Python 中每个复合语句（<code class="docutils literal notranslate"><span class="pre">if</span></code> / <code class="docutils literal notranslate"><span class="pre">elif</span></code> / <code class="docutils literal notranslate"><span class="pre">else</span></code> /
+<code class="docutils literal notranslate"><span class="pre">for</span></code> / <code class="docutils literal notranslate"><span class="pre">while</span></code> / <code class="docutils literal notranslate"><span class="pre">def</span></code> /
+<code class="docutils literal notranslate"><span class="pre">class</span></code>…）的<strong>条件/表头后面必须跟一个冒号
+``:``</strong>，它宣告「下面缩进的代码块属于我」。漏掉它，解释器在这个位置期望读到
+<code class="docutils literal notranslate"><span class="pre">:</span></code>（在 3.12 里直接提示 <code class="docutils literal notranslate"><span class="pre">expected</span> <span class="pre">':'</span></code>）。</p>
+<p><strong>解决办法</strong>：在括号（条件）末尾补上冒号，一个都不要少：</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">temp</span> <span class="o">=</span> <span class="mi">32</span>
+<span class="k">if</span> <span class="n">temp</span> <span class="o">&gt;</span> <span class="mi">30</span><span class="p">:</span>
+    <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;今天最高气温超过 30℃，高温日&quot;</span><span class="p">)</span>   <span class="c1"># 输出：今天最高气温超过 30℃，高温日</span>
+</pre></div>
+</div>
+<blockquote>
+<div><p>进阶提示：有的 Python 环境里同样错误显示成
+<code class="docutils literal notranslate"><span class="pre">SyntaxError:</span> <span class="pre">invalid</span> <span class="pre">syntax</span></code>，其实是同一件事，不必惊慌——都是「漏了冒号」或「冒号写成了别的字」。搜
+<code class="docutils literal notranslate"><span class="pre">python</span> <span class="pre">if</span> <span class="pre">missing</span> <span class="pre">colon</span></code> 即可看到大量同类案例。</p>
+<p><strong>气象场景一句话</strong>：给兰州站做「≥35 ℃
+高温预警」，<code class="docutils literal notranslate"><span class="pre">if</span> <span class="pre">temp</span> <span class="pre">&gt;=</span> <span class="pre">35</span></code>
+后面<strong>少写这个冒号</strong>，整个判断直接垮掉——像雷暴预警短信把分隔符发错了一样，信号根本发不出去。</p>
+</div></blockquote>
+<hr class="docutils" />
+</section>
+<section id="indentationerror-expected-an-indented-block">
+<span id="id6"></span><h3>3.1.2 分支/循环体忘缩进 —— <code class="docutils literal notranslate"><span class="pre">IndentationError:</span> <span class="pre">expected</span> <span class="pre">an</span> <span class="pre">indented</span> <span class="pre">block</span></code><a class="headerlink" href="#indentationerror-expected-an-indented-block" title="Link to this heading">#</a></h3>
+<p><strong>现象 / 真实报错信息</strong></p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="k">if</span> <span class="kc">True</span><span class="p">:</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;这是 if 分支体内的语句，但没缩进&quot;</span><span class="p">)</span>
+</pre></div>
+</div>
+<div class="highlight-text notranslate"><div class="highlight"><pre><span></span>  File &quot;...\sim\ch03\s2_missing_indent.py&quot;, line 3
+    print(&quot;这是 if 分支体内的语句，但没缩进&quot;)
+    ^^^^^
+IndentationError: expected an indented block after &#39;if&#39; statement on line 2
+</pre></div>
+</div>
+<p><strong>原因</strong>：<code class="docutils literal notranslate"><span class="pre">if</span> <span class="pre">...:</span></code> 后面必须<strong>换行 +
+至少缩进一层</strong>（一个代码块）才构成一个合法分支。Python
+规定「一个块起始符后面必须紧跟一条（缩进的）语句」，不能留空或顶格下去。这是第
+3 章、也是全 Python <strong>第一高频报错</strong>——很多同学抄别人的 <code class="docutils literal notranslate"><span class="pre">if</span></code>
+时忘了把分支内的句子向右推。</p>
+<p><strong>解决办法</strong>：把属于该分支体的每一行，统一向右缩进 4 个空格：</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="k">if</span> <span class="kc">True</span><span class="p">:</span>
+    <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;这是 if 分支体内的语句，没缩进才是错的&quot;</span><span class="p">)</span>   <span class="c1"># 输出：这是 if 分支体内的语句，没缩进才是错的</span>
+</pre></div>
+</div>
+<blockquote>
+<div><p>最容易犯的两个变体：① 从网上复制代码时缩进被啃掉；②
+中文输入法状态下打出全角空格（把全角空格清掉重敲空格）。全角空格是“隐形杀手”，编辑器里看着一样，实则是非法字符。</p>
+<p><strong>气象场景一句话</strong>：气温等级判定的 <code class="docutils literal notranslate"><span class="pre">if</span> <span class="pre">/</span> <span class="pre">elif</span> <span class="pre">/</span> <span class="pre">else</span></code>
+里只要有一处忘了缩进，那一行就掉出分支——等于“暴雨等级漏判一级”，雨量
+30 mm 明明该是暴雨，却因为没缩进被当普通代码执行，结果全错。</p>
+</div></blockquote>
+<hr class="docutils" />
+</section>
+<section id="indentationerror-unexpected-indent">
+<span id="id7"></span><h3>3.1.3 多了不该有的缩进 —— <code class="docutils literal notranslate"><span class="pre">IndentationError:</span> <span class="pre">unexpected</span> <span class="pre">indent</span></code><a class="headerlink" href="#indentationerror-unexpected-indent" title="Link to this heading">#</a></h3>
+<p><strong>现象 / 真实报错信息</strong></p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="nb">print</span><span class="p">(</span><span class="s2">&quot;开始&quot;</span><span class="p">)</span>
+    <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;这一行被不小心多缩进了，正常应该是顶格&quot;</span><span class="p">)</span>
+</pre></div>
+</div>
+<div class="highlight-text notranslate"><div class="highlight"><pre><span></span>  File &quot;...\sim\ch03\s3_unexpected_indent.py&quot;, line 3
+    print(&quot;这一行被不小心多缩进了，正常应该是顶格&quot;)
+IndentationError: unexpected indent
+</pre></div>
+</div>
+<p><strong>原因</strong>：Python
+没有大/中括号划分块，<strong>顶层层级（模块层）的代码一旦莫名向左推进了几个空格，Python
+就不知它属于哪个块</strong>，直接报「意外的缩进」。通常是：<code class="docutils literal notranslate"><span class="pre">print</span></code>
+顶格语句被多敲了空格、或整段代码无意中整体被 Tab/空格推入。</p>
+<p><strong>解决办法</strong>：确认这一行<strong>不属于任何分支</strong>时把它退到最左侧（顶格）；属于某个块时，退到与<strong>同类兄弟语句完全一致</strong>的列。</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="nb">print</span><span class="p">(</span><span class="s2">&quot;开始&quot;</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;这一行顶格，输出正常&quot;</span><span class="p">)</span>
+</pre></div>
+</div>
+<blockquote>
+<div><p>排查小窍门：打开代码编辑器的「显示空白字符 / 渲染空白」（VS Code
+<code class="docutils literal notranslate"><span class="pre">Ctrl+P</span></code> 输入 <code class="docutils literal notranslate"><span class="pre">Toggle</span> <span class="pre">Render</span> <span class="pre">Whitespace</span></code>），空格会显示成小圆点
+<code class="docutils literal notranslate"><span class="pre">·</span></code>、Tab 显示成
+<code class="docutils literal notranslate"><span class="pre">→</span></code>，一眼看清每行到底缩进了几格。凡缩进不一致，先用编辑器「格式化文档」（VS
+Code <code class="docutils literal notranslate"><span class="pre">Shift+Alt+F</span></code>）一键排齐。</p>
+<p><strong>气象场景一句话</strong>：多一层缩进，Python
+就以为这一行属于「另一个更深的天气系统」，等值线嵌套了不该有的内圈——判断结果彻底对不上号。</p>
+</div></blockquote>
+<hr class="docutils" />
+</section>
+<section id="tab-taberror-inconsistent-use-of-tabs-and-spaces-in-indentation">
+<span id="id8"></span><h3>3.1.4 Tab 与空格混用 —— <code class="docutils literal notranslate"><span class="pre">TabError:</span> <span class="pre">inconsistent</span> <span class="pre">use</span> <span class="pre">of</span> <span class="pre">tabs</span> <span class="pre">and</span> <span class="pre">spaces</span> <span class="pre">in</span> <span class="pre">indentation</span></code><a class="headerlink" href="#tab-taberror-inconsistent-use-of-tabs-and-spaces-in-indentation" title="Link to this heading">#</a></h3>
+<p><strong>现象 / 真实报错信息</strong></p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="k">if</span> <span class="kc">True</span><span class="p">:</span>
+\<span class="n">tprint</span><span class="p">(</span><span class="s2">&quot;这一行用了 Tab(8 列)&quot;</span><span class="p">)</span>
+    <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;这一行用了 4 个空格&quot;</span><span class="p">)</span>
+</pre></div>
+</div>
+<div class="highlight-text notranslate"><div class="highlight"><pre><span></span>  File &quot;...\sim\ch03\s4b_tab_error.py&quot;, line 4
+    print(&quot;这一行用了 Tab(8 列)&quot;)
+TabError: inconsistent use of tabs and spaces in indentation
+</pre></div>
+</div>
+<blockquote>
+<div><p>说明：上面代码第一行分支体用的是<strong>真实 Tab 字符</strong>、第二行用 <strong>4
+个空格</strong>，同一个块用两种字符，Python
+认为缩进「无法唯一判定层级」，抛 <code class="docutils literal notranslate"><span class="pre">TabError</span></code>。这是
+<code class="docutils literal notranslate"><span class="pre">IndentationError</span></code> 的特例——在 0.3 层级树里，<code class="docutils literal notranslate"><span class="pre">TabError</span></code> 是
+<code class="docutils literal notranslate"><span class="pre">IndentationError</span></code> 的子孙。（通常第一步跑出来的可能是
+<code class="docutils literal notranslate"><span class="pre">IndentationError:</span> <span class="pre">unindent</span> <span class="pre">does</span> <span class="pre">not</span> <span class="pre">match...</span></code>，报的是同一类病。）</p>
+</div></blockquote>
+<p><strong>原因</strong>：Tab
+和空格混用导致缩进「同一列却可由多种字符组合得到」，Python
+无法确定该行属于哪一层，拒绝运行。</p>
+<p><strong>解决办法</strong>：<strong>统一、统一、再统一——只用 4 个空格，永远不按 Tab
+缩进</strong>。把编辑器 Tab 键改成「插入 4 个空格」：</p>
+<ul class="simple">
+<li><p>VS Code：左下设置 → 搜 <code class="docutils literal notranslate"><span class="pre">insert</span> <span class="pre">spaces</span></code> → 勾选，并设
+<code class="docutils literal notranslate"><span class="pre">Tab</span> <span class="pre">Size</span> <span class="pre">=</span> <span class="pre">4</span></code>；再开启 <code class="docutils literal notranslate"><span class="pre">Render</span> <span class="pre">Whitespace</span></code> 看清晰是我空格。</p></li>
+<li><p>PyCharm：File → Settings → Editor → Code Style → Python，勾选 “Use tab
+character: off”、Indent 填 4。</p></li>
+<li><p>Jupyter / 终端里误按了 Tab，把这一行整行退格重敲 4 空格。</p></li>
+</ul>
+<blockquote>
+<div><p>老文件已经混了怎么办？用编辑器「全选 → 把 Tab 转成空格」（VS Code
+<code class="docutils literal notranslate"><span class="pre">Ctrl+Shift+P</span></code> → “Convert Indentation to Spaces”）一键清洗。</p>
+<p><strong>气象场景一句话</strong>：同一片观测场，一个站点用格点数据、一个用站点数据、单位还不统一——数据根本没法放一起算。Tab/空格混用就是代码里的「单位不统一」，Python
+直接拒绝开工。</p>
+</div></blockquote>
+<hr class="docutils" />
+</section>
+<section id="if-x-indentationerror-pass">
+<span id="id9"></span><h3>3.1.5 空代码块：<code class="docutils literal notranslate"><span class="pre">if</span> <span class="pre">x:</span></code> 下只写了注释 —— 也要 <code class="docutils literal notranslate"><span class="pre">IndentationError</span></code>，用 <code class="docutils literal notranslate"><span class="pre">pass</span></code> 占位<a class="headerlink" href="#if-x-indentationerror-pass" title="Link to this heading">#</a></h3>
+<p><strong>现象 / 真实报错信息</strong></p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">rain</span> <span class="o">=</span> <span class="mf">12.5</span>
+<span class="k">if</span> <span class="n">rain</span> <span class="o">&gt;</span> <span class="mi">10</span><span class="p">:</span>
+    <span class="c1"># 这里还什么都没写，先留个待办</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;打印这一行本该在 if 外，但它其实想进分支&quot;</span><span class="p">)</span>
+</pre></div>
+</div>
+<div class="highlight-text notranslate"><div class="highlight"><pre><span></span>  File &quot;...\sim\ch03\s10_empty_block.py&quot;, line 5
+    print(&quot;打印这一行本该在 if 外，但它其实想进分支&quot;)
+    ^^^^^
+IndentationError: expected an indented block after &#39;if&#39; statement on line 3
+</pre></div>
+</div>
+<p><strong>原因</strong>：<strong>注释不算语句</strong>。<code class="docutils literal notranslate"><span class="pre">if</span> <span class="pre">...:</span></code> 后面的块里如果只写了
+<code class="docutils literal notranslate"><span class="pre">#</span> <span class="pre">注释</span></code>、没有任何可执行语句，这个块还是「空的」，Python
+照样要求你一定给一条语句。很多同学以为「写了注释就等于填满了块」，结果注释底下的
+<code class="docutils literal notranslate"><span class="pre">print</span></code> 又没缩进，于是 <code class="docutils literal notranslate"><span class="pre">if</span></code> 的分支空心、代码块缺失。</p>
+<p><strong>解决办法</strong>：方案一，把想放进分支的语句真正缩进进去；方案二，暂时还没想好写什么时，用<strong>``pass`` 占位</strong>（<code class="docutils literal notranslate"><span class="pre">pass</span></code> 是一条“什么都不做的合法语句”）：</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">rain</span> <span class="o">=</span> <span class="mf">12.5</span>
+<span class="k">if</span> <span class="n">rain</span> <span class="o">&gt;</span> <span class="mi">10</span><span class="p">:</span>
+    <span class="c1"># 这里还什么都没写，先留个待办</span>
+    <span class="k">pass</span>          <span class="c1"># 占位：这个分支将来会写预报结论</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;这一行顶格，正常执行&quot;</span><span class="p">)</span>
+</pre></div>
+</div>
+<blockquote>
+<div><p><code class="docutils literal notranslate"><span class="pre">pass</span></code> 用于 Python
+语法要求“必须有语句”但你暂时不想写任何逻辑的空块；<code class="docutils literal notranslate"><span class="pre">...</span></code>（省略号字面量）也常被拿来占位，但建议初学者统一用
+<code class="docutils literal notranslate"><span class="pre">pass</span></code>，语义更直白。</p>
+<p><strong>气象场景一句话</strong>：「降水等级≥暴雨」预警的分支，你只写了句「待补充」注释就想收工——Python
+不认，它只认实打实的预报动作；先把架子搭好用 <code class="docutils literal notranslate"><span class="pre">pass</span></code>
+占位，改天再填阈值逻辑。</p>
+</div></blockquote>
+<hr class="docutils" />
+</section>
+</section>
+<section id="id10">
+<span id="id11"></span><h2>3.2 条件判断与逻辑运算<a class="headerlink" href="#id10" title="Link to this heading">#</a></h2>
+<section id="syntaxerror">
+<span id="id12"></span><h3>3.2.1 条件里误写赋值 <code class="docutils literal notranslate"><span class="pre">=</span></code>（应当 <code class="docutils literal notranslate"><span class="pre">==</span></code>）—— <code class="docutils literal notranslate"><span class="pre">SyntaxError</span></code><a class="headerlink" href="#syntaxerror" title="Link to this heading">#</a></h3>
+<p><strong>现象 / 真实报错信息</strong></p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">x</span> <span class="o">=</span> <span class="mi">5</span>
+<span class="k">if</span> <span class="n">x</span> <span class="o">=</span> <span class="mi">5</span><span class="p">:</span>
+    <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;x 等于 5&quot;</span><span class="p">)</span>
+</pre></div>
+</div>
+<div class="highlight-text notranslate"><div class="highlight"><pre><span></span>  File &quot;...\sim\ch03\s5_assign_in_cond.py&quot;, line 3
+    if x = 5:
+       ^^^^^
+SyntaxError: invalid syntax. Maybe you meant &#39;==&#39; or &#39;:=&#39; instead of &#39;=&#39;?
+</pre></div>
+</div>
+<p><strong>原因</strong>：<code class="docutils literal notranslate"><span class="pre">if</span></code> 的条件里必须是「<strong>产生 ``True/False``
+的表达式</strong>」，而 <code class="docutils literal notranslate"><span class="pre">=</span></code> 是<strong>赋值语句</strong>、不是比较。把 <code class="docutils literal notranslate"><span class="pre">x</span> <span class="pre">=</span> <span class="pre">5</span></code> 塞进
+<code class="docutils literal notranslate"><span class="pre">if</span></code> 会让解释器在条件位置读到一条赋值，语义非法。这一条在 <code class="docutils literal notranslate"><span class="pre">flow.rst</span></code>
+里有专门 <code class="docutils literal notranslate"><span class="pre">warning</span></code>：「单独的 <code class="docutils literal notranslate"><span class="pre">=</span></code> 仅表示赋值，判断相等必须用
+<code class="docutils literal notranslate"><span class="pre">==</span></code>」——正是第一高频报错。3.12 版本甚至贴心地提示你「Maybe you meant
+<code class="docutils literal notranslate"><span class="pre">==</span></code> or <code class="docutils literal notranslate"><span class="pre">:=</span></code>」。</p>
+<p><strong>解决办法</strong>：判断相等用<strong>双等号 ``==``</strong>：</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">x</span> <span class="o">=</span> <span class="mi">5</span>
+<span class="k">if</span> <span class="n">x</span> <span class="o">==</span> <span class="mi">5</span><span class="p">:</span>
+    <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;x 等于 5&quot;</span><span class="p">)</span>   <span class="c1"># 输出：x 等于 5</span>
+</pre></div>
+</div>
+<blockquote>
+<div><p>延伸：如果确实想在条件里「一边赋值一边判断」，那是 Python 3.8+
+的海象运算符 <code class="docutils literal notranslate"><span class="pre">:=</span></code>
+的活（<code class="docutils literal notranslate"><span class="pre">if</span> <span class="pre">(m</span> <span class="pre">:=</span> <span class="pre">后台读取到的值)</span> <span class="pre">&gt;</span> <span class="pre">0:</span></code>），本章不必掌握，但看到报错里提示
+<code class="docutils literal notranslate"><span class="pre">:=</span></code> 就知道它说的不是你现在要的。</p>
+<p><strong>气象场景一句话</strong>：判断「今天是否达高温」却写成
+<code class="docutils literal notranslate"><span class="pre">if</span> <span class="pre">temp</span> <span class="pre">=</span> <span class="pre">35</span></code>，等于把「天气」当「命令」使唤——不是查天气，而是把温度硬改成
+35，Python 当然拦下你（语法错误），气象等级判定瞬间失守。</p>
+</div></blockquote>
+<hr class="docutils" />
+</section>
+<section id="if-elif-else-elif-else-syntaxerror">
+<span id="ifelifelse-elif-else-syntaxerror"></span><h3>3.2.2 <code class="docutils literal notranslate"><span class="pre">if/elif/else</span></code> 结构错误：<code class="docutils literal notranslate"><span class="pre">elif</span></code> 单独出现、<code class="docutils literal notranslate"><span class="pre">else</span></code> 后跟条件 —— <code class="docutils literal notranslate"><span class="pre">SyntaxError</span></code><a class="headerlink" href="#if-elif-else-elif-else-syntaxerror" title="Link to this heading">#</a></h3>
+<p><strong>三类真实报错信息</strong></p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="c1"># ① elif 前面没有 if（elif 不能打头）</span>
+<span class="n">score</span> <span class="o">=</span> <span class="mi">85</span>
+<span class="k">elif</span> <span class="n">score</span> <span class="o">&gt;=</span> <span class="mi">60</span><span class="p">:</span>
+    <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;及格&quot;</span><span class="p">)</span>
+</pre></div>
+</div>
+<div class="highlight-text notranslate"><div class="highlight"><pre><span></span>  File &quot;...\s6_elif_alone.py&quot;, line 3
+    elif score &gt;= 60:
+    ^^^^
+SyntaxError: invalid syntax
+</pre></div>
+</div>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="c1"># ② else 后面不能跟条件(else 只兜底)</span>
+<span class="n">temp</span> <span class="o">=</span> <span class="mi">32</span>
+<span class="k">if</span> <span class="n">temp</span> <span class="o">&gt;</span> <span class="mi">30</span><span class="p">:</span>
+    <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;高温&quot;</span><span class="p">)</span>
+<span class="k">else</span> <span class="n">temp</span> <span class="o">&gt;</span> <span class="mi">20</span><span class="p">:</span>
+    <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;偏热&quot;</span><span class="p">)</span>
+</pre></div>
+</div>
+<div class="highlight-text notranslate"><div class="highlight"><pre><span></span>  File &quot;...\s7_else_with_cond.py&quot;, line 5
+    else temp &gt; 20:
+         ^^^^
+SyntaxError: expected &#39;:&#39;
+</pre></div>
+</div>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="c1"># ③ else 单独出现、前面既没有 if 也没有循环</span>
+<span class="n">x</span> <span class="o">=</span> <span class="mi">10</span>
+<span class="k">else</span><span class="p">:</span>
+    <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;else 无处安放&quot;</span><span class="p">)</span>
+</pre></div>
+</div>
+<div class="highlight-text notranslate"><div class="highlight"><pre><span></span>  File &quot;...\r7_else_alone.py&quot;, line 3
+    else:
+    ^^^^
+SyntaxError: invalid syntax
+</pre></div>
+</div>
+<p><strong>原因</strong>：<code class="docutils literal notranslate"><span class="pre">elif</span></code> 和 <code class="docutils literal notranslate"><span class="pre">else</span></code> <strong>都必须依附在某个 ``if``
+之后</strong>，它们是「接续器」不是「开头」。<code class="docutils literal notranslate"><span class="pre">else</span></code>
+关键词后面<strong>不接任何条件</strong>（它兜底其余所有情况）——这是 <code class="docutils literal notranslate"><span class="pre">flow.rst</span></code>
+三件必记之一。三个反模式分别犯：<code class="docutils literal notranslate"><span class="pre">elif</span></code> 打头、<code class="docutils literal notranslate"><span class="pre">else</span></code>
+带条件、<code class="docutils literal notranslate"><span class="pre">else</span></code> 孤立。</p>
+<p><strong>解决办法</strong>：理清层级，<code class="docutils literal notranslate"><span class="pre">elif</span></code> 前面必有 <code class="docutils literal notranslate"><span class="pre">if</span></code>，<code class="docutils literal notranslate"><span class="pre">else:</span></code>
+后面直接换行写块、<strong>绝不给它写条件</strong>：</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">rain</span> <span class="o">=</span> <span class="mf">45.0</span>
+<span class="k">if</span> <span class="n">rain</span> <span class="o">&lt;</span> <span class="mi">10</span><span class="p">:</span>
+    <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;小雨&quot;</span><span class="p">)</span>
+<span class="k">elif</span> <span class="n">rain</span> <span class="o">&lt;</span> <span class="mi">50</span><span class="p">:</span>     <span class="c1"># elif 在 if 之后，条件照写</span>
+    <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;大雨&quot;</span><span class="p">)</span>
+<span class="k">else</span><span class="p">:</span>               <span class="c1"># else 不接任何条件</span>
+    <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;暴雨及以上&quot;</span><span class="p">)</span>
+</pre></div>
+</div>
+<blockquote>
+<div><p>判定顺序提醒（PPT 第 14 页专门强调）：<strong>``elif``
+自上而下，条件有包含关系时先小后大</strong>。<code class="docutils literal notranslate"><span class="pre">if</span> <span class="pre">score&gt;=60:</span> <span class="pre">D</span> <span class="pre">/</span> <span class="pre">elif</span> <span class="pre">score&gt;=70:</span> <span class="pre">C</span> <span class="pre">/</span> <span class="pre">elif</span> <span class="pre">score&gt;=80:</span> <span class="pre">B</span> <span class="pre">/</span> <span class="pre">elif</span> <span class="pre">score&gt;=90:</span> <span class="pre">A</span></code>
+这组是反的——它会先判 60，一切到底，90 分永远进不了
+A。正确顺序是从大往小（<code class="docutils literal notranslate"><span class="pre">&gt;=90</span></code>
+在前）或像视频里那样用「阶梯式单边比较」。</p>
+<p><strong>气象场景一句话</strong>：降水等级判定，<code class="docutils literal notranslate"><span class="pre">elif</span></code> 使劲往前凑却搭不上
+<code class="docutils literal notranslate"><span class="pre">if</span></code>，或 <code class="docutils literal notranslate"><span class="pre">else</span></code>
+后面还拖着个条件——等于预警分级表上的「箭头」画错了方向，本应「无雨→暴雨」的阶梯从此断档，漏级在所难免。</p>
+</div></blockquote>
+<hr class="docutils" />
+</section>
+<section id="truthiness-none-0-if-true">
+<span id="id13"></span><h3>3.2.3 条件判断的 Truthiness：空列表 / <code class="docutils literal notranslate"><span class="pre">None</span></code> / <code class="docutils literal notranslate"><span class="pre">0</span></code> 的布尔值，避免 <code class="docutils literal notranslate"><span class="pre">if</span> <span class="pre">列表</span> <span class="pre">==</span> <span class="pre">True</span></code><a class="headerlink" href="#truthiness-none-0-if-true" title="Link to this heading">#</a></h3>
+<p><strong>现象 / 真实输出</strong>（无报错，但判断结果颠覆直觉）</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">empty_list</span> <span class="o">=</span> <span class="p">[]</span>
+<span class="k">if</span> <span class="n">empty_list</span> <span class="o">==</span> <span class="kc">True</span><span class="p">:</span>
+    <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;empty_list 是 True&quot;</span><span class="p">)</span>
+<span class="k">else</span><span class="p">:</span>
+    <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;empty_list == True 是 False，这个 if 是错的&quot;</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;直接 if empty_list：&quot;</span><span class="p">,</span> <span class="s2">&quot;非空&quot;</span> <span class="k">if</span> <span class="n">empty_list</span> <span class="k">else</span> <span class="s2">&quot;空&quot;</span><span class="p">)</span>
+</pre></div>
+</div>
+<div class="highlight-text notranslate"><div class="highlight"><pre><span></span>bool([])      = False
+bool(None)    = False
+bool(0)       = False
+bool(1)       = True
+empty_list == True 是 False，这个 if 是错的
+直接 if empty_list： 空
+</pre></div>
+</div>
+<p><strong>原因</strong>：在条件判断里，Python
+会对很多值隐式求布尔值（Truthiness）：<code class="docutils literal notranslate"><span class="pre">False</span></code>、<code class="docutils literal notranslate"><span class="pre">0</span></code>、<code class="docutils literal notranslate"><span class="pre">0.0</span></code>、空字符串
+<code class="docutils literal notranslate"><span class="pre">&quot;&quot;</span></code>、空列表 <code class="docutils literal notranslate"><span class="pre">[]</span></code>、空元组 <code class="docutils literal notranslate"><span class="pre">()</span></code>、空字典 <code class="docutils literal notranslate"><span class="pre">{}</span></code>、空集合
+<code class="docutils literal notranslate"><span class="pre">set()</span></code>、<code class="docutils literal notranslate"><span class="pre">None</span></code>、<code class="docutils literal notranslate"><span class="pre">float('nan')</span></code>
+之外的绝大多数值都是「真」的。而<strong>「空列表 ``[]`` 本身不等于
+``True``」</strong>——<code class="docutils literal notranslate"><span class="pre">[]</span> <span class="pre">==</span> <span class="pre">True</span></code> 永远是 <code class="docutils literal notranslate"><span class="pre">False</span></code>（<code class="docutils literal notranslate"><span class="pre">==</span></code>
+是比较数值相等，<code class="docutils literal notranslate"><span class="pre">0</span> <span class="pre">==</span> <span class="pre">True</span></code> 都不成立，<code class="docutils literal notranslate"><span class="pre">[]</span></code>
+更不成立）。所以判断集合是否非空，<strong>正确写法是直接
+``if 列表:``</strong>，别拿它和 <code class="docutils literal notranslate"><span class="pre">True</span></code> 比。</p>
+<p><strong>解决办法</strong>：想判断「某站有没有数据」时，直接测集合本身的真假：</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">stations</span> <span class="o">=</span> <span class="p">[</span><span class="s2">&quot;兰州&quot;</span><span class="p">]</span>
+<span class="k">if</span> <span class="n">stations</span><span class="p">:</span>                       <span class="c1"># 非空 → 真</span>
+    <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;有 </span><span class="si">{</span><span class="nb">len</span><span class="p">(</span><span class="n">stations</span><span class="p">)</span><span class="si">}</span><span class="s2"> 个站点&quot;</span><span class="p">)</span>
+<span class="k">else</span><span class="p">:</span>
+    <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;没有站点数据，需补充观测&quot;</span><span class="p">)</span>
+</pre></div>
+</div>
+<blockquote>
+<div><p>记忆口诀：<strong>审值时，``0/空/None/False``
+都是假，其余基本是真</strong>。判断「非空」写
+<code class="docutils literal notranslate"><span class="pre">if</span> <span class="pre">列表:</span></code>(读作“如果有东西”)，判断「是空」写 <code class="docutils literal notranslate"><span class="pre">if</span> <span class="pre">not</span> <span class="pre">列表:</span></code>。</p>
+<p><strong>气象场景一句话</strong>：一群站点的雨量桶都记的是
+<code class="docutils literal notranslate"><span class="pre">0.0</span> <span class="pre">mm</span></code>（空雨量、全空列表），你想知道「到底有没有雨量桶待读取」——写
+<code class="docutils literal notranslate"><span class="pre">if</span> <span class="pre">桶清单</span> <span class="pre">==</span> <span class="pre">True</span></code>
+会把“啥都没有”误判成“有数据”，把空表格当成满表格去发布，贻笑大方。</p>
+</div></blockquote>
+<hr class="docutils" />
+</section>
+<section id="t-35-vs-and">
+<span id="id14"></span><h3>3.2.4 链式比较 <code class="docutils literal notranslate"><span class="pre">20</span> <span class="pre">&lt;</span> <span class="pre">t</span> <span class="pre">&lt;</span> <span class="pre">35</span></code> vs <code class="docutils literal notranslate"><span class="pre">and</span></code> —— 两种等价写法<a class="headerlink" href="#t-35-vs-and" title="Link to this heading">#</a></h3>
+<p><strong>现象 / 真实输出</strong>（不是报错，是常见困惑——到底该写哪种）</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">t</span> <span class="o">=</span> <span class="mi">28</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;链式 20 &lt; t &lt; 35:&quot;</span><span class="p">,</span> <span class="mi">20</span> <span class="o">&lt;</span> <span class="n">t</span> <span class="o">&lt;</span> <span class="mi">35</span><span class="p">)</span>              <span class="c1"># True</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;and   20 &lt; t and t &lt; 35:&quot;</span><span class="p">,</span> <span class="mi">20</span> <span class="o">&lt;</span> <span class="n">t</span> <span class="ow">and</span> <span class="n">t</span> <span class="o">&lt;</span> <span class="mi">35</span><span class="p">)</span>  <span class="c1"># True</span>
+<span class="n">t2</span> <span class="o">=</span> <span class="mi">40</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;链式 t2=40:&quot;</span><span class="p">,</span> <span class="mi">20</span> <span class="o">&lt;</span> <span class="n">t2</span> <span class="o">&lt;</span> <span class="mi">35</span><span class="p">,</span> <span class="s2">&quot; and 写法:&quot;</span><span class="p">,</span> <span class="mi">20</span> <span class="o">&lt;</span> <span class="n">t2</span> <span class="ow">and</span> <span class="n">t2</span> <span class="o">&lt;</span> <span class="mi">35</span><span class="p">)</span>
+</pre></div>
+</div>
+<div class="highlight-text notranslate"><div class="highlight"><pre><span></span>链式 20 &lt; t &lt; 35: True
+and   20 &lt; t and t &lt; 35: True
+链式 t2=40: False  and 写法: False
+</pre></div>
+</div>
+<p>（两条写法对任何输入的结果<strong>完全一致</strong>，选读数更顺眼的即可。）</p>
+<p><strong>原因</strong>：Python 支持<strong>数学意义上的链式比较</strong>
+<code class="docutils literal notranslate"><span class="pre">a</span> <span class="pre">&lt;</span> <span class="pre">x</span> <span class="pre">&lt;</span> <span class="pre">b</span></code>，它自动展开为「<code class="docutils literal notranslate"><span class="pre">a</span> <span class="pre">&lt;</span> <span class="pre">x</span></code> 且 <code class="docutils literal notranslate"><span class="pre">x</span> <span class="pre">&lt;</span> <span class="pre">b</span></code>」。这正是
+<code class="docutils literal notranslate"><span class="pre">flow.rst</span></code>
+强调的反模式「碎片区间」要避免的东西——但它本身语法合法、逻辑准确，永远等价于
+<code class="docutils literal notranslate"><span class="pre">a</span> <span class="pre">&lt;</span> <span class="pre">x</span> <span class="pre">and</span> <span class="pre">x</span> <span class="pre">&lt;</span> <span class="pre">b</span></code>。<strong>注意别把它和 ``and`` 弄混成 ``a &lt; x &lt; b``
+就是
+``and``</strong>——其实等价，只是写法不同；真正要警惕的是「链式比较里夹了副作用/变了变量」。</p>
+<p><strong>解决办法</strong>：两种皆可，随你顺手。推荐：</p>
+<ul class="simple">
+<li><p>清晰的范围判定：直接用<strong>单条链式</strong>
+<code class="docutils literal notranslate"><span class="pre">if</span> <span class="pre">20</span> <span class="pre">&lt;=</span> <span class="pre">t</span> <span class="pre">&lt;=</span> <span class="pre">35:</span></code>，读数最像数学式；</p></li>
+<li><p>跨类型的复合条件（如「温度高 <strong>或</strong> 湿度大」）用 <code class="docutils literal notranslate"><span class="pre">and</span> <span class="pre">/</span> <span class="pre">or</span></code> 组合。</p></li>
+</ul>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">t</span> <span class="o">=</span> <span class="mi">28</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;20 &lt;= t &lt;= 35:&quot;</span><span class="p">,</span> <span class="mi">20</span> <span class="o">&lt;=</span> <span class="n">t</span> <span class="o">&lt;=</span> <span class="mi">35</span><span class="p">)</span>      <span class="c1"># True，推荐的范围写法</span>
+</pre></div>
+</div>
+<blockquote>
+<div><p>易错点提示：<strong>别把 ``and`` 当数学连接符连着变量乱写</strong>，例如
+<code class="docutils literal notranslate"><span class="pre">if</span> <span class="pre">t</span> <span class="pre">&gt;</span> <span class="pre">20</span> <span class="pre">and</span> <span class="pre">&lt;</span> <span class="pre">35:</span></code> 是<strong>语法错误</strong>——<code class="docutils literal notranslate"><span class="pre">&lt;</span></code>
+左边缺了操作数，<code class="docutils literal notranslate"><span class="pre">and</span></code> 前后必须是两个完整的表达式。</p>
+<p><strong>气象场景一句话</strong>：判断「≤35 ℃ 且 ≥20 ℃ 的适宜温区」写成
+<code class="docutils literal notranslate"><span class="pre">20</span> <span class="pre">&lt;</span> <span class="pre">t</span> <span class="pre">&lt;</span> <span class="pre">35</span></code>，句子跟气象条件一样“区间明确”；要是东拼西凑漏一半（<code class="docutils literal notranslate"><span class="pre">and</span> <span class="pre">&lt;</span> <span class="pre">35</span></code>），就预告片缺了半截，判定范围直接破洞。</p>
+</div></blockquote>
+<hr class="docutils" />
+</section>
+<section id="or-and">
+<span id="id15"></span><h3>3.2.5 <code class="docutils literal notranslate"><span class="pre">or</span></code> / <code class="docutils literal notranslate"><span class="pre">and</span></code> 的短路返回值：返回「表达式」，不是布尔<a class="headerlink" href="#or-and" title="Link to this heading">#</a></h3>
+<p><strong>现象 / 真实输出</strong></p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="k">def</span><span class="w"> </span><span class="nf">sensor</span><span class="p">():</span> <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;调用 sensor()，返回缺测 None&quot;</span><span class="p">);</span> <span class="k">return</span> <span class="kc">None</span>
+<span class="k">def</span><span class="w"> </span><span class="nf">backup</span><span class="p">():</span> <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;调用 backup()，返回备用值 25.0&quot;</span><span class="p">);</span> <span class="k">return</span> <span class="mf">25.0</span>
+<span class="n">result</span> <span class="o">=</span> <span class="n">sensor</span><span class="p">()</span> <span class="ow">or</span> <span class="n">backup</span><span class="p">()</span>     <span class="c1"># 主传感器缺测(None→假)，or 会去取备用</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;or 的结果是:&quot;</span><span class="p">,</span> <span class="n">result</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="mi">0</span> <span class="ow">or</span> <span class="s2">&quot;默认值&quot;</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="mi">28</span> <span class="ow">or</span> <span class="mi">0</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="mi">28</span> <span class="ow">and</span> <span class="mi">0</span><span class="p">)</span>
+</pre></div>
+</div>
+<div class="highlight-text notranslate"><div class="highlight"><pre><span></span>调用 sensor()，返回缺测 None
+调用 backup()，返回备用值 25.0
+or 的结果是: 25.0
+默认值
+28
+0
+</pre></div>
+</div>
+<p><strong>原因</strong>：<code class="docutils literal notranslate"><span class="pre">x</span> <span class="pre">or</span> <span class="pre">y</span></code> 的逻辑是「<strong>若 x 为真，返回 x；否则返回
+y</strong>」；<code class="docutils literal notranslate"><span class="pre">x</span> <span class="pre">and</span> <span class="pre">y</span></code> 则是「<strong>若 x 为假，返回 x；否则返回
+y</strong>」。所以它<strong>返回的是参与运算的某个值本身</strong>，不一定是
+<code class="docutils literal notranslate"><span class="pre">True/False</span></code>。这就是「取缺测时的备用值」的经典写法——<code class="docutils literal notranslate"><span class="pre">sensor()</span> <span class="pre">or</span> <span class="pre">backup()</span></code>
+在 <code class="docutils literal notranslate"><span class="pre">sensor()</span></code> 拿到 <code class="docutils literal notranslate"><span class="pre">None</span></code>（假）时自动落回 <code class="docutils literal notranslate"><span class="pre">backup()</span></code>。</p>
+<p><strong>解决办法</strong>：</p>
+<ul class="simple">
+<li><p>想要真的布尔结果，用 <code class="docutils literal notranslate"><span class="pre">bool(...)</span></code>
+包一下：<code class="docutils literal notranslate"><span class="pre">print(bool(0</span> <span class="pre">or</span> <span class="pre">&quot;默认值&quot;))</span></code> 是 <code class="docutils literal notranslate"><span class="pre">True</span></code>；</p></li>
+<li><p>想实现「取备胎」逻辑，<code class="docutils literal notranslate"><span class="pre">A</span> <span class="pre">or</span> <span class="pre">B</span></code> 正是你要的，别绕路写
+<code class="docutils literal notranslate"><span class="pre">if</span> <span class="pre">A:</span> <span class="pre">use</span> <span class="pre">A</span> <span class="pre">else:</span> <span class="pre">use</span> <span class="pre">B</span></code>；</p></li>
+<li><p>想判断「A 和 B 都得是真」再用 <code class="docutils literal notranslate"><span class="pre">A</span> <span class="pre">and</span> <span class="pre">B</span></code> 当条件。</p></li>
+</ul>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">station_temp</span> <span class="o">=</span> <span class="kc">None</span>                <span class="c1"># 某站缺测</span>
+<span class="n">backup_temp</span>  <span class="o">=</span> <span class="mf">25.0</span>
+<span class="n">t</span> <span class="o">=</span> <span class="n">station_temp</span> <span class="k">if</span> <span class="n">station_temp</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span> <span class="k">else</span> <span class="n">backup_temp</span>   <span class="c1"># 显式取备</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;最终采用温度:&quot;</span><span class="p">,</span> <span class="n">t</span><span class="p">)</span>              <span class="c1"># 25.0</span>
+</pre></div>
+</div>
+<blockquote>
+<div><p>拓展提醒：短路(<code class="docutils literal notranslate"><span class="pre">short-circuit</span></code>)意味着 <code class="docutils literal notranslate"><span class="pre">or</span> <span class="pre">/</span> <span class="pre">and</span></code>
+<strong>可能不执行第二个表达式</strong>——上面 <code class="docutils literal notranslate"><span class="pre">backup()</span></code> 只在 <code class="docutils literal notranslate"><span class="pre">sensor()</span></code>
+为假时才被调用。别依赖“两个函数都被调用”去收数据。</p>
+<p><strong>气象场景一句话</strong>：主站观测仪坏了返回
+<code class="docutils literal notranslate"><span class="pre">None</span></code>，你想「主站不行就自动用备用站」——<code class="docutils literal notranslate"><span class="pre">主站气温</span> <span class="pre">or</span> <span class="pre">备用站气温</span></code>
+一个式子就搞定；这正是把 <code class="docutils literal notranslate"><span class="pre">or</span></code> 的短路当“多传感器自愈”用的贴合场景。</p>
+</div></blockquote>
+<hr class="docutils" />
+</section>
+</section>
+<section id="for">
+<span id="id16"></span><h2>3.3 for 循环<a class="headerlink" href="#for" title="Link to this heading">#</a></h2>
+<blockquote>
+<div><p>气象类比一句话：<code class="docutils literal notranslate"><span class="pre">for</span></code>
+就像<strong>让探空气球逐层爬升、挨层读温度</strong>，每一层是列表里的一个元素；把探测器装错要用“新列表”而不动原列表，才不会被上一次气球挤压带乱次序。</p>
+</div></blockquote>
+<section id="id17">
+<span id="id18"></span><h3>3.3.1 遍历列表时修改正在迭代的列表 —— 跳过元素 / 错位 / 可能报错<a class="headerlink" href="#id17" title="Link to this heading">#</a></h3>
+<p><strong>现象 / 真实输出</strong>（无报错，但结果错！——最阴险的一类）</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">temps</span> <span class="o">=</span> <span class="p">[</span><span class="mi">25</span><span class="p">,</span> <span class="mi">32</span><span class="p">,</span> <span class="mi">28</span><span class="p">,</span> <span class="mi">35</span><span class="p">,</span> <span class="mi">30</span><span class="p">,</span> <span class="mi">27</span><span class="p">]</span>
+<span class="k">for</span> <span class="n">t</span> <span class="ow">in</span> <span class="n">temps</span><span class="p">:</span>
+    <span class="k">if</span> <span class="n">t</span> <span class="o">&gt;=</span> <span class="mi">30</span><span class="p">:</span>          <span class="c1"># 想删掉所有&quot;高温日&quot;(&gt;=30)</span>
+        <span class="n">temps</span><span class="o">.</span><span class="n">remove</span><span class="p">(</span><span class="n">t</span><span class="p">)</span>  <span class="c1"># 边遍历边删 → 索引错位</span>
+    <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;  当次取到&quot;</span><span class="p">,</span> <span class="n">t</span><span class="p">,</span> <span class="s2">&quot;，当前列表&quot;</span><span class="p">,</span> <span class="n">temps</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;删除后:&quot;</span><span class="p">,</span> <span class="n">temps</span><span class="p">)</span>
+</pre></div>
+</div>
+<div class="highlight-text notranslate"><div class="highlight"><pre><span></span>删除前: [25, 32, 28, 35, 30, 27]
+  当次取到 25 ，当前列表 [25, 32, 28, 35, 30, 27]
+  当次取到 32 ，当前列表 [25, 28, 35, 30, 27]
+  当次取到 35 ，当前列表 [25, 28, 30, 27]
+  当次取到 27 ，当前列表 [25, 28, 30, 27]
+删除后: [25, 28, 30, 27] （35 没被删掉 = 被跳过了！）
+</pre></div>
+</div>
+<p><strong>原因</strong>：<code class="docutils literal notranslate"><span class="pre">for</span></code> 内部用一个游标，每轮移动一次去找下个元素。你在取到
+<code class="docutils literal notranslate"><span class="pre">32</span></code> 时把它 <code class="docutils literal notranslate"><span class="pre">remove</span></code> 掉了，后面的 <code class="docutils literal notranslate"><span class="pre">28</span></code>
+顺势前移一位、被游标<strong>跳过</strong>；同理 <code class="docutils literal notranslate"><span class="pre">30</span></code> 跳掉。结果
+<code class="docutils literal notranslate"><span class="pre">35</span></code>、<code class="docutils literal notranslate"><span class="pre">30</span></code> 两个高温日明明 ≥30
+却没被删——<strong>边遍历边改列表，游标和长度错位</strong>。若在循环里 <code class="docutils literal notranslate"><span class="pre">append</span></code>
+增加元素，还可能造成<strong>列表无限变长、循环转不完</strong>；若一边删又把列表删空/越界，还会顺手触发
+<code class="docutils literal notranslate"><span class="pre">IndexError</span></code>。</p>
+<p><strong>解决办法</strong>：<strong>不要边遍历边改原列表</strong>。三种安全做法（推荐第一种）：</p>
+<ul class="simple">
+<li><p>遍历它的<strong>副本</strong>
+<code class="docutils literal notranslate"><span class="pre">for</span> <span class="pre">t</span> <span class="pre">in</span> <span class="pre">temps[:]:</span></code>（切片产生新列表，删原列表互不干扰）；</p></li>
+<li><p>用<strong>列表推导式</strong>新建 <code class="docutils literal notranslate"><span class="pre">kept</span> <span class="pre">=</span> <span class="pre">[t</span> <span class="pre">for</span> <span class="pre">t</span> <span class="pre">in</span> <span class="pre">temps</span> <span class="pre">if</span> <span class="pre">t</span> <span class="pre">&lt;</span> <span class="pre">30]</span></code>；</p></li>
+<li><p>从<strong>后往前删</strong>（<code class="docutils literal notranslate"><span class="pre">for</span> <span class="pre">i</span> <span class="pre">in</span> <span class="pre">range(len(temps)-1,</span> <span class="pre">-1,</span> <span class="pre">-1):</span></code>），因为删末尾不影响前面游标。</p></li>
+</ul>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">temps</span> <span class="o">=</span> <span class="p">[</span><span class="mi">25</span><span class="p">,</span> <span class="mi">32</span><span class="p">,</span> <span class="mi">28</span><span class="p">,</span> <span class="mi">35</span><span class="p">,</span> <span class="mi">30</span><span class="p">,</span> <span class="mi">27</span><span class="p">]</span>
+<span class="n">kept</span> <span class="o">=</span> <span class="p">[</span><span class="n">t</span> <span class="k">for</span> <span class="n">t</span> <span class="ow">in</span> <span class="n">temps</span> <span class="k">if</span> <span class="n">t</span> <span class="o">&lt;</span> <span class="mi">30</span><span class="p">]</span>     <span class="c1"># 只留非高温(推荐)</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">kept</span><span class="p">)</span>                              <span class="c1"># [25, 28, 27]</span>
+</pre></div>
+</div>
+<blockquote>
+<div><p><code class="docutils literal notranslate"><span class="pre">flow.rst</span></code>
+的列表推导式正是为这个场景准备的：<code class="docutils literal notranslate"><span class="pre">high_days</span> <span class="pre">=</span> <span class="pre">[t</span> <span class="pre">for</span> <span class="pre">t</span> <span class="pre">in</span> <span class="pre">temps</span> <span class="pre">if</span> <span class="pre">t&gt;=35]</span></code>
+一步筛出、不动原列表。</p>
+<p><strong>气象场景一句话</strong>：你想从逐日气温里「剔除 ≥35 ℃
+的高温日」，却边扫边删原数组——像探针在改自己的采样路径，有的高温日被“卡位跳过”，最后说你没发现有高温，实际天天
+38 ℃。</p>
+</div></blockquote>
+<hr class="docutils" />
+</section>
+<section id="range-len-x-1-indexerror-list-index-out-of-range">
+<span id="rangelenx1-indexerror-list-index-out-of-range"></span><h3>3.3.2 用 <code class="docutils literal notranslate"><span class="pre">range(len(x)+1)</span></code> 取下标，越界 —— <code class="docutils literal notranslate"><span class="pre">IndexError:</span> <span class="pre">list</span> <span class="pre">index</span> <span class="pre">out</span> <span class="pre">of</span> <span class="pre">range</span></code><a class="headerlink" href="#range-len-x-1-indexerror-list-index-out-of-range" title="Link to this heading">#</a></h3>
+<p><strong>现象 / 真实报错信息</strong></p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">names</span> <span class="o">=</span> <span class="p">[</span><span class="s2">&quot;兰州&quot;</span><span class="p">,</span> <span class="s2">&quot;北京&quot;</span><span class="p">,</span> <span class="s2">&quot;上海&quot;</span><span class="p">]</span>
+<span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">names</span><span class="p">)</span> <span class="o">+</span> <span class="mi">1</span><span class="p">):</span>   <span class="c1"># 多跑一次 → i=3 越界</span>
+    <span class="nb">print</span><span class="p">(</span><span class="n">i</span><span class="p">,</span> <span class="n">names</span><span class="p">[</span><span class="n">i</span><span class="p">])</span>
+</pre></div>
+</div>
+<div class="highlight-text notranslate"><div class="highlight"><pre><span></span>0 兰州
+1 北京
+2 上海
+Traceback (most recent call last):
+  File &quot;...\sim\ch03\r4_index_error.py&quot;, line 4, in &lt;module&gt;
+    print(i, names[i])
+             ~~~~~^^^
+IndexError: list index out of range
+</pre></div>
+</div>
+<p><strong>原因</strong>：列表下标从 <strong>0</strong> 开始，有效范围为
+<code class="docutils literal notranslate"><span class="pre">0</span> <span class="pre">..</span> <span class="pre">len-1</span></code>。<code class="docutils literal notranslate"><span class="pre">range(len(names)+1)</span></code> 会生成到 <code class="docutils literal notranslate"><span class="pre">len</span></code>
+本身（这里是 3），而 <code class="docutils literal notranslate"><span class="pre">names[3]</span></code>
+不存在——<strong>Off-by-one（差一）错误</strong>。<code class="docutils literal notranslate"><span class="pre">flow.rst</span></code> 里给了用
+<code class="docutils literal notranslate"><span class="pre">range(len())</span></code> 配合下标的写法，稍不留神多 +1 就越界。</p>
+<p><strong>解决办法</strong>：改成 <code class="docutils literal notranslate"><span class="pre">range(len(names))</span></code>，或更好用 <code class="docutils literal notranslate"><span class="pre">enumerate</span></code>
+同时拿下标和值（见 §3.3.3）：</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">names</span> <span class="o">=</span> <span class="p">[</span><span class="s2">&quot;兰州&quot;</span><span class="p">,</span> <span class="s2">&quot;北京&quot;</span><span class="p">,</span> <span class="s2">&quot;上海&quot;</span><span class="p">]</span>
+<span class="k">for</span> <span class="n">i</span><span class="p">,</span> <span class="n">city</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="n">names</span><span class="p">):</span>     <span class="c1"># i 自动从 0 到 2</span>
+    <span class="nb">print</span><span class="p">(</span><span class="n">i</span><span class="p">,</span> <span class="n">city</span><span class="p">)</span>
+</pre></div>
+</div>
+<blockquote>
+<div><p>深究：<code class="docutils literal notranslate"><span class="pre">IndexError</span></code> 是 <code class="docutils literal notranslate"><span class="pre">LookupError</span></code> 的子孙（0.3 层级树），跟第
+2 章“索引”主题同源；本章只是它出现在 <code class="docutils literal notranslate"><span class="pre">for</span> <span class="pre">+</span> <span class="pre">len</span></code>
+组合里。看到它先数一遍 <code class="docutils literal notranslate"><span class="pre">len</span></code> 与循环到底跑几次。</p>
+<p><strong>气象场景一句话</strong>：遍历 30 天资料却写了
+<code class="docutils literal notranslate"><span class="pre">range(len(t)+1)</span></code>——探空气球多爬了一层拿云端空气当下层，<code class="docutils literal notranslate"><span class="pre">第31天</span></code>
+根本不存在，IndexError 拦下你这颗“不该升的空球”。</p>
+</div></blockquote>
+<hr class="docutils" />
+</section>
+<section id="valueerror-not-enough-too-many-values-to-unpack">
+<span id="id19"></span><h3>3.3.3 枚举/解包个数不匹配 —— <code class="docutils literal notranslate"><span class="pre">ValueError:</span> <span class="pre">not</span> <span class="pre">enough</span> <span class="pre">/</span> <span class="pre">too</span> <span class="pre">many</span> <span class="pre">values</span> <span class="pre">to</span> <span class="pre">unpack</span></code><a class="headerlink" href="#valueerror-not-enough-too-many-values-to-unpack" title="Link to this heading">#</a></h3>
+<p><strong>现象 / 真实报错信息</strong>（两个方向都演示）</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">data</span> <span class="o">=</span> <span class="p">[(</span><span class="s2">&quot;兰州&quot;</span><span class="p">,</span> <span class="mf">28.1</span><span class="p">),</span> <span class="p">(</span><span class="s2">&quot;北京&quot;</span><span class="p">,</span> <span class="mf">29.4</span><span class="p">)]</span>
+<span class="k">for</span> <span class="n">station</span><span class="p">,</span> <span class="n">temp</span><span class="p">,</span> <span class="n">alt</span> <span class="ow">in</span> <span class="n">data</span><span class="p">:</span>   <span class="c1"># 想要 3 个，元组只有 2 个 → not enough</span>
+    <span class="nb">print</span><span class="p">(</span><span class="n">station</span><span class="p">,</span> <span class="n">temp</span><span class="p">,</span> <span class="n">alt</span><span class="p">)</span>
+</pre></div>
+</div>
+<div class="highlight-text notranslate"><div class="highlight"><pre><span></span>ValueError: not enough values to unpack (expected 3, got 2)
+</pre></div>
+</div>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">data</span> <span class="o">=</span> <span class="p">[(</span><span class="s2">&quot;兰州&quot;</span><span class="p">,</span> <span class="mf">28.1</span><span class="p">,</span> <span class="mi">1000</span><span class="p">),</span> <span class="p">(</span><span class="s2">&quot;北京&quot;</span><span class="p">,</span> <span class="mf">29.4</span><span class="p">)]</span>
+<span class="k">for</span> <span class="n">station</span><span class="p">,</span> <span class="n">temp</span> <span class="ow">in</span> <span class="n">data</span><span class="p">:</span>        <span class="c1"># 前面元组有 3 个，只写 2 个变量 → too many</span>
+    <span class="nb">print</span><span class="p">(</span><span class="n">station</span><span class="p">,</span> <span class="n">temp</span><span class="p">)</span>
+</pre></div>
+</div>
+<div class="highlight-text notranslate"><div class="highlight"><pre><span></span>ValueError: too many values to unpack (expected 2)
+</pre></div>
+</div>
+<p><strong>原因</strong>：<code class="docutils literal notranslate"><span class="pre">for</span> <span class="pre">a,</span> <span class="pre">b</span> <span class="pre">in</span> <span class="pre">...</span></code> 要求<strong>每个被迭代元素都能解出
+``a``、``b``</strong>。写几个变量就得有几个值：变量比值多 →
+<code class="docutils literal notranslate"><span class="pre">not</span> <span class="pre">enough</span></code>；值比变量多 →
+<code class="docutils literal notranslate"><span class="pre">too</span> <span class="pre">many</span></code>。数据里混进“长短不齐”的记录就翻车。<code class="docutils literal notranslate"><span class="pre">flow.rst</span></code> 用的
+<code class="docutils literal notranslate"><span class="pre">for</span> <span class="pre">station,</span> <span class="pre">temp</span> <span class="pre">in</span> <span class="pre">zip(...)</span></code> / <code class="docutils literal notranslate"><span class="pre">weather.items()</span></code>
+都靠这种解包——前提是每个元组长度一致。</p>
+<p><strong>解决办法</strong>：保证每个元素结构一致；被迭代对象不确定时，先 <code class="docutils literal notranslate"><span class="pre">print</span></code>
+前几项看看长度，或改用更稳妥的写法（每项只取固定下标，不展开）：</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="c1"># 方案一：保证数据齐整</span>
+<span class="n">data</span> <span class="o">=</span> <span class="p">[(</span><span class="s2">&quot;兰州&quot;</span><span class="p">,</span> <span class="mf">28.1</span><span class="p">,</span> <span class="mi">1000</span><span class="p">),</span> <span class="p">(</span><span class="s2">&quot;北京&quot;</span><span class="p">,</span> <span class="mf">29.4</span><span class="p">,</span> <span class="mi">500</span><span class="p">)]</span>
+<span class="k">for</span> <span class="n">station</span><span class="p">,</span> <span class="n">temp</span><span class="p">,</span> <span class="n">alt</span> <span class="ow">in</span> <span class="n">data</span><span class="p">:</span>
+    <span class="nb">print</span><span class="p">(</span><span class="n">station</span><span class="p">,</span> <span class="n">temp</span><span class="p">,</span> <span class="n">alt</span><span class="p">)</span>
+
+<span class="c1"># 方案二：不强行解包，用下标访问，容忍结构不同</span>
+<span class="n">data2</span> <span class="o">=</span> <span class="p">[(</span><span class="s2">&quot;兰州&quot;</span><span class="p">,</span> <span class="mf">28.1</span><span class="p">,</span> <span class="mi">1000</span><span class="p">),</span> <span class="p">(</span><span class="s2">&quot;北京&quot;</span><span class="p">,</span> <span class="mf">29.4</span><span class="p">)]</span>
+<span class="k">for</span> <span class="n">item</span> <span class="ow">in</span> <span class="n">data2</span><span class="p">:</span>
+    <span class="n">station</span> <span class="o">=</span> <span class="n">item</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
+    <span class="n">temp</span>    <span class="o">=</span> <span class="n">item</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span>
+    <span class="nb">print</span><span class="p">(</span><span class="n">station</span><span class="p">,</span> <span class="n">temp</span><span class="p">)</span>
+</pre></div>
+</div>
+<blockquote>
+<div><p>关联记忆：<code class="docutils literal notranslate"><span class="pre">enumerate</span></code> 每项返回 <code class="docutils literal notranslate"><span class="pre">(下标,</span> <span class="pre">值)</span></code> 二元组，所以
+<code class="docutils literal notranslate"><span class="pre">for</span> <span class="pre">idx,</span> <span class="pre">val</span> <span class="pre">in</span> <span class="pre">enumerate(lst)</span></code> 的<strong>变量个数必须刚好 2
+个</strong>；多写一个变量也会 <code class="docutils literal notranslate"><span class="pre">not</span> <span class="pre">enough</span> <span class="pre">values</span> <span class="pre">to</span> <span class="pre">unpack</span></code>。</p>
+<p><strong>气象场景一句话</strong>：站点气温表里，“北京”那行某天少记了个高度字段，<code class="docutils literal notranslate"><span class="pre">for</span> <span class="pre">站,温,压</span> <span class="pre">in</span> <span class="pre">表</span></code>
+一解包就爆
+<code class="docutils literal notranslate"><span class="pre">not</span> <span class="pre">enough</span> <span class="pre">values</span></code>——像雷达拼图上有一块缺了回波，拼图机当场报警。</p>
+</div></blockquote>
+<hr class="docutils" />
+</section>
+<section id="for-else-else">
+<span id="forelse-else"></span><h3>3.3.4 <code class="docutils literal notranslate"><span class="pre">for...else</span></code> 少用却常踩 —— <code class="docutils literal notranslate"><span class="pre">else</span></code> 是「循环正常跑完」才执行<a class="headerlink" href="#for-else-else" title="Link to this heading">#</a></h3>
+<p><strong>现象 / 真实输出</strong>（无报错，但和 <code class="docutils literal notranslate"><span class="pre">if</span></code> 的 <code class="docutils literal notranslate"><span class="pre">else</span></code> 行为完全不同）</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="nb">print</span><span class="p">(</span><span class="s2">&quot;== 场景A：没发生 break，else 执行 ==&quot;</span><span class="p">)</span>
+<span class="n">temps</span> <span class="o">=</span> <span class="p">[</span><span class="mi">18</span><span class="p">,</span> <span class="mi">21</span><span class="p">,</span> <span class="mi">24</span><span class="p">,</span> <span class="mi">27</span><span class="p">]</span>
+<span class="k">for</span> <span class="n">t</span> <span class="ow">in</span> <span class="n">temps</span><span class="p">:</span>
+    <span class="k">if</span> <span class="n">t</span> <span class="o">&gt;=</span> <span class="mi">35</span><span class="p">:</span>
+        <span class="k">break</span>
+<span class="k">else</span><span class="p">:</span>
+    <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;一个 &gt;=35 的高温都没有，else 正常收尾&quot;</span><span class="p">)</span>
+
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;== 场景B：发生 break，else 不执行 ==&quot;</span><span class="p">)</span>
+<span class="n">temps2</span> <span class="o">=</span> <span class="p">[</span><span class="mi">18</span><span class="p">,</span> <span class="mi">38</span><span class="p">,</span> <span class="mi">42</span><span class="p">]</span>
+<span class="k">for</span> <span class="n">t</span> <span class="ow">in</span> <span class="n">temps2</span><span class="p">:</span>
+    <span class="k">if</span> <span class="n">t</span> <span class="o">&gt;=</span> <span class="mi">35</span><span class="p">:</span>
+        <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;找到超过 35 的 </span><span class="si">{</span><span class="n">t</span><span class="si">}</span><span class="s2">，break 打断&quot;</span><span class="p">)</span>
+        <span class="k">break</span>
+<span class="k">else</span><span class="p">:</span>
+    <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;不该走到这里&quot;</span><span class="p">)</span>
+</pre></div>
+</div>
+<div class="highlight-text notranslate"><div class="highlight"><pre><span></span>== 场景A：没发生 break，else 执行 ==
+一个 &gt;=35 的高温都没有，else 正常收尾
+== 场景B：发生 break，else 不执行 ==
+找到超过 35 的 38，break 打断
+</pre></div>
+</div>
+<p><strong>原因</strong>：<code class="docutils literal notranslate"><span class="pre">for</span></code>/<code class="docutils literal notranslate"><span class="pre">while</span></code> 后接的 <code class="docutils literal notranslate"><span class="pre">else</span></code> 是「<strong>循环没被
+``break`` 打断、自然跑完</strong>」才执行一次的奖励块——不是 <code class="docutils literal notranslate"><span class="pre">if</span></code> 的
+<code class="docutils literal notranslate"><span class="pre">else</span></code>。PPT 第 47 页原话：「当循环没有被 break 语句退出时，执行 else
+语句块」。很多人以为它是 <code class="docutils literal notranslate"><span class="pre">if</span></code> 的兜底，逻辑全反。</p>
+<p><strong>解决办法</strong>：适合「找东西，找不到就宣布未出现」。示例（<code class="docutils literal notranslate"><span class="pre">flow.rst</span></code>
+的 while-else 找超阈值下标的思想）：</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">temps</span> <span class="o">=</span> <span class="p">[</span><span class="mi">18</span><span class="p">,</span> <span class="mi">21</span><span class="p">,</span> <span class="mi">24</span><span class="p">,</span> <span class="mi">27</span><span class="p">,</span> <span class="mi">32</span><span class="p">,</span> <span class="mi">35</span><span class="p">]</span>
+<span class="k">for</span> <span class="n">t</span> <span class="ow">in</span> <span class="n">temps</span><span class="p">:</span>
+    <span class="k">if</span> <span class="n">t</span> <span class="o">&gt;=</span> <span class="mi">35</span><span class="p">:</span>
+        <span class="k">break</span>
+<span class="k">else</span><span class="p">:</span>
+    <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;整段资料里没有 ≥35 ℃ 的高温&quot;</span><span class="p">)</span>   <span class="c1"># 只在没遇到高温时打印</span>
+</pre></div>
+</div>
+<blockquote>
+<div><p>提醒：若 <code class="docutils literal notranslate"><span class="pre">for</span></code> 里根本没写 <code class="docutils literal notranslate"><span class="pre">break</span></code>，那 <code class="docutils literal notranslate"><span class="pre">else</span></code>
+永远都会执行——这种写法基本没有意义；<code class="docutils literal notranslate"><span class="pre">else</span></code> 就是为 <code class="docutils literal notranslate"><span class="pre">break</span></code>
+配套“反向收尾”的。</p>
+<p><strong>气象场景一句话</strong>：遍历 7 日资料找「会不会出现单日 ≥35
+℃」——<code class="docutils literal notranslate"><span class="pre">break</span></code> 一找到就撤，没找到则 <code class="docutils literal notranslate"><span class="pre">for...else</span></code> 的 <code class="docutils literal notranslate"><span class="pre">else</span></code>
+才出来说「本周无高温」；这是“巡逻哨巡完一圈没发现异常才收队”的气象侦察写法。</p>
+</div></blockquote>
+<hr class="docutils" />
+</section>
+</section>
+<section id="while">
+<span id="id20"></span><h2>3.4 while 循环<a class="headerlink" href="#while" title="Link to this heading">#</a></h2>
+<blockquote>
+<div><p>气象类比一句话：<code class="docutils literal notranslate"><span class="pre">while</span></code>
+是<strong>一步步给温度计加温直到触发阈值的“渐进过程”</strong>，条件是那个阈值；只要没人给温度计加热、或加热的方向错了，它就永远在空中转圈——无限循环。</p>
+</div></blockquote>
+<section id="while-ctrl-c-keyboardinterrupt">
+<span id="while-ctrlckeyboardinterrupt"></span><h3>3.4.1 死循环：<code class="docutils literal notranslate"><span class="pre">while</span></code> 忘了更新条件变量 —— 程序卡住，<code class="docutils literal notranslate"><span class="pre">Ctrl+C</span></code>（KeyboardInterrupt）<a class="headerlink" href="#while-ctrl-c-keyboardinterrupt" title="Link to this heading">#</a></h3>
+<p><strong>现象 / 真实报错信息</strong>（后台线程 ≈ 用户按 <code class="docutils literal notranslate"><span class="pre">Ctrl+C</span></code>，完整复现）</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span><span class="w"> </span><span class="nn">time</span>
+<span class="n">temp</span> <span class="o">=</span> <span class="mf">28.0</span>     <span class="c1"># 起始气温</span>
+<span class="n">hour</span> <span class="o">=</span> <span class="mi">0</span>
+<span class="k">while</span> <span class="n">temp</span> <span class="o">&lt;</span> <span class="mi">35</span><span class="p">:</span>            <span class="c1"># 想让温度升到 35，可循环体里没有 temp 的变化</span>
+    <span class="n">hour</span> <span class="o">+=</span> <span class="mi">1</span>
+    <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;第 </span><span class="si">{</span><span class="n">hour</span><span class="si">}</span><span class="s2"> 小时，气温仍是 </span><span class="si">{</span><span class="n">temp</span><span class="si">}</span><span class="s2">℃&quot;</span><span class="p">)</span>
+    <span class="n">time</span><span class="o">.</span><span class="n">sleep</span><span class="p">(</span><span class="mf">0.05</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;经过 </span><span class="si">{</span><span class="n">hour</span><span class="si">}</span><span class="s2"> 小时，触发高温预警！&quot;</span><span class="p">)</span>    <span class="c1"># 永远到不了</span>
+</pre></div>
+</div>
+<div class="highlight-text notranslate"><div class="highlight"><pre><span></span>第 1 小时，气温仍是 28.0℃
+第 2 小时，气温仍是 28.0℃
+   ……（程序卡死，这一行会无限刷屏下去）……
+第 30 小时，气温仍是 28.0℃
+&gt;&gt;&gt; 用户按下 Ctrl+C，触发 KeyboardInterrupt &lt;&lt;&lt;
+Traceback (most recent call last):
+  File &quot;...\sim\ch03\r5_infinite_while.py&quot;, line 17, in &lt;module&gt;
+    time.sleep(0.05)
+KeyboardInterrupt
+</pre></div>
+</div>
+<p><strong>原因</strong>：<code class="docutils literal notranslate"><span class="pre">while</span> <span class="pre">temp</span> <span class="pre">&lt;</span> <span class="pre">35</span></code> 的条件里出现了
+<code class="docutils literal notranslate"><span class="pre">temp</span></code>，但<strong>循环体内没有任何一行让 ``temp`` 朝 35 靠近</strong>——<code class="docutils literal notranslate"><span class="pre">temp</span></code>
+永远是 28，条件永远为真，<code class="docutils literal notranslate"><span class="pre">while</span></code> 永不结束。<code class="docutils literal notranslate"><span class="pre">flow.rst</span></code> 的
+<code class="docutils literal notranslate"><span class="pre">warning</span></code> 原话：「while
+循环体内必须更新条件涉及的变量（<code class="docutils literal notranslate"><span class="pre">temp</span> <span class="pre">+=</span> <span class="pre">0.5</span></code>），否则条件永远为真，程序卡死。」这是
+<code class="docutils literal notranslate"><span class="pre">while</span></code> 第一大坑。</p>
+<p><strong>解决办法</strong>：<code class="docutils literal notranslate"><span class="pre">while</span></code>「三大保命习惯」（<code class="docutils literal notranslate"><span class="pre">flow.rst</span></code> 原文）——</p>
+<ol class="arabic simple">
+<li><p><strong>循环体内更新条件变量</strong>：凡是条件里出现的变量，循环体里至少有一处让它朝终止方向变；</p></li>
+<li><p><strong>加安全上限</strong>：处理未知数据时用 <code class="docutils literal notranslate"><span class="pre">break</span></code> 在达到上限时强制退出；</p></li>
+<li><p><strong>能用 ``for`` 就用 ``for``</strong>：只有「次数未知、只靠条件」才用
+<code class="docutils literal notranslate"><span class="pre">while</span></code>，<code class="docutils literal notranslate"><span class="pre">for</span></code> 天然不会死循环。</p></li>
+</ol>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">temp</span> <span class="o">=</span> <span class="mf">28.0</span>
+<span class="n">hour</span> <span class="o">=</span> <span class="mi">0</span>
+<span class="k">while</span> <span class="n">temp</span> <span class="o">&lt;</span> <span class="mi">35</span><span class="p">:</span>            <span class="c1"># 阈值停在 35</span>
+    <span class="n">hour</span> <span class="o">+=</span> <span class="mi">1</span>
+    <span class="n">temp</span> <span class="o">+=</span> <span class="mf">0.5</span>              <span class="c1"># ← 关键更新：温度一步步逼近 35</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;经过 </span><span class="si">{</span><span class="n">hour</span><span class="si">}</span><span class="s2"> 小时后达到 </span><span class="si">{</span><span class="n">temp</span><span class="si">}</span><span class="s2">℃，触发高温预警&quot;</span><span class="p">)</span>   <span class="c1"># 到 35 正常退出</span>
+</pre></div>
+</div>
+<blockquote>
+<div><p>若已经在跑死循环：在 Jupyter/终端里按
+<code class="docutils literal notranslate"><span class="pre">Ctrl+C</span></code>（键盘中断）即可打断该单元格执行，不必重启内核。<code class="docutils literal notranslate"><span class="pre">KeyboardInterrupt</span></code>
+在 0.3 层级树里是 <code class="docutils literal notranslate"><span class="pre">BaseException</span></code> 的直系，<strong>不属于</strong>
+<code class="docutils literal notranslate"><span class="pre">Exception</span></code>——所以 <code class="docutils literal notranslate"><span class="pre">try/except</span> <span class="pre">Exception</span></code> 是抓不住它的。</p>
+<p><strong>气象场景一句话</strong>：统计“气温从 28 ℃ 起每小时升 0.5 ℃、直到触 35
+摄氏度阈值预热多久”——只要你在 <code class="docutils literal notranslate"><span class="pre">while</span></code> 里漏了
+<code class="docutils literal notranslate"><span class="pre">temp</span> <span class="pre">+=</span> <span class="pre">0.5</span></code>，温度计永远停在 28
+℃，程序就变成了“永远不会放晴的连续阴雨”，只能 <code class="docutils literal notranslate"><span class="pre">Ctrl+C</span></code>
+手动喊停观测。</p>
+</div></blockquote>
+<hr class="docutils" />
+</section>
+<section id="continue">
+<span id="id21"></span><h3>3.4.2 死循环：<code class="docutils literal notranslate"><span class="pre">continue</span></code> 跳过了循环体里「更新计数」的那一行<a class="headerlink" href="#continue" title="Link to this heading">#</a></h3>
+<p><strong>现象 / 真实报错信息</strong></p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">t</span> <span class="o">=</span> <span class="mf">36.0</span>          <span class="c1"># 第 0 天就是&quot;高温日&quot;</span>
+<span class="n">i</span> <span class="o">=</span> <span class="mi">0</span>
+<span class="k">while</span> <span class="n">i</span> <span class="o">&lt;</span> <span class="mi">7</span><span class="p">:</span>      <span class="c1"># 想数 7 天的等级统计</span>
+    <span class="k">if</span> <span class="n">t</span> <span class="o">&gt;=</span> <span class="mi">35</span><span class="p">:</span>
+        <span class="k">continue</span>  <span class="c1"># ← continue 直接跳过了下面 i += 1，i 永远 0</span>
+    <span class="n">i</span> <span class="o">+=</span> <span class="mi">1</span>
+    <span class="n">t</span> <span class="o">+=</span> <span class="mf">0.5</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;完成统计&quot;</span><span class="p">)</span>
+</pre></div>
+</div>
+<div class="highlight-text notranslate"><div class="highlight"><pre><span></span>&gt;&gt;&gt; 用户按下 Ctrl+C &lt;&lt;&lt;
+Traceback (most recent call last):
+  File &quot;...\sim\ch03\r6_continue_skip_increment.py&quot;, line 15, in &lt;module&gt;
+    continue  # ← continue 跳过了下面 i += 1，i 永远 0
+    ^^^^^^^^
+KeyboardInterrupt
+</pre></div>
+</div>
+<p><strong>原因</strong>：<code class="docutils literal notranslate"><span class="pre">continue</span></code>
+会把当前这轮剩余代码<strong>全部跳过</strong>、直接回到循环开头重新判断条件。如果<strong>「更新计数器/条件变量」的那几行正好写在
+``continue`` 之后</strong>，一旦触发
+<code class="docutils literal notranslate"><span class="pre">continue</span></code>，计数器就再也不会增加，条件永不改变 →
+死循环。<code class="docutils literal notranslate"><span class="pre">flow.rst</span></code> 强调的 <code class="docutils literal notranslate"><span class="pre">continue</span></code>
+应用场景是「跳过缺测数据继续」，但你的更新语句必须放对位置。</p>
+<p><strong>解决办法</strong>：在 <code class="docutils literal notranslate"><span class="pre">while</span></code> + <code class="docutils literal notranslate"><span class="pre">continue</span></code>
+混用时，<strong>把条件变量的更新放在 ``continue``
+之前</strong>（一进来就更新），或者更新单独写在循环体更靠前的位置：</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">t</span> <span class="o">=</span> <span class="mf">36.0</span>
+<span class="n">i</span> <span class="o">=</span> <span class="mi">0</span>
+<span class="k">while</span> <span class="n">i</span> <span class="o">&lt;</span> <span class="mi">7</span><span class="p">:</span>
+    <span class="n">i</span> <span class="o">+=</span> <span class="mi">1</span>               <span class="c1"># ← 先更新计数器，再判断，绝不被 continue 吃掉</span>
+    <span class="k">if</span> <span class="n">t</span> <span class="o">&gt;=</span> <span class="mi">35</span><span class="p">:</span>
+        <span class="k">continue</span>         <span class="c1"># 跳过的是&quot;统计&quot;，不是&quot;计数&quot;</span>
+    <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;统计天数:&quot;</span><span class="p">,</span> <span class="n">i</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;完成统计&quot;</span><span class="p">)</span>
+</pre></div>
+</div>
+<blockquote>
+<div><p>对比镜像坑：<code class="docutils literal notranslate"><span class="pre">continue</span></code> 用在 <code class="docutils literal notranslate"><span class="pre">for</span></code> 里是安全的（<code class="docutils literal notranslate"><span class="pre">for</span></code>
+自己管理游标下标）；只有 <code class="docutils literal notranslate"><span class="pre">while</span></code> 才需要你亲力维护计数变量——这是
+<code class="docutils literal notranslate"><span class="pre">while</span></code> 与 <code class="docutils literal notranslate"><span class="pre">continue</span></code> 同框时的专属陷阱。</p>
+<p><strong>气象场景一句话</strong>：逐日算高温天数的 <code class="docutils literal notranslate"><span class="pre">while</span></code>
+里，<code class="docutils literal notranslate"><span class="pre">if</span> <span class="pre">t&gt;=35:</span> <span class="pre">continue</span></code> 直接把 <code class="docutils literal notranslate"><span class="pre">i</span> <span class="pre">+=</span> <span class="pre">1</span></code>
+跳过——从第一天起计数就冻住了，循环像“只会放晴的天数统计器”一样原地打转，永远完不成报表。</p>
+</div></blockquote>
+<hr class="docutils" />
+</section>
+</section>
+<section id="break-continue-return">
+<span id="id22"></span><h2>3.5 break / continue / return 的适用范围<a class="headerlink" href="#break-continue-return" title="Link to this heading">#</a></h2>
+<blockquote>
+<div><p>气象类比一句话：<strong>``break`` 是“发完这条预警就停发”，``continue``
+是“这一站数据缺失，跳过它继续下一个站”</strong>。但它们都只能在循环这个“观测机房”里按，出了机房（循环外）按了无效还报错。</p>
+</div></blockquote>
+<section id="break-syntaxerror-break-outside-loop">
+<span id="id23"></span><h3>3.5.1 <code class="docutils literal notranslate"><span class="pre">break</span></code> 写在循环外 —— <code class="docutils literal notranslate"><span class="pre">SyntaxError:</span> <span class="pre">'break'</span> <span class="pre">outside</span> <span class="pre">loop</span></code><a class="headerlink" href="#break-syntaxerror-break-outside-loop" title="Link to this heading">#</a></h3>
+<p><strong>现象 / 真实报错信息</strong></p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">temp</span> <span class="o">=</span> <span class="mi">32</span>
+<span class="k">if</span> <span class="n">temp</span> <span class="o">&gt;</span> <span class="mi">30</span><span class="p">:</span>
+    <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;高温&quot;</span><span class="p">)</span>
+    <span class="k">break</span>
+</pre></div>
+</div>
+<div class="highlight-text notranslate"><div class="highlight"><pre><span></span>  File &quot;...\sim\ch03\s8_break_outside.py&quot;, line 5
+    break
+    ^^^^^
+SyntaxError: &#39;break&#39; outside loop
+</pre></div>
+</div>
+<p><strong>原因</strong>：<code class="docutils literal notranslate"><span class="pre">break</span></code> <strong>只能出现在 ``for`` / ``while``
+循环体内</strong>，它负责“跳出循环”。放在普通
+<code class="docutils literal notranslate"><span class="pre">if</span></code>（不在任何循环里）、函数体等位置，Python 直接判语法非法。</p>
+<p><strong>解决办法</strong>：<code class="docutils literal notranslate"><span class="pre">if</span></code> 里的 <code class="docutils literal notranslate"><span class="pre">break</span></code> 只有在<strong>该 ``if``
+位于某个循环内</strong>时才合法；想退出的是 <code class="docutils literal notranslate"><span class="pre">if</span></code>
+分支本身，什么都不用写（<code class="docutils literal notranslate"><span class="pre">if</span></code> 跑完自动向后走）；想退出当前循环，把
+<code class="docutils literal notranslate"><span class="pre">break</span></code> 放进循环体内：</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="k">for</span> <span class="n">temp</span> <span class="ow">in</span> <span class="p">[</span><span class="mi">25</span><span class="p">,</span> <span class="mi">35</span><span class="p">,</span> <span class="mi">40</span><span class="p">]:</span>
+    <span class="k">if</span> <span class="n">temp</span> <span class="o">&gt;=</span> <span class="mi">35</span><span class="p">:</span>
+        <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;触发高温预警&quot;</span><span class="p">,</span> <span class="n">temp</span><span class="p">)</span>
+        <span class="k">break</span>          <span class="c1"># 在 for 体内，合法；遇到 35 就停</span>
+</pre></div>
+</div>
+<blockquote>
+<div><p>关联注意：嵌套循环里 <code class="docutils literal notranslate"><span class="pre">break</span></code> <strong>只跳出最内层那个循环</strong>（PPT 第 45
+页：「break
+仅跳出当前最内层循环」）。想一次跳出多层要额外加标志或用函数的
+<code class="docutils literal notranslate"><span class="pre">return</span></code>（此时需把代码包进 <code class="docutils literal notranslate"><span class="pre">def</span></code>，见 §3.5.3）。</p>
+<p><strong>气象场景一句话</strong>：想在“扫描 5 站遇缺测即停”时写
+<code class="docutils literal notranslate"><span class="pre">break</span></code>，却放到了循环外的 <code class="docutils literal notranslate"><span class="pre">if</span></code>
+里——等于在观测机房外拔总闸，Python 不允许，直接报
+<code class="docutils literal notranslate"><span class="pre">'break'</span> <span class="pre">outside</span> <span class="pre">loop</span></code>。</p>
+</div></blockquote>
+<hr class="docutils" />
+</section>
+<section id="continue-syntaxerror-continue-not-properly-in-loop">
+<span id="id24"></span><h3>3.5.2 <code class="docutils literal notranslate"><span class="pre">continue</span></code> 写在循环外 —— <code class="docutils literal notranslate"><span class="pre">SyntaxError:</span> <span class="pre">'continue'</span> <span class="pre">not</span> <span class="pre">properly</span> <span class="pre">in</span> <span class="pre">loop</span></code><a class="headerlink" href="#continue-syntaxerror-continue-not-properly-in-loop" title="Link to this heading">#</a></h3>
+<p><strong>现象 / 真实报错信息</strong></p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">temp</span> <span class="o">=</span> <span class="mi">32</span>
+<span class="k">if</span> <span class="n">temp</span> <span class="o">&gt;</span> <span class="mi">30</span><span class="p">:</span>
+    <span class="k">continue</span>
+</pre></div>
+</div>
+<div class="highlight-text notranslate"><div class="highlight"><pre><span></span>  File &quot;...\sim\ch03\s9_continue_outside.py&quot;, line 4
+    continue
+    ^^^^^^^^
+SyntaxError: &#39;continue&#39; not properly in loop
+</pre></div>
+</div>
+<p><strong>原因</strong>：与 <code class="docutils literal notranslate"><span class="pre">break</span></code>
+同理，<code class="docutils literal notranslate"><span class="pre">continue</span></code>（跳过本轮循环剩余部分）<strong>只能在 ``for`` /
+``while`` 循环体内</strong>。放在循环外的 <code class="docutils literal notranslate"><span class="pre">if</span></code> 里就报「没待在循环里」。</p>
+<p><strong>解决办法</strong>：确认 <code class="docutils literal notranslate"><span class="pre">continue</span></code> 处在某个循环内部；若想“跳过当前 <code class="docutils literal notranslate"><span class="pre">if</span></code>
+里的剩余逻辑再走后面的”,二选一：</p>
+<ul class="simple">
+<li><p>把 <code class="docutils literal notranslate"><span class="pre">if</span> <span class="pre">...</span> <span class="pre">continue</span></code> 放进循环里（大量缺测日场景）：见下方正确版；</p></li>
+<li><p>若并不在循环里、只是想 “这一支不算了”,直接改写 <code class="docutils literal notranslate"><span class="pre">if/else</span></code>
+结构即可，不需要 <code class="docutils literal notranslate"><span class="pre">continue</span></code>。</p></li>
+</ul>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">raw</span> <span class="o">=</span> <span class="p">[</span><span class="mf">25.5</span><span class="p">,</span> <span class="kc">None</span><span class="p">,</span> <span class="mf">26.0</span><span class="p">]</span>
+<span class="k">for</span> <span class="n">temp</span> <span class="ow">in</span> <span class="n">raw</span><span class="p">:</span>
+    <span class="k">if</span> <span class="n">temp</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+        <span class="k">continue</span>          <span class="c1"># 缺测就跳过，不进统计</span>
+    <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;正常记录 </span><span class="si">{</span><span class="n">temp</span><span class="si">}</span><span class="s2">℃&quot;</span><span class="p">)</span>
+</pre></div>
+</div>
+<blockquote>
+<div><p><code class="docutils literal notranslate"><span class="pre">flow.rst</span></code> 的「break vs continue
+处理缺测」正是如此：<code class="docutils literal notranslate"><span class="pre">break</span></code>(遇首个缺测即截断)、<code class="docutils literal notranslate"><span class="pre">continue</span></code>(缺测是常态、跳过继续)。留意区分二者位置都必须落在循环里。</p>
+<p><strong>气象场景一句话</strong>：逐小时观测里碰到缺测想 <code class="docutils literal notranslate"><span class="pre">continue</span></code> 跳过，却把
+<code class="docutils literal notranslate"><span class="pre">continue</span></code> 甩在了 <code class="docutils literal notranslate"><span class="pre">for</span></code>
+循环外面——像“跳过这台坏自动站”的指令发给了一个并不存在的站点，Python
+拒绝执行并报 <code class="docutils literal notranslate"><span class="pre">not</span> <span class="pre">properly</span> <span class="pre">in</span> <span class="pre">loop</span></code>。</p>
+</div></blockquote>
+<hr class="docutils" />
+</section>
+<section id="return-syntaxerror-return-outside-function">
+<span id="id25"></span><h3>3.5.3 <code class="docutils literal notranslate"><span class="pre">return</span></code> 写在循环里、却不在任何函数内 —— <code class="docutils literal notranslate"><span class="pre">SyntaxError:</span> <span class="pre">'return'</span> <span class="pre">outside</span> <span class="pre">function</span></code>（进阶延伸）<a class="headerlink" href="#return-syntaxerror-return-outside-function" title="Link to this heading">#</a></h3>
+<p><strong>现象 / 真实报错信息</strong></p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">5</span><span class="p">):</span>
+    <span class="k">return</span> <span class="n">i</span>   <span class="c1"># 顶层没有函数，return 没有返回目标</span>
+</pre></div>
+</div>
+<div class="highlight-text notranslate"><div class="highlight"><pre><span></span>  File &quot;...\sim\ch03\r8_return_outside.py&quot;, line 3
+    return i   # 顶层没有函数，return 没有返回目标
+    ^^^^^^^^
+SyntaxError: &#39;return&#39; outside function
+</pre></div>
+</div>
+<p><strong>原因</strong>：<code class="docutils literal notranslate"><span class="pre">return</span></code>
+的语义是「<strong>结束当前函数并把值交还给调用者</strong>」。脚本顶层（或裸循环里）没有“函数”这层容器，<code class="docutils literal notranslate"><span class="pre">return</span></code>
+无处可返，Python 报非法。新手常想在循环里 “取到第一个就退出” 而写
+<code class="docutils literal notranslate"><span class="pre">return</span></code>，其实循环里该用 <code class="docutils literal notranslate"><span class="pre">break</span></code>。</p>
+<p><strong>解决办法</strong>：分两种情况——</p>
+<ul class="simple">
+<li><p>想要「找到就退出循环」：用 <strong>``break``</strong>（见 §3.5.1）；</p></li>
+<li><p>确实想“返回一个值”：把这段包进 <code class="docutils literal notranslate"><span class="pre">def</span></code> 函数再 <code class="docutils literal notranslate"><span class="pre">return</span></code>：</p></li>
+</ul>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="k">def</span><span class="w"> </span><span class="nf">first_high</span><span class="p">(</span><span class="n">temps</span><span class="p">):</span>
+    <span class="k">for</span> <span class="n">t</span> <span class="ow">in</span> <span class="n">temps</span><span class="p">:</span>
+        <span class="k">if</span> <span class="n">t</span> <span class="o">&gt;=</span> <span class="mi">35</span><span class="p">:</span>
+            <span class="k">return</span> <span class="n">t</span>        <span class="c1"># 找到就返回该气温</span>
+    <span class="k">return</span> <span class="kc">None</span>             <span class="c1"># 一个都没有就返回 None</span>
+
+<span class="nb">print</span><span class="p">(</span><span class="n">first_high</span><span class="p">([</span><span class="mi">18</span><span class="p">,</span> <span class="mi">38</span><span class="p">,</span> <span class="mi">40</span><span class="p">]))</span>   <span class="c1"># 38</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">first_high</span><span class="p">([</span><span class="mi">10</span><span class="p">,</span> <span class="mi">12</span><span class="p">]))</span>       <span class="c1"># None</span>
+</pre></div>
+</div>
+<blockquote>
+<div><p>这门课第 4 章会系统讲函数；本章只要记住：<strong>脚本顶层不能
+``return``，要么用 ``break``、要么把代码装进 ``def``</strong>。</p>
+<p><strong>气象场景一句话</strong>：想在逐站扫描里“遇到第一个高温站当场交回结果”——先
+<code class="docutils literal notranslate"><span class="pre">def</span></code> 一个探测函数，让 <code class="docutils literal notranslate"><span class="pre">return</span></code> 有家可回；不然函数都没建，Python
+没法把结果“交给上级台站”。</p>
+</div></blockquote>
+<hr class="docutils" />
+</section>
+</section>
+<section id="range">
+<span id="id26"></span><h2>3.6 range() 的参数问题<a class="headerlink" href="#range" title="Link to this heading">#</a></h2>
+<section id="range-0-valueerror-range-arg-3-must-not-be-zero-typeerror">
+<span id="id27"></span><h3>3.6.1 <code class="docutils literal notranslate"><span class="pre">range</span></code> 步长为 0 —— <code class="docutils literal notranslate"><span class="pre">ValueError:</span> <span class="pre">range()</span> <span class="pre">arg</span> <span class="pre">3</span> <span class="pre">must</span> <span class="pre">not</span> <span class="pre">be</span> <span class="pre">zero</span></code>；参数不足 —— <code class="docutils literal notranslate"><span class="pre">TypeError</span></code><a class="headerlink" href="#range-0-valueerror-range-arg-3-must-not-be-zero-typeerror" title="Link to this heading">#</a></h3>
+<p><strong>现象 / 真实报错信息</strong>（两个默认都真跑）</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="nb">list</span><span class="p">(</span><span class="nb">range</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">10</span><span class="p">,</span> <span class="mi">0</span><span class="p">))</span>   <span class="c1"># 步长(第3参)写成 0 → ValueError</span>
+</pre></div>
+</div>
+<div class="highlight-text notranslate"><div class="highlight"><pre><span></span>ValueError: range() arg 3 must not be zero
+</pre></div>
+</div>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="nb">list</span><span class="p">(</span><span class="nb">range</span><span class="p">())</span>           <span class="c1"># 一个参数都没给 → TypeError</span>
+</pre></div>
+</div>
+<div class="highlight-text notranslate"><div class="highlight"><pre><span></span>TypeError: range expected at least 1 argument, got 0
+</pre></div>
+</div>
+<p><strong>原因</strong>：<code class="docutils literal notranslate"><span class="pre">range(起始,</span> <span class="pre">结束,</span> <span class="pre">步长)</span></code> 的<strong>步长如果为
+0</strong>，序列“一步都不走、原地踏步”，永远无法推进——Python 直接拦截并抛
+<code class="docutils literal notranslate"><span class="pre">ValueError</span></code>。而 <code class="docutils literal notranslate"><span class="pre">range</span></code> 至少要 1
+个参数（<code class="docutils literal notranslate"><span class="pre">用法可为一个、两个、三个</span></code>，PPT 第 32 页），0 个参数触发
+<code class="docutils literal notranslate"><span class="pre">TypeError</span></code>（参数个数不对）。</p>
+<p><strong>解决办法</strong>：步长给非 0 的整数；参数补足 1~3 个（缺的用默认值：起默认
+0、步长默认 1）：</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="nb">print</span><span class="p">(</span><span class="nb">list</span><span class="p">(</span><span class="nb">range</span><span class="p">(</span><span class="mi">5</span><span class="p">)))</span>          <span class="c1"># [0,1,2,3,4]       一个参数</span>
+<span class="nb">print</span><span class="p">(</span><span class="nb">list</span><span class="p">(</span><span class="nb">range</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">6</span><span class="p">)))</span>       <span class="c1"># [1,2,3,4,5]       两个参数</span>
+<span class="nb">print</span><span class="p">(</span><span class="nb">list</span><span class="p">(</span><span class="nb">range</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">8</span><span class="p">,</span> <span class="mi">2</span><span class="p">)))</span>    <span class="c1"># [1,3,5,7]         三个参数</span>
+<span class="nb">print</span><span class="p">(</span><span class="nb">list</span><span class="p">(</span><span class="nb">range</span><span class="p">(</span><span class="mi">7</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="o">-</span><span class="mi">1</span><span class="p">)))</span>   <span class="c1"># [7,6,5,4,3,2,1]   负步长(倒序)合法</span>
+</pre></div>
+</div>
+<blockquote>
+<div><p>附带区分：<strong>两种报错别混</strong>——<code class="docutils literal notranslate"><span class="pre">ValueError</span></code>（<code class="docutils literal notranslate"><span class="pre">range()</span></code> 步长为
+0）是“类型没错、值非法”；<code class="docutils literal notranslate"><span class="pre">TypeError</span></code>（<code class="docutils literal notranslate"><span class="pre">range</span></code>
+参数不足）是“类型/个数不对”。正好呼应 0.3 层级树的 <code class="docutils literal notranslate"><span class="pre">ValueError</span></code> vs
+<code class="docutils literal notranslate"><span class="pre">TypeError</span></code> 一句话区分。</p>
+<p>视角提醒：<code class="docutils literal notranslate"><span class="pre">range</span></code>
+返回的是可迭代对象不是列表，<code class="docutils literal notranslate"><span class="pre">for</span> <span class="pre">i</span> <span class="pre">in</span> <span class="pre">range(7)</span></code> 直接 <code class="docutils literal notranslate"><span class="pre">print(i)</span></code>
+拿的是数字，别试图 <code class="docutils literal notranslate"><span class="pre">print(range(7))</span></code> 想看到数字序列（会打印
+<code class="docutils literal notranslate"><span class="pre">range(0,</span> <span class="pre">7)</span></code>）。要想看内容用 <code class="docutils literal notranslate"><span class="pre">list(range(7))</span></code>。</p>
+</div></blockquote>
+<blockquote>
+<div><p><strong>气象场景一句话</strong>：想按步长 3 小时扫一遍 24 小时资料
+<code class="docutils literal notranslate"><span class="pre">range(0,</span> <span class="pre">24,</span> <span class="pre">3)</span></code>，结果手一抖把步长填成 0——探空仪从 0
+时起就跟定在原点不动，Python 一眼看穿
+<code class="docutils literal notranslate"><span class="pre">range()</span> <span class="pre">arg</span> <span class="pre">3</span> <span class="pre">must</span> <span class="pre">not</span> <span class="pre">be</span> <span class="pre">zero</span></code>，不让你原地打转。</p>
+</div></blockquote>
+<hr class="docutils" />
+</section>
+</section>
+<section id="id28">
+<span id="id29"></span><h2>3.7 结尾 · 本章高频速查表<a class="headerlink" href="#id28" title="Link to this heading">#</a></h2>
+<blockquote>
+<div><p>用法：报错卡住时，先看 <strong>报错关键词</strong> 命中哪一行，照 <strong>一句话原因</strong>
+对号入座，再回 § 条目看完整修法。</p>
+</div></blockquote>
+<div class="pst-scrollable-table-container"><table class="table">
+<thead>
+<tr class="row-odd"><th class="head"><p>报错关键词</p></th>
+<th class="head"><p>一句话原因</p></th>
+<th class="head"><p>对应条目</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">SyntaxError:</span> <span class="pre">expected</span> <span class="pre">':'</span></code> / <code class="docutils literal notranslate"><span class="pre">invalid</span> <span class="pre">syntax</span></code></p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">if/for/while</span></code>
+条件后漏了冒号（光标在下一行）</p></td>
+<td><p>§3.1.1</p></td>
+</tr>
+<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">IndentationError:</span> <span class="pre">expected</span> <span class="pre">an</span> <span class="pre">indented</span> <span class="pre">block</span></code></p></td>
+<td><p>块起始符后忘了缩进 / 只写了注释（需
+<code class="docutils literal notranslate"><span class="pre">pass</span></code>）</p></td>
+<td><p>§3.1.2 · §3.1.5</p></td>
+</tr>
+<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">IndentationError:</span> <span class="pre">unexpected</span> <span class="pre">indent</span></code></p></td>
+<td><p>多了不该有的缩进（顶格行被推入不前）</p></td>
+<td><p>§3.1.3</p></td>
+</tr>
+<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">TabError:</span> <span class="pre">inconsistent</span> <span class="pre">use</span> <span class="pre">of</span> <span class="pre">tabs</span> <span class="pre">and</span> <span class="pre">spaces</span></code></p></td>
+<td><p>Tab 与空格混用，统一成 4 空格</p></td>
+<td><p>§3.1.4</p></td>
+</tr>
+<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">SyntaxError</span></code>（条件里 <code class="docutils literal notranslate"><span class="pre">=</span></code>）</p></td>
+<td><p>判断相等写成赋值，改 <code class="docutils literal notranslate"><span class="pre">==</span></code></p></td>
+<td><p>§3.2.1</p></td>
+</tr>
+<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">SyntaxError</span></code>（<code class="docutils literal notranslate"><span class="pre">elif</span></code>/<code class="docutils literal notranslate"><span class="pre">else</span></code>/<code class="docutils literal notranslate"><span class="pre">else</span> <span class="pre">条件</span></code>）</p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">if-elif-else</span></code>
+结构残缺，<code class="docutils literal notranslate"><span class="pre">elif/else</span></code> 必须接
+<code class="docutils literal notranslate"><span class="pre">if</span></code></p></td>
+<td><p>§3.2.2</p></td>
+</tr>
+<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">if</span> <span class="pre">列表</span> <span class="pre">==</span> <span class="pre">True</span></code>（无报错但错）</p></td>
+<td><p>用 Truthiness，直接
+<code class="docutils literal notranslate"><span class="pre">if</span> <span class="pre">列表:</span> <span class="pre">/</span> <span class="pre">if</span> <span class="pre">not</span> <span class="pre">列表:</span></code></p></td>
+<td><p>§3.2.3</p></td>
+</tr>
+<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">20</span> <span class="pre">&lt;</span> <span class="pre">t</span> <span class="pre">&lt;</span> <span class="pre">35</span></code> vs <code class="docutils literal notranslate"><span class="pre">and</span></code></p></td>
+<td><p>链式等价于
+<code class="docutils literal notranslate"><span class="pre">and</span></code>，别漏写半边操作数</p></td>
+<td><p>§3.2.4</p></td>
+</tr>
+<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">or</span> <span class="pre">/</span> <span class="pre">and</span></code> 返回非布尔</p></td>
+<td><p>短路返回“决定结果的表达式”，并非
+<code class="docutils literal notranslate"><span class="pre">True/False</span></code></p></td>
+<td><p>§3.2.5</p></td>
+</tr>
+<tr class="row-odd"><td><p>遍历时改列表（无报错但跳过元素）</p></td>
+<td><p>边 <code class="docutils literal notranslate"><span class="pre">for</span></code> 边 <code class="docutils literal notranslate"><span class="pre">remove/append</span></code>
+游标错位；遍历副本或列表推导</p></td>
+<td><p>§3.3.1</p></td>
+</tr>
+<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">IndexError:</span> <span class="pre">list</span> <span class="pre">index</span> <span class="pre">out</span> <span class="pre">of</span> <span class="pre">range</span></code></p></td>
+<td><p>下标越界，常因
+<code class="docutils literal notranslate"><span class="pre">range(len(x)+1)</span></code>；用
+<code class="docutils literal notranslate"><span class="pre">enumerate</span></code></p></td>
+<td><p>§3.3.2</p></td>
+</tr>
+<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">ValueError:</span> <span class="pre">not</span> <span class="pre">enough/too</span> <span class="pre">many</span> <span class="pre">values</span> <span class="pre">to</span> <span class="pre">unpack</span></code></p></td>
+<td><p>解包变量数与元素个数不符；先用
+<code class="docutils literal notranslate"><span class="pre">.items()</span></code>/<code class="docutils literal notranslate"><span class="pre">zip</span></code> 对齐结构</p></td>
+<td><p>§3.3.3</p></td>
+</tr>
+<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">for…else</span></code> 行为看不懂</p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">else</span></code> 只在循环没被 <code class="docutils literal notranslate"><span class="pre">break</span></code>
+打段时才执行</p></td>
+<td><p>§3.3.4</p></td>
+</tr>
+<tr class="row-odd"><td><p>死循环（卡住）</p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">while</span></code> 未更新条件变量；不会
+<code class="docutils literal notranslate"><span class="pre">Ctrl+C</span></code> 收场</p></td>
+<td><p>§3.4.1</p></td>
+</tr>
+<tr class="row-even"><td><p>死循环（<code class="docutils literal notranslate"><span class="pre">continue</span></code> 后计数不动）</p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">continue</span></code> 跳过更新语句；更新放
+<code class="docutils literal notranslate"><span class="pre">continue</span></code> 前</p></td>
+<td><p>§3.4.2</p></td>
+</tr>
+<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">SyntaxError:</span> <span class="pre">'break'</span> <span class="pre">outside</span> <span class="pre">loop</span></code></p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">break</span></code> 出了循环；放进
+<code class="docutils literal notranslate"><span class="pre">for/while</span></code> 内</p></td>
+<td><p>§3.5.1</p></td>
+</tr>
+<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">SyntaxError:</span> <span class="pre">'continue'</span> <span class="pre">not</span> <span class="pre">properly</span> <span class="pre">in</span> <span class="pre">loop</span></code></p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">continue</span></code> 出了循环；放进
+<code class="docutils literal notranslate"><span class="pre">for/while</span></code> 内</p></td>
+<td><p>§3.5.2</p></td>
+</tr>
+<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">SyntaxError:</span> <span class="pre">'return'</span> <span class="pre">outside</span> <span class="pre">function</span></code></p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">return</span></code> 无函数可返回；用
+<code class="docutils literal notranslate"><span class="pre">break</span></code> 或包 <code class="docutils literal notranslate"><span class="pre">def</span></code></p></td>
+<td><p>§3.5.3</p></td>
+</tr>
+<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">ValueError:</span> <span class="pre">range()</span> <span class="pre">arg</span> <span class="pre">3</span> <span class="pre">must</span> <span class="pre">not</span> <span class="pre">be</span> <span class="pre">zero</span></code></p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">range</span></code> 步长为 0，原地踏步</p></td>
+<td><p>§3.6.1</p></td>
+</tr>
+<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">TypeError:</span> <span class="pre">range</span> <span class="pre">expected</span> <span class="pre">at</span> <span class="pre">least</span> <span class="pre">1</span> <span class="pre">argument</span></code></p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">range</span></code> 参数不足，至少给 1 个</p></td>
+<td><p>§3.6.1</p></td>
+</tr>
+</tbody>
+</table>
+</div>
+<p><strong>三字一句口诀（背下来）</strong>：</p>
+<ul class="simple">
+<li><p>冒号不能丢（§3.1.1）；</p></li>
+<li><p>缩进统一四空格、不用 Tab（§3.1.4）；</p></li>
+<li><p>判断用 <code class="docutils literal notranslate"><span class="pre">==</span></code>、<code class="docutils literal notranslate"><span class="pre">else</span></code> 不接条件（§3.2.1 · §3.2.2）；</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">while</span></code> 必更新、<code class="docutils literal notranslate"><span class="pre">continue</span></code> 不吞计数（§3.4）;</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">break/continue/return</span></code> 各回各家（§3.5）。</p></li>
+</ul>
+</section>
+</section>
+
+
+                </article>
+              
+              
+              
+              
+              
+                <footer class="prev-next-footer d-print-none">
+                  
+<div class="prev-next-area">
+    <a class="left-prev"
+       href="02-%E6%95%B0%E6%8D%AE%E7%B1%BB%E5%9E%8B%E4%B8%8E%E8%BF%90%E7%AE%97%E7%AC%A6-QA.html"
+       title="上一页">
+      <i class="fa-solid fa-angle-left"></i>
+      <div class="prev-next-info">
+        <p class="prev-next-subtitle">上一页</p>
+        <p class="prev-next-title">基本数据类型、变量和运算符 Q&amp;A</p>
+      </div>
+    </a>
+    <a class="right-next"
+       href="04-%E5%87%BD%E6%95%B0%E4%BD%9C%E7%94%A8%E5%9F%9F%E6%A8%A1%E5%9D%97%E5%8C%85-QA.html"
+       title="下一页">
+      <div class="prev-next-info">
+        <p class="prev-next-subtitle">下一页</p>
+        <p class="prev-next-title">函数、变量作用域、模块与包 Q&amp;A</p>
+      </div>
+      <i class="fa-solid fa-angle-right"></i>
+    </a>
+</div>
+                </footer>
+              
+            </div>
+            
+            
+              
+                <dialog id="pst-secondary-sidebar-modal"></dialog>
+                <div id="pst-secondary-sidebar" class="bd-sidebar-secondary bd-toc"><div class="sidebar-secondary-items sidebar-secondary__inner">
+
+
+  <div class="sidebar-secondary-item">
+<div
+    id="pst-page-navigation-heading-2"
+    class="page-toc tocsection onthispage">
+    <i class="fa-solid fa-list"></i> 当前页面
+  </div>
+  <nav id="pst-page-toc-nav" class="page-toc" aria-labelledby="pst-page-navigation-heading-2">
+    <ul class="pst-show_toc_level nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id1">3.0 本章报错总览表</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id3">3.1 分支与缩进基础</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#syntaxerror-expected">3.1.1 忘写冒号 —— <code class="docutils literal notranslate"><span class="pre">SyntaxError:</span> <span class="pre">expected</span> <span class="pre">':'</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#indentationerror-expected-an-indented-block">3.1.2 分支/循环体忘缩进 —— <code class="docutils literal notranslate"><span class="pre">IndentationError:</span> <span class="pre">expected</span> <span class="pre">an</span> <span class="pre">indented</span> <span class="pre">block</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#indentationerror-unexpected-indent">3.1.3 多了不该有的缩进 —— <code class="docutils literal notranslate"><span class="pre">IndentationError:</span> <span class="pre">unexpected</span> <span class="pre">indent</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#tab-taberror-inconsistent-use-of-tabs-and-spaces-in-indentation">3.1.4 Tab 与空格混用 —— <code class="docutils literal notranslate"><span class="pre">TabError:</span> <span class="pre">inconsistent</span> <span class="pre">use</span> <span class="pre">of</span> <span class="pre">tabs</span> <span class="pre">and</span> <span class="pre">spaces</span> <span class="pre">in</span> <span class="pre">indentation</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#if-x-indentationerror-pass">3.1.5 空代码块：<code class="docutils literal notranslate"><span class="pre">if</span> <span class="pre">x:</span></code> 下只写了注释 —— 也要 <code class="docutils literal notranslate"><span class="pre">IndentationError</span></code>，用 <code class="docutils literal notranslate"><span class="pre">pass</span></code> 占位</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id10">3.2 条件判断与逻辑运算</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#syntaxerror">3.2.1 条件里误写赋值 <code class="docutils literal notranslate"><span class="pre">=</span></code>（应当 <code class="docutils literal notranslate"><span class="pre">==</span></code>）—— <code class="docutils literal notranslate"><span class="pre">SyntaxError</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#if-elif-else-elif-else-syntaxerror">3.2.2 <code class="docutils literal notranslate"><span class="pre">if/elif/else</span></code> 结构错误：<code class="docutils literal notranslate"><span class="pre">elif</span></code> 单独出现、<code class="docutils literal notranslate"><span class="pre">else</span></code> 后跟条件 —— <code class="docutils literal notranslate"><span class="pre">SyntaxError</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#truthiness-none-0-if-true">3.2.3 条件判断的 Truthiness：空列表 / <code class="docutils literal notranslate"><span class="pre">None</span></code> / <code class="docutils literal notranslate"><span class="pre">0</span></code> 的布尔值，避免 <code class="docutils literal notranslate"><span class="pre">if</span> <span class="pre">列表</span> <span class="pre">==</span> <span class="pre">True</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#t-35-vs-and">3.2.4 链式比较 <code class="docutils literal notranslate"><span class="pre">20</span> <span class="pre">&lt;</span> <span class="pre">t</span> <span class="pre">&lt;</span> <span class="pre">35</span></code> vs <code class="docutils literal notranslate"><span class="pre">and</span></code> —— 两种等价写法</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#or-and">3.2.5 <code class="docutils literal notranslate"><span class="pre">or</span></code> / <code class="docutils literal notranslate"><span class="pre">and</span></code> 的短路返回值：返回「表达式」，不是布尔</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#for">3.3 for 循环</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#id17">3.3.1 遍历列表时修改正在迭代的列表 —— 跳过元素 / 错位 / 可能报错</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#range-len-x-1-indexerror-list-index-out-of-range">3.3.2 用 <code class="docutils literal notranslate"><span class="pre">range(len(x)+1)</span></code> 取下标，越界 —— <code class="docutils literal notranslate"><span class="pre">IndexError:</span> <span class="pre">list</span> <span class="pre">index</span> <span class="pre">out</span> <span class="pre">of</span> <span class="pre">range</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#valueerror-not-enough-too-many-values-to-unpack">3.3.3 枚举/解包个数不匹配 —— <code class="docutils literal notranslate"><span class="pre">ValueError:</span> <span class="pre">not</span> <span class="pre">enough</span> <span class="pre">/</span> <span class="pre">too</span> <span class="pre">many</span> <span class="pre">values</span> <span class="pre">to</span> <span class="pre">unpack</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#for-else-else">3.3.4 <code class="docutils literal notranslate"><span class="pre">for...else</span></code> 少用却常踩 —— <code class="docutils literal notranslate"><span class="pre">else</span></code> 是「循环正常跑完」才执行</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#while">3.4 while 循环</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#while-ctrl-c-keyboardinterrupt">3.4.1 死循环：<code class="docutils literal notranslate"><span class="pre">while</span></code> 忘了更新条件变量 —— 程序卡住，<code class="docutils literal notranslate"><span class="pre">Ctrl+C</span></code>（KeyboardInterrupt）</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#continue">3.4.2 死循环：<code class="docutils literal notranslate"><span class="pre">continue</span></code> 跳过了循环体里「更新计数」的那一行</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#break-continue-return">3.5 break / continue / return 的适用范围</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#break-syntaxerror-break-outside-loop">3.5.1 <code class="docutils literal notranslate"><span class="pre">break</span></code> 写在循环外 —— <code class="docutils literal notranslate"><span class="pre">SyntaxError:</span> <span class="pre">'break'</span> <span class="pre">outside</span> <span class="pre">loop</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#continue-syntaxerror-continue-not-properly-in-loop">3.5.2 <code class="docutils literal notranslate"><span class="pre">continue</span></code> 写在循环外 —— <code class="docutils literal notranslate"><span class="pre">SyntaxError:</span> <span class="pre">'continue'</span> <span class="pre">not</span> <span class="pre">properly</span> <span class="pre">in</span> <span class="pre">loop</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#return-syntaxerror-return-outside-function">3.5.3 <code class="docutils literal notranslate"><span class="pre">return</span></code> 写在循环里、却不在任何函数内 —— <code class="docutils literal notranslate"><span class="pre">SyntaxError:</span> <span class="pre">'return'</span> <span class="pre">outside</span> <span class="pre">function</span></code>（进阶延伸）</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#range">3.6 range() 的参数问题</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#range-0-valueerror-range-arg-3-must-not-be-zero-typeerror">3.6.1 <code class="docutils literal notranslate"><span class="pre">range</span></code> 步长为 0 —— <code class="docutils literal notranslate"><span class="pre">ValueError:</span> <span class="pre">range()</span> <span class="pre">arg</span> <span class="pre">3</span> <span class="pre">must</span> <span class="pre">not</span> <span class="pre">be</span> <span class="pre">zero</span></code>；参数不足 —— <code class="docutils literal notranslate"><span class="pre">TypeError</span></code></a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id28">3.7 结尾 · 本章高频速查表</a></li>
+</ul>
+  </nav></div>
+
+</div></div>
+              
+            
+          </div>
+          <footer class="bd-footer-content">
+            
+          </footer>
+        
+      </main>
+    </div>
+  </div>
+  
+  <!-- Scripts loaded after <body> so the DOM is not blocked -->
+  <script defer src="../../_static/scripts/bootstrap.js?digest=90905a2f556bf617f1a9"></script>
+<script defer src="../../_static/scripts/pydata-sphinx-theme.js?digest=90905a2f556bf617f1a9"></script>
+
+  <footer class="bd-footer">
+<div class="bd-footer__inner bd-page-width">
+  
+    <div class="footer-items__start">
+      
+        <div class="footer-item">
+
+  <p class="copyright">
+    
+      © Copyright 2026, 兰州大学大气科学学院编程社区.
+      <br/>
+    
+  </p>
+</div>
+      
+        <div class="footer-item">
+
+  <p class="sphinx-version">
+    由 <a href="https://www.sphinx-doc.org/">Sphinx</a> 8.2.3创建。
+    <br/>
+  </p>
+</div>
+      
+    </div>
+  
+  
+  
+    <div class="footer-items__end">
+      
+        <div class="footer-item">
+<p class="theme-version">
+  <!-- # L10n: Setting the PST URL as an argument as this does not need to be localized -->
+  使用 <a href="https://pydata-sphinx-theme.readthedocs.io/en/stable/index.html">PyData Sphinx Theme</a> 0.20.0构建.
+</p></div>
+      
+    </div>
+  
+</div>
+
+  </footer>
+  </body>
+</html>

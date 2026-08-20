@@ -1,0 +1,1556 @@
+
+<!DOCTYPE html>
+
+
+<html lang="zh-CN" data-content_root="../../" >
+
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
+    <title>气象数据绘图（二）Cartopy Q&amp;A &#8212; MeteoPython</title>
+  
+  
+  
+  <script data-cfasync="false">
+    document.documentElement.dataset.mode = localStorage.getItem("mode") || "";
+    document.documentElement.dataset.theme = localStorage.getItem("theme") || "";
+  </script>
+  <!--
+    this give us a css class that will be invisible only if js is disabled
+  -->
+  <noscript>
+    <style>
+      .pst-js-only { display: none !important; }
+
+    </style>
+  </noscript>
+  
+  <!-- Loaded before other Sphinx assets -->
+  <link href="../../_static/styles/theme.css?digest=90905a2f556bf617f1a9" rel="stylesheet" />
+<link href="../../_static/styles/pydata-sphinx-theme.css?digest=90905a2f556bf617f1a9" rel="stylesheet" />
+
+    <link rel="stylesheet" type="text/css" href="../../_static/pygments.css?v=8f2a1f02" />
+    <link rel="stylesheet" type="text/css" href="../../_static/copybutton.css?v=76b2166b" />
+    <link rel="stylesheet" type="text/css" href="../../_static/sg_gallery.css?v=fd6457a4" />
+    <link rel="stylesheet" type="text/css" href="../../_static/sg_gallery-binder.css?v=f4aeca0c" />
+    <link rel="stylesheet" type="text/css" href="../../_static/sg_gallery-dataframe.css?v=2082cf3c" />
+    <link rel="stylesheet" type="text/css" href="../../_static/sg_gallery-rendered-html.css?v=1277b6f3" />
+    <link rel="stylesheet" type="text/css" href="../../_static/sphinx-design.min.css?v=95c83b7e" />
+    <link rel="stylesheet" type="text/css" href="../../_static/./custom.css?v=fbe1f034" />
+  
+  <!-- So that users can add custom icons -->
+  <script defer src="../../_static/scripts/fontawesome.js?digest=90905a2f556bf617f1a9"></script>
+  <!-- Pre-loaded scripts that we'll load fully later -->
+  <link rel="preload" as="script" href="../../_static/scripts/bootstrap.js?digest=90905a2f556bf617f1a9" />
+<link rel="preload" as="script" href="../../_static/scripts/pydata-sphinx-theme.js?digest=90905a2f556bf617f1a9" />
+
+    <script src="../../_static/documentation_options.js?v=9becfed8"></script>
+    <script src="../../_static/doctools.js?v=9bcbadda"></script>
+    <script src="../../_static/sphinx_highlight.js?v=dc90522c"></script>
+    <script src="../../_static/sg-tags.js?v=d80f6fa4"></script>
+    <script src="../../_static/clipboard.min.js?v=a7894cd8"></script>
+    <script src="../../_static/copybutton.js?v=fd10adb8"></script>
+    <script src="../../_static/translations.js?v=beaddf03"></script>
+    <script src="../../_static/design-tabs.js?v=f930bc37"></script>
+    <script>DOCUMENTATION_OPTIONS.pagename = 'qa/viz/10-Cartopy气象绘图-QA';</script>
+    <script>
+        DOCUMENTATION_OPTIONS.theme_version = '0.20.0';
+        DOCUMENTATION_OPTIONS.theme_switcher_json_url = '_static/switcher.json';
+        DOCUMENTATION_OPTIONS.theme_switcher_version_match = '0.1.0';
+        DOCUMENTATION_OPTIONS.show_version_warning_banner =
+            false;
+        </script>
+    <script>DOCUMENTATION_OPTIONS.search_as_you_type = false;</script>
+    <link rel="icon" href="../../_static/favicon.svg"/>
+    <link rel="index" title="索引" href="../../genindex.html" />
+    <link rel="search" title="搜索" href="../../search.html" />
+    <link rel="prev" title="气象数据绘图（一）Matplotlib Q&amp;A" href="09-Matplotlib%E6%B0%94%E8%B1%A1%E7%BB%98%E5%9B%BE-QA.html" />
+  <meta name="viewport" content="width=device-width, initial-scale=1"/>
+  <meta name="docsearch:language" content="zh-CN"/>
+  <meta name="docsearch:version" content="0.1" />
+    <meta name="docbuild:last-update" content="2026-08-20"/>
+  
+    
+    <script src="../../_static/searchtools.js"></script>
+    <script src="../../_static/language_data.js"></script>
+    <script src="../../searchindex.js"></script>
+  
+  </head>
+  <body data-default-mode="">
+  
+  
+  <div id="pst-skip-link" class="skip-link d-print-none"><a href="#main-content">跳转至主要内容</a></div>
+
+  
+  <div id="pst-scroll-pixel-helper"></div>
+  
+  <button type="button" class="btn rounded-pill" id="pst-back-to-top">
+    <i class="fa-solid fa-arrow-up"></i>回到顶部</button>
+  
+  
+  
+  
+  <dialog id="pst-search-dialog">
+    
+<form class="bd-search d-flex align-items-center"
+      action="../../search.html"
+      method="get">
+  <i class="fa-solid fa-magnifying-glass"></i>
+  <input type="search"
+         class="form-control"
+         name="q"
+         placeholder="搜索文档…"
+         aria-label="搜索文档…"
+         autocomplete="off"
+         autocorrect="off"
+         autocapitalize="off"
+         spellcheck="false"/>
+  <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd>K</kbd></span>
+</form>
+  </dialog>
+
+  <div class="pst-async-banner-revealer d-none">
+  <aside id="bd-header-version-warning" class="d-none d-print-none" aria-label="版本警告"></aside>
+</div>
+
+  
+    <header id="pst-header" class="bd-header navbar navbar-expand-lg bd-navbar d-print-none">
+<div class="bd-header__inner bd-page-width">
+  <button class="pst-navbar-icon sidebar-toggle primary-toggle" aria-label="网页导航">
+    <span class="fa-solid fa-bars"></span>
+  </button>
+  
+  
+  <div class="col-lg-3 navbar-header-items__start">
+    
+      <div class="navbar-item">
+
+  
+    
+  
+
+<a class="navbar-brand logo" href="../../index.html">
+  
+  
+  
+  
+  
+    
+    
+      
+    
+    
+    <img src="../../_static/logo.svg" class="logo__image only-light" alt="MeteoPython - Home"/>
+    <img src="../../_static/logo.svg" class="logo__image only-dark pst-js-only" alt="MeteoPython - Home"/>
+  
+  
+</a></div>
+    
+  </div>
+  
+  <div class="col-lg-9 navbar-header-items">
+    
+    <div class="me-auto navbar-header-items__center">
+      
+        <div class="navbar-item">
+<nav>
+  <ul class="bd-navbar-elements navbar-nav">
+    
+<li class="nav-item ">
+  <a class="nav-link nav-internal" href="../../user_guide/index.html">
+    教程
+  </a>
+</li>
+
+
+<li class="nav-item ">
+  <a class="nav-link nav-internal" href="../../tutorials/index.html">
+    练习
+  </a>
+</li>
+
+
+<li class="nav-item ">
+  <a class="nav-link nav-internal" href="../../gallery/index.html">
+    示例
+  </a>
+</li>
+
+
+<li class="nav-item ">
+  <a class="nav-link nav-internal" href="../../api/index.html">
+    术语参考
+  </a>
+</li>
+
+
+<li class="nav-item current active">
+  <a class="nav-link nav-internal" href="../index.html">
+    常见问题 Q&A
+  </a>
+</li>
+
+  </ul>
+</nav></div>
+      
+    </div>
+    
+    
+    <div class="navbar-header-items__end">
+      
+        <div class="navbar-item navbar-persistent--container">
+          
+
+<button class="btn search-button-field search-button__button pst-js-only" title="搜索" aria-label="搜索" data-bs-placement="bottom" data-bs-toggle="tooltip">
+ <i class="fa-solid fa-magnifying-glass"></i>
+ <span class="search-button__default-text">搜索</span>
+ <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd class="kbd-shortcut__modifier">K</kbd></span>
+</button>
+        </div>
+      
+      
+        <div class="navbar-item">
+
+<div class="theme-switch-container dropdown pst-js-only" data-bs-toggle="tooltip" data-bs-placement="bottom" title="Color mode">
+  <button class="btn btn-sm nav-link pst-navbar-icon theme-switch-button dropdown-toggle" aria-label="Color mode" data-bs-toggle="dropdown">
+    <i class="theme-switch fa-solid fa-sun fa-lg fa-fw" data-mode="light" title="亮色"></i>
+    <i class="theme-switch fa-solid fa-moon fa-lg fa-fw" data-mode="dark" title="暗色"></i>
+    <i class="theme-switch fa-solid fa-circle-half-stroke fa-lg fa-fw" data-mode="auto" title="System Settings"></i>
+  </button>
+  <ul class="dropdown-menu dropdown-menu-end">
+    <li><button class="dropdown-item d-flex align-items-center theme-change-button" data-mode="auto"><i class="fa-solid fa-circle-half-stroke fa-lg fa-fw me-1"></i>System Settings</button></li>
+    <li><button class="dropdown-item d-flex align-items-center theme-change-button" data-mode="light"><i class="fa-solid fa-sun fa-lg fa-fw me-1"></i>亮色</button></li>
+    <li><button class="dropdown-item d-flex align-items-center theme-change-button" data-mode="dark"><i class="fa-solid fa-moon fa-lg fa-fw me-1"></i>暗色</button></li>
+  </ul>
+</div></div>
+      
+        <div class="navbar-item"><ul class="navbar-icon-links"
+    aria-label="Icon Links">
+</ul></div>
+      
+    </div>
+    
+  </div>
+  
+  
+    <div class="navbar-persistent--mobile">
+
+<button class="btn search-button-field search-button__button pst-js-only" title="搜索" aria-label="搜索" data-bs-placement="bottom" data-bs-toggle="tooltip">
+ <i class="fa-solid fa-magnifying-glass"></i>
+ <span class="search-button__default-text">搜索</span>
+ <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd class="kbd-shortcut__modifier">K</kbd></span>
+</button>
+    </div>
+  
+
+  
+    <button class="pst-navbar-icon sidebar-toggle secondary-toggle" aria-label="当前页面">
+      <span class="fa-solid fa-outdent"></span>
+    </button>
+  
+</div>
+
+    </header>
+  
+
+  <div class="bd-container">
+    <div class="bd-container__inner bd-page-width">
+      
+      
+      
+      <dialog id="pst-primary-sidebar-modal"></dialog>
+      <div id="pst-primary-sidebar" class="bd-sidebar-primary bd-sidebar">
+        
+
+  
+  <div class="sidebar-header-items sidebar-primary__section">
+    
+    
+      <div class="sidebar-header-items__center">
+        
+          
+          
+            <div class="navbar-item">
+<nav>
+  <ul class="bd-navbar-elements navbar-nav">
+    
+<li class="nav-item ">
+  <a class="nav-link nav-internal" href="../../user_guide/index.html">
+    教程
+  </a>
+</li>
+
+
+<li class="nav-item ">
+  <a class="nav-link nav-internal" href="../../tutorials/index.html">
+    练习
+  </a>
+</li>
+
+
+<li class="nav-item ">
+  <a class="nav-link nav-internal" href="../../gallery/index.html">
+    示例
+  </a>
+</li>
+
+
+<li class="nav-item ">
+  <a class="nav-link nav-internal" href="../../api/index.html">
+    术语参考
+  </a>
+</li>
+
+
+<li class="nav-item current active">
+  <a class="nav-link nav-internal" href="../index.html">
+    常见问题 Q&A
+  </a>
+</li>
+
+  </ul>
+</nav></div>
+          
+        
+      </div>
+    
+    
+    
+      <div class="sidebar-header-items__end">
+        
+          <div class="navbar-item">
+
+<div class="theme-switch-container dropdown pst-js-only" data-bs-toggle="tooltip" data-bs-placement="bottom" title="Color mode">
+  <button class="btn btn-sm nav-link pst-navbar-icon theme-switch-button dropdown-toggle" aria-label="Color mode" data-bs-toggle="dropdown">
+    <i class="theme-switch fa-solid fa-sun fa-lg fa-fw" data-mode="light" title="亮色"></i>
+    <i class="theme-switch fa-solid fa-moon fa-lg fa-fw" data-mode="dark" title="暗色"></i>
+    <i class="theme-switch fa-solid fa-circle-half-stroke fa-lg fa-fw" data-mode="auto" title="System Settings"></i>
+  </button>
+  <ul class="dropdown-menu dropdown-menu-end">
+    <li><button class="dropdown-item d-flex align-items-center theme-change-button" data-mode="auto"><i class="fa-solid fa-circle-half-stroke fa-lg fa-fw me-1"></i>System Settings</button></li>
+    <li><button class="dropdown-item d-flex align-items-center theme-change-button" data-mode="light"><i class="fa-solid fa-sun fa-lg fa-fw me-1"></i>亮色</button></li>
+    <li><button class="dropdown-item d-flex align-items-center theme-change-button" data-mode="dark"><i class="fa-solid fa-moon fa-lg fa-fw me-1"></i>暗色</button></li>
+  </ul>
+</div></div>
+        
+          <div class="navbar-item"><ul class="navbar-icon-links"
+    aria-label="Icon Links">
+</ul></div>
+        
+      </div>
+    
+  </div>
+  
+    <div class="sidebar-primary-items__start sidebar-primary__section">
+        <div class="sidebar-primary-item pst-sidebar-collapse"><button id="pst-collapse-sidebar-button" aria-expanded="true" aria-controls="pst-primary-sidebar">
+  <svg class="pst-icon" role="img" aria-hidden="true" focusable="false" viewBox="0 0 16 16" xmlns="http://www.w3.org/2000/svg">
+    <path fill="currentColor" d="M3 15.5C2.36232 15.5 1.74874 15.2564 1.28478 14.8189C0.820828 14.3815 0.541576 13.7832 0.504167 13.1467L0.5 13L0.5 3C0.499965 2.36232 0.743605 1.74874 1.18107 1.28478C1.61854 0.820828 2.21676 0.541576 2.85333 0.504167L3 0.5L13 0.5C13.6377 0.499965 14.2513 0.743605 14.7152 1.18107C15.1792 1.61854 15.4584 2.21676 15.4958 2.85333L15.5 3L15.5 13C15.5 13.6377 15.2564 14.2513 14.8189 14.7152C14.3815 15.1792 13.7832 15.4584 13.1467 15.4958L13 15.5L3 15.5ZM3 13.8333L10.5 13.8333L10.5 2.16667L3 2.16667C2.79589 2.16669 2.59889 2.24163 2.44636 2.37726C2.29383 2.5129 2.19638 2.69979 2.1725 2.9025L2.16667 3L2.16667 13C2.16669 13.2041 2.24163 13.4011 2.37726 13.5536C2.5129 13.7062 2.69979 13.8036 2.9025 13.8275L3 13.8333ZM6.65583 10.325L6.5775 10.2558L4.91083 8.58917C4.76735 8.44567 4.68116 8.25476 4.66843 8.05223C4.65569 7.84971 4.71729 7.6495 4.84167 7.48917L4.91083 7.41083L6.5775 5.74417C6.72747 5.59471 6.9287 5.50794 7.14032 5.50148C7.35194 5.49502 7.55809 5.56935 7.7169 5.70937C7.8757 5.8494 7.97525 6.04463 7.99533 6.25539C8.01541 6.46616 7.95451 6.67667 7.825 6.84417L7.75583 6.9225L6.67917 8L7.75583 9.0775C7.89931 9.22099 7.98551 9.41191 7.99824 9.61443C8.01097 9.81695 7.94938 10.0172 7.825 10.1775L7.75583 10.2558C7.61234 10.3993 7.42142 10.4855 7.2189 10.4982C7.01638 10.511 6.81617 10.4494 6.65583 10.325Z"/>
+  </svg>
+  <span class="pst-collapse-sidebar-label">Collapse Sidebar</span>
+  <span class="pst-expand-sidebar-label">Expand Sidebar</span>
+</button></div>
+        <div class="sidebar-primary-item">
+
+<nav class="bd-docs-nav bd-links"
+     aria-label="章节导航">
+  <p class="bd-links__title" role="heading" aria-level="1">章节导航</p>
+  <div class="bd-toc-item navbar-nav"><ul class="current nav bd-sidenav">
+<li class="toctree-l1 has-children"><a class="reference internal" href="../basics/index.html">模块一 Python 编程基础（常见问题 Q&amp;A）</a><details open="open"><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
+<li class="toctree-l2"><a class="reference internal" href="../basics/00-%E9%80%9A%E7%94%A8%E6%8E%92%E9%94%99%E6%8C%87%E5%8D%97.html">通用排错方法论：从「看不懂报错」到「有的放矢」 Q&amp;A</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../basics/01-Python%E7%AE%80%E4%BB%8B%E4%B8%8EConda%E7%8E%AF%E5%A2%83-QA.html">Python 简介及安装环境 Q&amp;A</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../basics/02-%E6%95%B0%E6%8D%AE%E7%B1%BB%E5%9E%8B%E4%B8%8E%E8%BF%90%E7%AE%97%E7%AC%A6-QA.html">基本数据类型、变量和运算符 Q&amp;A</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../basics/03-%E5%88%86%E6%94%AF%E6%9D%A1%E4%BB%B6%E5%BE%AA%E7%8E%AF-QA.html">分支、条件与循环 Q&amp;A</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../basics/04-%E5%87%BD%E6%95%B0%E4%BD%9C%E7%94%A8%E5%9F%9F%E6%A8%A1%E5%9D%97%E5%8C%85-QA.html">函数、变量作用域、模块与包 Q&amp;A</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../basics/05-%E9%9D%A2%E5%90%91%E5%AF%B9%E8%B1%A1%E5%87%BD%E6%95%B0%E5%BC%8F%E9%AB%98%E7%BA%A7%E8%AF%AD%E6%B3%95-QA.html">面向对象、函数式编程与高级语法 Q&amp;A</a></li>
+</ul>
+</details></li>
+<li class="toctree-l1 has-children"><a class="reference internal" href="../data/index.html">模块二 气象数据处理（常见问题 Q&amp;A）</a><details open="open"><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
+<li class="toctree-l2"><a class="reference internal" href="../data/06-NumPy%E6%B0%94%E8%B1%A1%E8%AE%A1%E7%AE%97-QA.html">气象数据计算 NumPy Q&amp;A</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../data/07-Pandas%E6%B0%94%E8%B1%A1%E5%88%86%E6%9E%90-QA.html">气象数据分析（一）Pandas Q&amp;A</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../data/08-Xarray%E6%B0%94%E8%B1%A1%E5%88%86%E6%9E%90-QA.html">Xarray 气象数据处理（二）Q&amp;A</a></li>
+</ul>
+</details></li>
+<li class="toctree-l1 current active has-children"><a class="reference internal" href="index.html">模块三 气象数据可视化（常见问题 Q&amp;A）</a><details open="open"><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="09-Matplotlib%E6%B0%94%E8%B1%A1%E7%BB%98%E5%9B%BE-QA.html">气象数据绘图（一）Matplotlib Q&amp;A</a></li>
+<li class="toctree-l2 current active"><a class="current reference internal" href="#">气象数据绘图（二）Cartopy Q&amp;A</a></li>
+</ul>
+</details></li>
+</ul>
+</div>
+</nav></div>
+    </div>
+  
+  
+  <div class="sidebar-primary-items__end sidebar-primary__section">
+      <div class="sidebar-primary-item">
+<div id="ethical-ad-placement"
+      class="flat"
+      data-ea-publisher="readthedocs"
+      data-ea-type="readthedocs-sidebar"
+      data-ea-manual="true">
+</div></div>
+  </div>
+
+
+      </div>
+      
+      <main id="main-content" class="bd-main" role="main">
+        
+        
+          <div class="bd-content">
+            <div class="bd-article-container">
+              
+              <div class="bd-header-article d-print-none">
+<div class="header-article-items header-article__inner">
+  
+    <div class="header-article-items__start">
+      
+        <div class="header-article-item">
+
+<nav aria-label="Breadcrumb" class="d-print-none">
+  <ul class="bd-breadcrumbs">
+    
+    <li class="breadcrumb-item breadcrumb-home">
+      <a href="../../index.html" class="nav-link" aria-label="初始页面">
+        <i class="fa-solid fa-home"></i>
+      </a>
+    </li>
+    
+    <li class="breadcrumb-item"><a href="../index.html" class="nav-link">常见问题 Q&amp;A</a></li>
+    
+    
+    <li class="breadcrumb-item"><a href="index.html" class="nav-link">模块三 气象数据可视化（常见问题 Q&amp;A）</a></li>
+    
+    <li class="breadcrumb-item active" aria-current="page"><span class="ellipsis">气象数据绘图（二）Cartopy Q&amp;A</span></li>
+  </ul>
+</nav>
+</div>
+      
+    </div>
+  
+  
+</div>
+</div>
+              
+              
+              
+                
+<div id="searchbox"></div>
+                <article class="bd-article">
+                  
+  <section id="cartopy-q-a">
+<h1>气象数据绘图（二）Cartopy Q&amp;A<a class="headerlink" href="#cartopy-q-a" title="Link to this heading">#</a></h1>
+<blockquote>
+<div><p><strong>章节定位</strong>：第 10 章（模块三）· 对应用户指南
+<code class="docutils literal notranslate"><span class="pre">user_guide/viz/cartopy.rst</span></code>，贯穿项目第 10
+步：绘制西北地区气温空间分布图（等值线填色 +
+海岸线）。重点是「把一张带经纬度标签的格点表，经投影铺到地图上」时的报错、警告与静默异常现象。
+<strong>通用排错方法论</strong>：见
+<a class="reference internal" href="../basics/00-%E9%80%9A%E7%94%A8%E6%8E%92%E9%94%99%E6%8C%87%E5%8D%97.html"><span class="doc">00-通用排错指南</span></a>（0.1 节「报错 / 警告 /
+静默错值」三分法、0.4 节「排查七招」、0.5 节「静默污染」先读；0.3
+节的 <code class="docutils literal notranslate"><span class="pre">ImportError</span> <span class="pre">/</span> <span class="pre">AttributeError</span> <span class="pre">/</span> <span class="pre">DeprecationWarning</span> <span class="pre">/</span> <span class="pre">URLError</span></code>
+家谱图在本章会反复用到）。 <strong>校正说明</strong>：本文全部
+<code class="docutils literal notranslate"><span class="pre">Traceback</span> <span class="pre">/</span> <span class="pre">Warning</span> <span class="pre">/</span> <span class="pre">DeprecationWarning</span> <span class="pre">/</span> <span class="pre">URLError</span></code> 均来自
+Cartopy <strong>0.25.0</strong> + Matplotlib <strong>3.10.8</strong>
+的真实运行输出，原文照录。文中涉及 DLL / PROJ
+的备注，是提醒你：<strong>用 ``conda install cartopy`` 装出的版本会自动把
+PROJ/GEOS 底层库放进环境，无需手动补 DLL</strong>——若你自行用 pip 裸装后出现
+DLL 报错，可回看 10.7 的依赖清单补装 <code class="docutils literal notranslate"><span class="pre">shapely</span> <span class="pre">/</span> <span class="pre">pyproj</span> <span class="pre">/</span> <span class="pre">pyshp</span></code>。
+<strong>联网说明</strong>：Cartopy 首次使用 <code class="docutils literal notranslate"><span class="pre">add_feature</span></code> / <code class="docutils literal notranslate"><span class="pre">coastlines</span></code>
+会联网下载 Natural Earth
+数据。若你身处断网/被墙环境，首次必报网络下载错（见
+10.6)——这地方同时给了「预缓存 +
+离线」两个标准方案，课前可先在有网机器上合好缓存。</p>
+</div></blockquote>
+<hr class="docutils" />
+<section id="id1">
+<span id="id2"></span><h2>10.0 本章报错/警告/异常现象速查总表<a class="headerlink" href="#id1" title="Link to this heading">#</a></h2>
+<p>第 10 章的高频坑先按「类别 | 类型 | 一句现象提示 |
+解决办法一句话」摊开，方便你快速锚定。</p>
+<div class="pst-scrollable-table-container"><table class="table">
+<thead>
+<tr class="row-odd"><th class="head"><p>英文关键词 / 现象</p></th>
+<th class="head"><p>类型</p></th>
+<th class="head"><p>一句现象提示</p></th>
+<th class="head"><p>解决办法一句话</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p>地图上出现<strong>白色竖线/白条</strong>（全球图 ±180 或 0 处）</p></td>
+<td><p>静默现象</p></td>
+<td><p>数据经度范围与投影中央经线错位，跨存线处填色断裂</p></td>
+<td><p>统一数据经度与 <code class="docutils literal notranslate"><span class="pre">central_longitude</span></code>，或用
+<code class="docutils literal notranslate"><span class="pre">add_cyclic_point</span></code> / 平移经度</p></td>
+</tr>
+<tr class="row-odd"><td><p>漏写 <code class="docutils literal notranslate"><span class="pre">transform=</span></code></p></td>
+<td><p>静默/错位</p></td>
+<td><p>换非 PlateCarree 投影后数据跑到旁边/图外</p></td>
+<td><p>每个空间绘图都补 <code class="docutils literal notranslate"><span class="pre">transform=ccrs.PlateCarree()</span></code></p></td>
+</tr>
+<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">projection=</span></code> 与 <code class="docutils literal notranslate"><span class="pre">transform=</span></code> 混淆</p></td>
+<td><p>静默/错位</p></td>
+<td><p>把「画布投影」当作「数据投影」混着写</p></td>
+<td><p>分清：<code class="docutils literal notranslate"><span class="pre">projection</span></code> 在轴、<code class="docutils literal notranslate"><span class="pre">transform</span></code>
+在每个绘图调用</p></td>
+</tr>
+<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">set_extent</span></code> 裁剪失效/画面空白</p></td>
+<td><p>静默现象</p></td>
+<td><p>经纬序写反、漏 <code class="docutils literal notranslate"><span class="pre">crs=</span></code>、投影坐标系混用</p></td>
+<td><p>写
+<code class="docutils literal notranslate"><span class="pre">set_extent([西,东,南,北],</span> <span class="pre">crs=ccrs.PlateCarree())</span></code></p></td>
+</tr>
+<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">contourf</span></code> 报 <code class="docutils literal notranslate"><span class="pre">Input</span> <span class="pre">z</span> <span class="pre">must</span> <span class="pre">be</span> <span class="pre">2D,</span> <span class="pre">not</span> <span class="pre">3D</span></code></p></td>
+<td><p>报错</p></td>
+<td><p>给 z 多留了一个 time 维</p></td>
+<td><p>取单时刻/做 <code class="docutils literal notranslate"><span class="pre">sel</span></code>/<code class="docutils literal notranslate"><span class="pre">squeeze</span></code> 后再画</p></td>
+</tr>
+<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">contourf</span></code> 报 <code class="docutils literal notranslate"><span class="pre">Shapes</span> <span class="pre">of</span> <span class="pre">x</span> <span class="pre">(...)</span> <span class="pre">and</span> <span class="pre">z</span> <span class="pre">(...)</span> <span class="pre">do</span> <span class="pre">not</span> <span class="pre">match</span></code></p></td>
+<td><p>报错</p></td>
+<td><p>x/y 网格shape 与 z 对不上（常因 <code class="docutils literal notranslate"><span class="pre">.T</span></code> 转置）</p></td>
+<td><p>统一 <code class="docutils literal notranslate"><span class="pre">meshgrid</span></code> 的纬度数×经度数与 z 一致</p></td>
+</tr>
+<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">pcolormesh</span></code> 报 <code class="docutils literal notranslate"><span class="pre">Dimensions</span> <span class="pre">of</span> <span class="pre">C</span> <span class="pre">...</span> <span class="pre">one</span> <span class="pre">smaller</span> <span class="pre">than</span> <span class="pre">X</span> <span class="pre">...</span></code></p></td>
+<td><p>报错</p></td>
+<td><p>1D x/y 与 z 尺寸关系错</p></td>
+<td><p>用 <code class="docutils literal notranslate"><span class="pre">shading=&quot;auto&quot;</span></code> 或让 x/y 比 z 各多一格一致</p></td>
+</tr>
+<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">add_feature</span></code>/<code class="docutils literal notranslate"><span class="pre">coastlines</span></code> 报 <code class="docutils literal notranslate"><span class="pre">URLError</span></code>/超时</p></td>
+<td><p>报错</p></td>
+<td><p>首次用要联网下载 Natural Earth，断网/被墙失败</p></td>
+<td><p>配 <code class="docutils literal notranslate"><span class="pre">config[&quot;data_dir&quot;]</span></code> 缓存、或预下载 NE 到本地</p></td>
+</tr>
+<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">ModuleNotFoundError:</span> <span class="pre">No</span> <span class="pre">module</span> <span class="pre">named</span> <span class="pre">'pyproj'/'shapely'</span></code></p></td>
+<td><p>报错</p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">cartopy</span></code> 依赖的地理库没装/环境没激活</p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">conda</span> <span class="pre">install</span> <span class="pre">cartopy</span> <span class="pre">shapely</span> <span class="pre">pyproj</span></code> 或
+<code class="docutils literal notranslate"><span class="pre">conda</span> <span class="pre">activate</span></code></p></td>
+</tr>
+<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">AttributeError:</span> <span class="pre">'GeoAxes'</span> <span class="pre">object</span> <span class="pre">has</span> <span class="pre">no</span> <span class="pre">attribute</span> <span class="pre">'natural_earth_shp'</span></code></p></td>
+<td><p>报错</p></td>
+<td><p>用了老版本/教科书旧的 API</p></td>
+<td><p>用 <code class="docutils literal notranslate"><span class="pre">cfeature</span></code> /
+<code class="docutils literal notranslate"><span class="pre">add_geometries(shapereader.Reader(...))</span></code></p></td>
+</tr>
+<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">DeprecationWarning:</span> <span class="pre">geos_to_path</span> <span class="pre">is</span> <span class="pre">deprecated...</span> <span class="pre">Use</span> <span class="pre">cartopy.mpl.path.shapely_to_path</span></code></p></td>
+<td><p>警告</p></td>
+<td><p>旧版内部 API 被官方弃用</p></td>
+<td><p>更新为新写法；老代码按提示迁移</p></td>
+</tr>
+<tr class="row-odd"><td><p>站点点到<strong>大洋/图外</strong>（静默）</p></td>
+<td><p>静默现象</p></td>
+<td><p>点位经纬度装反或顺序传错</p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">scatter(lon,</span> <span class="pre">lat,</span> <span class="pre">transform=...)</span></code>，lon 在前 lat
+在后</p></td>
+</tr>
+<tr class="row-even"><td><p>站点/要素<strong>不显示</strong></p></td>
+<td><p>静默/错位</p></td>
+<td><p>非 PlateCarree 轴上漏 <code class="docutils literal notranslate"><span class="pre">transform</span></code></p></td>
+<td><p>加 <code class="docutils literal notranslate"><span class="pre">transform</span></code>，检查 <code class="docutils literal notranslate"><span class="pre">set_extent</span></code> 是否盖住它</p></td>
+</tr>
+<tr class="row-odd"><td><p>中文标题/色标显示<strong>方框</strong>（汉字缺失）</p></td>
+<td><p>警告</p></td>
+<td><p>系统未配置中文字体，Glyph missing</p></td>
+<td><p>配 <code class="docutils literal notranslate"><span class="pre">SimHei</span></code>/<code class="docutils literal notranslate"><span class="pre">Microsoft</span> <span class="pre">YaHei</span></code>（同第 9 章）</p></td>
+</tr>
+<tr class="row-even"><td><p>图外/空白一片（等值线在图测）</p></td>
+<td><p>静默现象</p></td>
+<td><p>数据范围远小于 <code class="docutils literal notranslate"><span class="pre">set_extent</span></code>、或字段全 NaN</p></td>
+<td><p>先 <code class="docutils literal notranslate"><span class="pre">print(vmin/vmax/nan)</span></code>，再配 <code class="docutils literal notranslate"><span class="pre">levels</span></code> 与
+<code class="docutils literal notranslate"><span class="pre">vmin/vmax</span></code></p></td>
+</tr>
+<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">UserWarning:</span> <span class="pre">...</span> <span class="pre">identical</span> <span class="pre">low</span> <span class="pre">and</span> <span class="pre">high</span> <span class="pre">ylims</span> <span class="pre">makes</span> <span class="pre">transformation</span> <span class="pre">singular</span></code></p></td>
+<td><p>警告</p></td>
+<td><p>范围退化为一个点</p></td>
+<td><p>检查 <code class="docutils literal notranslate"><span class="pre">set_extent</span></code>/首位数据使窗口至少占一个区域</p></td>
+</tr>
+</tbody>
+</table>
+</div>
+<blockquote>
+<div><p><strong>一句话记住</strong>：Cartopy
+的「白色竖线、图层错位、点画到海里去」大多是<strong>第 3
+类静默现象</strong>——程序绿灯到底、图也能存，只是位置错了。它们不会主动报错，靠的是你给<strong>每个空间绘图函数都贴上
+``transform`` 标签</strong>，并盯住经度单位（度 vs 弧度）、经度范围（0–360
+vs −180–180）与维度顺序（lat,lon vs
+lon,lat）。凡“画完总觉得哪儿不对劲”，先开 <code class="docutils literal notranslate"><span class="pre">set_extent</span></code> 附近和
+<code class="docutils literal notranslate"><span class="pre">transform</span></code> 三连问。</p>
+</div></blockquote>
+<hr class="docutils" />
+</section>
+<section id="id3">
+<span id="id4"></span><h2>10.1 全球图 / 跨日界线出现的白色竖线（白条）<a class="headerlink" href="#id3" title="Link to this heading">#</a></h2>
+<blockquote>
+<div><p>这是 Cartopy
+新手与气象数据打交道最经典、也最神秘的“静默现象”——程序不报任何错，可全球图上就是有一条（或一窄条）竖白缝，把本该连续的气象场劈成两半。它几乎永远出现在<strong>经度不连续的那条经线</strong>上（±180
+日界线，或 0/360 交界）。</p>
+</div></blockquote>
+<section id="platecarree-0-180">
+<span id="id5"></span><h3>10.1.1 暖脊骑在日界线上：<code class="docutils literal notranslate"><span class="pre">PlateCarree()</span></code> 默认中央经线 0 时在 ±180 裂出白缝<a class="headerlink" href="#platecarree-0-180" title="Link to this heading">#</a></h3>
+<p><strong>现象 / 异常现象描述</strong>：构造一场「暖脊横跨 +-180°
+日界线」的温度场（全球格点场），用默认
+<code class="docutils literal notranslate"><span class="pre">ccrs.PlateCarree()</span></code>（中央经线 0）去 <code class="docutils literal notranslate"><span class="pre">pcolormesh</span></code>
+填色，得到的图上，暖脊本应在日界线处连续地“跨过去”，却在地图左右两条
+±180°
+边附近各出现一道<strong>白色竖缝</strong>，暖脊被劈成两半，好像地图被撕开过。</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span><span class="w"> </span><span class="nn">numpy</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">np</span><span class="o">,</span><span class="w"> </span><span class="nn">matplotlib</span>
+<span class="n">matplotlib</span><span class="o">.</span><span class="n">use</span><span class="p">(</span><span class="s2">&quot;Agg&quot;</span><span class="p">)</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">matplotlib.pyplot</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">plt</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">cartopy.crs</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">ccrs</span>
+
+<span class="n">lon</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">arange</span><span class="p">(</span><span class="o">-</span><span class="mi">180</span><span class="p">,</span> <span class="mi">180</span><span class="p">,</span> <span class="mf">2.5</span><span class="p">)</span>          <span class="c1"># 经度：-180, -177.5, ..., 178.75</span>
+<span class="n">lat</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">arange</span><span class="p">(</span><span class="o">-</span><span class="mi">75</span><span class="p">,</span> <span class="mi">76</span><span class="p">,</span> <span class="mf">1.0</span><span class="p">)</span>
+<span class="n">LON</span><span class="p">,</span> <span class="n">LAT</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">meshgrid</span><span class="p">(</span><span class="n">lon</span><span class="p">,</span> <span class="n">lat</span><span class="p">)</span>
+<span class="c1"># &quot;到日界线的最短球面距离&quot;: 经度 +-180 都是同一根线</span>
+<span class="n">dist</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">minimum</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">abs</span><span class="p">(</span><span class="n">LON</span> <span class="o">-</span> <span class="mi">180</span><span class="p">),</span> <span class="n">np</span><span class="o">.</span><span class="n">abs</span><span class="p">(</span><span class="n">LON</span> <span class="o">+</span> <span class="mi">180</span><span class="p">))</span>
+<span class="n">TEMP</span> <span class="o">=</span> <span class="mi">18</span> <span class="o">*</span> <span class="n">np</span><span class="o">.</span><span class="n">cos</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">deg2rad</span><span class="p">(</span><span class="n">LAT</span><span class="p">))</span> <span class="o">+</span> <span class="mi">25</span> <span class="o">*</span> <span class="n">np</span><span class="o">.</span><span class="n">exp</span><span class="p">(</span><span class="o">-</span><span class="p">((</span><span class="n">dist</span><span class="p">)</span> <span class="o">**</span> <span class="mi">2</span><span class="p">)</span> <span class="o">/</span> <span class="mf">6.0</span><span class="p">)</span>
+
+<span class="n">fig</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">figure</span><span class="p">(</span><span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">10</span><span class="p">,</span> <span class="mf">4.4</span><span class="p">))</span>
+<span class="n">ax</span> <span class="o">=</span> <span class="n">fig</span><span class="o">.</span><span class="n">add_subplot</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="n">projection</span><span class="o">=</span><span class="n">ccrs</span><span class="o">.</span><span class="n">PlateCarree</span><span class="p">())</span>  <span class="c1"># 默认中央经线 0</span>
+<span class="n">pc</span> <span class="o">=</span> <span class="n">ax</span><span class="o">.</span><span class="n">pcolormesh</span><span class="p">(</span><span class="n">LON</span><span class="p">,</span> <span class="n">LAT</span><span class="p">,</span> <span class="n">TEMP</span><span class="p">,</span> <span class="n">cmap</span><span class="o">=</span><span class="s2">&quot;coolwarm&quot;</span><span class="p">,</span> <span class="n">shading</span><span class="o">=</span><span class="s2">&quot;auto&quot;</span><span class="p">,</span>
+                   <span class="n">transform</span><span class="o">=</span><span class="n">ccrs</span><span class="o">.</span><span class="n">PlateCarree</span><span class="p">())</span>
+<span class="n">fig</span><span class="o">.</span><span class="n">colorbar</span><span class="p">(</span><span class="n">pc</span><span class="p">,</span> <span class="n">shrink</span><span class="o">=</span><span class="mf">0.8</span><span class="p">)</span>
+<span class="n">ax</span><span class="o">.</span><span class="n">set_title</span><span class="p">(</span><span class="s2">&quot;warm ridge crossing +-180 on central_longitude=0 -&gt; white seam at map edge&quot;</span><span class="p">)</span>
+<span class="n">fig</span><span class="o">.</span><span class="n">savefig</span><span class="p">(</span><span class="sa">r</span><span class="s2">&quot;...\sim\10b2_seam_pcmesh.png&quot;</span><span class="p">,</span> <span class="n">dpi</span><span class="o">=</span><span class="mi">110</span><span class="p">,</span> <span class="n">bbox_inches</span><span class="o">=</span><span class="s2">&quot;tight&quot;</span><span class="p">)</span>
+</pre></div>
+</div>
+<p><strong>像素证据</strong>：对保存的图统计“地图左右两侧 2%
+宽度内的白色（空白）占比”，<code class="docutils literal notranslate"><span class="pre">central_longitude=0</span></code> 时<strong>左缘
+0.98、右缘 0.90</strong> 皆近乎全白；改用 <code class="docutils literal notranslate"><span class="pre">central_longitude=180</span></code>
+后<strong>左缘降到
+0.06</strong>，白缝消失。这把「白缝跟着经度不连续线走」坐实了。</p>
+<p><strong>原因（地理学解释，务必理解）</strong>：地球经线是<strong>周期性的</strong>——178.9°E 和
+-179.1°E 其实只隔约 2°，是全球邻接的两格；但文件里经度数组
+<code class="docutils literal notranslate"><span class="pre">lon</span> <span class="pre">=</span> <span class="pre">-180..180</span></code> 是把这条线<strong>硬生生切开摊平</strong>存储的，第 0
+格（-180）和第 1
+格相邻，最后一格（+180）和“虚拟的下一格(-180)”在<strong>数组头尾两端</strong>。当你用中央经线为
+0 的 PlateCarree 画全球图，图幅左右两条边正好对齐 ±180，Cartopy
+在「末格(+178°)与下一格(-179°)」之间做插值填色时，发现这两格在数组里相距不是
+2° 而是
+<code class="docutils literal notranslate"><span class="pre">360°-</span></code>——它宁可留白，也不愿把颜色“绕地球一圈”缝合。于是经度不连续性，就在地图边缘变成一条白缝。<strong>也就是
+PPT 里说的：``nc 文件存储的问题，在 0 度经线上出现白条``。</strong></p>
+<p><strong>解决办法</strong>：三选一（都要确保“数据经度网格”与“地图如何看待经度”一致）：</p>
+<ol class="arabic simple">
+<li><p><strong>投影中央经线对准数据断裂点</strong>——数据是 0–360，就把轴与 <code class="docutils literal notranslate"><span class="pre">transform</span></code>
+都设 <code class="docutils literal notranslate"><span class="pre">PlateCarree(central_longitude=180)</span></code>；数据是
+-180–180，就常保留默认（中央 0）。这样 <strong>180
+那条“缝”正好藏在图幅中央（日界线画在地图中间），左右两侧不再有经度跳跃</strong>：</p></li>
+</ol>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">proj</span> <span class="o">=</span> <span class="n">ccrs</span><span class="o">.</span><span class="n">PlateCarree</span><span class="p">(</span><span class="n">central_longitude</span><span class="o">=</span><span class="mi">180</span><span class="p">)</span>
+<span class="n">fig</span><span class="p">,</span> <span class="n">ax</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">subplots</span><span class="p">(</span><span class="n">subplot_kw</span><span class="o">=</span><span class="p">{</span><span class="s2">&quot;projection&quot;</span><span class="p">:</span> <span class="n">proj</span><span class="p">})</span>
+<span class="n">pc</span> <span class="o">=</span> <span class="n">ax</span><span class="o">.</span><span class="n">pcolormesh</span><span class="p">(</span><span class="n">LON</span><span class="p">,</span> <span class="n">LAT</span><span class="p">,</span> <span class="n">TEMP</span><span class="p">,</span> <span class="n">cmap</span><span class="o">=</span><span class="s2">&quot;coolwarm&quot;</span><span class="p">,</span> <span class="n">shading</span><span class="o">=</span><span class="s2">&quot;auto&quot;</span><span class="p">,</span> <span class="n">transform</span><span class="o">=</span><span class="n">proj</span><span class="p">)</span>
+<span class="c1"># 轴投影与数据投影都用同一个 180 中央 —— 白色竖缝消失（图上见 10b2_seam_fixed.png）</span>
+</pre></div>
+</div>
+<ol class="arabic simple" start="2">
+<li><p><strong>``cartopy.util.add_cyclic_point``
+补一列循环格点</strong>：把经度首尾接起来（在经度数组末尾再接一个
+<code class="docutils literal notranslate"><span class="pre">lon[0]+360</span></code> 的副本列），Cartopy 就能把末列和首列连续缝合：</p></li>
+</ol>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span><span class="w"> </span><span class="nn">cartopy.util</span><span class="w"> </span><span class="kn">import</span> <span class="n">add_cyclic_point</span>
+<span class="n">TEMP_cyc</span><span class="p">,</span> <span class="n">lon_cyc</span> <span class="o">=</span> <span class="n">add_cyclic_point</span><span class="p">(</span><span class="n">TEMP</span><span class="p">,</span> <span class="n">coord</span><span class="o">=</span><span class="n">lon</span><span class="p">)</span>   <span class="c1"># TEMP 形如 (nlat, nlon)</span>
+<span class="n">proj</span> <span class="o">=</span> <span class="n">ccrs</span><span class="o">.</span><span class="n">PlateCarree</span><span class="p">(</span><span class="n">central_longitude</span><span class="o">=</span><span class="mi">180</span><span class="p">)</span>
+<span class="n">LONc</span><span class="p">,</span> <span class="n">LATc</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">meshgrid</span><span class="p">(</span><span class="n">lon_cyc</span><span class="p">,</span> <span class="n">lat</span><span class="p">)</span>
+<span class="n">ax</span><span class="o">.</span><span class="n">pcolormesh</span><span class="p">(</span><span class="n">LONc</span><span class="p">,</span> <span class="n">LATc</span><span class="p">,</span> <span class="n">TEMP_cyc</span><span class="p">,</span> <span class="n">transform</span><span class="o">=</span><span class="n">proj</span><span class="p">,</span> <span class="n">shading</span><span class="o">=</span><span class="s2">&quot;auto&quot;</span><span class="p">)</span>
+</pre></div>
+</div>
+<ol class="arabic simple" start="3">
+<li><p><strong>手动平移经度</strong>：全局数据多是从 <code class="docutils literal notranslate"><span class="pre">-180..180</span></code>（或
+<code class="docutils literal notranslate"><span class="pre">0..360</span></code>）来的，可先用 <code class="docutils literal notranslate"><span class="pre">(lon+180)</span> <span class="pre">%</span> <span class="pre">360</span></code>
+并把数据按新经度重排，让它与中央 180 的图幅对齐（见 10.1.2 代码）。</p></li>
+</ol>
+<blockquote>
+<div><p><strong>气象/地理场景一句话</strong>：<code class="docutils literal notranslate"><span class="pre">-180°E</span></code> 和 <code class="docutils literal notranslate"><span class="pre">180°E</span></code>
+在地球上是同一根经线，好比「标准子午线」0° 与 360°
+也是同一根——可平铺在地图册上，人非要把球皮沿某根经线剪开摊平，剪开的那条缝就叫<strong>经度不连续线（dateline
+/
+剪口）</strong>。你的图在哪条经线上出现白缝，哪条经线就是你手里的“剪子剪开的地方”。要做的不是“把缝磨平”，而是<strong>让剪口避开你要看的区域</strong>，或者<strong>用
+``add_cyclic_point`` 把剪口计价缝合回去</strong>。</p>
+</div></blockquote>
+<hr class="docutils" />
+</section>
+<section id="id6">
+<span id="id7"></span><h3>10.1.2 数据 0–360 与画布 -180–180 混用（「右半边世界」+ 0/360 白条）<a class="headerlink" href="#id6" title="Link to this heading">#</a></h3>
+<p><strong>现象 / 异常现象描述</strong>：很多再分析（ERA5
+部分变量、WRF/模式输出）经度存成 <strong>0–360</strong>，而你用的
+<code class="docutils literal notranslate"><span class="pre">ccrs.PlateCarree()</span></code> 画布默认把经度当 <strong>-180–180</strong> 解读。把 0–360
+数据直接 <code class="docutils literal notranslate"><span class="pre">pcolormesh</span></code>
+上去，地图右半边会出现“整个世界被塞进来又错位”的样子，0/360
+那条接缝同样裂成白条；更坑的是你<strong>完全看不出哪不对</strong>，因为程序照跑、图也能存。</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">lon</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">linspace</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">360</span><span class="p">,</span> <span class="mi">97</span><span class="p">)</span>             <span class="c1"># 数据经度 0..360</span>
+<span class="n">lat</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">linspace</span><span class="p">(</span><span class="o">-</span><span class="mi">90</span><span class="p">,</span> <span class="mi">90</span><span class="p">,</span> <span class="mi">37</span><span class="p">)</span>
+<span class="n">LON</span><span class="p">,</span> <span class="n">LAT</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">meshgrid</span><span class="p">(</span><span class="n">lon</span><span class="p">,</span> <span class="n">lat</span><span class="p">)</span>
+<span class="n">TEMP</span> <span class="o">=</span> <span class="mi">25</span> <span class="o">*</span> <span class="n">np</span><span class="o">.</span><span class="n">cos</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">deg2rad</span><span class="p">(</span><span class="n">LAT</span><span class="p">))</span> <span class="o">+</span> <span class="mi">10</span> <span class="o">*</span> <span class="n">np</span><span class="o">.</span><span class="n">sin</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">radians</span><span class="p">(</span><span class="n">LON</span><span class="p">))</span>
+
+<span class="c1"># 错：画布中央 0，数据却 0..360</span>
+<span class="n">ax1</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">subplot</span><span class="p">(</span><span class="n">projection</span><span class="o">=</span><span class="n">ccrs</span><span class="o">.</span><span class="n">PlateCarree</span><span class="p">())</span>
+<span class="n">pc</span> <span class="o">=</span> <span class="n">ax1</span><span class="o">.</span><span class="n">pcolormesh</span><span class="p">(</span><span class="n">LON</span><span class="p">,</span> <span class="n">LAT</span><span class="p">,</span> <span class="n">TEMP</span><span class="p">,</span> <span class="n">transform</span><span class="o">=</span><span class="n">ccrs</span><span class="o">.</span><span class="n">PlateCarree</span><span class="p">(),</span> <span class="n">shading</span><span class="o">=</span><span class="s2">&quot;auto&quot;</span><span class="p">)</span>  <span class="c1"># 静默错位</span>
+</pre></div>
+</div>
+<p><strong>原因 / 解决办法</strong>：<code class="docutils literal notranslate"><span class="pre">transform=ccrs.PlateCarree()</span></code>
+都等价的——但「用 0–360 数据」配上「中央经线 0 的轴」时，Cartopy 把 &gt;180
+的那些度全部当成了东度西边（-…°），整片东半球叠错。正确做法：<strong>要么把数据平移成
+-180..180</strong>，要么<strong>把轴与 ``transform`` 的中央经线也设成 180 以匹配
+0–360</strong>：</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="c1"># 方案 A：把 0..360 重排成 -180..180（经纬都平移对齐）</span>
+<span class="n">lon2</span> <span class="o">=</span> <span class="p">(</span><span class="n">lon</span> <span class="o">-</span> <span class="mi">180</span><span class="p">)</span> <span class="o">%</span> <span class="mi">360</span> <span class="o">-</span> <span class="mi">180</span>             <span class="c1"># 0..360 -&gt; -180..180</span>
+<span class="n">order</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">argsort</span><span class="p">(</span><span class="n">lon2</span><span class="p">)</span>
+<span class="n">proj</span> <span class="o">=</span> <span class="n">ccrs</span><span class="o">.</span><span class="n">PlateCarree</span><span class="p">()</span>                  <span class="c1"># 中央 0，匹配 -180..180</span>
+<span class="n">ax</span><span class="o">.</span><span class="n">pcolormesh</span><span class="p">(</span><span class="n">lon2</span><span class="p">[</span><span class="n">order</span><span class="p">],</span> <span class="n">lat</span><span class="p">,</span> <span class="n">TEMP</span><span class="p">[:,</span> <span class="n">order</span><span class="p">],</span>
+              <span class="n">transform</span><span class="o">=</span><span class="n">proj</span><span class="p">,</span> <span class="n">shading</span><span class="o">=</span><span class="s2">&quot;auto&quot;</span><span class="p">,</span> <span class="n">cmap</span><span class="o">=</span><span class="s2">&quot;coolwarm&quot;</span><span class="p">)</span>
+
+<span class="c1"># 方案 B：轴与数据都用中央 180 的 PlateCarree（保持 0..360 不动）</span>
+<span class="n">proj2</span> <span class="o">=</span> <span class="n">ccrs</span><span class="o">.</span><span class="n">PlateCarree</span><span class="p">(</span><span class="n">central_longitude</span><span class="o">=</span><span class="mi">180</span><span class="p">)</span>
+<span class="n">ax2</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">subplot</span><span class="p">(</span><span class="n">projection</span><span class="o">=</span><span class="n">proj2</span><span class="p">)</span>
+<span class="n">ax2</span><span class="o">.</span><span class="n">pcolormesh</span><span class="p">(</span><span class="n">LON</span><span class="p">,</span> <span class="n">LAT</span><span class="p">,</span> <span class="n">TEMP</span><span class="p">,</span> <span class="n">transform</span><span class="o">=</span><span class="n">proj2</span><span class="p">,</span> <span class="n">shading</span><span class="o">=</span><span class="s2">&quot;auto&quot;</span><span class="p">,</span> <span class="n">cmap</span><span class="o">=</span><span class="s2">&quot;coolwarm&quot;</span><span class="p">)</span>
+</pre></div>
+</div>
+<blockquote>
+<div><p><strong>排查经验（联网补充）</strong>：若你混合两个数据源（一个 -180..180、一个
+0..360）在同一张图，二者会自动错位半个地球——这是最阴险的「0-360 与
+-180-180 混用」静默错误（对应任务清单第 9 点）。动手前务必
+<code class="docutils literal notranslate"><span class="pre">print(&quot;lon</span> <span class="pre">min/max</span> <span class="pre">=&quot;,</span> <span class="pre">lon.min(),</span> <span class="pre">lon.max())</span></code>
+确认经度范围，再决定要不要平移或换 <code class="docutils literal notranslate"><span class="pre">central_longitude</span></code>。</p>
+</div></blockquote>
+<hr class="docutils" />
+</section>
+<section id="xarray-roll">
+<span id="id8"></span><h3>10.1.3 进阶：用 xarray 的经度换球（roll）/ 补循环<a class="headerlink" href="#xarray-roll" title="Link to this heading">#</a></h3>
+<p>如果数据是 xarray 读进来的全球场，不必手写平移。Cartopy 推荐用 xarray 的
+<code class="docutils literal notranslate"><span class="pre">.roll()</span></code> 配合经度重排来做 wrap，或用
+<code class="docutils literal notranslate"><span class="pre">cartopy.util.add_cyclic_point</span></code>
+补齐首尾。课堂西北区域图没有全球白条困扰，这里只需知道：<strong>凡是看到全球图中央（或
+±180 / 0）一缕白条，第一反应就是经度周期性没处理好。</strong>
+处理要点只有一句：<strong>让「数据切断的经线」和你「地图中央的经线」错开。</strong></p>
+<hr class="docutils" />
+</section>
+</section>
+<section id="transform-projection-10">
+<span id="id9"></span><h2>10.2 transform 与 projection：这两个参数别搞混（第 10 章强调得最多的坑）<a class="headerlink" href="#transform-projection-10" title="Link to this heading">#</a></h2>
+<section id="transform-ccrs-platecarree-platecarree">
+<span id="transformccrsplatecarree-platecarree"></span><h3>10.2.1 漏写 <code class="docutils literal notranslate"><span class="pre">transform=ccrs.PlateCarree()</span></code>：在 PlateCarree 下<strong>静默通过</strong>，换投影才“爆发”<a class="headerlink" href="#transform-ccrs-platecarree-platecarree" title="Link to this heading">#</a></h3>
+<p><strong>现象 / 异常现象描述</strong>：教科书、用户指南反复强调 <code class="docutils literal notranslate"><span class="pre">transform</span></code>
+是坐标变换、最容易被遗漏。但你如果<strong>刚好</strong>用 <code class="docutils literal notranslate"><span class="pre">PlateCarree</span></code>
+当画布投影，又漏写了
+<code class="docutils literal notranslate"><span class="pre">transform=</span></code>，往往会<strong>很顺地画出正确的图</strong>——因为 PlateCarree
+的“显示坐标系”就是经纬度，数据按经纬度贴上去天然就对：</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">lon</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">linspace</span><span class="p">(</span><span class="mi">90</span><span class="p">,</span> <span class="mi">112</span><span class="p">,</span> <span class="mi">45</span><span class="p">);</span> <span class="n">lat</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">linspace</span><span class="p">(</span><span class="mi">32</span><span class="p">,</span> <span class="mi">43</span><span class="p">,</span> <span class="mi">33</span><span class="p">)</span>
+<span class="n">LON</span><span class="p">,</span> <span class="n">LAT</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">meshgrid</span><span class="p">(</span><span class="n">lon</span><span class="p">,</span> <span class="n">lat</span><span class="p">)</span>
+<span class="n">TEMP</span> <span class="o">=</span> <span class="mi">10</span> <span class="o">+</span> <span class="mf">0.5</span> <span class="o">*</span> <span class="p">(</span><span class="mi">40</span> <span class="o">-</span> <span class="n">LAT</span><span class="p">)</span> <span class="o">-</span> <span class="mf">0.02</span> <span class="o">*</span> <span class="p">(</span><span class="n">LON</span> <span class="o">-</span> <span class="mi">101</span><span class="p">)</span> <span class="o">**</span> <span class="mi">2</span>
+<span class="n">fig</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">figure</span><span class="p">(</span><span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">10</span><span class="p">,</span> <span class="mi">5</span><span class="p">))</span>
+<span class="n">ax</span> <span class="o">=</span> <span class="n">fig</span><span class="o">.</span><span class="n">add_subplot</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="n">projection</span><span class="o">=</span><span class="n">ccrs</span><span class="o">.</span><span class="n">PlateCarree</span><span class="p">())</span>
+<span class="n">ax</span><span class="o">.</span><span class="n">contourf</span><span class="p">(</span><span class="n">LON</span><span class="p">,</span> <span class="n">LAT</span><span class="p">,</span> <span class="n">TEMP</span><span class="p">,</span> <span class="n">levels</span><span class="o">=</span><span class="mi">15</span><span class="p">,</span> <span class="n">cmap</span><span class="o">=</span><span class="s2">&quot;coolwarm&quot;</span><span class="p">)</span>   <span class="c1"># 漏 transform：在 PlateCarree 下仍画对!</span>
+</pre></div>
+</div>
+<p><strong>为什么这是更凶的坑</strong>：因为 PlateCarree
+掩盖了错误！等你哪天按用户指南的“拓展”去换
+<code class="docutils literal notranslate"><span class="pre">LambertConformal</span></code>（西北兰勃脱）或 <code class="docutils literal notranslate"><span class="pre">Mercator</span></code>，漏写
+<code class="docutils literal notranslate"><span class="pre">transform</span></code>
+的数据会被当成那座投影的平面坐标（米），立刻错位/消失——而那时你已经“学会了”错误写法。真正严谨的姿势：<strong>``transform=``
+永远显式写上
+``ccrs.PlateCarree()``，养成肌肉记忆，不赌投影恰好一样。</strong></p>
+<p><strong>真实现象（非 PlateCarree 投影上漏 transform）</strong>：把西北数据画在
+<code class="docutils literal notranslate"><span class="pre">LambertConformal</span></code> 轴上但不写 <code class="docutils literal notranslate"><span class="pre">transform</span></code>，图完全乱/几乎空白（配图
+<code class="docutils literal notranslate"><span class="pre">10d_lambert_notransform.png</span></code>）；scatter
+一个点更是直接跑没影（<code class="docutils literal notranslate"><span class="pre">10d_scatter_notransform.png</span></code>）。</p>
+<blockquote>
+<div><p><strong>气象/地理场景一句话</strong>：<code class="docutils literal notranslate"><span class="pre">transform</span></code>
+是给数据贴的「经纬度身份证」，告诉
+Cartopy「这份数据原始家住在经纬网上、还没投影过」。PlateCarree
+就像“你恰好把图铺在经纬网上”，所以漏贴身份证也不扣罚；一旦换到兰勃脱/墨卡托，就变成“把写满经纬度的户籍本直接当像素/米坐标去贴”，哪能不跑偏。</p>
+</div></blockquote>
+</section>
+<section id="transform-projection">
+<span id="id10"></span><h3>10.2.2 <code class="docutils literal notranslate"><span class="pre">transform=</span></code> 与 <code class="docutils literal notranslate"><span class="pre">projection=</span></code> 二者互换了/搞混<a class="headerlink" href="#transform-projection" title="Link to this heading">#</a></h3>
+<p><strong>现象 / 现象描述</strong>：把 <code class="docutils literal notranslate"><span class="pre">transform</span></code> 误当装饰性参数删掉，或把
+<code class="docutils literal notranslate"><span class="pre">transform=ccrs.PlateCarree()</span></code> 写成 <code class="docutils literal notranslate"><span class="pre">ccrs.LambertConformal()</span></code>
+之类（错误地认为“数据应该用跟我画布一样的投影变换”），数据会被投影二次，图层整体移位、扭曲。</p>
+<p><strong>核心区分表</strong>：</p>
+<div class="pst-scrollable-table-container"><table class="table">
+<thead>
+<tr class="row-odd"><th class="head"><p>参数</p></th>
+<th class="head"><p>出现在哪</p></th>
+<th class="head"><p>含义</p></th>
+<th class="head"><p>例子</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">projection=...</span></code></p></td>
+<td><p>创建<strong>画布轴</strong>时（<code class="docutils literal notranslate"><span class="pre">plt.subplots(subplot_kw=...)</span></code>）</p></td>
+<td><p>这张地图用哪种投影摊平</p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">projection=ccrs.LambertAzimuthalEqualArea(...)</span></code></p></td>
+</tr>
+<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">transform=...</span></code></p></td>
+<td><p>每个<strong>绘图调用</strong>（<code class="docutils literal notranslate"><span class="pre">contourf/scatter/quiver/text/pcolormesh</span></code>）</p></td>
+<td><p>数据本身的原始坐标系</p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">transform=ccrs.PlateCarree()</span></code>（NetCDF
+的经纬格点）</p></td>
+</tr>
+</tbody>
+</table>
+</div>
+<blockquote>
+<div><p>口诀：<strong>画布选 ``projection``（舞台搭在哪），数据标
+``transform``（演员从哪来）。</strong> 数据一直是经纬格点，所以
+<code class="docutils literal notranslate"><span class="pre">transform</span></code> 几乎永远是
+<code class="docutils literal notranslate"><span class="pre">ccrs.PlateCarree()</span></code>；只有你想把“已经投影好的坐标”画上时才改。西北数据
+<code class="docutils literal notranslate"><span class="pre">transform=ccrs.PlateCarree()</span></code> 是铁律。</p>
+</div></blockquote>
+</section>
+<section id="text-scatter-transform">
+<span id="id11"></span><h3>10.2.3 <code class="docutils literal notranslate"><span class="pre">text</span></code> 与 <code class="docutils literal notranslate"><span class="pre">scatter</span></code> 同样要 <code class="docutils literal notranslate"><span class="pre">transform</span></code><a class="headerlink" href="#text-scatter-transform" title="Link to this heading">#</a></h3>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">ax</span><span class="o">.</span><span class="n">scatter</span><span class="p">(</span><span class="mf">103.83</span><span class="p">,</span> <span class="mf">36.06</span><span class="p">,</span> <span class="n">c</span><span class="o">=</span><span class="s2">&quot;black&quot;</span><span class="p">,</span> <span class="n">s</span><span class="o">=</span><span class="mi">30</span><span class="p">,</span> <span class="n">transform</span><span class="o">=</span><span class="n">ccrs</span><span class="o">.</span><span class="n">PlateCarree</span><span class="p">())</span>  <span class="c1"># 兰州站</span>
+<span class="n">ax</span><span class="o">.</span><span class="n">text</span><span class="p">(</span><span class="mf">104.2</span><span class="p">,</span> <span class="mf">36.06</span><span class="p">,</span> <span class="s2">&quot;兰州站&quot;</span><span class="p">,</span> <span class="n">fontsize</span><span class="o">=</span><span class="mi">9</span><span class="p">,</span> <span class="n">transform</span><span class="o">=</span><span class="n">ccrs</span><span class="o">.</span><span class="n">PlateCarree</span><span class="p">())</span>
+</pre></div>
+</div>
+<p>漏掉任何一个，点在 <code class="docutils literal notranslate"><span class="pre">LambertConformal</span></code> 等非 PlateCarree
+画布上就定位错（配图 <code class="docutils literal notranslate"><span class="pre">10d_text_notransform.png</span></code>）。与 <code class="docutils literal notranslate"><span class="pre">contourf</span></code>
+同一道理——<strong>所有空间绘图函数 ``contourf/scatter/quiver/text/pcolormesh``
+的 ``transform`` 一个都不能少</strong>。</p>
+<blockquote>
+<div><p><strong>气象/地理场景一句话</strong>：兰州站 (103.83°E, 36.06°N)
+想标在地图上，<code class="docutils literal notranslate"><span class="pre">scatter</span></code> 不写
+transform，等于你只报了个“103.83、36.06
+两个数”，没告诉人家这两个数是不是经纬度——在兰勃脱画布上，它被当成以米为单位的平面坐标，站名自然跑到荒郊野岭去了。</p>
+</div></blockquote>
+<hr class="docutils" />
+</section>
+</section>
+<section id="set-extent-crs">
+<span id="id12"></span><h2>10.3 坐标范围与投影冲突：<code class="docutils literal notranslate"><span class="pre">set_extent</span></code> / <code class="docutils literal notranslate"><span class="pre">crs=</span></code> / 经度顺序 / 单位<a class="headerlink" href="#set-extent-crs" title="Link to this heading">#</a></h2>
+<section id="set-extent">
+<span id="id13"></span><h3>10.3.1 <code class="docutils literal notranslate"><span class="pre">set_extent</span></code> 经纬序写反：画布变成一片空白<a class="headerlink" href="#set-extent" title="Link to this heading">#</a></h3>
+<p><strong>现象 / 真实现象描述</strong>：<code class="docutils literal notranslate"><span class="pre">set_extent</span></code> 的正确顺序是
+<code class="docutils literal notranslate"><span class="pre">[西经,</span> <span class="pre">东经,</span> <span class="pre">南纬,</span> <span class="pre">北纬]</span></code>，即 <code class="docutils literal notranslate"><span class="pre">[90,</span> <span class="pre">112,</span> <span class="pre">32,</span> <span class="pre">43]</span></code>。写成
+<code class="docutils literal notranslate"><span class="pre">[32,</span> <span class="pre">43,</span> <span class="pre">90,</span> <span class="pre">112]</span></code>
+后，代码不报错，但画布范围完全错乱——像素统计显示内容占比仅
+~0.03（几乎全白）（配图 <code class="docutils literal notranslate"><span class="pre">10e_extent_wrongorder.png</span></code>）。</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">ax</span><span class="o">.</span><span class="n">set_extent</span><span class="p">([</span><span class="mi">32</span><span class="p">,</span> <span class="mi">43</span><span class="p">,</span> <span class="mi">90</span><span class="p">,</span> <span class="mi">112</span><span class="p">],</span> <span class="n">crs</span><span class="o">=</span><span class="n">ccrs</span><span class="o">.</span><span class="n">PlateCarree</span><span class="p">())</span>   <span class="c1"># 错误：把纬度当经度</span>
+<span class="c1"># 正确：ax.set_extent([90, 112, 32, 43], crs=ccrs.PlateCarree())</span>
+</pre></div>
+</div>
+<p><strong>原因</strong>：<code class="docutils literal notranslate"><span class="pre">[西,东,南,北]</span></code> 把 90–112°E 误当纬度、32–43°N
+误当经度，二者在经纬网上找不到交叉区域，于是渲染出一片几乎没有内容的空白窗口。</p>
+</section>
+<section id="set-extent-crs-platecarree">
+<span id="id14"></span><h3>10.3.2 <code class="docutils literal notranslate"><span class="pre">set_extent</span></code> 漏 <code class="docutils literal notranslate"><span class="pre">crs=</span></code>（尤其非 PlateCarree 画布）<a class="headerlink" href="#set-extent-crs-platecarree" title="Link to this heading">#</a></h3>
+<p><strong>现象 / 真实现象描述</strong>：在兰勃脱/兰伯特等面积投影的画布上写
+<code class="docutils literal notranslate"><span class="pre">ax.set_extent([90,112,32,43])</span></code> 而<strong>不写
+``crs=ccrs.PlateCarree()``</strong>，那四个数字会被当成<strong>该投影自身的平面坐标</strong>（米）。因为
+90/112
+作为“米”远超该投影量程，窗口被挤到远处，图上明明画了数据却“找不到角度”，成为奇怪的空白或极狭窄条带（配图
+<code class="docutils literal notranslate"><span class="pre">10e_extent_nocrs.png</span></code>）。正确写法永远带 <code class="docutils literal notranslate"><span class="pre">crs=</span></code>：</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">proj</span> <span class="o">=</span> <span class="n">ccrs</span><span class="o">.</span><span class="n">LambertAzimuthalEqualArea</span><span class="p">(</span><span class="n">central_longitude</span><span class="o">=</span><span class="mi">101</span><span class="p">,</span> <span class="n">central_latitude</span><span class="o">=</span><span class="mi">38</span><span class="p">)</span>
+<span class="n">ax</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">subplot</span><span class="p">(</span><span class="n">projection</span><span class="o">=</span><span class="n">proj</span><span class="p">)</span>
+<span class="n">ax</span><span class="o">.</span><span class="n">set_extent</span><span class="p">([</span><span class="mi">90</span><span class="p">,</span> <span class="mi">112</span><span class="p">,</span> <span class="mi">32</span><span class="p">,</span> <span class="mi">43</span><span class="p">],</span> <span class="n">crs</span><span class="o">=</span><span class="n">ccrs</span><span class="o">.</span><span class="n">PlateCarree</span><span class="p">())</span>   <span class="c1"># crs 必须有</span>
+</pre></div>
+</div>
+<p><strong>排查经验</strong>：<code class="docutils literal notranslate"><span class="pre">set_extent</span></code> 没裁剪效果的三大元凶——①顺序写反、②漏
+<code class="docutils literal notranslate"><span class="pre">crs=</span></code>、③给的经纬范围就不在数据/图幅内。先 <code class="docutils literal notranslate"><span class="pre">print</span></code> 再逐条核对。</p>
+<blockquote>
+<div><p><strong>气象/地理场景一句话</strong>：<code class="docutils literal notranslate"><span class="pre">set_extent</span></code>
+像相机的“取景框”，<code class="docutils literal notranslate"><span class="pre">crs=ccrs.PlateCarree()</span></code>
+是告诉相机“我报的这串数单位是经纬度”；漏了它，等于把“经纬度”当成“像素坐标”去调焦，相框自然套不住你的西北格点。</p>
+</div></blockquote>
+</section>
+<section id="id15">
+<span id="id16"></span><h3>10.3.3 经纬度单位混淆：把弧度当度、把 0-360 当 -180-180<a class="headerlink" href="#id15" title="Link to this heading">#</a></h3>
+<p><strong>现象 / 现象描述</strong>：不小心把经度做成弧度（如三角函数 <code class="docutils literal notranslate"><span class="pre">np.cos(lon)</span></code>
+忘了 <code class="docutils literal notranslate"><span class="pre">np.deg2rad</span></code>，或从某些库拿到的项目已把经纬换算成弧度），或混用
+0–360 / -180–180
+两套经度，图上要素严重错位、旋转、跑偏——程序通常不报错。</p>
+<p><strong>排查经验</strong>：画任何要素前 <code class="docutils literal notranslate"><span class="pre">print(lon.min(),</span> <span class="pre">lon.max())</span></code>：</p>
+<ul class="simple">
+<li><p>若数值落在 <code class="docutils literal notranslate"><span class="pre">[0,</span> <span class="pre">6.28]</span></code> 左右 → 是弧度，需 <code class="docutils literal notranslate"><span class="pre">np.rad2deg(lon)</span></code>；</p></li>
+<li><p>若落在 <code class="docutils literal notranslate"><span class="pre">[0,</span> <span class="pre">360]</span></code> → 语义“东经累加”，需与 <code class="docutils literal notranslate"><span class="pre">central_longitude</span></code>
+匹配或平移成 <code class="docutils literal notranslate"><span class="pre">[-180,180]</span></code>（见 10.1.2）。</p></li>
+</ul>
+<blockquote>
+<div><p><strong>气象/地理场景一句话</strong>：气象里几乎所有“觉得纬度不对劲、经度不对劲”的疑难杂症，九成是<strong>单位或范围</strong>二选一错位——经纬度永远是“度”，不是弧度；全球图永远先想清楚它是
+0–360 还是 -180–180 的“户籍”。</p>
+</div></blockquote>
+<hr class="docutils" />
+</section>
+</section>
+<section id="contourf-pcolormesh-traceback">
+<span id="id17"></span><h2>10.4 <code class="docutils literal notranslate"><span class="pre">contourf</span></code> / <code class="docutils literal notranslate"><span class="pre">pcolormesh</span></code> 在地图轴上的经典报错（真实 Traceback）<a class="headerlink" href="#contourf-pcolormesh-traceback" title="Link to this heading">#</a></h2>
+<section id="typeerror-input-z-must-be-2d-not-3d-time">
+<span id="id18"></span><h3>10.4.1 <code class="docutils literal notranslate"><span class="pre">TypeError:</span> <span class="pre">Input</span> <span class="pre">z</span> <span class="pre">must</span> <span class="pre">be</span> <span class="pre">2D,</span> <span class="pre">not</span> <span class="pre">3D</span></code>（多留了一个 time 维）<a class="headerlink" href="#typeerror-input-z-must-be-2d-not-3d-time" title="Link to this heading">#</a></h3>
+<p><strong>现象 / 真实报错信息</strong>：<code class="docutils literal notranslate"><span class="pre">xarray</span></code> 读进来很多 NetCDF 的气温是
+<code class="docutils literal notranslate"><span class="pre">(time,</span> <span class="pre">lat,</span> <span class="pre">lon)</span></code> 三维。直接 <code class="docutils literal notranslate"><span class="pre">ax.contourf(lon,</span> <span class="pre">lat,</span> <span class="pre">temp3d)</span></code> 时报：</p>
+<div class="highlight-text notranslate"><div class="highlight"><pre><span></span>  File &quot;...\matplotlib\contour.py&quot;, line 1385, in _check_xyz
+    raise TypeError(f&quot;Input z must be 2D, not {z.ndim}D&quot;)
+TypeError: Input z must be 2D, not 3D
+</pre></div>
+</div>
+<p><strong>原因</strong>：<code class="docutils literal notranslate"><span class="pre">contourf</span></code> 要求 z
+是<strong>二维场</strong>（每格一个值）；<code class="docutils literal notranslate"><span class="pre">temp3d</span></code> 还带着 time 轴（3
+维）。气象新手里最常见的写法是把整个时间序列直接扔进 <code class="docutils literal notranslate"><span class="pre">contourf</span></code>。</p>
+<p><strong>解决办法</strong>：先取单时刻，<code class="docutils literal notranslate"><span class="pre">isel/sel</span></code> 后 <code class="docutils literal notranslate"><span class="pre">.squeeze()</span></code> 掉长度 1
+的维，再画：</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">temp2d</span> <span class="o">=</span> <span class="n">ds</span><span class="o">.</span><span class="n">temp</span><span class="o">.</span><span class="n">sel</span><span class="p">(</span><span class="n">time</span><span class="o">=</span><span class="s2">&quot;2024-01-01&quot;</span><span class="p">)</span><span class="o">.</span><span class="n">squeeze</span><span class="p">()</span>   <span class="c1"># (lat, lon)</span>
+<span class="n">ax</span><span class="o">.</span><span class="n">contourf</span><span class="p">(</span><span class="n">lon</span><span class="p">,</span> <span class="n">lat</span><span class="p">,</span> <span class="n">temp2d</span><span class="p">,</span> <span class="n">levels</span><span class="o">=</span><span class="mi">20</span><span class="p">,</span> <span class="n">cmap</span><span class="o">=</span><span class="s2">&quot;coolwarm&quot;</span><span class="p">,</span>
+            <span class="n">transform</span><span class="o">=</span><span class="n">ccrs</span><span class="o">.</span><span class="n">PlateCarree</span><span class="p">())</span>
+</pre></div>
+</div>
+<blockquote>
+<div><p><strong>气象/地理场景一句话</strong>：你想画“某一时候的气温场”，手里却攥着“整段
+30 年逐日 + 每天全球格点”的三维大货柜——<code class="docutils literal notranslate"><span class="pre">contourf</span></code>
+只认一张“横纬纵经的快照”，要先 <code class="docutils literal notranslate"><span class="pre">sel</span></code> 取出你要的那一帧再画。</p>
+</div></blockquote>
+</section>
+<section id="typeerror-shapes-of-x-and-z-do-not-match-t">
+<span id="id19"></span><h3>10.4.2 <code class="docutils literal notranslate"><span class="pre">TypeError:</span> <span class="pre">Shapes</span> <span class="pre">of</span> <span class="pre">x</span> <span class="pre">(...)</span> <span class="pre">and</span> <span class="pre">z</span> <span class="pre">(...)</span> <span class="pre">do</span> <span class="pre">not</span> <span class="pre">match</span></code>（转置 .T 惹的祸）<a class="headerlink" href="#typeerror-shapes-of-x-and-z-do-not-match-t" title="Link to this heading">#</a></h3>
+<p><strong>现象 / 真实报错信息</strong>：<code class="docutils literal notranslate"><span class="pre">meshgrid(lon,</span> <span class="pre">lat)</span></code> 出来的网格 shape 是
+<code class="docutils literal notranslate"><span class="pre">(纬度数,</span> <span class="pre">经度数)</span></code> = <code class="docutils literal notranslate"><span class="pre">(33,</span> <span class="pre">45)</span></code>（lat 有 33 个、lon 有 45
+个）。若你给 z 的是这个 2D 数组的<strong>转置
+``.T``</strong>（<code class="docutils literal notranslate"><span class="pre">(45,</span> <span class="pre">33)</span></code>），shape 就对不上：</p>
+<div class="highlight-text notranslate"><div class="highlight"><pre><span></span>  File &quot;...\matplotlib\contour.py&quot;, line 1406, in _check_xyz
+    raise TypeError(
+TypeError: Shapes of x (33, 45) and z (45, 33) do not match
+</pre></div>
+</div>
+<p><strong>原因 / 解决办法</strong>：<code class="docutils literal notranslate"><span class="pre">contourf(x,</span> <span class="pre">y,</span> <span class="pre">z)</span></code> 三者的第 0 维、第 1
+维必须一一对应（都 <code class="docutils literal notranslate"><span class="pre">(nlat,</span> <span class="pre">nlon)</span></code>）。出现此错十有八九是 <code class="docutils literal notranslate"><span class="pre">.T</span></code>
+转置或 <code class="docutils literal notranslate"><span class="pre">(lon,lat)</span></code> 与 <code class="docutils literal notranslate"><span class="pre">(lat,lon)</span></code> 约定混了。统一口径：</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">LON</span><span class="p">,</span> <span class="n">LAT</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">meshgrid</span><span class="p">(</span><span class="n">lon</span><span class="p">,</span> <span class="n">lat</span><span class="p">)</span>            <span class="c1"># 22 行第 (nlat, nlon)</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">LON</span><span class="o">.</span><span class="n">shape</span><span class="p">,</span> <span class="n">TEMP</span><span class="o">.</span><span class="n">shape</span><span class="p">)</span>                <span class="c1"># 两者必须都是 (33, 45)</span>
+<span class="c1"># TEMP 若不是 (nlat,nlon)，用 TEMP.T 或按坐标来源校正</span>
+</pre></div>
+</div>
+<blockquote>
+<div><p><strong>气象/地理场景一句话</strong>：NetCDF 里 <code class="docutils literal notranslate"><span class="pre">temp</span></code> 常存成
+<code class="docutils literal notranslate"><span class="pre">(lat,</span> <span class="pre">lon)</span></code>，<code class="docutils literal notranslate"><span class="pre">meshgrid</span></code> 默认也是
+<code class="docutils literal notranslate"><span class="pre">(lat,</span> <span class="pre">lon)</span></code>——一个顺的，别在中间莫名 <code class="docutils literal notranslate"><span class="pre">.T</span></code> 一下把它翻成
+<code class="docutils literal notranslate"><span class="pre">(lon,</span> <span class="pre">lat)</span></code>，否则“大小坑”就填不平。</p>
+</div></blockquote>
+</section>
+<section id="pcolormesh-dimensions-of-c-should-be-one-smaller-than-x-y">
+<span id="id20"></span><h3>10.4.3 <code class="docutils literal notranslate"><span class="pre">pcolormesh</span></code> 报 <code class="docutils literal notranslate"><span class="pre">Dimensions</span> <span class="pre">of</span> <span class="pre">C</span> <span class="pre">...</span> <span class="pre">should</span> <span class="pre">be</span> <span class="pre">one</span> <span class="pre">smaller</span> <span class="pre">than</span> <span class="pre">X</span> <span class="pre">/</span> <span class="pre">Y</span></code><a class="headerlink" href="#pcolormesh-dimensions-of-c-should-be-one-smaller-than-x-y" title="Link to this heading">#</a></h3>
+<p><strong>现象 / 真实报错信息</strong>：给 <code class="docutils literal notranslate"><span class="pre">pcolormesh</span></code> 传 1D 的 <code class="docutils literal notranslate"><span class="pre">lon</span></code>（45
+个）、<code class="docutils literal notranslate"><span class="pre">lat</span></code>（33 个），z 却是 <code class="docutils literal notranslate"><span class="pre">(33,45)</span></code>，用
+<code class="docutils literal notranslate"><span class="pre">shading=&quot;flat&quot;</span></code>（默认）时：</p>
+<div class="highlight-text notranslate"><div class="highlight"><pre><span></span>  File &quot;...\matplotlib\axes\_axes.py&quot;, line 6060, in _pcolorargs
+    raise TypeError(f&quot;Dimensions of C {C.shape} should&quot;)
+TypeError: Dimensions of C (33, 45) should be one smaller than X(33) and Y(45) while using shading=&#39;flat&#39; see help(pcolormesh)
+</pre></div>
+</div>
+<p><strong>原因</strong>：<code class="docutils literal notranslate"><span class="pre">pcolormesh</span></code> 历史上把 x/y
+当成“单元格顶点的经纬网”，<code class="docutils literal notranslate"><span class="pre">shading='flat'</span></code> 要求 <strong>C 的每个维度比 X/Y
+各少一个顶点</strong>（45 个经度顶点 → 44 个经度单元格）。你数据 z 是
+<code class="docutils literal notranslate"><span class="pre">(33,45)</span></code>，与“顶点数-1”的规则对不上。</p>
+<p><strong>解决办法</strong>：</p>
+<ul class="simple">
+<li><p>最简单：<code class="docutils literal notranslate"><span class="pre">shading=&quot;auto&quot;</span></code>（自动在 <code class="docutils literal notranslate"><span class="pre">flat</span></code> 与 <code class="docutils literal notranslate"><span class="pre">nearest</span></code>
+间选合适的，单元格对齐数据格点）——本项目西北图推荐，多半直接通过：</p></li>
+</ul>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">pc</span> <span class="o">=</span> <span class="n">ax</span><span class="o">.</span><span class="n">pcolormesh</span><span class="p">(</span><span class="n">lon</span><span class="p">,</span> <span class="n">lat</span><span class="p">,</span> <span class="n">TEMP</span><span class="p">,</span> <span class="n">shading</span><span class="o">=</span><span class="s2">&quot;auto&quot;</span><span class="p">,</span> <span class="n">cmap</span><span class="o">=</span><span class="s2">&quot;coolwarm&quot;</span><span class="p">,</span>
+                   <span class="n">transform</span><span class="o">=</span><span class="n">ccrs</span><span class="o">.</span><span class="n">PlateCarree</span><span class="p">())</span>
+</pre></div>
+</div>
+<ul class="simple">
+<li><p>或把 z 裁掉末行末列，让 C = <code class="docutils literal notranslate"><span class="pre">(nlat-1,</span> <span class="pre">nlon-1)</span></code> 与“顶点-1”一致。</p></li>
+</ul>
+<p><strong>对照（能通过的写法）</strong>：<code class="docutils literal notranslate"><span class="pre">pcolormesh</span></code> 传 1D <code class="docutils literal notranslate"><span class="pre">lon</span></code>/<code class="docutils literal notranslate"><span class="pre">lat</span></code> +
+<code class="docutils literal notranslate"><span class="pre">shading=&quot;auto&quot;</span></code>，z 为 <code class="docutils literal notranslate"><span class="pre">(nlat,</span> <span class="pre">nlon)</span></code>——正常出图（配图
+<code class="docutils literal notranslate"><span class="pre">10g_pcolormesh_ok.png</span></code>）。</p>
+<blockquote>
+<div><p><strong>气象/地理场景一句话</strong>：<code class="docutils literal notranslate"><span class="pre">pcolormesh</span></code>
+把它当作“一个个色块”画，色块的数目永远比格点少一（首尾两格各算半个）。就像
+45 把尺子量出的 44
+个间隔——你给足了格子却忘了颜色数要比格子少一，人家就喊“你对不上”。</p>
+</div></blockquote>
+</section>
+<section id="contourf-levels-nan">
+<span id="id21"></span><h3>10.4.4 <code class="docutils literal notranslate"><span class="pre">contourf</span></code> 里 <code class="docutils literal notranslate"><span class="pre">levels</span></code> 数量与色标问题、NaN 破洞<a class="headerlink" href="#contourf-levels-nan" title="Link to this heading">#</a></h3>
+<p><strong>现象 / 现象描述（静默 + 报错各一种）</strong>：</p>
+<ul class="simple">
+<li><p>传 <code class="docutils literal notranslate"><span class="pre">levels</span></code> 一个<strong>数值</strong>（如 <code class="docutils literal notranslate"><span class="pre">levels=20</span></code>）→ 自动在
+<code class="docutils literal notranslate"><span class="pre">vmin..vmax</span></code> 里切 20 层；若数据全 NaN
+或范围小，等值线可能“画不出来”或只零星几根。</p></li>
+<li><p>传 <code class="docutils literal notranslate"><span class="pre">levels=[]</span></code>（空列表）或传一个<strong>不含任何数据数值</strong>的列表 →
+<code class="docutils literal notranslate"><span class="pre">contour</span></code> 会报与层级相关的 <code class="docutils literal notranslate"><span class="pre">ValueError</span></code>，或画出空图。</p></li>
+<li><p>数据里混入 <code class="docutils literal notranslate"><span class="pre">NaN</span></code>（缺测没转）→
+填色在那些格子上“破洞”，露出白/底图。</p></li>
+</ul>
+<p><strong>排查经验</strong>：画之前先
+<code class="docutils literal notranslate"><span class="pre">print(np.nanmin(TEMP),</span> <span class="pre">np.nanmax(TEMP),</span> <span class="pre">np.isnan(TEMP).sum())</span></code>；缺测先
+<code class="docutils literal notranslate"><span class="pre">TEMP</span> <span class="pre">=</span> <span class="pre">np.where(TEMP</span> <span class="pre">&gt;</span> <span class="pre">900,</span> <span class="pre">np.nan,</span> <span class="pre">TEMP)</span></code> 之类统一成 NaN，再用
+<code class="docutils literal notranslate"><span class="pre">vmin/vmax</span></code> 约束色标范围（本章“十二图统一 vmin/vmax”正是为可比性）。</p>
+<blockquote>
+<div><p><strong>气象/地理场景一句话</strong>：等值线是“数学意义上的等高线”，<code class="docutils literal notranslate"><span class="pre">levels</span></code>
+列表就是你要画几层、画在哪些值；给了它却一个都不在数据范围内，等于“纸上画飞机航迹却不在你这段空域”，自然空无一物。先核对量级和缺测，再谈分层。</p>
+</div></blockquote>
+<hr class="docutils" />
+</section>
+<section id="contourf-typeerror-geometrycollection-object-is-not-subscriptable">
+<span id="id22"></span><h3>10.4.5 全球 <code class="docutils literal notranslate"><span class="pre">contourf</span></code> 跨投影边界：<code class="docutils literal notranslate"><span class="pre">TypeError:</span> <span class="pre">'GeometryCollection'</span> <span class="pre">object</span> <span class="pre">is</span> <span class="pre">not</span> <span class="pre">subscriptable</span></code>（进阶坑）<a class="headerlink" href="#contourf-typeerror-geometrycollection-object-is-not-subscriptable" title="Link to this heading">#</a></h3>
+<p><strong>现象 / 真实报错信息</strong>：把全球数据（0–360）直接 <code class="docutils literal notranslate"><span class="pre">contourf</span></code> 到一个
+<code class="docutils literal notranslate"><span class="pre">PlateCarree(central_longitude=180)</span></code> 的画布上，个别版本/组合会让
+Cartopy 把跨越日界线的等值线环投影成碎片：</p>
+<div class="highlight-text notranslate"><div class="highlight"><pre><span></span>  File &quot;...\cartopy\crs.py&quot;, line 1270, in _rings_to_multi_polygon
+    return sgeom.MultiPolygon(polygon_bits)
+  File &quot;...\shapely\geometry\multipolygon.py&quot;, line 76, in __new__
+    shell = ob[0]
+TypeError: &#39;GeometryCollection&#39; object is not subscriptable
+</pre></div>
+</div>
+<p><strong>原因</strong>：全球等值线跨越投影边界时被切成“几条环”，拼合时出现
+<code class="docutils literal notranslate"><span class="pre">GeometryCollection</span></code>（混合几何），Cartopy 组装 <code class="docutils literal notranslate"><span class="pre">MultiPolygon</span></code>
+失败。是 cartopy 在跨日界线全局 <code class="docutils literal notranslate"><span class="pre">contourf</span></code> 上的一个已知边角问题。</p>
+<p><strong>解决办法</strong>：这类“全球填色+跨日界线”优先用 <strong>``pcolormesh`` +
+``add_cyclic_point``</strong>，或先 <code class="docutils literal notranslate"><span class="pre">add_cyclic_point</span></code> 再
+<code class="docutils literal notranslate"><span class="pre">contourf</span></code>，或把数据平移成与图幅中央一致（见
+10.1.2）后再画。<strong>普通西北局地场不会踩到</strong>，这里只是让你知道：全球
+<code class="docutils literal notranslate"><span class="pre">contourf</span></code> 踩坑时的第一招是改 <code class="docutils literal notranslate"><span class="pre">pcolormesh</span></code>/补循环。</p>
+<hr class="docutils" />
+</section>
+</section>
+<section id="shapefile-api-deprecationwarning">
+<span id="id23"></span><h2>10.5 shapefile 读取与 API 弃用（DeprecationWarning / 旧函数）<a class="headerlink" href="#shapefile-api-deprecationwarning" title="Link to this heading">#</a></h2>
+<section id="api-attributeerror-geoaxes-object-has-no-attribute-natural-earth-shp">
+<span id="id24"></span><h3>10.5.1 旧版 API 已移除：<code class="docutils literal notranslate"><span class="pre">AttributeError:</span> <span class="pre">'GeoAxes'</span> <span class="pre">object</span> <span class="pre">has</span> <span class="pre">no</span> <span class="pre">attribute</span> <span class="pre">'natural_earth_shp'</span></code><a class="headerlink" href="#api-attributeerror-geoaxes-object-has-no-attribute-natural-earth-shp" title="Link to this heading">#</a></h3>
+<p><strong>现象 / 真实报错信息</strong>：老教程/老代码里那句
+<code class="docutils literal notranslate"><span class="pre">ax.natural_earth_shp('10m_land')</span></code> 在新版 Cartopy 已经不存在：</p>
+<div class="highlight-text notranslate"><div class="highlight"><pre><span></span>  File &quot;...\sim\10j_attr.py&quot;, line 17, in &lt;module&gt;
+    ax.natural_earth_shp(&quot;10m_land&quot;)
+    ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AttributeError: &#39;GeoAxes&#39; object has no attribute &#39;natural_earth_shp&#39;
+</pre></div>
+</div>
+<p><strong>原因</strong>：<code class="docutils literal notranslate"><span class="pre">GeoAxes.natural_earth_shp</span></code> 是很早版本的接口，新版本改用
+<code class="docutils literal notranslate"><span class="pre">cartopy.feature</span></code> 的 <code class="docutils literal notranslate"><span class="pre">cfeature.*</span></code> 或 <code class="docutils literal notranslate"><span class="pre">shapereader.Reader</span></code> +
+<code class="docutils literal notranslate"><span class="pre">add_geometries</span></code>。凡 <code class="docutils literal notranslate"><span class="pre">AttributeError</span></code>
+且方法名带时间感（<code class="docutils literal notranslate"><span class="pre">natural_earth_shp</span></code>、<code class="docutils literal notranslate"><span class="pre">add_feature</span></code> vs 旧
+<code class="docutils literal notranslate"><span class="pre">ax.add_geometries(Reader...)</span></code>），第一怀疑就是<strong>你抄的是老
+API，版本对不上</strong>。</p>
+<p><strong>解决办法</strong>（读 shapefile 画自定义边界的标准写法）：</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span><span class="w"> </span><span class="nn">cartopy.crs</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">ccrs</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">cartopy.io</span><span class="w"> </span><span class="kn">import</span> <span class="n">shapereader</span>
+
+<span class="n">fname</span> <span class="o">=</span> <span class="n">shapereader</span><span class="o">.</span><span class="n">natural_earth</span><span class="p">(</span><span class="n">resolution</span><span class="o">=</span><span class="s2">&quot;10m&quot;</span><span class="p">,</span> <span class="n">category</span><span class="o">=</span><span class="s2">&quot;cultural&quot;</span><span class="p">,</span>
+                                  <span class="n">name</span><span class="o">=</span><span class="s2">&quot;admin_1_states_provinces&quot;</span><span class="p">)</span>   <span class="c1"># 或你自己的 .shp 路径</span>
+<span class="c1"># 用 Reader 读本地 shp:</span>
+<span class="n">records</span> <span class="o">=</span> <span class="nb">list</span><span class="p">(</span><span class="n">shapereader</span><span class="o">.</span><span class="n">Reader</span><span class="p">(</span><span class="s2">&quot;我的省界.shp&quot;</span><span class="p">)</span><span class="o">.</span><span class="n">geometries</span><span class="p">())</span>
+<span class="n">ax</span><span class="o">.</span><span class="n">add_geometries</span><span class="p">(</span><span class="n">records</span><span class="p">,</span> <span class="n">crs</span><span class="o">=</span><span class="n">ccrs</span><span class="o">.</span><span class="n">PlateCarree</span><span class="p">(),</span>
+                  <span class="n">facecolor</span><span class="o">=</span><span class="s2">&quot;none&quot;</span><span class="p">,</span> <span class="n">edgecolor</span><span class="o">=</span><span class="s2">&quot;gray&quot;</span><span class="p">,</span> <span class="n">linewidth</span><span class="o">=</span><span class="mf">0.5</span><span class="p">)</span>
+</pre></div>
+</div>
+<blockquote>
+<div><p><strong>排查经验</strong>：<code class="docutils literal notranslate"><span class="pre">DeprecationWarning</span></code>
+提示里往往会带上要替换的新对象（例如
+<code class="docutils literal notranslate"><span class="pre">Use</span> <span class="pre">cartopy.mpl.path.shapely_to_path</span> <span class="pre">instead</span></code>）。照着提示改即可；若提示只写“将被移除”，就先查官网当前文档里的同功能新写法。</p>
+</div></blockquote>
+</section>
+<section id="deprecationwarning-cartopy-mpl-patch-geos-to-path">
+<span id="deprecationwarningcartopymplpatchgeos-to-path"></span><h3>10.5.2 真实 <code class="docutils literal notranslate"><span class="pre">DeprecationWarning</span></code>：<code class="docutils literal notranslate"><span class="pre">cartopy.mpl.patch.geos_to_path</span></code> 弃用<a class="headerlink" href="#deprecationwarning-cartopy-mpl-patch-geos-to-path" title="Link to this heading">#</a></h3>
+<p><strong>现象 / 真实报错信息</strong>（<code class="docutils literal notranslate"><span class="pre">geos_to_path</span></code>
+在新版本已标记弃用，但老代码常出现）：</p>
+<div class="highlight-text notranslate"><div class="highlight"><pre><span></span>D:\...\10n_patch_deprec.py:13: DeprecationWarning: geos_to_path is deprecated and will be removed in a future
+release.  Use cartopy.mpl.path.shapely_to_path instead.
+  path = patch.geos_to_path(ring)
+</pre></div>
+</div>
+<p><strong>说明</strong>：这是一条<strong>警告</strong>，程序照跑、返回结果也没变（我们运行后
+<code class="docutils literal notranslate"><span class="pre">geos_to_path</span></code> 仍正常返回 <code class="docutils literal notranslate"><span class="pre">list</span></code>）；但 Cartopy
+官方已把它标注弃用。看到 <code class="docutils literal notranslate"><span class="pre">DeprecationWarning</span></code> 的正确态度与 00
+篇一致：<strong>它不打断你，但提示你“老的写法会被删除”，趁早在作业里换成新写法</strong>，别等库升级后一下链式报错。</p>
+<p><strong>关于 ``cartopy.io.shapereader`` 的澄清</strong>：在你 conda 装的 Cartopy
+0.25 里，<code class="docutils literal notranslate"><span class="pre">shapereader.Reader</span></code> 与 <code class="docutils literal notranslate"><span class="pre">shapereader.natural_earth</span></code>
+是<strong>当前正式 API（并未弃用）</strong>。新手最常见的“shapefile
+部分弃用”其实来自两点——①把老网页上的 <code class="docutils literal notranslate"><span class="pre">ax.natural_earth_shp</span></code>
+当接口抄（见 10.5.1 报错）；②混用 <code class="docutils literal notranslate"><span class="pre">pip</span></code>/<code class="docutils literal notranslate"><span class="pre">conda</span></code> 装了奇怪的 cartopy
+版本。<strong>读 shapefile 一律走 ``shapereader.Reader`` +
+``add_geometries``</strong>，就不会踩坑。</p>
+<blockquote>
+<div><p><strong>气象/地理场景一句话</strong>：<code class="docutils literal notranslate"><span class="pre">DeprecationWarning</span></code>
+就是国家站仪器的“换代提前通告”——旧观云器还在用，但气象局已经官宣它明后年退役，用新站（新
+API）才是正道。看到 “is deprecated and will be
+removed”，翻译过来是“给力用旧写法留着，但该准备了”。</p>
+</div></blockquote>
+<hr class="docutils" />
+</section>
+</section>
+<section id="add-feature-coastlines">
+<span id="id25"></span><h2>10.6 网络 / 数据下载：<code class="docutils literal notranslate"><span class="pre">add_feature</span></code> / <code class="docutils literal notranslate"><span class="pre">coastlines</span></code> / 缓存<a class="headerlink" href="#add-feature-coastlines" title="Link to this heading">#</a></h2>
+<section id="add-feature-coastlines-urlerror">
+<span id="add-featurecoastlines-urlerror"></span><h3>10.6.1 首次 <code class="docutils literal notranslate"><span class="pre">add_feature</span></code>/<code class="docutils literal notranslate"><span class="pre">coastlines</span></code> 联网下载失败：<code class="docutils literal notranslate"><span class="pre">URLError</span></code> / 超时<a class="headerlink" href="#add-feature-coastlines-urlerror" title="Link to this heading">#</a></h3>
+<p><strong>现象 / 真实报错信息</strong>（断网 / 被墙 / 缓存未命中，首次调用触发）：</p>
+<div class="highlight-text notranslate"><div class="highlight"><pre><span></span>  File &quot;...\cartopy\io\shapereader.py&quot;, line 374, in acquire_resource
+    shapefile_online = self._urlopen(url)
+  File &quot;...\urllib\request.py&quot;, line 1347, in do_open
+    raise URLError(err)
+urllib.error.URLError: &lt;urlopen error [WinError 10061] 由于目标计算机积极拒绝，无法连接。&gt;
+</pre></div>
+</div>
+<p><strong>原因</strong>：<code class="docutils literal notranslate"><span class="pre">cfeature.COASTLINE</span></code>、<code class="docutils literal notranslate"><span class="pre">ax.coastlines()</span></code>、<code class="docutils literal notranslate"><span class="pre">cfeature.LAKES/BORDERS/RIVERS</span></code>
+首次使用要<strong>联网下载 Natural Earth 的矢量 shp</strong>
+并缓存。断网、被墙（国内常见）、或公司代理拦截，就会在
+<code class="docutils literal notranslate"><span class="pre">cartopy.io.shapereader.acquire_resource</span></code> 这一层抛 <code class="docutils literal notranslate"><span class="pre">URLError</span></code> /
+<code class="docutils literal notranslate"><span class="pre">TimeoutError</span></code>。<strong>注意区分：这是“网络下载失败”，不是代码语法错</strong>——排查时先看是不是
+<code class="docutils literal notranslate"><span class="pre">URLError</span> <span class="pre">/</span> <span class="pre">[WinError</span> <span class="pre">...]</span> <span class="pre">/</span> <span class="pre">Connection</span> <span class="pre">...</span></code> 之类，别误改投影代码。</p>
+<p><strong>解决办法</strong>：</p>
+<ol class="arabic simple">
+<li><p><strong>联网环境下一次性预下载</strong>：先 <code class="docutils literal notranslate"><span class="pre">import</span> <span class="pre">cartopy;</span> <span class="pre">cartopy.config</span></code>
+看缓存目录，手动下载 Natural Earth
+放到该目录（或让程序首跑完成一次下载）；</p></li>
+<li><p><strong>设本地缓存目录，避免课堂信道挤爆</strong>：</p></li>
+</ol>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span><span class="w"> </span><span class="nn">cartopy</span><span class="w"> </span><span class="kn">import</span> <span class="n">config</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">os</span>
+<span class="n">os</span><span class="o">.</span><span class="n">makedirs</span><span class="p">(</span><span class="s2">&quot;./ne_cache&quot;</span><span class="p">,</span> <span class="n">exist_ok</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+<span class="n">config</span><span class="p">[</span><span class="s2">&quot;data_dir&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">abspath</span><span class="p">(</span><span class="s2">&quot;./ne_cache&quot;</span><span class="p">)</span>   <span class="c1"># 缓存放项目内，离线/多机复用</span>
+</pre></div>
+</div>
+<ol class="arabic simple" start="3">
+<li><p>离线环境就别硬刚
+<code class="docutils literal notranslate"><span class="pre">add_feature(COASTLINE)</span></code>；可先画填色主图，把海岸线留作“联网后补”。</p></li>
+</ol>
+<blockquote>
+<div><p><strong>气象/地理场景一句话</strong>：<code class="docutils literal notranslate"><span class="pre">coastlines()</span></code>
+第一次画就像第一次查全网海图——要先上网“下载一副海岸线底图”；断网时它就卡在“下载”这步（<code class="docutils literal notranslate"><span class="pre">URLError</span></code>），不是你的填色代码错了。预下载并指向缓存目录，等于把海图先拷进本地图库，之后离线也能画。</p>
+</div></blockquote>
+</section>
+<section id="id26">
+<span id="id27"></span><h3>10.6.2 别把「网络下载超时」误当「绘图代码报错」<a class="headerlink" href="#id26" title="Link to this heading">#</a></h3>
+<p><strong>现象 / 排查经验</strong>：已有数据也正常读出、<code class="docutils literal notranslate"><span class="pre">contourf</span></code> 也正常，但一调
+<code class="docutils literal notranslate"><span class="pre">ax.coastlines()</span></code> 就卡住/报 <code class="docutils literal notranslate"><span class="pre">URLError</span></code>。这往往是缓存目录里没有 NE
+数据，网络又不通。判据：报错信息含
+<code class="docutils literal notranslate"><span class="pre">acquire_resource</span></code>、<code class="docutils literal notranslate"><span class="pre">_urlopen</span></code>、<code class="docutils literal notranslate"><span class="pre">urllib.error</span></code>、<code class="docutils literal notranslate"><span class="pre">WinError</span></code>、<code class="docutils literal notranslate"><span class="pre">TimeoutError</span></code>、<code class="docutils literal notranslate"><span class="pre">Connection</span></code>
+等字眼 → 是网络；含
+<code class="docutils literal notranslate"><span class="pre">cartopy\crs.py</span></code>、<code class="docutils literal notranslate"><span class="pre">contour.py</span></code>、<code class="docutils literal notranslate"><span class="pre">TypeError/ValueError</span></code> →
+才是代码。</p>
+<blockquote>
+<div><p><strong>气象/地理场景一句话</strong>：就像发传真给对方没打通——<code class="docutils literal notranslate"><span class="pre">URLError</span></code>
+是“对方电话没接”（网络/服务器），不是“我传真内容写错”（代码）。先分清这两类，再去改参数。</p>
+</div></blockquote>
+<hr class="docutils" />
+</section>
+</section>
+<section id="modulenotfounderror-attributeerror">
+<span id="id28"></span><h2>10.7 版本与依赖：<code class="docutils literal notranslate"><span class="pre">ModuleNotFoundError</span></code> / <code class="docutils literal notranslate"><span class="pre">AttributeError</span></code> 全家桶<a class="headerlink" href="#modulenotfounderror-attributeerror" title="Link to this heading">#</a></h2>
+<section id="modulenotfounderror-no-module-named-pyproj-shapely-pyshp">
+<span id="modulenotfounderror-no-module-named-pyprojshapelypyshp"></span><h3>10.7.1 缺核心依赖：<code class="docutils literal notranslate"><span class="pre">ModuleNotFoundError:</span> <span class="pre">No</span> <span class="pre">module</span> <span class="pre">named</span> <span class="pre">'pyproj'/'shapely'/'pyshp'</span></code><a class="headerlink" href="#modulenotfounderror-no-module-named-pyproj-shapely-pyshp" title="Link to this heading">#</a></h3>
+<p><strong>现象 /
+真实报错信息</strong>（在你机器上缺包/环境没激活时，<code class="docutils literal notranslate"><span class="pre">import</span> <span class="pre">cartopy</span></code>
+或首次画图会触发）：</p>
+<div class="highlight-text notranslate"><div class="highlight"><pre><span></span>ModuleNotFoundError: No module named &#39;cartopy&#39;           # 压根没装 cartopy / 环境没激活
+ModuleNotFoundError: No module named &#39;pyproj&#39;            # cartopy 在 import cartopy.crs 时找不到 pyproj
+ModuleNotFoundError: No module named &#39;shapely&#39;           # add_feature/几何运算找不到 shapely
+ModuleNotFoundError: No module named &#39;pyshp&#39;             # 读 shapefile 时找不到 pyshp(shapefile.py 包)
+</pre></div>
+</div>
+<p><strong>原因</strong>：Cartopy 是“地图引擎壳”，它靠 <code class="docutils literal notranslate"><span class="pre">pyproj</span></code>（PROJ
+投影库）、<code class="docutils literal notranslate"><span class="pre">shapely</span></code>（几何）、<code class="docutils literal notranslate"><span class="pre">pyshp</span></code>（shapefile
+解析）在底层工作。<code class="docutils literal notranslate"><span class="pre">cartopy</span></code> 装了但不代表它也装了——尤其
+<code class="docutils literal notranslate"><span class="pre">pip</span> <span class="pre">install</span> <span class="pre">cartopy</span></code> 老版本时坑多。</p>
+<p><strong>解决办法（铁律）</strong>：<strong>优先
+``conda install cartopy shapely pyproj pyshp``</strong>（conda 会把这些底层 C
+库 GEOS/PROJ 一起配好），不要只
+<code class="docutils literal notranslate"><span class="pre">pip</span> <span class="pre">install</span> <span class="pre">cartopy</span></code>。装了之后若仍报，检查：①Conda 环境是否
+activate（见第 1 章）；②是不是在自己脚本里用了 <code class="docutils literal notranslate"><span class="pre">import</span> <span class="pre">cartopy.crs</span></code>
+但没先 <code class="docutils literal notranslate"><span class="pre">import</span> <span class="pre">cartopy</span></code> 的初始化链（默认会链式）。</p>
+<blockquote>
+<div><p><strong>气象/地理场景一句话</strong>：Cartopy
+像“绘图外包公司”，<code class="docutils literal notranslate"><span class="pre">shapely/pyproj/pyshp</span></code>
+是它雇的三个施工队（做几何/投影/读边界）。只装了“公司”没招“施工队”，一上项目就喊“没有人干活”（<code class="docutils literal notranslate"><span class="pre">ModuleNotFoundError</span></code>）。conda
+打包会一起招齐，这正是文档反复强调“别只用 pip”的原因。</p>
+</div></blockquote>
+</section>
+<section id="api-attributeerror">
+<span id="id29"></span><h3>10.7.2 版本间 API 改名导致的 <code class="docutils literal notranslate"><span class="pre">AttributeError</span></code><a class="headerlink" href="#api-attributeerror" title="Link to this heading">#</a></h3>
+<p><strong>现象 / 真实报错信息</strong>：</p>
+<div class="highlight-text notranslate"><div class="highlight"><pre><span></span>AttributeError: module &#39;cartopy.crs&#39; has no attribute &#39;PlateCarree&#39;   # 记错模块名/拼错
+AttributeError: &#39;GeoAxes&#39; object has no attribute &#39;natural_earth_shp&#39; # 旧 API 移除（见 10.5.1）
+AttributeError: &#39;Gridliner&#39; object has no attribute &#39;xlines&#39;          # 属性改名/版本差
+</pre></div>
+</div>
+<p><strong>原因</strong>：Cartopy 从 0.x
+迭代很快，不少方法、类、参数名变过（<code class="docutils literal notranslate"><span class="pre">natural_earth_shp</span></code>→<code class="docutils literal notranslate"><span class="pre">add_geometries</span></code>、某些
+<code class="docutils literal notranslate"><span class="pre">*_style</span></code> 属性→<code class="docutils literal notranslate"><span class="pre">gridliner</span></code> 新写法等）。看见 <code class="docutils literal notranslate"><span class="pre">AttributeError</span></code>
+且<strong>你确定调用的是“某个对象的方法/属性”</strong>，先猜三点：拼错、对象类型不对（拿
+<code class="docutils literal notranslate"><span class="pre">Gridliner</span></code> 当 <code class="docutils literal notranslate"><span class="pre">GeoAxes</span></code> 用）、版本 API 变了。</p>
+<p><strong>解决思路</strong>：</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="nb">print</span><span class="p">(</span><span class="nb">type</span><span class="p">(</span><span class="n">ax</span><span class="p">))</span>                    <span class="c1"># 确认到底是不是 GeoAxes</span>
+<span class="nb">print</span><span class="p">([</span><span class="n">a</span> <span class="k">for</span> <span class="n">a</span> <span class="ow">in</span> <span class="nb">dir</span><span class="p">(</span><span class="n">ax</span><span class="p">)</span> <span class="k">if</span> <span class="s2">&quot;coast&quot;</span> <span class="ow">in</span> <span class="n">a</span><span class="p">])</span>   <span class="c1"># 看真实有哪些方法</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">cartopy</span><span class="p">;</span> <span class="nb">print</span><span class="p">(</span><span class="n">cartopy</span><span class="o">.</span><span class="n">__version__</span><span class="p">)</span>    <span class="c1"># 先对版本再搜文档</span>
+</pre></div>
+</div>
+</section>
+<section id="proj-geographiccrs">
+<span id="id30"></span><h3>10.7.3 proj 相关：<code class="docutils literal notranslate"><span class="pre">GeographicCRS</span></code> / 网格报错（进阶）<a class="headerlink" href="#proj-geographiccrs" title="Link to this heading">#</a></h3>
+<p><code class="docutils literal notranslate"><span class="pre">pyproj</span></code> 报 <code class="docutils literal notranslate"><span class="pre">KeyError:</span> <span class="pre">'proj'</span></code> 或 <code class="docutils literal notranslate"><span class="pre">ProjError:</span> <span class="pre">...</span></code>
+多在<strong>数据自带投影字符串</strong>与 <code class="docutils literal notranslate"><span class="pre">transform</span></code>
+写死无关时出现；西北数据就是经纬格点，<code class="docutils literal notranslate"><span class="pre">transform=ccrs.PlateCarree()</span></code>
+不会触发。若报 proj 相关，优先查 <code class="docutils literal notranslate"><span class="pre">pip</span> <span class="pre">与</span> <span class="pre">conda</span> <span class="pre">混装</span></code>导致 proj
+二进制错位——重装一个干净环境即可。</p>
+<blockquote>
+<div><p><strong>气象/地理场景一句话</strong>：版本错配的 <code class="docutils literal notranslate"><span class="pre">AttributeError</span></code>
+就像“用新版的仪器操作手册去开旧型号的探空仪”——方法按键对不上。先
+<code class="docutils literal notranslate"><span class="pre">----.__version__</span></code> 对齐手册版本，再能谈操作。</p>
+</div></blockquote>
+<hr class="docutils" />
+</section>
+</section>
+<section id="colorbar">
+<span id="id31"></span><h2>10.8 图例 / colorbar / 子图 / 地理要素<a class="headerlink" href="#colorbar" title="Link to this heading">#</a></h2>
+<section id="geoaxes-colorbar-fig-colorbar-contour-ax-ax-shrink-0-8">
+<span id="geoaxes-colorbarfigcolorbarcontour-axax-shrink08"></span><h3>10.8.1 GeoAxes 上加 colorbar：<code class="docutils literal notranslate"><span class="pre">fig.colorbar(contour,</span> <span class="pre">ax=ax,</span> <span class="pre">shrink=0.8)</span></code><a class="headerlink" href="#geoaxes-colorbar-fig-colorbar-contour-ax-ax-shrink-0-8" title="Link to this heading">#</a></h3>
+<p><strong>现象 / 真实现象</strong>：Cartopy 的轴是
+<code class="docutils literal notranslate"><span class="pre">GeoAxes</span></code>（自带经纬刻度、固定纵横比）。直接不加 <code class="docutils literal notranslate"><span class="pre">ax=</span></code> 地用
+<code class="docutils literal notranslate"><span class="pre">plt.colorbar(contour)</span></code>、或想缩窄色标时，容易“吃掉/挤压地图”或警告。标准写法（已实测通过并出图，见
+<code class="docutils literal notranslate"><span class="pre">10h_colorbar.png</span></code>）：</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">cbar</span> <span class="o">=</span> <span class="n">fig</span><span class="o">.</span><span class="n">colorbar</span><span class="p">(</span><span class="n">contour</span><span class="p">,</span> <span class="n">ax</span><span class="o">=</span><span class="n">ax</span><span class="p">,</span> <span class="n">shrink</span><span class="o">=</span><span class="mf">0.8</span><span class="p">,</span> <span class="n">pad</span><span class="o">=</span><span class="mf">0.02</span><span class="p">)</span>
+<span class="n">cbar</span><span class="o">.</span><span class="n">set_label</span><span class="p">(</span><span class="s2">&quot;气温 ℃&quot;</span><span class="p">,</span> <span class="n">fontsize</span><span class="o">=</span><span class="mi">11</span><span class="p">)</span>
+<span class="n">cbar</span><span class="o">.</span><span class="n">ax</span><span class="o">.</span><span class="n">tick_params</span><span class="p">(</span><span class="n">labelsize</span><span class="o">=</span><span class="mi">10</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>多子图（2×2
+季节对比）想共用一只色标：<code class="docutils literal notranslate"><span class="pre">fig.colorbar(contour,</span> <span class="pre">ax=axes.ravel().tolist(),</span> <span class="pre">shrink=0.8,</span> <span class="pre">pad=0.02)</span></code>（<code class="docutils literal notranslate"><span class="pre">ax=</span></code>
+传子图列表）。</p>
+<p><strong>注意中文字体</strong>：<code class="docutils literal notranslate"><span class="pre">cbar.set_label(&quot;气温</span> <span class="pre">℃&quot;)</span></code>
+若系统没配中文字体，保存时会刷屏
+<code class="docutils literal notranslate"><span class="pre">UserWarning:</span> <span class="pre">Glyph</span> <span class="pre">...</span> <span class="pre">missing</span> <span class="pre">from</span> <span class="pre">font(s)</span> <span class="pre">DejaVu</span> <span class="pre">Sans</span></code>，图上相应中文变方框（见
+10.9.4）。</p>
+</section>
+<section id="lakes-rivers-borders-add-geometries">
+<span id="id32"></span><h3>10.8.2 地理要素 <code class="docutils literal notranslate"><span class="pre">lakes</span> <span class="pre">/</span> <span class="pre">rivers</span> <span class="pre">/</span> <span class="pre">borders</span></code> 与 <code class="docutils literal notranslate"><span class="pre">add_geometries</span></code> 投影错误<a class="headerlink" href="#lakes-rivers-borders-add-geometries" title="Link to this heading">#</a></h3>
+<p><strong>现象 / 现象描述</strong>：<code class="docutils literal notranslate"><span class="pre">ax.add_feature(cfeature.LAKES)</span></code>
+画不出或位置怪，常常不是代码错而是<strong>图层顺序</strong>（先画了填色把要素盖住，或
+<code class="docutils literal notranslate"><span class="pre">set_extent</span></code>
+范围太小根本没盖到要素）。用户指南已给图层顺序口诀：<strong>填色场 → 河流 →
+海岸线 → 国界 → 站点标记</strong>（自底到顶）。</p>
+<p>用 <code class="docutils literal notranslate"><span class="pre">Reader</span></code> 读 shp 后
+<code class="docutils literal notranslate"><span class="pre">add_geometries(geoms,</span> <span class="pre">crs=ccrs.PlateCarree())</span></code> 时，<code class="docutils literal notranslate"><span class="pre">crs</span></code>
+参数必须写<strong>数据的原始坐标系</strong>——读的 shp 本身是经纬度，就写
+<code class="docutils literal notranslate"><span class="pre">ccrs.PlateCarree()</span></code>；若 shp 已是投影坐标，写对应投影。写错 →
+要素整体错位/不显示（也是静默）。</p>
+<blockquote>
+<div><p><strong>气象/地理场景一句话</strong>：图层顺序就像“先铺桌布再摆餐具”——先画气温填色（桌布）再画河流国界（餐具），否则餐具被桌布盖住看不见。</p>
+</div></blockquote>
+</section>
+<section id="id33">
+<span id="id34"></span><h3>10.8.3 批量绘图不关画布：内存累积 / 卡顿<a class="headerlink" href="#id33" title="Link to this heading">#</a></h3>
+<p>用户指南强调循环里 <code class="docutils literal notranslate"><span class="pre">plt.close(fig)</span></code>。不关的话 <code class="docutils literal notranslate"><span class="pre">fig</span></code>
+累计占用内存，图越多越卡，甚至无报错误卡死。属“静默资源泄漏”（00 篇 0.5
+节）。统一 <code class="docutils literal notranslate"><span class="pre">vmin/vmax</span></code> 保证十二图可比。</p>
+<hr class="docutils" />
+</section>
+</section>
+<section id="id35">
+<span id="id36"></span><h2>10.9 气象静默错误（不报错但结果错）——最阴险的一类<a class="headerlink" href="#id35" title="Link to this heading">#</a></h2>
+<section id="id37">
+<span id="id38"></span><h3>10.9.1 站点经纬度数组装反：点画到大洋/图外<a class="headerlink" href="#id37" title="Link to this heading">#</a></h3>
+<p><strong>现象 / 真实现象描述</strong>：<code class="docutils literal notranslate"><span class="pre">ax.scatter(103.83,</span> <span class="pre">36.06,</span> <span class="pre">...)</span></code>
+是“经度在前、纬度在后”。把它写成
+<code class="docutils literal notranslate"><span class="pre">scatter(36.06,</span> <span class="pre">103.83)</span></code>（先纬度后经度），兰州站就变成“东经
+36°、北纬
+103°”，跑出图外，图上只剩坐标刻度附近一个小点或根本看不见（配图
+<code class="docutils literal notranslate"><span class="pre">10f_site_swap.png</span></code>）。代码不报错、能存图——这就是静默错误。</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">ax</span><span class="o">.</span><span class="n">scatter</span><span class="p">(</span><span class="mf">36.061</span><span class="p">,</span> <span class="mf">103.831</span><span class="p">,</span> <span class="n">c</span><span class="o">=</span><span class="s2">&quot;red&quot;</span><span class="p">,</span> <span class="n">s</span><span class="o">=</span><span class="mi">60</span><span class="p">,</span> <span class="n">transform</span><span class="o">=</span><span class="n">ccrs</span><span class="o">.</span><span class="n">PlateCarree</span><span class="p">())</span>  <span class="c1"># 装反，点消失</span>
+<span class="c1"># 正确：ax.scatter(103.831, 36.061, ..., transform=ccrs.PlateCarree())</span>
+</pre></div>
+</div>
+<p><strong>排查经验</strong>：凡清单上“站点没显示在预期位置”，先问两件事：①传参顺序对不对（lon
+前 lat 后）；②<code class="docutils literal notranslate"><span class="pre">transform</span></code> 写了没有（非 PlateCarree 漏写会跑偏，见
+10.2.3）。再核对 <code class="docutils literal notranslate"><span class="pre">set_extent</span></code> 是否覆盖该点经纬。</p>
+<blockquote>
+<div><p><strong>气象/地理场景一句话</strong>：兰州(103.83°E,
+36.06°N)你偏写成“北上南下”，等于给探测车发错了经纬度——它真跑到东经 36
+度的荒原去盘点，程序却一点不喊冤。先检查“经纬顺序”这四个字。</p>
+</div></blockquote>
+</section>
+<section id="lon-lat-lat-lon">
+<span id="lonlat-latlon"></span><h3>10.9.2 温度场 <code class="docutils literal notranslate"><span class="pre">(lon,lat)</span></code> 与 <code class="docutils literal notranslate"><span class="pre">(lat,lon)</span></code> 切片反了：图像被转置/侧躺<a class="headerlink" href="#lon-lat-lat-lon" title="Link to this heading">#</a></h3>
+<p><strong>现象 / 真实现象描述</strong>：NetCDF 里 <code class="docutils literal notranslate"><span class="pre">temp</span></code> 常是 <code class="docutils literal notranslate"><span class="pre">(lat,</span> <span class="pre">lon)</span></code> 或
+<code class="docutils literal notranslate"><span class="pre">(lon,</span> <span class="pre">lat)</span></code> 两种存储均可。若读进来的数组是 <code class="docutils literal notranslate"><span class="pre">(lon,lat)</span></code> 存法，你却用
+<code class="docutils literal notranslate"><span class="pre">(lat,lon)</span></code>
+的网格（<code class="docutils literal notranslate"><span class="pre">meshgrid(lon,lat)</span></code>）去对位，不报错但<strong>地图的南北向和东西向会被偷偷对调/翻转</strong>——等值线走向整个不对。真“shape
+一致但顺序错”时，甚至报 <code class="docutils literal notranslate"><span class="pre">Shapes</span> <span class="pre">of</span> <span class="pre">x</span> <span class="pre">...</span> <span class="pre">and</span> <span class="pre">z</span> <span class="pre">...</span> <span class="pre">do</span> <span class="pre">not</span> <span class="pre">match</span></code>（见
+10.4.2）；顺序微妙错位时则静默地“侧躺”或“翻面”（<code class="docutils literal notranslate"><span class="pre">contourf(lat,</span> <span class="pre">lon,</span> <span class="pre">...)</span></code>
+把经纬轴互换，图会反过来，见配图 <code class="docutils literal notranslate"><span class="pre">10f_transposed.png</span></code>）。</p>
+<p><strong>排查经验</strong>：画第一张图前固定三步：</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="nb">print</span><span class="p">(</span><span class="n">TEMP</span><span class="o">.</span><span class="n">shape</span><span class="p">)</span>                 <span class="c1"># 期望 (nlat, nlon)</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">lon</span><span class="o">.</span><span class="n">shape</span><span class="p">,</span> <span class="n">lat</span><span class="o">.</span><span class="n">shape</span><span class="p">)</span>       <span class="c1"># (nlon,), (nlat,)</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;比较:&quot;</span><span class="p">,</span> <span class="n">TEMP</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="nb">len</span><span class="p">(</span><span class="n">lat</span><span class="p">),</span> <span class="s2">&quot;|&quot;</span><span class="p">,</span> <span class="n">TEMP</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">1</span><span class="p">],</span> <span class="nb">len</span><span class="p">(</span><span class="n">lon</span><span class="p">))</span>
+</pre></div>
+</div>
+<p>若第一个维度数≠<code class="docutils literal notranslate"><span class="pre">len(lat)</span></code>，多半存储是 <code class="docutils literal notranslate"><span class="pre">(lon,</span> <span class="pre">lat)</span></code>，需
+<code class="docutils literal notranslate"><span class="pre">TEMP</span> <span class="pre">=</span> <span class="pre">TEMP.T</span></code>（并确认不再转重叠）。<strong>先对齐维度语义，再谈绘图。</strong></p>
+<blockquote>
+<div><p><strong>气象/地理场景一句话</strong>：一张“横纬纵经”的表你偏偏当“横经纵纬”读，等于把地球横过来了画——等值线都不指向真实的北。这就是
+00 篇 0.5 节警告的静默坐标错位。</p>
+</div></blockquote>
+</section>
+<section id="id39">
+<span id="id40"></span><h3>10.9.3 经纬 0–360 与 -180–180 混用（静默错位）<a class="headerlink" href="#id39" title="Link to this heading">#</a></h3>
+<p>详见
+10.1.2。两个数据源经度范围不一致时，它们在图上会<strong>相差整整半个地球</strong>地叠在一起、却无报错。判读见
+10.3.3。</p>
+</section>
+<section id="userwarning-glyph-missing-from-font">
+<span id="id41"></span><h3>10.9.4 中文显示方框：<code class="docutils literal notranslate"><span class="pre">UserWarning:</span> <span class="pre">Glyph</span> <span class="pre">...</span> <span class="pre">missing</span> <span class="pre">from</span> <span class="pre">font</span></code><a class="headerlink" href="#userwarning-glyph-missing-from-font" title="Link to this heading">#</a></h3>
+<p><strong>现象 / 真实警告</strong>（没配中文字体时，保存含中文标题/色标地图会出现）：</p>
+<div class="highlight-text notranslate"><div class="highlight"><pre><span></span>D:\...\10h_colorbar.py:21: UserWarning: Glyph 27668 (\N{CJK UNIFIED IDEOGRAPH-6C14}) missing from font(s) DejaVu Sans.
+</pre></div>
+</div>
+<p><strong>原因 / 解决办法</strong>：Matplotlib 默认字体 DejaVu Sans
+不含汉字。配中文字体（<code class="docutils literal notranslate"><span class="pre">SimHei</span></code> / <code class="docutils literal notranslate"><span class="pre">Microsoft</span> <span class="pre">YaHei</span></code>，同第 9
+章做法）后重画即可；若一时不想配字体，把标题/标签写成英文也是折中。</p>
+</section>
+<section id="id42">
+<span id="id43"></span><h3>10.9.5 等值线画在图外/整片空白（数据范围与窗口不匹配）<a class="headerlink" href="#id42" title="Link to this heading">#</a></h3>
+<p><strong>现象 / 现象描述</strong>：数据范围（比如西北全境 90–112°E）比
+<code class="docutils literal notranslate"><span class="pre">set_extent</span></code> 窗口（比如只框 103–104°）大很多，或多层 <code class="docutils literal notranslate"><span class="pre">levels</span></code>
+全在数据范围之外，图“该有的一片天空”却是空白。静默不报错。</p>
+<p><strong>排查</strong>：<code class="docutils literal notranslate"><span class="pre">print(np.nanmin(TEMP),</span> <span class="pre">np.nanmax(TEMP))</span></code> 与
+<code class="docutils literal notranslate"><span class="pre">levels</span></code>、<code class="docutils literal notranslate"><span class="pre">vmin/vmax</span></code>、<code class="docutils literal notranslate"><span class="pre">set_extent</span></code>
+对一下，确保取景框、图层分档都落在数据实际范围里。</p>
+<hr class="docutils" />
+</section>
+</section>
+<section id="id44">
+<span id="id45"></span><h2>10.10 高频坑自查速查表（含联网补充）<a class="headerlink" href="#id44" title="Link to this heading">#</a></h2>
+<div class="pst-scrollable-table-container"><table class="table">
+<thead>
+<tr class="row-odd"><th class="head"><p>看到的现象/报错</p></th>
+<th class="head"><p>立刻联想到</p></th>
+<th class="head"><p>处理</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p>地图出现竖白条</p></td>
+<td><p>经度不连续线（±180/0/360）与
+<code class="docutils literal notranslate"><span class="pre">central_longitude</span></code> 错位</p></td>
+<td><p>统一经度/<code class="docutils literal notranslate"><span class="pre">add_cyclic_point</span></code>/平移到中央 180</p></td>
+</tr>
+<tr class="row-odd"><td><p>数据画到别处/消失</p></td>
+<td><p>漏 <code class="docutils literal notranslate"><span class="pre">transform=</span></code>
+或投影坐标系混</p></td>
+<td><p>补 <code class="docutils literal notranslate"><span class="pre">transform=ccrs.PlateCarree()</span></code></p></td>
+</tr>
+<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">set_extent</span></code> 不裁剪/空白</p></td>
+<td><p>经纬序反、漏 <code class="docutils literal notranslate"><span class="pre">crs=</span></code>、弧度过</p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">set_extent([西,东,南,北],</span> <span class="pre">crs=ccrs.PlateCarree())</span></code></p></td>
+</tr>
+<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">Input</span> <span class="pre">z</span> <span class="pre">must</span> <span class="pre">be</span> <span class="pre">2D,</span> <span class="pre">not</span> <span class="pre">3D</span></code></p></td>
+<td><p>contourf 拿到带 time 的三维</p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">sel(time=...).squeeze()</span></code></p></td>
+</tr>
+<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">Shapes</span> <span class="pre">of</span> <span class="pre">x</span> <span class="pre">(..)</span> <span class="pre">and</span> <span class="pre">z</span> <span class="pre">(..)</span> <span class="pre">do</span> <span class="pre">not</span> <span class="pre">match</span></code></p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">.T</span></code>
+转置、<code class="docutils literal notranslate"><span class="pre">(lat,lon)/(lon,lat)</span></code>
+混用</p></td>
+<td><p>统一 <code class="docutils literal notranslate"><span class="pre">(nlat,nlon)</span></code></p></td>
+</tr>
+<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">Dimensions</span> <span class="pre">of</span> <span class="pre">C</span> <span class="pre">...</span> <span class="pre">one</span> <span class="pre">smaller</span> <span class="pre">than</span> <span class="pre">X/Y</span></code></p></td>
+<td><p>pcolormesh 顶点-色块差一</p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">shading=&quot;auto&quot;</span></code></p></td>
+</tr>
+<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">URLError</span></code>/<code class="docutils literal notranslate"><span class="pre">WinError</span></code>/超时</p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">add_feature</span></code>/<code class="docutils literal notranslate"><span class="pre">coastlines</span></code>
+要联网下载 NE</p></td>
+<td><p>预下载/设 <code class="docutils literal notranslate"><span class="pre">config[&quot;data_dir&quot;]</span></code> 缓存</p></td>
+</tr>
+<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">ModuleNotFoundError:</span> <span class="pre">No</span> <span class="pre">module</span> <span class="pre">named</span> <span class="pre">'pyproj/shapely/pyshp/cartopy'</span></code></p></td>
+<td><p>依赖没装/环境没激活/pip 装的坑</p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">conda</span> <span class="pre">install</span> <span class="pre">cartopy</span> <span class="pre">shapely</span> <span class="pre">pyproj</span> <span class="pre">pyshp</span></code></p></td>
+</tr>
+<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">AttributeError:</span> <span class="pre">...</span> <span class="pre">natural_earth_shp</span></code></p></td>
+<td><p>抄了老 API</p></td>
+<td><p>用 <code class="docutils literal notranslate"><span class="pre">cfeature</span></code> / <code class="docutils literal notranslate"><span class="pre">add_geometries(Read)</span></code></p></td>
+</tr>
+<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">DeprecationWarning:</span> <span class="pre">geos_to_path</span> <span class="pre">is</span> <span class="pre">deprecated</span> <span class="pre">...</span> <span class="pre">Use</span> <span class="pre">...shapely_to_path</span></code></p></td>
+<td><p>旧内部 API 弃用</p></td>
+<td><p>按提示换新写法</p></td>
+</tr>
+<tr class="row-even"><td><p>站点点到大洋/图外(静默)</p></td>
+<td><p>经纬顺序装反 / 漏 transform</p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">scatter(经,</span> <span class="pre">纬,</span> <span class="pre">transform=...)</span></code></p></td>
+</tr>
+<tr class="row-odd"><td><p>中文变方框 + <code class="docutils literal notranslate"><span class="pre">Glyph</span> <span class="pre">missing</span></code></p></td>
+<td><p>没配中文字体</p></td>
+<td><p>配 SimHei/微软雅黑</p></td>
+</tr>
+<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">identical</span> <span class="pre">low</span> <span class="pre">and</span> <span class="pre">high</span> <span class="pre">ylims</span> <span class="pre">makes</span> <span class="pre">transformation</span> <span class="pre">singular</span></code></p></td>
+<td><p>范围退化成一个点</p></td>
+<td><p>检查 <code class="docutils literal notranslate"><span class="pre">set_extent</span></code>/首尾数据</p></td>
+</tr>
+<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">GeometryCollection</span> <span class="pre">object</span> <span class="pre">is</span> <span class="pre">not</span> <span class="pre">subscriptable</span></code></p></td>
+<td><p>全球 contourf 跨日界线边角 bug</p></td>
+<td><p>改 <code class="docutils literal notranslate"><span class="pre">pcolormesh</span></code>/<code class="docutils literal notranslate"><span class="pre">add_cyclic_point</span></code></p></td>
+</tr>
+</tbody>
+</table>
+</div>
+<blockquote>
+<div><p><strong>收尾口诀（气象风）</strong>：看到 <strong>白竖线</strong>先查 <code class="docutils literal notranslate"><span class="pre">central_longitude</span></code>
+与经度范围；看到 <strong>图层错位/点画到海里</strong>先查 <code class="docutils literal notranslate"><span class="pre">transform=</span></code>
+和经纬顺序；看到 <code class="docutils literal notranslate"><span class="pre">.do</span> <span class="pre">not</span> <span class="pre">match</span> <span class="pre">/</span> <span class="pre">one</span> <span class="pre">smaller</span> <span class="pre">/</span> <span class="pre">must</span> <span class="pre">be</span> <span class="pre">2D</span></code>
+查维度与形状；看到 <code class="docutils literal notranslate"><span class="pre">URLError</span> <span class="pre">/</span> <span class="pre">ModuleNotFoundError</span></code>
+先分清“网络/环境”再说；看到 <code class="docutils literal notranslate"><span class="pre">DeprecationWarning</span> <span class="pre">/</span> <span class="pre">AttributeError</span></code>
+查版本
+API。<strong>凡是“程序绿灯到底、图却别扭”的静默现象，一律三连问：transform
+贴了吗？经纬顺序对吗？0-360 与 -180-180 统一了吗？</strong> —— 第 10
+章守门三问。</p>
+</div></blockquote>
+</section>
+</section>
+
+
+                </article>
+              
+              
+              
+              
+              
+                <footer class="prev-next-footer d-print-none">
+                  
+<div class="prev-next-area">
+    <a class="left-prev"
+       href="09-Matplotlib%E6%B0%94%E8%B1%A1%E7%BB%98%E5%9B%BE-QA.html"
+       title="上一页">
+      <i class="fa-solid fa-angle-left"></i>
+      <div class="prev-next-info">
+        <p class="prev-next-subtitle">上一页</p>
+        <p class="prev-next-title">气象数据绘图（一）Matplotlib Q&amp;A</p>
+      </div>
+    </a>
+</div>
+                </footer>
+              
+            </div>
+            
+            
+              
+                <dialog id="pst-secondary-sidebar-modal"></dialog>
+                <div id="pst-secondary-sidebar" class="bd-sidebar-secondary bd-toc"><div class="sidebar-secondary-items sidebar-secondary__inner">
+
+
+  <div class="sidebar-secondary-item">
+<div
+    id="pst-page-navigation-heading-2"
+    class="page-toc tocsection onthispage">
+    <i class="fa-solid fa-list"></i> 当前页面
+  </div>
+  <nav id="pst-page-toc-nav" class="page-toc" aria-labelledby="pst-page-navigation-heading-2">
+    <ul class="pst-show_toc_level nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id1">10.0 本章报错/警告/异常现象速查总表</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id3">10.1 全球图 / 跨日界线出现的白色竖线（白条）</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#platecarree-0-180">10.1.1 暖脊骑在日界线上：<code class="docutils literal notranslate"><span class="pre">PlateCarree()</span></code> 默认中央经线 0 时在 ±180 裂出白缝</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#id6">10.1.2 数据 0–360 与画布 -180–180 混用（「右半边世界」+ 0/360 白条）</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#xarray-roll">10.1.3 进阶：用 xarray 的经度换球（roll）/ 补循环</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#transform-projection-10">10.2 transform 与 projection：这两个参数别搞混（第 10 章强调得最多的坑）</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#transform-ccrs-platecarree-platecarree">10.2.1 漏写 <code class="docutils literal notranslate"><span class="pre">transform=ccrs.PlateCarree()</span></code>：在 PlateCarree 下<strong>静默通过</strong>，换投影才“爆发”</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#transform-projection">10.2.2 <code class="docutils literal notranslate"><span class="pre">transform=</span></code> 与 <code class="docutils literal notranslate"><span class="pre">projection=</span></code> 二者互换了/搞混</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#text-scatter-transform">10.2.3 <code class="docutils literal notranslate"><span class="pre">text</span></code> 与 <code class="docutils literal notranslate"><span class="pre">scatter</span></code> 同样要 <code class="docutils literal notranslate"><span class="pre">transform</span></code></a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#set-extent-crs">10.3 坐标范围与投影冲突：<code class="docutils literal notranslate"><span class="pre">set_extent</span></code> / <code class="docutils literal notranslate"><span class="pre">crs=</span></code> / 经度顺序 / 单位</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#set-extent">10.3.1 <code class="docutils literal notranslate"><span class="pre">set_extent</span></code> 经纬序写反：画布变成一片空白</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#set-extent-crs-platecarree">10.3.2 <code class="docutils literal notranslate"><span class="pre">set_extent</span></code> 漏 <code class="docutils literal notranslate"><span class="pre">crs=</span></code>（尤其非 PlateCarree 画布）</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#id15">10.3.3 经纬度单位混淆：把弧度当度、把 0-360 当 -180-180</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#contourf-pcolormesh-traceback">10.4 <code class="docutils literal notranslate"><span class="pre">contourf</span></code> / <code class="docutils literal notranslate"><span class="pre">pcolormesh</span></code> 在地图轴上的经典报错（真实 Traceback）</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#typeerror-input-z-must-be-2d-not-3d-time">10.4.1 <code class="docutils literal notranslate"><span class="pre">TypeError:</span> <span class="pre">Input</span> <span class="pre">z</span> <span class="pre">must</span> <span class="pre">be</span> <span class="pre">2D,</span> <span class="pre">not</span> <span class="pre">3D</span></code>（多留了一个 time 维）</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#typeerror-shapes-of-x-and-z-do-not-match-t">10.4.2 <code class="docutils literal notranslate"><span class="pre">TypeError:</span> <span class="pre">Shapes</span> <span class="pre">of</span> <span class="pre">x</span> <span class="pre">(...)</span> <span class="pre">and</span> <span class="pre">z</span> <span class="pre">(...)</span> <span class="pre">do</span> <span class="pre">not</span> <span class="pre">match</span></code>（转置 .T 惹的祸）</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#pcolormesh-dimensions-of-c-should-be-one-smaller-than-x-y">10.4.3 <code class="docutils literal notranslate"><span class="pre">pcolormesh</span></code> 报 <code class="docutils literal notranslate"><span class="pre">Dimensions</span> <span class="pre">of</span> <span class="pre">C</span> <span class="pre">...</span> <span class="pre">should</span> <span class="pre">be</span> <span class="pre">one</span> <span class="pre">smaller</span> <span class="pre">than</span> <span class="pre">X</span> <span class="pre">/</span> <span class="pre">Y</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#contourf-levels-nan">10.4.4 <code class="docutils literal notranslate"><span class="pre">contourf</span></code> 里 <code class="docutils literal notranslate"><span class="pre">levels</span></code> 数量与色标问题、NaN 破洞</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#contourf-typeerror-geometrycollection-object-is-not-subscriptable">10.4.5 全球 <code class="docutils literal notranslate"><span class="pre">contourf</span></code> 跨投影边界：<code class="docutils literal notranslate"><span class="pre">TypeError:</span> <span class="pre">'GeometryCollection'</span> <span class="pre">object</span> <span class="pre">is</span> <span class="pre">not</span> <span class="pre">subscriptable</span></code>（进阶坑）</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#shapefile-api-deprecationwarning">10.5 shapefile 读取与 API 弃用（DeprecationWarning / 旧函数）</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#api-attributeerror-geoaxes-object-has-no-attribute-natural-earth-shp">10.5.1 旧版 API 已移除：<code class="docutils literal notranslate"><span class="pre">AttributeError:</span> <span class="pre">'GeoAxes'</span> <span class="pre">object</span> <span class="pre">has</span> <span class="pre">no</span> <span class="pre">attribute</span> <span class="pre">'natural_earth_shp'</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#deprecationwarning-cartopy-mpl-patch-geos-to-path">10.5.2 真实 <code class="docutils literal notranslate"><span class="pre">DeprecationWarning</span></code>：<code class="docutils literal notranslate"><span class="pre">cartopy.mpl.patch.geos_to_path</span></code> 弃用</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#add-feature-coastlines">10.6 网络 / 数据下载：<code class="docutils literal notranslate"><span class="pre">add_feature</span></code> / <code class="docutils literal notranslate"><span class="pre">coastlines</span></code> / 缓存</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#add-feature-coastlines-urlerror">10.6.1 首次 <code class="docutils literal notranslate"><span class="pre">add_feature</span></code>/<code class="docutils literal notranslate"><span class="pre">coastlines</span></code> 联网下载失败：<code class="docutils literal notranslate"><span class="pre">URLError</span></code> / 超时</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#id26">10.6.2 别把「网络下载超时」误当「绘图代码报错」</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#modulenotfounderror-attributeerror">10.7 版本与依赖：<code class="docutils literal notranslate"><span class="pre">ModuleNotFoundError</span></code> / <code class="docutils literal notranslate"><span class="pre">AttributeError</span></code> 全家桶</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#modulenotfounderror-no-module-named-pyproj-shapely-pyshp">10.7.1 缺核心依赖：<code class="docutils literal notranslate"><span class="pre">ModuleNotFoundError:</span> <span class="pre">No</span> <span class="pre">module</span> <span class="pre">named</span> <span class="pre">'pyproj'/'shapely'/'pyshp'</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#api-attributeerror">10.7.2 版本间 API 改名导致的 <code class="docutils literal notranslate"><span class="pre">AttributeError</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#proj-geographiccrs">10.7.3 proj 相关：<code class="docutils literal notranslate"><span class="pre">GeographicCRS</span></code> / 网格报错（进阶）</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#colorbar">10.8 图例 / colorbar / 子图 / 地理要素</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#geoaxes-colorbar-fig-colorbar-contour-ax-ax-shrink-0-8">10.8.1 GeoAxes 上加 colorbar：<code class="docutils literal notranslate"><span class="pre">fig.colorbar(contour,</span> <span class="pre">ax=ax,</span> <span class="pre">shrink=0.8)</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#lakes-rivers-borders-add-geometries">10.8.2 地理要素 <code class="docutils literal notranslate"><span class="pre">lakes</span> <span class="pre">/</span> <span class="pre">rivers</span> <span class="pre">/</span> <span class="pre">borders</span></code> 与 <code class="docutils literal notranslate"><span class="pre">add_geometries</span></code> 投影错误</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#id33">10.8.3 批量绘图不关画布：内存累积 / 卡顿</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id35">10.9 气象静默错误（不报错但结果错）——最阴险的一类</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#id37">10.9.1 站点经纬度数组装反：点画到大洋/图外</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#lon-lat-lat-lon">10.9.2 温度场 <code class="docutils literal notranslate"><span class="pre">(lon,lat)</span></code> 与 <code class="docutils literal notranslate"><span class="pre">(lat,lon)</span></code> 切片反了：图像被转置/侧躺</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#id39">10.9.3 经纬 0–360 与 -180–180 混用（静默错位）</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#userwarning-glyph-missing-from-font">10.9.4 中文显示方框：<code class="docutils literal notranslate"><span class="pre">UserWarning:</span> <span class="pre">Glyph</span> <span class="pre">...</span> <span class="pre">missing</span> <span class="pre">from</span> <span class="pre">font</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#id42">10.9.5 等值线画在图外/整片空白（数据范围与窗口不匹配）</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id44">10.10 高频坑自查速查表（含联网补充）</a></li>
+</ul>
+  </nav></div>
+
+</div></div>
+              
+            
+          </div>
+          <footer class="bd-footer-content">
+            
+          </footer>
+        
+      </main>
+    </div>
+  </div>
+  
+  <!-- Scripts loaded after <body> so the DOM is not blocked -->
+  <script defer src="../../_static/scripts/bootstrap.js?digest=90905a2f556bf617f1a9"></script>
+<script defer src="../../_static/scripts/pydata-sphinx-theme.js?digest=90905a2f556bf617f1a9"></script>
+
+  <footer class="bd-footer">
+<div class="bd-footer__inner bd-page-width">
+  
+    <div class="footer-items__start">
+      
+        <div class="footer-item">
+
+  <p class="copyright">
+    
+      © Copyright 2026, 兰州大学大气科学学院编程社区.
+      <br/>
+    
+  </p>
+</div>
+      
+        <div class="footer-item">
+
+  <p class="sphinx-version">
+    由 <a href="https://www.sphinx-doc.org/">Sphinx</a> 8.2.3创建。
+    <br/>
+  </p>
+</div>
+      
+    </div>
+  
+  
+  
+    <div class="footer-items__end">
+      
+        <div class="footer-item">
+<p class="theme-version">
+  <!-- # L10n: Setting the PST URL as an argument as this does not need to be localized -->
+  使用 <a href="https://pydata-sphinx-theme.readthedocs.io/en/stable/index.html">PyData Sphinx Theme</a> 0.20.0构建.
+</p></div>
+      
+    </div>
+  
+</div>
+
+  </footer>
+  </body>
+</html>

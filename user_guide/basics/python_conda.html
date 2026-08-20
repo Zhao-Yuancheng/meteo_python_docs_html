@@ -1,0 +1,855 @@
+
+<!DOCTYPE html>
+
+
+<html lang="zh-CN" data-content_root="../../" >
+
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
+    <title>Python 与 Conda 简介 &#8212; MeteoPython</title>
+  
+  
+  
+  <script data-cfasync="false">
+    document.documentElement.dataset.mode = localStorage.getItem("mode") || "";
+    document.documentElement.dataset.theme = localStorage.getItem("theme") || "";
+  </script>
+  <!--
+    this give us a css class that will be invisible only if js is disabled
+  -->
+  <noscript>
+    <style>
+      .pst-js-only { display: none !important; }
+
+    </style>
+  </noscript>
+  
+  <!-- Loaded before other Sphinx assets -->
+  <link href="../../_static/styles/theme.css?digest=90905a2f556bf617f1a9" rel="stylesheet" />
+<link href="../../_static/styles/pydata-sphinx-theme.css?digest=90905a2f556bf617f1a9" rel="stylesheet" />
+
+    <link rel="stylesheet" type="text/css" href="../../_static/pygments.css?v=8f2a1f02" />
+    <link rel="stylesheet" type="text/css" href="../../_static/copybutton.css?v=76b2166b" />
+    <link rel="stylesheet" type="text/css" href="../../_static/sg_gallery.css?v=fd6457a4" />
+    <link rel="stylesheet" type="text/css" href="../../_static/sg_gallery-binder.css?v=f4aeca0c" />
+    <link rel="stylesheet" type="text/css" href="../../_static/sg_gallery-dataframe.css?v=2082cf3c" />
+    <link rel="stylesheet" type="text/css" href="../../_static/sg_gallery-rendered-html.css?v=1277b6f3" />
+    <link rel="stylesheet" type="text/css" href="../../_static/sphinx-design.min.css?v=95c83b7e" />
+    <link rel="stylesheet" type="text/css" href="../../_static/./custom.css?v=fbe1f034" />
+  
+  <!-- So that users can add custom icons -->
+  <script defer src="../../_static/scripts/fontawesome.js?digest=90905a2f556bf617f1a9"></script>
+  <!-- Pre-loaded scripts that we'll load fully later -->
+  <link rel="preload" as="script" href="../../_static/scripts/bootstrap.js?digest=90905a2f556bf617f1a9" />
+<link rel="preload" as="script" href="../../_static/scripts/pydata-sphinx-theme.js?digest=90905a2f556bf617f1a9" />
+
+    <script src="../../_static/documentation_options.js?v=9becfed8"></script>
+    <script src="../../_static/doctools.js?v=9bcbadda"></script>
+    <script src="../../_static/sphinx_highlight.js?v=dc90522c"></script>
+    <script src="../../_static/sg-tags.js?v=d80f6fa4"></script>
+    <script src="../../_static/clipboard.min.js?v=a7894cd8"></script>
+    <script src="../../_static/copybutton.js?v=fd10adb8"></script>
+    <script src="../../_static/translations.js?v=beaddf03"></script>
+    <script src="../../_static/design-tabs.js?v=f930bc37"></script>
+    <script>DOCUMENTATION_OPTIONS.pagename = 'user_guide/basics/python_conda';</script>
+    <script>
+        DOCUMENTATION_OPTIONS.theme_version = '0.20.0';
+        DOCUMENTATION_OPTIONS.theme_switcher_json_url = '_static/switcher.json';
+        DOCUMENTATION_OPTIONS.theme_switcher_version_match = '0.1.0';
+        DOCUMENTATION_OPTIONS.show_version_warning_banner =
+            false;
+        </script>
+    <script>DOCUMENTATION_OPTIONS.search_as_you_type = false;</script>
+    <link rel="icon" href="../../_static/favicon.svg"/>
+    <link rel="index" title="索引" href="../../genindex.html" />
+    <link rel="search" title="搜索" href="../../search.html" />
+    <link rel="next" title="基本数据类型、变量和运算符" href="datatypes.html" />
+    <link rel="prev" title="模块一 Python 编程基础" href="index.html" />
+  <meta name="viewport" content="width=device-width, initial-scale=1"/>
+  <meta name="docsearch:language" content="zh-CN"/>
+  <meta name="docsearch:version" content="0.1" />
+    <meta name="docbuild:last-update" content="2026-08-20"/>
+  
+    
+    <script src="../../_static/searchtools.js"></script>
+    <script src="../../_static/language_data.js"></script>
+    <script src="../../searchindex.js"></script>
+  
+  </head>
+  <body data-default-mode="">
+  
+  
+  <div id="pst-skip-link" class="skip-link d-print-none"><a href="#main-content">跳转至主要内容</a></div>
+
+  
+  <div id="pst-scroll-pixel-helper"></div>
+  
+  <button type="button" class="btn rounded-pill" id="pst-back-to-top">
+    <i class="fa-solid fa-arrow-up"></i>回到顶部</button>
+  
+  
+  
+  
+  <dialog id="pst-search-dialog">
+    
+<form class="bd-search d-flex align-items-center"
+      action="../../search.html"
+      method="get">
+  <i class="fa-solid fa-magnifying-glass"></i>
+  <input type="search"
+         class="form-control"
+         name="q"
+         placeholder="搜索文档…"
+         aria-label="搜索文档…"
+         autocomplete="off"
+         autocorrect="off"
+         autocapitalize="off"
+         spellcheck="false"/>
+  <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd>K</kbd></span>
+</form>
+  </dialog>
+
+  <div class="pst-async-banner-revealer d-none">
+  <aside id="bd-header-version-warning" class="d-none d-print-none" aria-label="版本警告"></aside>
+</div>
+
+  
+    <header id="pst-header" class="bd-header navbar navbar-expand-lg bd-navbar d-print-none">
+<div class="bd-header__inner bd-page-width">
+  <button class="pst-navbar-icon sidebar-toggle primary-toggle" aria-label="网页导航">
+    <span class="fa-solid fa-bars"></span>
+  </button>
+  
+  
+  <div class="col-lg-3 navbar-header-items__start">
+    
+      <div class="navbar-item">
+
+  
+    
+  
+
+<a class="navbar-brand logo" href="../../index.html">
+  
+  
+  
+  
+  
+    
+    
+      
+    
+    
+    <img src="../../_static/logo.svg" class="logo__image only-light" alt="MeteoPython - Home"/>
+    <img src="../../_static/logo.svg" class="logo__image only-dark pst-js-only" alt="MeteoPython - Home"/>
+  
+  
+</a></div>
+    
+  </div>
+  
+  <div class="col-lg-9 navbar-header-items">
+    
+    <div class="me-auto navbar-header-items__center">
+      
+        <div class="navbar-item">
+<nav>
+  <ul class="bd-navbar-elements navbar-nav">
+    
+<li class="nav-item current active">
+  <a class="nav-link nav-internal" href="../index.html">
+    教程
+  </a>
+</li>
+
+
+<li class="nav-item ">
+  <a class="nav-link nav-internal" href="../../tutorials/index.html">
+    练习
+  </a>
+</li>
+
+
+<li class="nav-item ">
+  <a class="nav-link nav-internal" href="../../gallery/index.html">
+    示例
+  </a>
+</li>
+
+
+<li class="nav-item ">
+  <a class="nav-link nav-internal" href="../../api/index.html">
+    术语参考
+  </a>
+</li>
+
+
+<li class="nav-item ">
+  <a class="nav-link nav-internal" href="../../qa/index.html">
+    常见问题 Q&A
+  </a>
+</li>
+
+  </ul>
+</nav></div>
+      
+    </div>
+    
+    
+    <div class="navbar-header-items__end">
+      
+        <div class="navbar-item navbar-persistent--container">
+          
+
+<button class="btn search-button-field search-button__button pst-js-only" title="搜索" aria-label="搜索" data-bs-placement="bottom" data-bs-toggle="tooltip">
+ <i class="fa-solid fa-magnifying-glass"></i>
+ <span class="search-button__default-text">搜索</span>
+ <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd class="kbd-shortcut__modifier">K</kbd></span>
+</button>
+        </div>
+      
+      
+        <div class="navbar-item">
+
+<div class="theme-switch-container dropdown pst-js-only" data-bs-toggle="tooltip" data-bs-placement="bottom" title="Color mode">
+  <button class="btn btn-sm nav-link pst-navbar-icon theme-switch-button dropdown-toggle" aria-label="Color mode" data-bs-toggle="dropdown">
+    <i class="theme-switch fa-solid fa-sun fa-lg fa-fw" data-mode="light" title="亮色"></i>
+    <i class="theme-switch fa-solid fa-moon fa-lg fa-fw" data-mode="dark" title="暗色"></i>
+    <i class="theme-switch fa-solid fa-circle-half-stroke fa-lg fa-fw" data-mode="auto" title="System Settings"></i>
+  </button>
+  <ul class="dropdown-menu dropdown-menu-end">
+    <li><button class="dropdown-item d-flex align-items-center theme-change-button" data-mode="auto"><i class="fa-solid fa-circle-half-stroke fa-lg fa-fw me-1"></i>System Settings</button></li>
+    <li><button class="dropdown-item d-flex align-items-center theme-change-button" data-mode="light"><i class="fa-solid fa-sun fa-lg fa-fw me-1"></i>亮色</button></li>
+    <li><button class="dropdown-item d-flex align-items-center theme-change-button" data-mode="dark"><i class="fa-solid fa-moon fa-lg fa-fw me-1"></i>暗色</button></li>
+  </ul>
+</div></div>
+      
+        <div class="navbar-item"><ul class="navbar-icon-links"
+    aria-label="Icon Links">
+</ul></div>
+      
+    </div>
+    
+  </div>
+  
+  
+    <div class="navbar-persistent--mobile">
+
+<button class="btn search-button-field search-button__button pst-js-only" title="搜索" aria-label="搜索" data-bs-placement="bottom" data-bs-toggle="tooltip">
+ <i class="fa-solid fa-magnifying-glass"></i>
+ <span class="search-button__default-text">搜索</span>
+ <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd class="kbd-shortcut__modifier">K</kbd></span>
+</button>
+    </div>
+  
+
+  
+    <button class="pst-navbar-icon sidebar-toggle secondary-toggle" aria-label="当前页面">
+      <span class="fa-solid fa-outdent"></span>
+    </button>
+  
+</div>
+
+    </header>
+  
+
+  <div class="bd-container">
+    <div class="bd-container__inner bd-page-width">
+      
+      
+      
+      <dialog id="pst-primary-sidebar-modal"></dialog>
+      <div id="pst-primary-sidebar" class="bd-sidebar-primary bd-sidebar">
+        
+
+  
+  <div class="sidebar-header-items sidebar-primary__section">
+    
+    
+      <div class="sidebar-header-items__center">
+        
+          
+          
+            <div class="navbar-item">
+<nav>
+  <ul class="bd-navbar-elements navbar-nav">
+    
+<li class="nav-item current active">
+  <a class="nav-link nav-internal" href="../index.html">
+    教程
+  </a>
+</li>
+
+
+<li class="nav-item ">
+  <a class="nav-link nav-internal" href="../../tutorials/index.html">
+    练习
+  </a>
+</li>
+
+
+<li class="nav-item ">
+  <a class="nav-link nav-internal" href="../../gallery/index.html">
+    示例
+  </a>
+</li>
+
+
+<li class="nav-item ">
+  <a class="nav-link nav-internal" href="../../api/index.html">
+    术语参考
+  </a>
+</li>
+
+
+<li class="nav-item ">
+  <a class="nav-link nav-internal" href="../../qa/index.html">
+    常见问题 Q&A
+  </a>
+</li>
+
+  </ul>
+</nav></div>
+          
+        
+      </div>
+    
+    
+    
+      <div class="sidebar-header-items__end">
+        
+          <div class="navbar-item">
+
+<div class="theme-switch-container dropdown pst-js-only" data-bs-toggle="tooltip" data-bs-placement="bottom" title="Color mode">
+  <button class="btn btn-sm nav-link pst-navbar-icon theme-switch-button dropdown-toggle" aria-label="Color mode" data-bs-toggle="dropdown">
+    <i class="theme-switch fa-solid fa-sun fa-lg fa-fw" data-mode="light" title="亮色"></i>
+    <i class="theme-switch fa-solid fa-moon fa-lg fa-fw" data-mode="dark" title="暗色"></i>
+    <i class="theme-switch fa-solid fa-circle-half-stroke fa-lg fa-fw" data-mode="auto" title="System Settings"></i>
+  </button>
+  <ul class="dropdown-menu dropdown-menu-end">
+    <li><button class="dropdown-item d-flex align-items-center theme-change-button" data-mode="auto"><i class="fa-solid fa-circle-half-stroke fa-lg fa-fw me-1"></i>System Settings</button></li>
+    <li><button class="dropdown-item d-flex align-items-center theme-change-button" data-mode="light"><i class="fa-solid fa-sun fa-lg fa-fw me-1"></i>亮色</button></li>
+    <li><button class="dropdown-item d-flex align-items-center theme-change-button" data-mode="dark"><i class="fa-solid fa-moon fa-lg fa-fw me-1"></i>暗色</button></li>
+  </ul>
+</div></div>
+        
+          <div class="navbar-item"><ul class="navbar-icon-links"
+    aria-label="Icon Links">
+</ul></div>
+        
+      </div>
+    
+  </div>
+  
+    <div class="sidebar-primary-items__start sidebar-primary__section">
+        <div class="sidebar-primary-item pst-sidebar-collapse"><button id="pst-collapse-sidebar-button" aria-expanded="true" aria-controls="pst-primary-sidebar">
+  <svg class="pst-icon" role="img" aria-hidden="true" focusable="false" viewBox="0 0 16 16" xmlns="http://www.w3.org/2000/svg">
+    <path fill="currentColor" d="M3 15.5C2.36232 15.5 1.74874 15.2564 1.28478 14.8189C0.820828 14.3815 0.541576 13.7832 0.504167 13.1467L0.5 13L0.5 3C0.499965 2.36232 0.743605 1.74874 1.18107 1.28478C1.61854 0.820828 2.21676 0.541576 2.85333 0.504167L3 0.5L13 0.5C13.6377 0.499965 14.2513 0.743605 14.7152 1.18107C15.1792 1.61854 15.4584 2.21676 15.4958 2.85333L15.5 3L15.5 13C15.5 13.6377 15.2564 14.2513 14.8189 14.7152C14.3815 15.1792 13.7832 15.4584 13.1467 15.4958L13 15.5L3 15.5ZM3 13.8333L10.5 13.8333L10.5 2.16667L3 2.16667C2.79589 2.16669 2.59889 2.24163 2.44636 2.37726C2.29383 2.5129 2.19638 2.69979 2.1725 2.9025L2.16667 3L2.16667 13C2.16669 13.2041 2.24163 13.4011 2.37726 13.5536C2.5129 13.7062 2.69979 13.8036 2.9025 13.8275L3 13.8333ZM6.65583 10.325L6.5775 10.2558L4.91083 8.58917C4.76735 8.44567 4.68116 8.25476 4.66843 8.05223C4.65569 7.84971 4.71729 7.6495 4.84167 7.48917L4.91083 7.41083L6.5775 5.74417C6.72747 5.59471 6.9287 5.50794 7.14032 5.50148C7.35194 5.49502 7.55809 5.56935 7.7169 5.70937C7.8757 5.8494 7.97525 6.04463 7.99533 6.25539C8.01541 6.46616 7.95451 6.67667 7.825 6.84417L7.75583 6.9225L6.67917 8L7.75583 9.0775C7.89931 9.22099 7.98551 9.41191 7.99824 9.61443C8.01097 9.81695 7.94938 10.0172 7.825 10.1775L7.75583 10.2558C7.61234 10.3993 7.42142 10.4855 7.2189 10.4982C7.01638 10.511 6.81617 10.4494 6.65583 10.325Z"/>
+  </svg>
+  <span class="pst-collapse-sidebar-label">Collapse Sidebar</span>
+  <span class="pst-expand-sidebar-label">Expand Sidebar</span>
+</button></div>
+        <div class="sidebar-primary-item">
+
+<nav class="bd-docs-nav bd-links"
+     aria-label="章节导航">
+  <p class="bd-links__title" role="heading" aria-level="1">章节导航</p>
+  <div class="bd-toc-item navbar-nav"><ul class="current nav bd-sidenav">
+<li class="toctree-l1 current active has-children"><a class="reference internal" href="index.html">模块一 Python 编程基础</a><details open="open"><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul class="current">
+<li class="toctree-l2 current active"><a class="current reference internal" href="#">Python 与 Conda 简介</a></li>
+<li class="toctree-l2"><a class="reference internal" href="datatypes.html">基本数据类型、变量和运算符</a></li>
+<li class="toctree-l2"><a class="reference internal" href="flow.html">分支、条件与循环</a></li>
+<li class="toctree-l2"><a class="reference internal" href="functions.html">函数及变量作用域、模块和包</a></li>
+<li class="toctree-l2"><a class="reference internal" href="oop.html">面向对象与高级语法</a></li>
+</ul>
+</details></li>
+<li class="toctree-l1 has-children"><a class="reference internal" href="../data/index.html">模块二 气象数据处理</a><details open="open"><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
+<li class="toctree-l2"><a class="reference internal" href="../data/numpy.html">气象数据计算 NumPy</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../data/pandas.html">气象数据分析（一）Pandas</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../data/xarray.html">气象数据分析（二）Xarray</a></li>
+</ul>
+</details></li>
+<li class="toctree-l1 has-children"><a class="reference internal" href="../viz/index.html">模块三 气象数据可视化</a><details open="open"><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
+<li class="toctree-l2"><a class="reference internal" href="../viz/matplotlib.html">气象数据绘图（一）Matplotlib</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../viz/cartopy.html">气象数据绘图（二）Cartopy</a></li>
+</ul>
+</details></li>
+</ul>
+</div>
+</nav></div>
+    </div>
+  
+  
+  <div class="sidebar-primary-items__end sidebar-primary__section">
+      <div class="sidebar-primary-item">
+<div id="ethical-ad-placement"
+      class="flat"
+      data-ea-publisher="readthedocs"
+      data-ea-type="readthedocs-sidebar"
+      data-ea-manual="true">
+</div></div>
+  </div>
+
+
+      </div>
+      
+      <main id="main-content" class="bd-main" role="main">
+        
+        
+          <div class="bd-content">
+            <div class="bd-article-container">
+              
+              <div class="bd-header-article d-print-none">
+<div class="header-article-items header-article__inner">
+  
+    <div class="header-article-items__start">
+      
+        <div class="header-article-item">
+
+<nav aria-label="Breadcrumb" class="d-print-none">
+  <ul class="bd-breadcrumbs">
+    
+    <li class="breadcrumb-item breadcrumb-home">
+      <a href="../../index.html" class="nav-link" aria-label="初始页面">
+        <i class="fa-solid fa-home"></i>
+      </a>
+    </li>
+    
+    <li class="breadcrumb-item"><a href="../index.html" class="nav-link">教程</a></li>
+    
+    
+    <li class="breadcrumb-item"><a href="index.html" class="nav-link">模块一 Python 编程基础</a></li>
+    
+    <li class="breadcrumb-item active" aria-current="page"><span class="ellipsis">Python 与 Conda 简介</span></li>
+  </ul>
+</nav>
+</div>
+      
+    </div>
+  
+  
+</div>
+</div>
+              
+              
+              
+                
+<div id="searchbox"></div>
+                <article class="bd-article">
+                  
+  <section id="python-conda">
+<span id="tut-conda"></span><h1>Python 与 Conda 简介<a class="headerlink" href="#python-conda" title="Link to this heading">#</a></h1>
+<p>第 1 节 · 模块一 Python 编程基础
+贯穿项目第 1 步：搭建项目环境，创建 <code class="docutils literal notranslate"><span class="pre">weather_project/</span></code> 目录并跑通第一个验证脚本。</p>
+<p>本章是&quot;兰州气温观测数据分析与可视化系统&quot;的<strong>开篇</strong>。学会这一节，你就拥有了一个&quot;气象专用实验室&quot;：装好 Miniconda、建好虚拟环境、配好 VS Code，并运行出第一段打印兰州站点信息的气象代码。</p>
+<p>学完本章你将能够：</p>
+<ol class="arabic simple">
+<li><p>理解 Python 为什么是气象数据分析的首选语言；</p></li>
+<li><p>安装 Miniconda 并创建气象专用虚拟环境 <code class="docutils literal notranslate"><span class="pre">met_p312</span></code>；</p></li>
+<li><p>用 VS Code 绑定解释器，搭建 <code class="docutils literal notranslate"><span class="pre">weather_project</span></code> 项目目录；</p></li>
+<li><p>运行第一个气象脚本，验证环境搭建成功。</p></li>
+</ol>
+<div class="sd-container-fluid sd-sphinx-override sd-mb-4 docutils">
+<div class="sd-row sd-row-cols-1 sd-row-cols-xs-1 sd-row-cols-sm-2 sd-row-cols-md-2 sd-row-cols-lg-3 sd-g-2 sd-g-xs-2 sd-g-sm-2 sd-g-md-2 sd-g-lg-2 docutils">
+<div class="sd-col sd-d-flex-row docutils">
+<div class="sd-card sd-sphinx-override sd-w-100 sd-shadow-sm sd-card-hover gallery-card docutils">
+<div class="sd-card-header docutils">
+</div>
+<div class="sd-card-body docutils">
+<div class="sd-card-title sd-font-weight-bold docutils">
+🎬 配套视频</div>
+<p class="sd-card-text">安装与配置录屏 + 执行流程动画</p>
+</div>
+<a class="sd-stretched-link sd-hide-link-text reference internal" href="#ch01-video"><span class="std std-ref">配套视频</span></a></div>
+</div>
+<div class="sd-col sd-d-flex-row docutils">
+<div class="sd-card sd-sphinx-override sd-w-100 sd-shadow-sm sd-card-hover gallery-card docutils">
+<div class="sd-card-header docutils">
+</div>
+<div class="sd-card-body docutils">
+<div class="sd-card-title sd-font-weight-bold docutils">
+✏️ 配套练习</div>
+<p class="sd-card-text">环境创建、安装包、运行脚本实战题</p>
+</div>
+<a class="sd-stretched-link sd-hide-link-text reference internal" href="../../tutorials/basics/ch01_practice.html"><span class="doc">第 1 章练习：Python 简介及安装环境</span></a></div>
+</div>
+<div class="sd-col sd-d-flex-row docutils">
+<div class="sd-card sd-sphinx-override sd-w-100 sd-shadow-sm sd-card-hover gallery-card docutils">
+<div class="sd-card-header docutils">
+</div>
+<div class="sd-card-body docutils">
+<div class="sd-card-title sd-font-weight-bold docutils">
+🖼 可执行示例</div>
+<p class="sd-card-text">第一个气象折线图</p>
+</div>
+<a class="sd-stretched-link sd-hide-link-text reference internal" href="../../gallery/plot_basics/plot_first_weather.html"><span class="doc">我的第一个气象图</span></a></div>
+</div>
+</div>
+</div>
+<section id="ch01-video">
+<span id="id1"></span><h2>配套视频<a class="headerlink" href="#ch01-video" title="Link to this heading">#</a></h2>
+<p>三支视频分别对应安装 Anaconda、配置 VS Code、Python 执行流程动画，点击即可播放：</p>
+<p>（1）安装 Anaconda</p>
+<div  class="sphinx-contrib-video-container align-left"><video controls="True" preload="auto" width="100%"><source src="../../_images/T102-%E5%AE%89%E8%A3%85Anaconda_av1.webm" type="video/webm"></video></div><p>（2）配置 VS Code</p>
+<div  class="sphinx-contrib-video-container align-left"><video controls="True" preload="auto" width="100%"><source src="../../_images/T102-VSCode%E5%AE%89%E8%A3%85_av1.webm" type="video/webm"></video></div><p>（3）Python 执行流程动画</p>
+<div  class="sphinx-contrib-video-container align-left"><video controls="True" preload="auto" width="100%"><source src="../../_images/T102-Python%E4%BB%A3%E7%A0%81%E6%89%A7%E8%A1%8C%E6%B5%81%E7%A8%8B.webm" type="video/webm"></video></div></section>
+<section id="python">
+<h2>为什么气象数据分析首选 Python<a class="headerlink" href="#python" title="Link to this heading">#</a></h2>
+<ol class="arabic simple">
+<li><p><strong>开源免费</strong>：无软件版权限制，高校、气象台站均可用于教学、科研与业务处理，无授权费用。</p></li>
+<li><p><strong>气象领域生态完善，专业工具库全覆盖</strong>：</p>
+<ul class="simple">
+<li><p>数值矩阵计算：NumPy；</p></li>
+<li><p>站点表格观测数据：Pandas；</p></li>
+<li><p>气象格点再分析数据：Xarray；</p></li>
+<li><p>基础可视化绘图：Matplotlib；</p></li>
+<li><p>地理地图专业绘图：Cartopy（本项目绘制西北地区气温分布图专用）。</p></li>
+</ul>
+</li>
+<li><p><strong>语法简洁易懂</strong>：对比 Fortran、C、C++ 等传统气象编程语言，实现相同气温统计逻辑代码行数大幅减少，零基础学生可快速入门。</p></li>
+<li><p><strong>兼容主流气象数据格式</strong>：原生支持 CSV 站点逐日观测数据、NetCDF 气象场数据。本项目配套模拟数据均采用这两种格式。</p></li>
+</ol>
+<section id="id2">
+<h3>Python 代码底层执行逻辑<a class="headerlink" href="#id2" title="Link to this heading">#</a></h3>
+<p>Python 代码无法直接被电脑硬件识别，完整执行流程分三步：<code class="docutils literal notranslate"><span class="pre">.py</span></code> 源码文件 → 编译生成字节码 <code class="docutils literal notranslate"><span class="pre">.pyc</span></code> → Python 虚拟机 PVM 逐行解释执行。</p>
+<p>&gt; 形象地说，源码是你的&quot;乐谱&quot;，字节码是&quot;编译好的谱本&quot;，而 PVM 虚拟机是&quot;演奏家&quot;——它按谱本逐行&quot;演奏&quot;出结果。完整动态演示见上面的视频 1-3。</p>
+<div class="admonition note">
+<p class="admonition-title">备注</p>
+<p>Python 既不是&quot;纯解释型&quot;也不是&quot;纯编译型&quot;：它先把整个源文件编译成字节码，再逐条解释执行字节码。术语细节见 <a class="reference internal" href="../../api/ch01_terms.html"><span class="doc">第 1 章术语：Python 简介及安装环境</span></a> 中的&quot;解释器&quot;词条。</p>
+</div>
+</section>
+</section>
+<section id="miniconda">
+<h2>Miniconda 极简环境管理器<a class="headerlink" href="#miniconda" title="Link to this heading">#</a></h2>
+<p>Miniconda 是轻量化的 conda 发行版，只保留 conda 管理器与 Python 基础组件，安装包不足 100 MB，需要什么库再手动安装。与之相对的 Anaconda 集成了数百个第三方库、体积超 1 GB，启动慢、冗余多，本课程<strong>统一采用 Miniconda</strong>。</p>
+<p>conda 虚拟环境是气象学习的<strong>必备</strong>工具，三大优势：</p>
+<ol class="arabic simple">
+<li><p><strong>多 Python 版本隔离</strong>：一台电脑可同时存在多个 Python 版本，本项目固定使用 3.12；</p></li>
+<li><p><strong>第三方库版本隔离</strong>：不同项目独立虚拟环境，彻底解决 Cartopy、Xarray、NetCDF4 等气象底层库的版本冲突；</p></li>
+<li><p><strong>一键备份迁移</strong>：导出环境配置文件，更换电脑、机房设备可一键复现完全相同环境。</p></li>
+</ol>
+</section>
+<section id="miniconda-windows">
+<h2>安装 Miniconda（Windows）<a class="headerlink" href="#miniconda-windows" title="Link to this heading">#</a></h2>
+<ul class="simple">
+<li><p>官方国外源慢，推荐清华镜像站下载 Windows 64 位离线安装程序；</p></li>
+<li><p><strong>全程使用纯英文路径</strong>，禁止中文、空格、括号，推荐 <code class="docutils literal notranslate"><span class="pre">D:\Software\miniconda3</span></code>。</p></li>
+</ul>
+<p>安装六步走：</p>
+<ol class="arabic simple">
+<li><p>双击安装程序，同意用户许可协议；</p></li>
+<li><p>安装类型选【Just Me】，无需管理员权限；</p></li>
+<li><p>自定义安装路径（推荐 <code class="docutils literal notranslate"><span class="pre">D:\Software\miniconda3</span></code>）；</p></li>
+<li><p>高级选项<strong>两项必须勾选</strong>：Register Miniconda3 as my default Python 3.12 environment、Add Miniconda3 to my PATH environment variable；</p></li>
+<li><p>等待进度条走完，点击完成；</p></li>
+<li><p>验证：<code class="docutils literal notranslate"><span class="pre">Win+R</span></code> → <code class="docutils literal notranslate"><span class="pre">cmd</span></code>，依次输入：</p></li>
+</ol>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>conda<span class="w"> </span>--version
+python<span class="w"> </span>--version
+</pre></div>
+</div>
+<p>成功标准：正常输出版本号，Python 版本显示 <code class="docutils literal notranslate"><span class="pre">3.12.x</span></code>。若提示&quot;conda 不是内部或外部命令&quot;，说明 PATH 未勾选，重跑安装程序修复即可。</p>
+</section>
+<section id="miniconda-macos">
+<h2>安装 Miniconda（macOS）<a class="headerlink" href="#miniconda-macos" title="Link to this heading">#</a></h2>
+<p><strong>方式 1：图形化 pkg 安装（新手推荐）</strong></p>
+<ol class="arabic simple">
+<li><p>清华镜像下载对应芯片版本 pkg（Intel x86_64 / Apple M 系列 arm64）；</p></li>
+<li><p>双击 pkg 跟随引导安装，默认路径 <code class="docutils literal notranslate"><span class="pre">~/miniconda3</span></code>；</p></li>
+<li><p>终端初始化：</p></li>
+</ol>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span><span class="c1"># Intel 芯片 Mac</span>
+/Users/用户名/miniconda3/bin/conda<span class="w"> </span>init<span class="w"> </span>bash
+<span class="c1"># Apple M 系列芯片 Mac</span>
+/Users/用户名/miniconda3/bin/conda<span class="w"> </span>init<span class="w"> </span>zsh
+</pre></div>
+</div>
+<ol class="arabic simple" start="4">
+<li><p>完全关闭终端后重开，输入 <code class="docutils literal notranslate"><span class="pre">conda</span> <span class="pre">--version</span></code> 校验。</p></li>
+</ol>
+<p><strong>方式 2：Homebrew 命令行安装（有终端基础）</strong></p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>/bin/bash<span class="w"> </span>-c<span class="w"> </span><span class="s2">&quot;</span><span class="k">$(</span>curl<span class="w"> </span>-fsSL<span class="w"> </span>https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh<span class="k">)</span><span class="s2">&quot;</span>
+brew<span class="w"> </span>install<span class="w"> </span>--cask<span class="w"> </span>miniconda
+</pre></div>
+</div>
+</section>
+<section id="id3">
+<h2>创建气象专用虚拟环境<a class="headerlink" href="#id3" title="Link to this heading">#</a></h2>
+<p>本课程统一环境命名 <code class="docutils literal notranslate"><span class="pre">met_p312</span></code>，固定 Python 3.12：</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>conda<span class="w"> </span>create<span class="w"> </span>-n<span class="w"> </span>met_p312<span class="w"> </span><span class="nv">python</span><span class="o">=</span><span class="m">3</span>.12
+</pre></div>
+</div>
+<p>环境全套基础操作：</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>conda<span class="w"> </span>activate<span class="w"> </span>met_p312<span class="w">     </span><span class="c1"># 激活</span>
+conda<span class="w"> </span>env<span class="w"> </span>list<span class="w">               </span><span class="c1"># 查看所有环境</span>
+conda<span class="w"> </span>deactivate<span class="w">             </span><span class="c1"># 退出</span>
+</pre></div>
+</div>
+<p>激活后批量安装全书核心库：</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>conda<span class="w"> </span>install<span class="w"> </span>numpy<span class="w"> </span>pandas<span class="w"> </span>xarray<span class="w"> </span>matplotlib<span class="w"> </span>cartopy<span class="w"> </span>netcdf4
+</pre></div>
+</div>
+<div class="pst-scrollable-table-container"><table class="table">
+<colgroup>
+<col style="width: 20.0%" />
+<col style="width: 80.0%" />
+</colgroup>
+<thead>
+<tr class="row-odd"><th class="head"><p>库</p></th>
+<th class="head"><p>在兰州气温项目中的用途</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">numpy</span></code></p></td>
+<td><p>把逐日气温存成数组，做批量统计、标准化</p></td>
+</tr>
+<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">pandas</span></code></p></td>
+<td><p>读取气温 CSV 表格，按月份分组统计</p></td>
+</tr>
+<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">xarray</span></code></p></td>
+<td><p>打开西北地区 NetCDF 格点场，做区域平均</p></td>
+</tr>
+<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">matplotlib</span></code></p></td>
+<td><p>画气温时间序列折线图</p></td>
+</tr>
+<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">cartopy</span></code></p></td>
+<td><p>画西北地区气温空间分布地图</p></td>
+</tr>
+<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">netcdf4</span></code></p></td>
+<td><p>读写 NetCDF 气象数据文件的底层引擎</p></td>
+</tr>
+</tbody>
+</table>
+</div>
+</section>
+<section id="vs-code-python">
+<h2>VS Code 配置 Python 开发环境<a class="headerlink" href="#vs-code-python" title="Link to this heading">#</a></h2>
+<p>安装 <strong>3 个必备插件</strong>：Python（微软官方）、Pylint（语法检测）、Code Spell Checker（拼写检查）。然后左下角选择解释器，选中 <code class="docutils literal notranslate"><span class="pre">met_p312</span> <span class="pre">(Python</span> <span class="pre">3.12.x)</span></code>，底部状态栏显示环境名即绑定成功。</p>
+<p>新建项目总文件夹 <code class="docutils literal notranslate"><span class="pre">weather_project</span></code>，全书统一目录结构：</p>
+<div class="highlight-text notranslate"><div class="highlight"><pre><span></span>weather_project/
+├── data/          # 存放 CSV、NetCDF 气象模拟数据
+├── scripts/       # 各章节实战 Python 脚本
+├── figures/       # 所有绘图生成图片保存目录
+├── utils.py       # 第 4 章自定义气象工具模块
+└── main.py        # 项目主程序入口文件
+</pre></div>
+</div>
+</section>
+<section id="id4">
+<h2>运行第一段气象代码<a class="headerlink" href="#id4" title="Link to this heading">#</a></h2>
+<p>在 <code class="docutils literal notranslate"><span class="pre">weather_project</span></code> 新建 <code class="docutils literal notranslate"><span class="pre">main.py</span></code>，复制以下代码（无本地文件依赖，可直接运行）：</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="c1"># 兰州气温数据分析系统 - 第 1 章演示代码</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;===== 兰州气象观测数据分析项目 =====&quot;</span><span class="p">)</span>
+
+<span class="n">station_name</span> <span class="o">=</span> <span class="s2">&quot;兰州气象观测站&quot;</span>
+<span class="n">lon</span><span class="p">,</span> <span class="n">lat</span><span class="p">,</span> <span class="n">alt</span> <span class="o">=</span> <span class="mf">103.83</span><span class="p">,</span> <span class="mf">36.06</span><span class="p">,</span> <span class="mf">1517.2</span>
+
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;站点名称：</span><span class="si">{</span><span class="n">station_name</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;经纬度：东经</span><span class="si">{</span><span class="n">lon</span><span class="si">}</span><span class="s2">°，北纬</span><span class="si">{</span><span class="n">lat</span><span class="si">}</span><span class="s2">°&quot;</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;站点海拔：</span><span class="si">{</span><span class="n">alt</span><span class="si">}</span><span class="s2"> m&quot;</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;环境搭建完成，可正式开展气温数据处理工作！&quot;</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>在终端切换到项目目录并运行：</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span><span class="nb">cd</span><span class="w"> </span>weather_project
+python<span class="w"> </span>main.py
+</pre></div>
+</div>
+<p>预期输出：</p>
+<div class="highlight-text notranslate"><div class="highlight"><pre><span></span>===== 兰州气象观测数据分析项目 =====
+站点名称：兰州气象观测站
+经纬度：东经103.83°，北纬36.06°
+站点海拔：1517.2 m
+环境搭建完成，可正式开展气温数据处理工作！
+</pre></div>
+</div>
+<p>输出与上面完全一致，即代表环境、代码全部正常。</p>
+</section>
+<section id="id5">
+<h2>最佳实践：环境与工程规范<a class="headerlink" href="#id5" title="Link to this heading">#</a></h2>
+<p>正文讲了&quot;怎么装&quot;，这里讲&quot;怎么装得稳&quot;。以下规则来自一线踩坑经验，建议当作团队规范执行。</p>
+<section id="id6">
+<h3>类型与命名规范<a class="headerlink" href="#id6" title="Link to this heading">#</a></h3>
+<ul class="simple">
+<li><p>安装路径、项目、环境备份文件<strong>一律纯英文路径</strong>，不出现中文、空格、括号；</p></li>
+<li><p>所有代码<strong>只用相对路径</strong>，不写 C/D 盘绝对路径，机房、多设备可直接运行；</p></li>
+<li><p>环境统一命名 <code class="docutils literal notranslate"><span class="pre">met_p312</span></code>，固定 Python 3.12，<strong>禁止</strong> 用系统 Python 或 base 环境做气象分析。</p></li>
+</ul>
+</section>
+<section id="id7">
+<h3>环境备份与迁移<a class="headerlink" href="#id7" title="Link to this heading">#</a></h3>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>conda<span class="w"> </span>env<span class="w"> </span><span class="nb">export</span><span class="w"> </span>&gt;<span class="w"> </span>./met_p312_env.yml<span class="w">      </span><span class="c1"># 快照导出</span>
+conda<span class="w"> </span>env<span class="w"> </span>create<span class="w"> </span>-f<span class="w"> </span>met_p312_env.yml<span class="w">       </span><span class="c1"># 一键复现</span>
+</pre></div>
+</div>
+<p>适用机房统一授课、更换电脑、小组共享代码，保证所有人生成环境一致。</p>
+</section>
+<section id="id8">
+<h3>国内镜像加速（解决下载超时）<a class="headerlink" href="#id8" title="Link to this heading">#</a></h3>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>conda<span class="w"> </span>config<span class="w"> </span>--add<span class="w"> </span>channels<span class="w"> </span>https://mirrors.tuna.tsinghua.edu.cn/anaconda/pkgs/main/
+conda<span class="w"> </span>config<span class="w"> </span>--add<span class="w"> </span>channels<span class="w"> </span>https://mirrors.tuna.tsinghua.edu.cn/anaconda/pkgs/free/
+conda<span class="w"> </span>config<span class="w"> </span>--set<span class="w"> </span>show_channel_urls<span class="w"> </span>yes
+</pre></div>
+</div>
+</section>
+<section id="id9">
+<h3>日常维护避坑清单<a class="headerlink" href="#id9" title="Link to this heading">#</a></h3>
+<ol class="arabic simple">
+<li><p><strong>不随意升级 Python 主版本</strong>，锁定 3.12，防止 Cartopy、Xarray 兼容失效；</p></li>
+<li><p><strong>不混用 conda 与 pip 大量装库</strong>，底层气象库只用 conda，轻量工具少量 pip；</p></li>
+<li><p><strong>不随意删除 miniconda 安装文件夹</strong>，卸载环境通过 conda 命令；</p></li>
+<li><p>环境与项目备份文件统一英文路径，不出现中文命名的 yml/py/png；</p></li>
+<li><p>多人协作共享 <code class="docutils literal notranslate"><span class="pre">met_p312_env.yml</span></code>，保证环境完全统一。</p></li>
+</ol>
+<div class="admonition seealso">
+<p class="admonition-title">参见</p>
+<p>术语详解见 <a class="reference internal" href="../../api/ch01_terms.html"><span class="doc">第 1 章术语：Python 简介及安装环境</span></a>——解释器、环境、PATH、包管理器、IDE、脚本等词条，每个都配有&quot;一句话定义 + 生活类比 + 代码示例 + 易混淆点&quot;。配套练习见 <a class="reference internal" href="../../tutorials/basics/ch01_practice.html"><span class="doc">第 1 章练习：Python 简介及安装环境</span></a>。</p>
+</div>
+</section>
+</section>
+<section id="id10">
+<h2>贯穿项目 · 第 1 步：搭建环境并跑通验证脚本<a class="headerlink" href="#id10" title="Link to this heading">#</a></h2>
+<p>本章的项目推进：完成环境搭建、创建 <code class="docutils literal notranslate"><span class="pre">weather_project</span></code> 目录、运行 <code class="docutils literal notranslate"><span class="pre">main.py</span></code> 打印兰州站信息。<strong>验收标准</strong>：终端能跑通上面的演示代码并输出一致结果。</p>
+<p>可运行示例见 <a class="reference internal" href="../../gallery/plot_basics/plot_first_weather.html"><span class="doc">我的第一个气象图</span></a>。</p>
+</section>
+<section id="id11">
+<h2>本章小结<a class="headerlink" href="#id11" title="Link to this heading">#</a></h2>
+<ul class="simple">
+<li><p>掌握 Miniconda 在 Windows / macOS 的安装流程；</p></li>
+<li><p>能创建并管理气象专用虚拟环境 <code class="docutils literal notranslate"><span class="pre">met_p312</span></code>；</p></li>
+<li><p>完成 VS Code 插件安装、解释器绑定，搭建 <code class="docutils literal notranslate"><span class="pre">weather_project</span></code> 目录；</p></li>
+<li><p>成功运行第一段打印兰州站点信息的气象代码。</p></li>
+</ul>
+</section>
+</section>
+
+
+                </article>
+              
+              
+              
+              
+              
+                <footer class="prev-next-footer d-print-none">
+                  
+<div class="prev-next-area">
+    <a class="left-prev"
+       href="index.html"
+       title="上一页">
+      <i class="fa-solid fa-angle-left"></i>
+      <div class="prev-next-info">
+        <p class="prev-next-subtitle">上一页</p>
+        <p class="prev-next-title">模块一 Python 编程基础</p>
+      </div>
+    </a>
+    <a class="right-next"
+       href="datatypes.html"
+       title="下一页">
+      <div class="prev-next-info">
+        <p class="prev-next-subtitle">下一页</p>
+        <p class="prev-next-title">基本数据类型、变量和运算符</p>
+      </div>
+      <i class="fa-solid fa-angle-right"></i>
+    </a>
+</div>
+                </footer>
+              
+            </div>
+            
+            
+              
+                <dialog id="pst-secondary-sidebar-modal"></dialog>
+                <div id="pst-secondary-sidebar" class="bd-sidebar-secondary bd-toc"><div class="sidebar-secondary-items sidebar-secondary__inner">
+
+
+  <div class="sidebar-secondary-item">
+<div
+    id="pst-page-navigation-heading-2"
+    class="page-toc tocsection onthispage">
+    <i class="fa-solid fa-list"></i> 当前页面
+  </div>
+  <nav id="pst-page-toc-nav" class="page-toc" aria-labelledby="pst-page-navigation-heading-2">
+    <ul class="pst-show_toc_level nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#ch01-video">配套视频</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#python">为什么气象数据分析首选 Python</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#id2">Python 代码底层执行逻辑</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#miniconda">Miniconda 极简环境管理器</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#miniconda-windows">安装 Miniconda（Windows）</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#miniconda-macos">安装 Miniconda（macOS）</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id3">创建气象专用虚拟环境</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#vs-code-python">VS Code 配置 Python 开发环境</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id4">运行第一段气象代码</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id5">最佳实践：环境与工程规范</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#id6">类型与命名规范</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#id7">环境备份与迁移</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#id8">国内镜像加速（解决下载超时）</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#id9">日常维护避坑清单</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id10">贯穿项目 · 第 1 步：搭建环境并跑通验证脚本</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id11">本章小结</a></li>
+</ul>
+  </nav></div>
+
+</div></div>
+              
+            
+          </div>
+          <footer class="bd-footer-content">
+            
+          </footer>
+        
+      </main>
+    </div>
+  </div>
+  
+  <!-- Scripts loaded after <body> so the DOM is not blocked -->
+  <script defer src="../../_static/scripts/bootstrap.js?digest=90905a2f556bf617f1a9"></script>
+<script defer src="../../_static/scripts/pydata-sphinx-theme.js?digest=90905a2f556bf617f1a9"></script>
+
+  <footer class="bd-footer">
+<div class="bd-footer__inner bd-page-width">
+  
+    <div class="footer-items__start">
+      
+        <div class="footer-item">
+
+  <p class="copyright">
+    
+      © Copyright 2026, 兰州大学大气科学学院编程社区.
+      <br/>
+    
+  </p>
+</div>
+      
+        <div class="footer-item">
+
+  <p class="sphinx-version">
+    由 <a href="https://www.sphinx-doc.org/">Sphinx</a> 8.2.3创建。
+    <br/>
+  </p>
+</div>
+      
+    </div>
+  
+  
+  
+    <div class="footer-items__end">
+      
+        <div class="footer-item">
+<p class="theme-version">
+  <!-- # L10n: Setting the PST URL as an argument as this does not need to be localized -->
+  使用 <a href="https://pydata-sphinx-theme.readthedocs.io/en/stable/index.html">PyData Sphinx Theme</a> 0.20.0构建.
+</p></div>
+      
+    </div>
+  
+</div>
+
+  </footer>
+  </body>
+</html>

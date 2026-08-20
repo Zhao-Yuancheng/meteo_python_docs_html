@@ -1,0 +1,722 @@
+
+<!DOCTYPE html>
+
+
+<html lang="zh-CN" data-content_root="../../" >
+
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
+    <title>第 7 章练习：气象数据分析（一）Pandas &#8212; MeteoPython</title>
+  
+  
+  
+  <script data-cfasync="false">
+    document.documentElement.dataset.mode = localStorage.getItem("mode") || "";
+    document.documentElement.dataset.theme = localStorage.getItem("theme") || "";
+  </script>
+  <!--
+    this give us a css class that will be invisible only if js is disabled
+  -->
+  <noscript>
+    <style>
+      .pst-js-only { display: none !important; }
+
+    </style>
+  </noscript>
+  
+  <!-- Loaded before other Sphinx assets -->
+  <link href="../../_static/styles/theme.css?digest=90905a2f556bf617f1a9" rel="stylesheet" />
+<link href="../../_static/styles/pydata-sphinx-theme.css?digest=90905a2f556bf617f1a9" rel="stylesheet" />
+
+    <link rel="stylesheet" type="text/css" href="../../_static/pygments.css?v=8f2a1f02" />
+    <link rel="stylesheet" type="text/css" href="../../_static/copybutton.css?v=76b2166b" />
+    <link rel="stylesheet" type="text/css" href="../../_static/sg_gallery.css?v=fd6457a4" />
+    <link rel="stylesheet" type="text/css" href="../../_static/sg_gallery-binder.css?v=f4aeca0c" />
+    <link rel="stylesheet" type="text/css" href="../../_static/sg_gallery-dataframe.css?v=2082cf3c" />
+    <link rel="stylesheet" type="text/css" href="../../_static/sg_gallery-rendered-html.css?v=1277b6f3" />
+    <link rel="stylesheet" type="text/css" href="../../_static/sphinx-design.min.css?v=95c83b7e" />
+    <link rel="stylesheet" type="text/css" href="../../_static/./custom.css?v=fbe1f034" />
+  
+  <!-- So that users can add custom icons -->
+  <script defer src="../../_static/scripts/fontawesome.js?digest=90905a2f556bf617f1a9"></script>
+  <!-- Pre-loaded scripts that we'll load fully later -->
+  <link rel="preload" as="script" href="../../_static/scripts/bootstrap.js?digest=90905a2f556bf617f1a9" />
+<link rel="preload" as="script" href="../../_static/scripts/pydata-sphinx-theme.js?digest=90905a2f556bf617f1a9" />
+
+    <script src="../../_static/documentation_options.js?v=9becfed8"></script>
+    <script src="../../_static/doctools.js?v=9bcbadda"></script>
+    <script src="../../_static/sphinx_highlight.js?v=dc90522c"></script>
+    <script src="../../_static/sg-tags.js?v=d80f6fa4"></script>
+    <script src="../../_static/clipboard.min.js?v=a7894cd8"></script>
+    <script src="../../_static/copybutton.js?v=fd10adb8"></script>
+    <script src="../../_static/translations.js?v=beaddf03"></script>
+    <script src="../../_static/design-tabs.js?v=f930bc37"></script>
+    <script>DOCUMENTATION_OPTIONS.pagename = 'tutorials/data/ch07_practice';</script>
+    <script>
+        DOCUMENTATION_OPTIONS.theme_version = '0.20.0';
+        DOCUMENTATION_OPTIONS.theme_switcher_json_url = '_static/switcher.json';
+        DOCUMENTATION_OPTIONS.theme_switcher_version_match = '0.1.0';
+        DOCUMENTATION_OPTIONS.show_version_warning_banner =
+            false;
+        </script>
+    <script>DOCUMENTATION_OPTIONS.search_as_you_type = false;</script>
+    <link rel="icon" href="../../_static/favicon.svg"/>
+    <link rel="index" title="索引" href="../../genindex.html" />
+    <link rel="search" title="搜索" href="../../search.html" />
+    <link rel="next" title="第 8 章练习：气象数据分析（二）Xarray" href="ch08_practice.html" />
+    <link rel="prev" title="第 6 章练习：气象数据计算 NumPy" href="ch06_practice.html" />
+  <meta name="viewport" content="width=device-width, initial-scale=1"/>
+  <meta name="docsearch:language" content="zh-CN"/>
+  <meta name="docsearch:version" content="0.1" />
+    <meta name="docbuild:last-update" content="2026-08-20"/>
+  
+    
+    <script src="../../_static/searchtools.js"></script>
+    <script src="../../_static/language_data.js"></script>
+    <script src="../../searchindex.js"></script>
+  
+  </head>
+  <body data-default-mode="">
+  
+  
+  <div id="pst-skip-link" class="skip-link d-print-none"><a href="#main-content">跳转至主要内容</a></div>
+
+  
+  <div id="pst-scroll-pixel-helper"></div>
+  
+  <button type="button" class="btn rounded-pill" id="pst-back-to-top">
+    <i class="fa-solid fa-arrow-up"></i>回到顶部</button>
+  
+  
+  
+  
+  <dialog id="pst-search-dialog">
+    
+<form class="bd-search d-flex align-items-center"
+      action="../../search.html"
+      method="get">
+  <i class="fa-solid fa-magnifying-glass"></i>
+  <input type="search"
+         class="form-control"
+         name="q"
+         placeholder="搜索文档…"
+         aria-label="搜索文档…"
+         autocomplete="off"
+         autocorrect="off"
+         autocapitalize="off"
+         spellcheck="false"/>
+  <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd>K</kbd></span>
+</form>
+  </dialog>
+
+  <div class="pst-async-banner-revealer d-none">
+  <aside id="bd-header-version-warning" class="d-none d-print-none" aria-label="版本警告"></aside>
+</div>
+
+  
+    <header id="pst-header" class="bd-header navbar navbar-expand-lg bd-navbar d-print-none">
+<div class="bd-header__inner bd-page-width">
+  <button class="pst-navbar-icon sidebar-toggle primary-toggle" aria-label="网页导航">
+    <span class="fa-solid fa-bars"></span>
+  </button>
+  
+  
+  <div class="col-lg-3 navbar-header-items__start">
+    
+      <div class="navbar-item">
+
+  
+    
+  
+
+<a class="navbar-brand logo" href="../../index.html">
+  
+  
+  
+  
+  
+    
+    
+      
+    
+    
+    <img src="../../_static/logo.svg" class="logo__image only-light" alt="MeteoPython - Home"/>
+    <img src="../../_static/logo.svg" class="logo__image only-dark pst-js-only" alt="MeteoPython - Home"/>
+  
+  
+</a></div>
+    
+  </div>
+  
+  <div class="col-lg-9 navbar-header-items">
+    
+    <div class="me-auto navbar-header-items__center">
+      
+        <div class="navbar-item">
+<nav>
+  <ul class="bd-navbar-elements navbar-nav">
+    
+<li class="nav-item ">
+  <a class="nav-link nav-internal" href="../../user_guide/index.html">
+    教程
+  </a>
+</li>
+
+
+<li class="nav-item current active">
+  <a class="nav-link nav-internal" href="../index.html">
+    练习
+  </a>
+</li>
+
+
+<li class="nav-item ">
+  <a class="nav-link nav-internal" href="../../gallery/index.html">
+    示例
+  </a>
+</li>
+
+
+<li class="nav-item ">
+  <a class="nav-link nav-internal" href="../../api/index.html">
+    术语参考
+  </a>
+</li>
+
+
+<li class="nav-item ">
+  <a class="nav-link nav-internal" href="../../qa/index.html">
+    常见问题 Q&A
+  </a>
+</li>
+
+  </ul>
+</nav></div>
+      
+    </div>
+    
+    
+    <div class="navbar-header-items__end">
+      
+        <div class="navbar-item navbar-persistent--container">
+          
+
+<button class="btn search-button-field search-button__button pst-js-only" title="搜索" aria-label="搜索" data-bs-placement="bottom" data-bs-toggle="tooltip">
+ <i class="fa-solid fa-magnifying-glass"></i>
+ <span class="search-button__default-text">搜索</span>
+ <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd class="kbd-shortcut__modifier">K</kbd></span>
+</button>
+        </div>
+      
+      
+        <div class="navbar-item">
+
+<div class="theme-switch-container dropdown pst-js-only" data-bs-toggle="tooltip" data-bs-placement="bottom" title="Color mode">
+  <button class="btn btn-sm nav-link pst-navbar-icon theme-switch-button dropdown-toggle" aria-label="Color mode" data-bs-toggle="dropdown">
+    <i class="theme-switch fa-solid fa-sun fa-lg fa-fw" data-mode="light" title="亮色"></i>
+    <i class="theme-switch fa-solid fa-moon fa-lg fa-fw" data-mode="dark" title="暗色"></i>
+    <i class="theme-switch fa-solid fa-circle-half-stroke fa-lg fa-fw" data-mode="auto" title="System Settings"></i>
+  </button>
+  <ul class="dropdown-menu dropdown-menu-end">
+    <li><button class="dropdown-item d-flex align-items-center theme-change-button" data-mode="auto"><i class="fa-solid fa-circle-half-stroke fa-lg fa-fw me-1"></i>System Settings</button></li>
+    <li><button class="dropdown-item d-flex align-items-center theme-change-button" data-mode="light"><i class="fa-solid fa-sun fa-lg fa-fw me-1"></i>亮色</button></li>
+    <li><button class="dropdown-item d-flex align-items-center theme-change-button" data-mode="dark"><i class="fa-solid fa-moon fa-lg fa-fw me-1"></i>暗色</button></li>
+  </ul>
+</div></div>
+      
+        <div class="navbar-item"><ul class="navbar-icon-links"
+    aria-label="Icon Links">
+</ul></div>
+      
+    </div>
+    
+  </div>
+  
+  
+    <div class="navbar-persistent--mobile">
+
+<button class="btn search-button-field search-button__button pst-js-only" title="搜索" aria-label="搜索" data-bs-placement="bottom" data-bs-toggle="tooltip">
+ <i class="fa-solid fa-magnifying-glass"></i>
+ <span class="search-button__default-text">搜索</span>
+ <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd class="kbd-shortcut__modifier">K</kbd></span>
+</button>
+    </div>
+  
+
+  
+    <button class="pst-navbar-icon sidebar-toggle secondary-toggle" aria-label="当前页面">
+      <span class="fa-solid fa-outdent"></span>
+    </button>
+  
+</div>
+
+    </header>
+  
+
+  <div class="bd-container">
+    <div class="bd-container__inner bd-page-width">
+      
+      
+      
+      <dialog id="pst-primary-sidebar-modal"></dialog>
+      <div id="pst-primary-sidebar" class="bd-sidebar-primary bd-sidebar">
+        
+
+  
+  <div class="sidebar-header-items sidebar-primary__section">
+    
+    
+      <div class="sidebar-header-items__center">
+        
+          
+          
+            <div class="navbar-item">
+<nav>
+  <ul class="bd-navbar-elements navbar-nav">
+    
+<li class="nav-item ">
+  <a class="nav-link nav-internal" href="../../user_guide/index.html">
+    教程
+  </a>
+</li>
+
+
+<li class="nav-item current active">
+  <a class="nav-link nav-internal" href="../index.html">
+    练习
+  </a>
+</li>
+
+
+<li class="nav-item ">
+  <a class="nav-link nav-internal" href="../../gallery/index.html">
+    示例
+  </a>
+</li>
+
+
+<li class="nav-item ">
+  <a class="nav-link nav-internal" href="../../api/index.html">
+    术语参考
+  </a>
+</li>
+
+
+<li class="nav-item ">
+  <a class="nav-link nav-internal" href="../../qa/index.html">
+    常见问题 Q&A
+  </a>
+</li>
+
+  </ul>
+</nav></div>
+          
+        
+      </div>
+    
+    
+    
+      <div class="sidebar-header-items__end">
+        
+          <div class="navbar-item">
+
+<div class="theme-switch-container dropdown pst-js-only" data-bs-toggle="tooltip" data-bs-placement="bottom" title="Color mode">
+  <button class="btn btn-sm nav-link pst-navbar-icon theme-switch-button dropdown-toggle" aria-label="Color mode" data-bs-toggle="dropdown">
+    <i class="theme-switch fa-solid fa-sun fa-lg fa-fw" data-mode="light" title="亮色"></i>
+    <i class="theme-switch fa-solid fa-moon fa-lg fa-fw" data-mode="dark" title="暗色"></i>
+    <i class="theme-switch fa-solid fa-circle-half-stroke fa-lg fa-fw" data-mode="auto" title="System Settings"></i>
+  </button>
+  <ul class="dropdown-menu dropdown-menu-end">
+    <li><button class="dropdown-item d-flex align-items-center theme-change-button" data-mode="auto"><i class="fa-solid fa-circle-half-stroke fa-lg fa-fw me-1"></i>System Settings</button></li>
+    <li><button class="dropdown-item d-flex align-items-center theme-change-button" data-mode="light"><i class="fa-solid fa-sun fa-lg fa-fw me-1"></i>亮色</button></li>
+    <li><button class="dropdown-item d-flex align-items-center theme-change-button" data-mode="dark"><i class="fa-solid fa-moon fa-lg fa-fw me-1"></i>暗色</button></li>
+  </ul>
+</div></div>
+        
+          <div class="navbar-item"><ul class="navbar-icon-links"
+    aria-label="Icon Links">
+</ul></div>
+        
+      </div>
+    
+  </div>
+  
+    <div class="sidebar-primary-items__start sidebar-primary__section">
+        <div class="sidebar-primary-item pst-sidebar-collapse"><button id="pst-collapse-sidebar-button" aria-expanded="true" aria-controls="pst-primary-sidebar">
+  <svg class="pst-icon" role="img" aria-hidden="true" focusable="false" viewBox="0 0 16 16" xmlns="http://www.w3.org/2000/svg">
+    <path fill="currentColor" d="M3 15.5C2.36232 15.5 1.74874 15.2564 1.28478 14.8189C0.820828 14.3815 0.541576 13.7832 0.504167 13.1467L0.5 13L0.5 3C0.499965 2.36232 0.743605 1.74874 1.18107 1.28478C1.61854 0.820828 2.21676 0.541576 2.85333 0.504167L3 0.5L13 0.5C13.6377 0.499965 14.2513 0.743605 14.7152 1.18107C15.1792 1.61854 15.4584 2.21676 15.4958 2.85333L15.5 3L15.5 13C15.5 13.6377 15.2564 14.2513 14.8189 14.7152C14.3815 15.1792 13.7832 15.4584 13.1467 15.4958L13 15.5L3 15.5ZM3 13.8333L10.5 13.8333L10.5 2.16667L3 2.16667C2.79589 2.16669 2.59889 2.24163 2.44636 2.37726C2.29383 2.5129 2.19638 2.69979 2.1725 2.9025L2.16667 3L2.16667 13C2.16669 13.2041 2.24163 13.4011 2.37726 13.5536C2.5129 13.7062 2.69979 13.8036 2.9025 13.8275L3 13.8333ZM6.65583 10.325L6.5775 10.2558L4.91083 8.58917C4.76735 8.44567 4.68116 8.25476 4.66843 8.05223C4.65569 7.84971 4.71729 7.6495 4.84167 7.48917L4.91083 7.41083L6.5775 5.74417C6.72747 5.59471 6.9287 5.50794 7.14032 5.50148C7.35194 5.49502 7.55809 5.56935 7.7169 5.70937C7.8757 5.8494 7.97525 6.04463 7.99533 6.25539C8.01541 6.46616 7.95451 6.67667 7.825 6.84417L7.75583 6.9225L6.67917 8L7.75583 9.0775C7.89931 9.22099 7.98551 9.41191 7.99824 9.61443C8.01097 9.81695 7.94938 10.0172 7.825 10.1775L7.75583 10.2558C7.61234 10.3993 7.42142 10.4855 7.2189 10.4982C7.01638 10.511 6.81617 10.4494 6.65583 10.325Z"/>
+  </svg>
+  <span class="pst-collapse-sidebar-label">Collapse Sidebar</span>
+  <span class="pst-expand-sidebar-label">Expand Sidebar</span>
+</button></div>
+        <div class="sidebar-primary-item">
+
+<nav class="bd-docs-nav bd-links"
+     aria-label="章节导航">
+  <p class="bd-links__title" role="heading" aria-level="1">章节导航</p>
+  <div class="bd-toc-item navbar-nav"><ul class="current nav bd-sidenav">
+<li class="toctree-l1 has-children"><a class="reference internal" href="../basics/index.html">模块一 Python 编程基础（配套练习）</a><details open="open"><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
+<li class="toctree-l2"><a class="reference internal" href="../basics/ch01_practice.html">第 1 章练习：Python 简介及安装环境</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../basics/ch02_practice.html">第 2 章配套练习：站点信息与气温数据</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../basics/ch03_practice.html">第 3 章练习：分支、循环与条件</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../basics/ch04_practice.html">第 4 章练习：函数及变量作用域、模块和包</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../basics/ch05_practice.html">第 5 章练习：面向对象与高级语法</a></li>
+</ul>
+</details></li>
+<li class="toctree-l1 current active has-children"><a class="reference internal" href="index.html">模块二 气象数据处理（配套练习）</a><details open="open"><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="ch06_practice.html">第 6 章练习：气象数据计算 NumPy</a></li>
+<li class="toctree-l2 current active"><a class="current reference internal" href="#">第 7 章练习：气象数据分析（一）Pandas</a></li>
+<li class="toctree-l2"><a class="reference internal" href="ch08_practice.html">第 8 章练习：气象数据分析（二）Xarray</a></li>
+</ul>
+</details></li>
+<li class="toctree-l1 has-children"><a class="reference internal" href="../viz/index.html">模块三 气象数据可视化（配套练习）</a><details open="open"><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
+<li class="toctree-l2"><a class="reference internal" href="../viz/ch09_practice.html">第 9 章练习：Matplotlib 气象绘图</a></li>
+</ul>
+</details></li>
+</ul>
+</div>
+</nav></div>
+    </div>
+  
+  
+  <div class="sidebar-primary-items__end sidebar-primary__section">
+      <div class="sidebar-primary-item">
+<div id="ethical-ad-placement"
+      class="flat"
+      data-ea-publisher="readthedocs"
+      data-ea-type="readthedocs-sidebar"
+      data-ea-manual="true">
+</div></div>
+  </div>
+
+
+      </div>
+      
+      <main id="main-content" class="bd-main" role="main">
+        
+        
+          <div class="bd-content">
+            <div class="bd-article-container">
+              
+              <div class="bd-header-article d-print-none">
+<div class="header-article-items header-article__inner">
+  
+    <div class="header-article-items__start">
+      
+        <div class="header-article-item">
+
+<nav aria-label="Breadcrumb" class="d-print-none">
+  <ul class="bd-breadcrumbs">
+    
+    <li class="breadcrumb-item breadcrumb-home">
+      <a href="../../index.html" class="nav-link" aria-label="初始页面">
+        <i class="fa-solid fa-home"></i>
+      </a>
+    </li>
+    
+    <li class="breadcrumb-item"><a href="../index.html" class="nav-link">练习</a></li>
+    
+    
+    <li class="breadcrumb-item"><a href="index.html" class="nav-link">模块二 气象数据处理（配套练习）</a></li>
+    
+    <li class="breadcrumb-item active" aria-current="page"><span class="ellipsis">第 7 章练习：气象数据分析（一）Pandas</span></li>
+  </ul>
+</nav>
+</div>
+      
+    </div>
+  
+  
+</div>
+</div>
+              
+              
+              
+                
+<div id="searchbox"></div>
+                <article class="bd-article">
+                  
+  <section id="pandas">
+<h1>第 7 章练习：气象数据分析（一）Pandas<a class="headerlink" href="#pandas" title="Link to this heading">#</a></h1>
+<p>配套 <a class="reference internal" href="../../user_guide/data/pandas.html#tut-pandas"><span class="std std-ref">气象数据分析（一）Pandas</span></a> 正文使用。本练习贯穿一条现实主线：兰州站的一组逐日观测，你要把它拆开揉碎——先看清（读取）、再挑出高温日（筛选）、再按月算报表（分组）、再排出名次（排序）、最后存好文件（导出）。</p>
+<div class="admonition seealso">
+<p class="admonition-title">参见</p>
+<p>配套正文：<a class="reference internal" href="../../user_guide/data/pandas.html"><span class="doc">气象数据分析（一）Pandas</span></a>　·　示例画廊 <a class="reference internal" href="../../gallery/plot_numpy/index.html"><span class="doc">NumPy 计算示例</span></a></p>
+</div>
+<p>练习使用一份气象站点 CSV 数据。示例 CSV 字段：<code class="docutils literal notranslate"><span class="pre">date,</span> <span class="pre">station_id,</span> <span class="pre">temp,</span> <span class="pre">pressure</span></code></p>
+<ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">date</span></code>：观测日期，<code class="docutils literal notranslate"><span class="pre">YYYY-MM-DD</span></code> 格式</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">station_id</span></code>：站点编号</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">temp</span></code>：气温（℃）</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">pressure</span></code>：气压（hPa）</p></li>
+</ul>
+<p>练习统一导入（每道题开头都先跑这句）：</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span><span class="w"> </span><span class="nn">pandas</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">pd</span>
+</pre></div>
+</div>
+<section id="id1">
+<h2>第 1 题（实操）读取数据，基础查看<a class="headerlink" href="#id1" title="Link to this heading">#</a></h2>
+<p><strong>任务</strong>：</p>
+<ol class="arabic simple">
+<li><p>使用 <code class="docutils literal notranslate"><span class="pre">pd.read_csv()</span></code> 读取气象观测文件 <code class="docutils literal notranslate"><span class="pre">weather.csv</span></code>，保存为 <code class="docutils literal notranslate"><span class="pre">df</span></code>。</p></li>
+<li><p>分别打印前 5 行、数据表基本信息、数据表统计描述。</p></li>
+<li><p>输出数据表的列名，观察列名字母大小写。</p></li>
+</ol>
+<div class="admonition- admonition">
+<p class="admonition-title">提示</p>
+<p><strong>列名严格区分大小写</strong>：<code class="docutils literal notranslate"><span class="pre">df['Temp']</span></code> 和 <code class="docutils literal notranslate"><span class="pre">df['temp']</span></code> 是完全不同的列。若 CSV 里列名是 <code class="docutils literal notranslate"><span class="pre">Temp</span></code>，你却写 <code class="docutils literal notranslate"><span class="pre">df['temp']</span></code>，会直接抛出 <code class="docutils literal notranslate"><span class="pre">KeyError</span></code>。先 <code class="docutils literal notranslate"><span class="pre">print(df.columns)</span></code> 看一眼真实列名，再复制粘贴过来，比手敲更稳。</p>
+</div>
+<p><strong>参考答案</strong>：</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span><span class="w"> </span><span class="nn">pandas</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">pd</span>
+
+<span class="n">df</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">read_csv</span><span class="p">(</span><span class="s2">&quot;weather.csv&quot;</span><span class="p">)</span>
+
+<span class="nb">print</span><span class="p">(</span><span class="n">df</span><span class="o">.</span><span class="n">head</span><span class="p">())</span>        <span class="c1"># 前 5 行</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">df</span><span class="o">.</span><span class="n">info</span><span class="p">())</span>        <span class="c1"># 表基本信息：行数、列数、数据类型、内存占用</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">df</span><span class="o">.</span><span class="n">describe</span><span class="p">())</span>    <span class="c1"># 数值列的统计描述</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">df</span><span class="o">.</span><span class="n">columns</span><span class="p">)</span>       <span class="c1"># 列名（观察大小写）</span>
+</pre></div>
+</div>
+</section>
+<section id="id2">
+<h2>第 2 题（实操）条件筛选，筛选高温日<a class="headerlink" href="#id2" title="Link to this heading">#</a></h2>
+<p><strong>任务</strong>：</p>
+<ol class="arabic simple">
+<li><p>筛选气温 <code class="docutils literal notranslate"><span class="pre">temp</span></code> 大于等于 35℃ 的高温记录，得到数据子集 <code class="docutils literal notranslate"><span class="pre">high_temp_df</span></code>。</p></li>
+<li><p>统计一共有多少条高温记录。</p></li>
+<li><p>打印高温记录的全部内容。</p></li>
+</ol>
+<div class="admonition- admonition">
+<p class="admonition-title">提示</p>
+<p>这里很容易触发 <code class="docutils literal notranslate"><span class="pre">SettingWithCopyWarning</span></code>（链式赋值警告）。原因是：筛选结果可能只是原数据的一个「视图」，直接对它赋值修改，可能会悄悄改动原始 DataFrame，pandas 用警告提醒你。</p>
+<p><strong>✅ 正确做法</strong>：筛选结果立刻 <code class="docutils literal notranslate"><span class="pre">.copy()</span></code>，得到一份完全独立的副本，再修改就互不影响、也无警告：</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">high_temp_df</span> <span class="o">=</span> <span class="n">df</span><span class="p">[</span><span class="n">df</span><span class="p">[</span><span class="s2">&quot;temp&quot;</span><span class="p">]</span> <span class="o">&gt;=</span> <span class="mi">35</span><span class="p">]</span><span class="o">.</span><span class="n">copy</span><span class="p">()</span>
+</pre></div>
+</div>
+<p><strong>❌ 不推荐（会弹出警告）</strong>：</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="c1"># 没有 .copy()，后续若对 high_temp_df 赋值修改，会触发 SettingWithCopyWarning</span>
+<span class="n">high_temp_df</span> <span class="o">=</span> <span class="n">df</span><span class="p">[</span><span class="n">df</span><span class="p">[</span><span class="s2">&quot;temp&quot;</span><span class="p">]</span> <span class="o">&gt;=</span> <span class="mi">35</span><span class="p">]</span>
+</pre></div>
+</div>
+</div>
+<p><strong>参考答案</strong>：</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="c1"># .copy() 生成独立副本，规避 SettingWithCopyWarning</span>
+<span class="n">high_temp_df</span> <span class="o">=</span> <span class="n">df</span><span class="p">[</span><span class="n">df</span><span class="p">[</span><span class="s2">&quot;temp&quot;</span><span class="p">]</span> <span class="o">&gt;=</span> <span class="mi">35</span><span class="p">]</span><span class="o">.</span><span class="n">copy</span><span class="p">()</span>
+
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;高温记录条数：&quot;</span><span class="p">,</span> <span class="nb">len</span><span class="p">(</span><span class="n">high_temp_df</span><span class="p">))</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">high_temp_df</span><span class="p">)</span>
+</pre></div>
+</div>
+</section>
+<section id="id3">
+<h2>第 3 题（实操）按月分组统计气象数据<a class="headerlink" href="#id3" title="Link to this heading">#</a></h2>
+<p><strong>任务</strong>：</p>
+<ol class="arabic simple">
+<li><p>将 <code class="docutils literal notranslate"><span class="pre">date</span></code> 列转换为 pandas 时间格式。</p></li>
+<li><p>从 <code class="docutils literal notranslate"><span class="pre">date</span></code> 提取月份，新增一列 <code class="docutils literal notranslate"><span class="pre">month</span></code>。</p></li>
+<li><p>按照 <code class="docutils literal notranslate"><span class="pre">month</span></code> 分组，计算每月气温的<strong>平均气温、最高气温、最低气温</strong>。</p></li>
+<li><p>将分组统计结果保存为 <code class="docutils literal notranslate"><span class="pre">month_stats</span></code>。</p></li>
+</ol>
+<div class="admonition- admonition">
+<p class="admonition-title">提示</p>
+<ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">date</span></code> 列读进来通常是字符串，必须先 <code class="docutils literal notranslate"><span class="pre">pd.to_datetime(df[&quot;date&quot;])</span></code> 转成时间类型，之后 <code class="docutils literal notranslate"><span class="pre">.dt.month</span></code>、时间切片等操作才能正常进行。</p></li>
+<li><p>只用 <code class="docutils literal notranslate"><span class="pre">.dt.month</span></code> 分组，会把不同年份的相同月份（2024-01 与 2025-01）并到一组。如果数据只覆盖一年，这样没问题；如果有多年的数据，请改用 <code class="docutils literal notranslate"><span class="pre">df.groupby(df[&quot;date&quot;].dt.to_period(&quot;M&quot;))</span></code> 或 <code class="docutils literal notranslate"><span class="pre">pd.Grouper(freq=&quot;M&quot;)</span></code>，保证「年+月」一起分组。</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">df.groupby(&quot;month&quot;)[&quot;temp&quot;].agg([&quot;mean&quot;,</span> <span class="pre">&quot;max&quot;,</span> <span class="pre">&quot;min&quot;])</span></code> 会一次算出三列统计量：mean 均值、max 最高、min 最低。</p></li>
+</ul>
+</div>
+<p><strong>参考答案</strong>：</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">df</span><span class="p">[</span><span class="s2">&quot;date&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">to_datetime</span><span class="p">(</span><span class="n">df</span><span class="p">[</span><span class="s2">&quot;date&quot;</span><span class="p">])</span>
+<span class="n">df</span><span class="p">[</span><span class="s2">&quot;month&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">df</span><span class="p">[</span><span class="s2">&quot;date&quot;</span><span class="p">]</span><span class="o">.</span><span class="n">dt</span><span class="o">.</span><span class="n">month</span>
+
+<span class="n">month_stats</span> <span class="o">=</span> <span class="n">df</span><span class="o">.</span><span class="n">groupby</span><span class="p">(</span><span class="s2">&quot;month&quot;</span><span class="p">)[</span><span class="s2">&quot;temp&quot;</span><span class="p">]</span><span class="o">.</span><span class="n">agg</span><span class="p">([</span><span class="s2">&quot;mean&quot;</span><span class="p">,</span> <span class="s2">&quot;max&quot;</span><span class="p">,</span> <span class="s2">&quot;min&quot;</span><span class="p">])</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">month_stats</span><span class="p">)</span>
+</pre></div>
+</div>
+</section>
+<section id="id4">
+<h2>第 4 题（实操）数据排序<a class="headerlink" href="#id4" title="Link to this heading">#</a></h2>
+<p><strong>任务</strong>：</p>
+<ol class="arabic simple">
+<li><p>在原始 <code class="docutils literal notranslate"><span class="pre">df</span></code> 上，按气温 <code class="docutils literal notranslate"><span class="pre">temp</span></code> 从高到低降序排序。</p></li>
+<li><p>输出全年温度最高的 10 条观测记录。</p></li>
+<li><p>说明：排序可以原地修改，也可以生成一个新的 DataFrame。</p></li>
+</ol>
+<div class="admonition- admonition">
+<p class="admonition-title">提示</p>
+<ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">df.sort_values(by=&quot;temp&quot;,</span> <span class="pre">ascending=False)</span></code>：<code class="docutils literal notranslate"><span class="pre">by</span></code> 指定排序列，<code class="docutils literal notranslate"><span class="pre">ascending=False</span></code> 表示降序（从大到小）。升序就写 <code class="docutils literal notranslate"><span class="pre">ascending=True</span></code>，或省略。</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">sort_values</span></code> 默认返回<strong>新</strong> DataFrame，不会改原表；想原地修改则加参数 <code class="docutils literal notranslate"><span class="pre">inplace=True</span></code>。对初学者，养成「生成新表、赋值给新变量」的习惯更安全。</p></li>
+<li><p>排完取前 N 条用 <code class="docutils literal notranslate"><span class="pre">.head(10)</span></code>，从大到小取前 10 就是全年最高温的 10 条记录。</p></li>
+</ul>
+</div>
+<p><strong>参考答案</strong>：</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="c1"># 降序排序，生成新 DataFrame（不改原表）</span>
+<span class="n">df_sorted</span> <span class="o">=</span> <span class="n">df</span><span class="o">.</span><span class="n">sort_values</span><span class="p">(</span><span class="n">by</span><span class="o">=</span><span class="s2">&quot;temp&quot;</span><span class="p">,</span> <span class="n">ascending</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
+
+<span class="c1"># 全年温度最高的 10 条观测记录</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">df_sorted</span><span class="o">.</span><span class="n">head</span><span class="p">(</span><span class="mi">10</span><span class="p">))</span>
+</pre></div>
+</div>
+</section>
+<section id="id5">
+<h2>第 5 题（实操）数据导出保存<a class="headerlink" href="#id5" title="Link to this heading">#</a></h2>
+<p><strong>任务</strong>：</p>
+<ol class="arabic simple">
+<li><p>将第 2 题得到的高温记录 <code class="docutils literal notranslate"><span class="pre">high_temp_df</span></code> 导出保存为 <code class="docutils literal notranslate"><span class="pre">high_temperature.csv</span></code>，<strong>不要</strong>保存 pandas 自动生成的行索引。</p></li>
+<li><p>将第 3 题的按月统计结果 <code class="docutils literal notranslate"><span class="pre">month_stats</span></code> 导出保存为 <code class="docutils literal notranslate"><span class="pre">month_temp_stat.csv</span></code>。</p></li>
+</ol>
+<div class="admonition- admonition">
+<p class="admonition-title">提示</p>
+<ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">to_csv(index=False)</span></code>：关掉 pandas 默认写入的 0、1、2… 行号列。日常导出气象数据做交接、给 Excel 用时，几乎都要加 <code class="docutils literal notranslate"><span class="pre">index=False</span></code>，否则文件里多出一列没意义的行号。</p></li>
+<li><p>导出含中文表头的文件，建议同时加 <code class="docutils literal notranslate"><span class="pre">encoding=&quot;utf-8-sig&quot;</span></code>，这样 Windows 的 Excel 打开不会乱码（如 <code class="docutils literal notranslate"><span class="pre">to_csv(&quot;xxx.csv&quot;,</span> <span class="pre">index=False,</span> <span class="pre">encoding=&quot;utf-8-sig&quot;)</span></code>）。</p></li>
+</ul>
+</div>
+<p><strong>参考答案</strong>：</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">high_temp_df</span><span class="o">.</span><span class="n">to_csv</span><span class="p">(</span><span class="s2">&quot;high_temperature.csv&quot;</span><span class="p">,</span> <span class="n">index</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
+<span class="n">month_stats</span><span class="o">.</span><span class="n">to_csv</span><span class="p">(</span><span class="s2">&quot;month_temp_stat.csv&quot;</span><span class="p">)</span>
+</pre></div>
+</div>
+</section>
+<section id="tips">
+<h2>练习 tips 汇总<a class="headerlink" href="#tips" title="Link to this heading">#</a></h2>
+<p>📌 <strong>重要提示 1：列名大小写</strong></p>
+<p>Pandas 列名严格区分大小写。如果你的 CSV 列名是 <code class="docutils literal notranslate"><span class="pre">Temp</span></code>，写 <code class="docutils literal notranslate"><span class="pre">df[&quot;temp&quot;]</span></code> 会直接报 <code class="docutils literal notranslate"><span class="pre">KeyError</span></code>。</p>
+<p>调试技巧：先 <code class="docutils literal notranslate"><span class="pre">print(df.columns)</span></code>，再把真实的列名<strong>复制粘贴</strong>进代码，避免手动输入写错。</p>
+<p>📌 <strong>重要提示 2：SettingWithCopyWarning</strong></p>
+<p>警告含义：你操作的 DataFrame 可能只是原数据的切片视图，修改它可能会改动原始数据，结果不可预期。</p>
+<p><strong>✅ 正确写法</strong>（筛选后加 <code class="docutils literal notranslate"><span class="pre">.copy()</span></code>）：</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">subset</span> <span class="o">=</span> <span class="n">df</span><span class="p">[</span><span class="n">df</span><span class="p">[</span><span class="s2">&quot;temp&quot;</span><span class="p">]</span> <span class="o">&gt;</span> <span class="mi">30</span><span class="p">]</span><span class="o">.</span><span class="n">copy</span><span class="p">()</span>
+<span class="n">subset</span><span class="p">[</span><span class="s2">&quot;new_col&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">subset</span><span class="p">[</span><span class="s2">&quot;temp&quot;</span><span class="p">]</span> <span class="o">+</span> <span class="mi">1</span>
+</pre></div>
+</div>
+<p><strong>❌ 不推荐写法</strong>（会弹出警告）：</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">subset</span> <span class="o">=</span> <span class="n">df</span><span class="p">[</span><span class="n">df</span><span class="p">[</span><span class="s2">&quot;temp&quot;</span><span class="p">]</span> <span class="o">&gt;</span> <span class="mi">30</span><span class="p">]</span>
+<span class="n">subset</span><span class="p">[</span><span class="s2">&quot;new_col&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">subset</span><span class="p">[</span><span class="s2">&quot;temp&quot;</span><span class="p">]</span> <span class="o">+</span> <span class="mi">1</span>
+</pre></div>
+</div>
+<p>📌 <strong>小提示</strong></p>
+<ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">to_csv(index=False)</span></code>：导出 CSV 时关闭 pandas 自带行号索引，日常导出气象数据几乎都要加这个参数；</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">pd.to_datetime()</span></code> 一定要用来处理日期列，时间相关操作（提取年月、时间切片、按月重采样）才可以正常运行。</p></li>
+</ul>
+</section>
+</section>
+
+
+                </article>
+              
+              
+              
+              
+              
+                <footer class="prev-next-footer d-print-none">
+                  
+<div class="prev-next-area">
+    <a class="left-prev"
+       href="ch06_practice.html"
+       title="上一页">
+      <i class="fa-solid fa-angle-left"></i>
+      <div class="prev-next-info">
+        <p class="prev-next-subtitle">上一页</p>
+        <p class="prev-next-title">第 6 章练习：气象数据计算 NumPy</p>
+      </div>
+    </a>
+    <a class="right-next"
+       href="ch08_practice.html"
+       title="下一页">
+      <div class="prev-next-info">
+        <p class="prev-next-subtitle">下一页</p>
+        <p class="prev-next-title">第 8 章练习：气象数据分析（二）Xarray</p>
+      </div>
+      <i class="fa-solid fa-angle-right"></i>
+    </a>
+</div>
+                </footer>
+              
+            </div>
+            
+            
+              
+                <dialog id="pst-secondary-sidebar-modal"></dialog>
+                <div id="pst-secondary-sidebar" class="bd-sidebar-secondary bd-toc"><div class="sidebar-secondary-items sidebar-secondary__inner">
+
+
+  <div class="sidebar-secondary-item">
+<div
+    id="pst-page-navigation-heading-2"
+    class="page-toc tocsection onthispage">
+    <i class="fa-solid fa-list"></i> 当前页面
+  </div>
+  <nav id="pst-page-toc-nav" class="page-toc" aria-labelledby="pst-page-navigation-heading-2">
+    <ul class="pst-show_toc_level nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id1">第 1 题（实操）读取数据，基础查看</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id2">第 2 题（实操）条件筛选，筛选高温日</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id3">第 3 题（实操）按月分组统计气象数据</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id4">第 4 题（实操）数据排序</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id5">第 5 题（实操）数据导出保存</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#tips">练习 tips 汇总</a></li>
+</ul>
+  </nav></div>
+
+</div></div>
+              
+            
+          </div>
+          <footer class="bd-footer-content">
+            
+          </footer>
+        
+      </main>
+    </div>
+  </div>
+  
+  <!-- Scripts loaded after <body> so the DOM is not blocked -->
+  <script defer src="../../_static/scripts/bootstrap.js?digest=90905a2f556bf617f1a9"></script>
+<script defer src="../../_static/scripts/pydata-sphinx-theme.js?digest=90905a2f556bf617f1a9"></script>
+
+  <footer class="bd-footer">
+<div class="bd-footer__inner bd-page-width">
+  
+    <div class="footer-items__start">
+      
+        <div class="footer-item">
+
+  <p class="copyright">
+    
+      © Copyright 2026, 兰州大学大气科学学院编程社区.
+      <br/>
+    
+  </p>
+</div>
+      
+        <div class="footer-item">
+
+  <p class="sphinx-version">
+    由 <a href="https://www.sphinx-doc.org/">Sphinx</a> 8.2.3创建。
+    <br/>
+  </p>
+</div>
+      
+    </div>
+  
+  
+  
+    <div class="footer-items__end">
+      
+        <div class="footer-item">
+<p class="theme-version">
+  <!-- # L10n: Setting the PST URL as an argument as this does not need to be localized -->
+  使用 <a href="https://pydata-sphinx-theme.readthedocs.io/en/stable/index.html">PyData Sphinx Theme</a> 0.20.0构建.
+</p></div>
+      
+    </div>
+  
+</div>
+
+  </footer>
+  </body>
+</html>

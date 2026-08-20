@@ -1,0 +1,1133 @@
+
+<!DOCTYPE html>
+
+
+<html lang="zh-CN" data-content_root="../../" >
+
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
+    <title>气象数据分析（二）Xarray &#8212; MeteoPython</title>
+  
+  
+  
+  <script data-cfasync="false">
+    document.documentElement.dataset.mode = localStorage.getItem("mode") || "";
+    document.documentElement.dataset.theme = localStorage.getItem("theme") || "";
+  </script>
+  <!--
+    this give us a css class that will be invisible only if js is disabled
+  -->
+  <noscript>
+    <style>
+      .pst-js-only { display: none !important; }
+
+    </style>
+  </noscript>
+  
+  <!-- Loaded before other Sphinx assets -->
+  <link href="../../_static/styles/theme.css?digest=90905a2f556bf617f1a9" rel="stylesheet" />
+<link href="../../_static/styles/pydata-sphinx-theme.css?digest=90905a2f556bf617f1a9" rel="stylesheet" />
+
+    <link rel="stylesheet" type="text/css" href="../../_static/pygments.css?v=8f2a1f02" />
+    <link rel="stylesheet" type="text/css" href="../../_static/copybutton.css?v=76b2166b" />
+    <link rel="stylesheet" type="text/css" href="../../_static/sg_gallery.css?v=fd6457a4" />
+    <link rel="stylesheet" type="text/css" href="../../_static/sg_gallery-binder.css?v=f4aeca0c" />
+    <link rel="stylesheet" type="text/css" href="../../_static/sg_gallery-dataframe.css?v=2082cf3c" />
+    <link rel="stylesheet" type="text/css" href="../../_static/sg_gallery-rendered-html.css?v=1277b6f3" />
+    <link rel="stylesheet" type="text/css" href="../../_static/sphinx-design.min.css?v=95c83b7e" />
+    <link rel="stylesheet" type="text/css" href="../../_static/./custom.css?v=fbe1f034" />
+  
+  <!-- So that users can add custom icons -->
+  <script defer src="../../_static/scripts/fontawesome.js?digest=90905a2f556bf617f1a9"></script>
+  <!-- Pre-loaded scripts that we'll load fully later -->
+  <link rel="preload" as="script" href="../../_static/scripts/bootstrap.js?digest=90905a2f556bf617f1a9" />
+<link rel="preload" as="script" href="../../_static/scripts/pydata-sphinx-theme.js?digest=90905a2f556bf617f1a9" />
+
+    <script src="../../_static/documentation_options.js?v=9becfed8"></script>
+    <script src="../../_static/doctools.js?v=9bcbadda"></script>
+    <script src="../../_static/sphinx_highlight.js?v=dc90522c"></script>
+    <script src="../../_static/sg-tags.js?v=d80f6fa4"></script>
+    <script src="../../_static/clipboard.min.js?v=a7894cd8"></script>
+    <script src="../../_static/copybutton.js?v=fd10adb8"></script>
+    <script src="../../_static/translations.js?v=beaddf03"></script>
+    <script src="../../_static/design-tabs.js?v=f930bc37"></script>
+    <script>DOCUMENTATION_OPTIONS.pagename = 'user_guide/data/xarray';</script>
+    <script>
+        DOCUMENTATION_OPTIONS.theme_version = '0.20.0';
+        DOCUMENTATION_OPTIONS.theme_switcher_json_url = '_static/switcher.json';
+        DOCUMENTATION_OPTIONS.theme_switcher_version_match = '0.1.0';
+        DOCUMENTATION_OPTIONS.show_version_warning_banner =
+            false;
+        </script>
+    <script>DOCUMENTATION_OPTIONS.search_as_you_type = false;</script>
+    <link rel="icon" href="../../_static/favicon.svg"/>
+    <link rel="index" title="索引" href="../../genindex.html" />
+    <link rel="search" title="搜索" href="../../search.html" />
+    <link rel="next" title="模块三 气象数据可视化" href="../viz/index.html" />
+    <link rel="prev" title="气象数据分析（一）Pandas" href="pandas.html" />
+  <meta name="viewport" content="width=device-width, initial-scale=1"/>
+  <meta name="docsearch:language" content="zh-CN"/>
+  <meta name="docsearch:version" content="0.1" />
+    <meta name="docbuild:last-update" content="2026-08-20"/>
+  
+    
+    <script src="../../_static/searchtools.js"></script>
+    <script src="../../_static/language_data.js"></script>
+    <script src="../../searchindex.js"></script>
+  
+  </head>
+  <body data-default-mode="">
+  
+  
+  <div id="pst-skip-link" class="skip-link d-print-none"><a href="#main-content">跳转至主要内容</a></div>
+
+  
+  <div id="pst-scroll-pixel-helper"></div>
+  
+  <button type="button" class="btn rounded-pill" id="pst-back-to-top">
+    <i class="fa-solid fa-arrow-up"></i>回到顶部</button>
+  
+  
+  
+  
+  <dialog id="pst-search-dialog">
+    
+<form class="bd-search d-flex align-items-center"
+      action="../../search.html"
+      method="get">
+  <i class="fa-solid fa-magnifying-glass"></i>
+  <input type="search"
+         class="form-control"
+         name="q"
+         placeholder="搜索文档…"
+         aria-label="搜索文档…"
+         autocomplete="off"
+         autocorrect="off"
+         autocapitalize="off"
+         spellcheck="false"/>
+  <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd>K</kbd></span>
+</form>
+  </dialog>
+
+  <div class="pst-async-banner-revealer d-none">
+  <aside id="bd-header-version-warning" class="d-none d-print-none" aria-label="版本警告"></aside>
+</div>
+
+  
+    <header id="pst-header" class="bd-header navbar navbar-expand-lg bd-navbar d-print-none">
+<div class="bd-header__inner bd-page-width">
+  <button class="pst-navbar-icon sidebar-toggle primary-toggle" aria-label="网页导航">
+    <span class="fa-solid fa-bars"></span>
+  </button>
+  
+  
+  <div class="col-lg-3 navbar-header-items__start">
+    
+      <div class="navbar-item">
+
+  
+    
+  
+
+<a class="navbar-brand logo" href="../../index.html">
+  
+  
+  
+  
+  
+    
+    
+      
+    
+    
+    <img src="../../_static/logo.svg" class="logo__image only-light" alt="MeteoPython - Home"/>
+    <img src="../../_static/logo.svg" class="logo__image only-dark pst-js-only" alt="MeteoPython - Home"/>
+  
+  
+</a></div>
+    
+  </div>
+  
+  <div class="col-lg-9 navbar-header-items">
+    
+    <div class="me-auto navbar-header-items__center">
+      
+        <div class="navbar-item">
+<nav>
+  <ul class="bd-navbar-elements navbar-nav">
+    
+<li class="nav-item current active">
+  <a class="nav-link nav-internal" href="../index.html">
+    教程
+  </a>
+</li>
+
+
+<li class="nav-item ">
+  <a class="nav-link nav-internal" href="../../tutorials/index.html">
+    练习
+  </a>
+</li>
+
+
+<li class="nav-item ">
+  <a class="nav-link nav-internal" href="../../gallery/index.html">
+    示例
+  </a>
+</li>
+
+
+<li class="nav-item ">
+  <a class="nav-link nav-internal" href="../../api/index.html">
+    术语参考
+  </a>
+</li>
+
+
+<li class="nav-item ">
+  <a class="nav-link nav-internal" href="../../qa/index.html">
+    常见问题 Q&A
+  </a>
+</li>
+
+  </ul>
+</nav></div>
+      
+    </div>
+    
+    
+    <div class="navbar-header-items__end">
+      
+        <div class="navbar-item navbar-persistent--container">
+          
+
+<button class="btn search-button-field search-button__button pst-js-only" title="搜索" aria-label="搜索" data-bs-placement="bottom" data-bs-toggle="tooltip">
+ <i class="fa-solid fa-magnifying-glass"></i>
+ <span class="search-button__default-text">搜索</span>
+ <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd class="kbd-shortcut__modifier">K</kbd></span>
+</button>
+        </div>
+      
+      
+        <div class="navbar-item">
+
+<div class="theme-switch-container dropdown pst-js-only" data-bs-toggle="tooltip" data-bs-placement="bottom" title="Color mode">
+  <button class="btn btn-sm nav-link pst-navbar-icon theme-switch-button dropdown-toggle" aria-label="Color mode" data-bs-toggle="dropdown">
+    <i class="theme-switch fa-solid fa-sun fa-lg fa-fw" data-mode="light" title="亮色"></i>
+    <i class="theme-switch fa-solid fa-moon fa-lg fa-fw" data-mode="dark" title="暗色"></i>
+    <i class="theme-switch fa-solid fa-circle-half-stroke fa-lg fa-fw" data-mode="auto" title="System Settings"></i>
+  </button>
+  <ul class="dropdown-menu dropdown-menu-end">
+    <li><button class="dropdown-item d-flex align-items-center theme-change-button" data-mode="auto"><i class="fa-solid fa-circle-half-stroke fa-lg fa-fw me-1"></i>System Settings</button></li>
+    <li><button class="dropdown-item d-flex align-items-center theme-change-button" data-mode="light"><i class="fa-solid fa-sun fa-lg fa-fw me-1"></i>亮色</button></li>
+    <li><button class="dropdown-item d-flex align-items-center theme-change-button" data-mode="dark"><i class="fa-solid fa-moon fa-lg fa-fw me-1"></i>暗色</button></li>
+  </ul>
+</div></div>
+      
+        <div class="navbar-item"><ul class="navbar-icon-links"
+    aria-label="Icon Links">
+</ul></div>
+      
+    </div>
+    
+  </div>
+  
+  
+    <div class="navbar-persistent--mobile">
+
+<button class="btn search-button-field search-button__button pst-js-only" title="搜索" aria-label="搜索" data-bs-placement="bottom" data-bs-toggle="tooltip">
+ <i class="fa-solid fa-magnifying-glass"></i>
+ <span class="search-button__default-text">搜索</span>
+ <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd class="kbd-shortcut__modifier">K</kbd></span>
+</button>
+    </div>
+  
+
+  
+    <button class="pst-navbar-icon sidebar-toggle secondary-toggle" aria-label="当前页面">
+      <span class="fa-solid fa-outdent"></span>
+    </button>
+  
+</div>
+
+    </header>
+  
+
+  <div class="bd-container">
+    <div class="bd-container__inner bd-page-width">
+      
+      
+      
+      <dialog id="pst-primary-sidebar-modal"></dialog>
+      <div id="pst-primary-sidebar" class="bd-sidebar-primary bd-sidebar">
+        
+
+  
+  <div class="sidebar-header-items sidebar-primary__section">
+    
+    
+      <div class="sidebar-header-items__center">
+        
+          
+          
+            <div class="navbar-item">
+<nav>
+  <ul class="bd-navbar-elements navbar-nav">
+    
+<li class="nav-item current active">
+  <a class="nav-link nav-internal" href="../index.html">
+    教程
+  </a>
+</li>
+
+
+<li class="nav-item ">
+  <a class="nav-link nav-internal" href="../../tutorials/index.html">
+    练习
+  </a>
+</li>
+
+
+<li class="nav-item ">
+  <a class="nav-link nav-internal" href="../../gallery/index.html">
+    示例
+  </a>
+</li>
+
+
+<li class="nav-item ">
+  <a class="nav-link nav-internal" href="../../api/index.html">
+    术语参考
+  </a>
+</li>
+
+
+<li class="nav-item ">
+  <a class="nav-link nav-internal" href="../../qa/index.html">
+    常见问题 Q&A
+  </a>
+</li>
+
+  </ul>
+</nav></div>
+          
+        
+      </div>
+    
+    
+    
+      <div class="sidebar-header-items__end">
+        
+          <div class="navbar-item">
+
+<div class="theme-switch-container dropdown pst-js-only" data-bs-toggle="tooltip" data-bs-placement="bottom" title="Color mode">
+  <button class="btn btn-sm nav-link pst-navbar-icon theme-switch-button dropdown-toggle" aria-label="Color mode" data-bs-toggle="dropdown">
+    <i class="theme-switch fa-solid fa-sun fa-lg fa-fw" data-mode="light" title="亮色"></i>
+    <i class="theme-switch fa-solid fa-moon fa-lg fa-fw" data-mode="dark" title="暗色"></i>
+    <i class="theme-switch fa-solid fa-circle-half-stroke fa-lg fa-fw" data-mode="auto" title="System Settings"></i>
+  </button>
+  <ul class="dropdown-menu dropdown-menu-end">
+    <li><button class="dropdown-item d-flex align-items-center theme-change-button" data-mode="auto"><i class="fa-solid fa-circle-half-stroke fa-lg fa-fw me-1"></i>System Settings</button></li>
+    <li><button class="dropdown-item d-flex align-items-center theme-change-button" data-mode="light"><i class="fa-solid fa-sun fa-lg fa-fw me-1"></i>亮色</button></li>
+    <li><button class="dropdown-item d-flex align-items-center theme-change-button" data-mode="dark"><i class="fa-solid fa-moon fa-lg fa-fw me-1"></i>暗色</button></li>
+  </ul>
+</div></div>
+        
+          <div class="navbar-item"><ul class="navbar-icon-links"
+    aria-label="Icon Links">
+</ul></div>
+        
+      </div>
+    
+  </div>
+  
+    <div class="sidebar-primary-items__start sidebar-primary__section">
+        <div class="sidebar-primary-item pst-sidebar-collapse"><button id="pst-collapse-sidebar-button" aria-expanded="true" aria-controls="pst-primary-sidebar">
+  <svg class="pst-icon" role="img" aria-hidden="true" focusable="false" viewBox="0 0 16 16" xmlns="http://www.w3.org/2000/svg">
+    <path fill="currentColor" d="M3 15.5C2.36232 15.5 1.74874 15.2564 1.28478 14.8189C0.820828 14.3815 0.541576 13.7832 0.504167 13.1467L0.5 13L0.5 3C0.499965 2.36232 0.743605 1.74874 1.18107 1.28478C1.61854 0.820828 2.21676 0.541576 2.85333 0.504167L3 0.5L13 0.5C13.6377 0.499965 14.2513 0.743605 14.7152 1.18107C15.1792 1.61854 15.4584 2.21676 15.4958 2.85333L15.5 3L15.5 13C15.5 13.6377 15.2564 14.2513 14.8189 14.7152C14.3815 15.1792 13.7832 15.4584 13.1467 15.4958L13 15.5L3 15.5ZM3 13.8333L10.5 13.8333L10.5 2.16667L3 2.16667C2.79589 2.16669 2.59889 2.24163 2.44636 2.37726C2.29383 2.5129 2.19638 2.69979 2.1725 2.9025L2.16667 3L2.16667 13C2.16669 13.2041 2.24163 13.4011 2.37726 13.5536C2.5129 13.7062 2.69979 13.8036 2.9025 13.8275L3 13.8333ZM6.65583 10.325L6.5775 10.2558L4.91083 8.58917C4.76735 8.44567 4.68116 8.25476 4.66843 8.05223C4.65569 7.84971 4.71729 7.6495 4.84167 7.48917L4.91083 7.41083L6.5775 5.74417C6.72747 5.59471 6.9287 5.50794 7.14032 5.50148C7.35194 5.49502 7.55809 5.56935 7.7169 5.70937C7.8757 5.8494 7.97525 6.04463 7.99533 6.25539C8.01541 6.46616 7.95451 6.67667 7.825 6.84417L7.75583 6.9225L6.67917 8L7.75583 9.0775C7.89931 9.22099 7.98551 9.41191 7.99824 9.61443C8.01097 9.81695 7.94938 10.0172 7.825 10.1775L7.75583 10.2558C7.61234 10.3993 7.42142 10.4855 7.2189 10.4982C7.01638 10.511 6.81617 10.4494 6.65583 10.325Z"/>
+  </svg>
+  <span class="pst-collapse-sidebar-label">Collapse Sidebar</span>
+  <span class="pst-expand-sidebar-label">Expand Sidebar</span>
+</button></div>
+        <div class="sidebar-primary-item">
+
+<nav class="bd-docs-nav bd-links"
+     aria-label="章节导航">
+  <p class="bd-links__title" role="heading" aria-level="1">章节导航</p>
+  <div class="bd-toc-item navbar-nav"><ul class="current nav bd-sidenav">
+<li class="toctree-l1 has-children"><a class="reference internal" href="../basics/index.html">模块一 Python 编程基础</a><details open="open"><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
+<li class="toctree-l2"><a class="reference internal" href="../basics/python_conda.html">Python 与 Conda 简介</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../basics/datatypes.html">基本数据类型、变量和运算符</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../basics/flow.html">分支、条件与循环</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../basics/functions.html">函数及变量作用域、模块和包</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../basics/oop.html">面向对象与高级语法</a></li>
+</ul>
+</details></li>
+<li class="toctree-l1 current active has-children"><a class="reference internal" href="index.html">模块二 气象数据处理</a><details open="open"><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="numpy.html">气象数据计算 NumPy</a></li>
+<li class="toctree-l2"><a class="reference internal" href="pandas.html">气象数据分析（一）Pandas</a></li>
+<li class="toctree-l2 current active"><a class="current reference internal" href="#">气象数据分析（二）Xarray</a></li>
+</ul>
+</details></li>
+<li class="toctree-l1 has-children"><a class="reference internal" href="../viz/index.html">模块三 气象数据可视化</a><details open="open"><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
+<li class="toctree-l2"><a class="reference internal" href="../viz/matplotlib.html">气象数据绘图（一）Matplotlib</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../viz/cartopy.html">气象数据绘图（二）Cartopy</a></li>
+</ul>
+</details></li>
+</ul>
+</div>
+</nav></div>
+    </div>
+  
+  
+  <div class="sidebar-primary-items__end sidebar-primary__section">
+      <div class="sidebar-primary-item">
+<div id="ethical-ad-placement"
+      class="flat"
+      data-ea-publisher="readthedocs"
+      data-ea-type="readthedocs-sidebar"
+      data-ea-manual="true">
+</div></div>
+  </div>
+
+
+      </div>
+      
+      <main id="main-content" class="bd-main" role="main">
+        
+        
+          <div class="bd-content">
+            <div class="bd-article-container">
+              
+              <div class="bd-header-article d-print-none">
+<div class="header-article-items header-article__inner">
+  
+    <div class="header-article-items__start">
+      
+        <div class="header-article-item">
+
+<nav aria-label="Breadcrumb" class="d-print-none">
+  <ul class="bd-breadcrumbs">
+    
+    <li class="breadcrumb-item breadcrumb-home">
+      <a href="../../index.html" class="nav-link" aria-label="初始页面">
+        <i class="fa-solid fa-home"></i>
+      </a>
+    </li>
+    
+    <li class="breadcrumb-item"><a href="../index.html" class="nav-link">教程</a></li>
+    
+    
+    <li class="breadcrumb-item"><a href="index.html" class="nav-link">模块二 气象数据处理</a></li>
+    
+    <li class="breadcrumb-item active" aria-current="page"><span class="ellipsis">气象数据分析（二）Xarray</span></li>
+  </ul>
+</nav>
+</div>
+      
+    </div>
+  
+  
+</div>
+</div>
+              
+              
+              
+                
+<div id="searchbox"></div>
+                <article class="bd-article">
+                  
+  <section id="xarray">
+<span id="tut-xarray"></span><h1>气象数据分析（二）Xarray<a class="headerlink" href="#xarray" title="Link to this heading">#</a></h1>
+<p>第 8 节 · 模块二 气象数据处理
+贯穿项目第 8 步：用 Xarray 读取 NetCDF 再分析气温场，做区域平均与时间切片。</p>
+<p>除了站点观测这类「表格」数据，气象里更常见的是<strong>格点数据</strong>——数值模式输出、卫星反演、再分析资料，本质都是<strong>多维数组</strong>：经度、纬度、高度、时间……维度一多，Pandas 的二维 DataFrame 就力不从心了。你总不能记着 <code class="docutils literal notranslate"><span class="pre">temp[:,</span> <span class="pre">:,</span> <span class="pre">0,</span> <span class="pre">:]</span></code> 里第几个冒号是高度、第几个是纬度。</p>
+<p>Xarray 正是为解决「多维标记数组」而生：它给 NumPy 数组的每个<strong>轴贴上维度名</strong>、每根轴标上<strong>坐标值</strong>，于是取数不再靠「数第几个」，而是直接说「取纬度 36°N 上」——这就是 <a class="reference internal" href="../../api/ch08_terms.html#term-DataArray"><span class="xref std std-term">DataArray</span></a> 与 <a class="reference internal" href="../../api/ch08_terms.html#term-Dataset"><span class="xref std std-term">Dataset</span></a> 的全部魔法所在。它对 NetCDF、GRIB、Zarr 等气象标准格式原生友好，可以把它当作「多维的 Pandas」。</p>
+<p>先看一眼（感受「按名字取数」与「按位置取数」的差别）：</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span><span class="w"> </span><span class="nn">numpy</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">np</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">xarray</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">xr</span>
+
+<span class="n">da</span> <span class="o">=</span> <span class="n">xr</span><span class="o">.</span><span class="n">DataArray</span><span class="p">(</span>
+    <span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">randn</span><span class="p">(</span><span class="mi">5</span><span class="p">,</span> <span class="mi">8</span><span class="p">)</span> <span class="o">+</span> <span class="mi">15</span><span class="p">,</span>          <span class="c1"># 5 个纬度 × 8 个经度的一张小气温场</span>
+    <span class="n">dims</span><span class="o">=</span><span class="p">[</span><span class="s2">&quot;lat&quot;</span><span class="p">,</span> <span class="s2">&quot;lon&quot;</span><span class="p">],</span>
+    <span class="n">coords</span><span class="o">=</span><span class="p">{</span><span class="s2">&quot;lat&quot;</span><span class="p">:</span> <span class="n">np</span><span class="o">.</span><span class="n">linspace</span><span class="p">(</span><span class="mi">20</span><span class="p">,</span> <span class="mi">50</span><span class="p">,</span> <span class="mi">5</span><span class="p">),</span> <span class="s2">&quot;lon&quot;</span><span class="p">:</span> <span class="n">np</span><span class="o">.</span><span class="n">linspace</span><span class="p">(</span><span class="mi">70</span><span class="p">,</span> <span class="mi">140</span><span class="p">,</span> <span class="mi">8</span><span class="p">)},</span>
+    <span class="n">name</span><span class="o">=</span><span class="s2">&quot;t2m&quot;</span><span class="p">,</span>
+<span class="p">)</span>
+<span class="n">da</span><span class="o">.</span><span class="n">attrs</span><span class="p">[</span><span class="s2">&quot;units&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="s2">&quot;°C&quot;</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">da</span><span class="o">.</span><span class="n">sel</span><span class="p">(</span><span class="n">lat</span><span class="o">=</span><span class="mi">36</span><span class="p">,</span> <span class="n">method</span><span class="o">=</span><span class="s2">&quot;nearest&quot;</span><span class="p">))</span>   <span class="c1"># 一句话取最接近 36°N 的那一条纬带</span>
+</pre></div>
+</div>
+<p>本章主线（贯穿项目第 8 步）：读取一份西北地区 NetCDF 再分析气温场——核对维度与单位、时间切片、空间裁剪、纬度加权区域平均、单时刻切片、简单绘图。这些动作正是气候与天气分析的基本功。</p>
+<p>本章将覆盖的知识点：DataArray / Dataset、坐标与维度、<code class="docutils literal notranslate"><span class="pre">sel</span></code> / <code class="docutils literal notranslate"><span class="pre">isel</span></code>、<code class="docutils literal notranslate"><span class="pre">open_dataset</span></code>、简单绘图；提升拓展：<code class="docutils literal notranslate"><span class="pre">groupby</span></code> 时间分组、<code class="docutils literal notranslate"><span class="pre">resample</span></code> 重采样、加权平均。文中 <a class="reference internal" href="../../api/ch08_terms.html#term-resample"><span class="xref std std-term">重采样 resample</span></a>、<a class="reference internal" href="../../api/ch08_terms.html#term-attrs"><span class="xref std std-term">属性 attrs</span></a> 等关键词可跳转术语参考。</p>
+<section id="dataarray-dataset">
+<h2>8.1 DataArray 与 Dataset：带标签的多维数组<a class="headerlink" href="#dataarray-dataset" title="Link to this heading">#</a></h2>
+<p>Xarray 有两大核心数据结构，一句话分清：<strong>DataArray = 一个带标签的多维变量；Dataset = 一串共享坐标的 DataArray 打包</strong>。</p>
+<div class="pst-scrollable-table-container"><table class="table">
+<thead>
+<tr class="row-odd"><th class="head"><p>数据结构</p></th>
+<th class="head"><p>一句话</p></th>
+<th class="head"><p>类比</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p><a class="reference internal" href="../../api/ch08_terms.html#term-DataArray"><span class="xref std std-term">DataArray</span></a></p></td>
+<td><p>带坐标的多维数组，装<strong>一个</strong>气象变量</p></td>
+<td><p>Pandas 的 Series（但可以 N 维）</p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="../../api/ch08_terms.html#term-Dataset"><span class="xref std std-term">Dataset</span></a></p></td>
+<td><p>装<strong>多个</strong>共享维度/坐标的变量</p></td>
+<td><p>Pandas 的 DataFrame（但支持多维）</p></td>
+</tr>
+</tbody>
+</table>
+</div>
+<section id="dataarray">
+<h3>8.1.1 DataArray：给数字贴上标签<a class="headerlink" href="#dataarray" title="Link to this heading">#</a></h3>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span><span class="w"> </span><span class="nn">numpy</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">np</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">pandas</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">pd</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">xarray</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">xr</span>
+
+<span class="c1"># 3 站点 × 4 时次的气温数据</span>
+<span class="n">data</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([</span>
+    <span class="p">[</span><span class="mf">22.5</span><span class="p">,</span> <span class="mf">23.1</span><span class="p">,</span> <span class="mf">24.0</span><span class="p">,</span> <span class="mf">22.8</span><span class="p">],</span>
+    <span class="p">[</span><span class="mf">25.6</span><span class="p">,</span> <span class="mf">26.2</span><span class="p">,</span> <span class="mf">27.1</span><span class="p">,</span> <span class="mf">26.5</span><span class="p">],</span>
+    <span class="p">[</span><span class="mf">19.8</span><span class="p">,</span> <span class="mf">20.3</span><span class="p">,</span> <span class="mf">21.0</span><span class="p">,</span> <span class="mf">20.5</span><span class="p">],</span>
+<span class="p">])</span>
+<span class="n">da</span> <span class="o">=</span> <span class="n">xr</span><span class="o">.</span><span class="n">DataArray</span><span class="p">(</span>
+    <span class="n">data</span><span class="p">,</span>
+    <span class="n">dims</span><span class="o">=</span><span class="p">[</span><span class="s2">&quot;站点&quot;</span><span class="p">,</span> <span class="s2">&quot;时间&quot;</span><span class="p">],</span>                                  <span class="c1"># 维度名</span>
+    <span class="n">coords</span><span class="o">=</span><span class="p">{</span>
+        <span class="s2">&quot;站点&quot;</span><span class="p">:</span> <span class="p">[</span><span class="s2">&quot;北京&quot;</span><span class="p">,</span> <span class="s2">&quot;上海&quot;</span><span class="p">,</span> <span class="s2">&quot;广州&quot;</span><span class="p">],</span>                   <span class="c1"># 维度坐标</span>
+        <span class="s2">&quot;时间&quot;</span><span class="p">:</span> <span class="n">pd</span><span class="o">.</span><span class="n">date_range</span><span class="p">(</span><span class="s2">&quot;2026-08-14&quot;</span><span class="p">,</span> <span class="n">periods</span><span class="o">=</span><span class="mi">4</span><span class="p">),</span>     <span class="c1"># 时间坐标</span>
+    <span class="p">},</span>
+    <span class="n">name</span><span class="o">=</span><span class="s2">&quot;气温&quot;</span><span class="p">,</span>
+    <span class="n">attrs</span><span class="o">=</span><span class="p">{</span><span class="s2">&quot;单位&quot;</span><span class="p">:</span> <span class="s2">&quot;°C&quot;</span><span class="p">,</span> <span class="s2">&quot;说明&quot;</span><span class="p">:</span> <span class="s2">&quot;逐日最高气温&quot;</span><span class="p">},</span>           <span class="c1"># 元信息</span>
+<span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">da</span><span class="p">)</span>
+</pre></div>
+</div>
+<div class="highlight-text notranslate"><div class="highlight"><pre><span></span>&lt;xarray.DataArray &#39;气温&#39; (站点: 3, 时间: 4)&gt;
+array([[22.5, 23.1, 24. , 22.8],
+       [25.6, 26.2, 27.1, 26.5],
+       [19.8, 20.3, 21. , 20.5]])
+Coordinates:
+  * 站点     (站点) &lt;U2 &#39;北京&#39; &#39;上海&#39; &#39;广州&#39;
+  * 时间     (时间) datetime64[ns] 2026-08-14 ... 2026-08-17
+</pre></div>
+</div>
+<div class="admonition- admonition">
+<p class="admonition-title">四个常用属性</p>
+<ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">da.values</span></code>：底层 NumPy 数组；</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">da.dims</span></code>：维度名元组，如 <code class="docutils literal notranslate"><span class="pre">('站点',</span> <span class="pre">'时间')</span></code>；</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">da.coords</span></code>：所有坐标；</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">da.attrs</span></code>：元信息字典（单位、说明等），见 <a class="reference internal" href="../../api/ch08_terms.html#term-attrs"><span class="xref std std-term">属性 attrs</span></a>。</p></li>
+</ul>
+</div>
+</section>
+<section id="dataset">
+<h3>8.1.2 Dataset：一整本气象档案册<a class="headerlink" href="#dataset" title="Link to this heading">#</a></h3>
+<p>同一个 NetCDF 里通常同时装着气温、降水、气压好几个变量，用 <a class="reference internal" href="../../api/ch08_terms.html#term-Dataset"><span class="xref std std-term">Dataset</span></a> 装最自然：</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">ds</span> <span class="o">=</span> <span class="n">xr</span><span class="o">.</span><span class="n">Dataset</span><span class="p">(</span>
+    <span class="p">{</span>
+        <span class="s2">&quot;气温&quot;</span><span class="p">:</span>   <span class="p">([</span><span class="s2">&quot;站点&quot;</span><span class="p">,</span> <span class="s2">&quot;时间&quot;</span><span class="p">],</span> <span class="n">data</span><span class="p">),</span>
+        <span class="s2">&quot;降水量&quot;</span><span class="p">:</span> <span class="p">([</span><span class="s2">&quot;站点&quot;</span><span class="p">,</span> <span class="s2">&quot;时间&quot;</span><span class="p">],</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([[</span><span class="mf">0.0</span><span class="p">,</span> <span class="mf">3.5</span><span class="p">,</span> <span class="mf">0.0</span><span class="p">,</span> <span class="mf">0.0</span><span class="p">],</span>
+                                              <span class="p">[</span><span class="mf">0.0</span><span class="p">,</span> <span class="mf">0.0</span><span class="p">,</span> <span class="mf">12.1</span><span class="p">,</span> <span class="mf">5.0</span><span class="p">],</span>
+                                              <span class="p">[</span><span class="mf">0.0</span><span class="p">,</span> <span class="mf">0.0</span><span class="p">,</span> <span class="mf">0.0</span><span class="p">,</span> <span class="mf">0.0</span><span class="p">]])),</span>
+        <span class="s2">&quot;气压&quot;</span><span class="p">:</span>   <span class="p">([</span><span class="s2">&quot;站点&quot;</span><span class="p">,</span> <span class="s2">&quot;时间&quot;</span><span class="p">],</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([[</span><span class="mi">1013</span><span class="p">,</span> <span class="mi">1012</span><span class="p">,</span> <span class="mi">1011</span><span class="p">,</span> <span class="mi">1013</span><span class="p">],</span>
+                                              <span class="p">[</span><span class="mi">1008</span><span class="p">,</span> <span class="mi">1007</span><span class="p">,</span> <span class="mi">1006</span><span class="p">,</span> <span class="mi">1008</span><span class="p">],</span>
+                                              <span class="p">[</span><span class="mi">1015</span><span class="p">,</span> <span class="mi">1014</span><span class="p">,</span> <span class="mi">1013</span><span class="p">,</span> <span class="mi">1015</span><span class="p">]])),</span>
+    <span class="p">},</span>
+    <span class="n">coords</span><span class="o">=</span><span class="p">{</span>
+        <span class="s2">&quot;站点&quot;</span><span class="p">:</span> <span class="p">[</span><span class="s2">&quot;北京&quot;</span><span class="p">,</span> <span class="s2">&quot;上海&quot;</span><span class="p">,</span> <span class="s2">&quot;广州&quot;</span><span class="p">],</span>
+        <span class="s2">&quot;时间&quot;</span><span class="p">:</span> <span class="n">pd</span><span class="o">.</span><span class="n">date_range</span><span class="p">(</span><span class="s2">&quot;2026-08-14&quot;</span><span class="p">,</span> <span class="n">periods</span><span class="o">=</span><span class="mi">4</span><span class="p">),</span>
+    <span class="p">},</span>
+<span class="p">)</span>
+
+<span class="nb">print</span><span class="p">(</span><span class="n">ds</span><span class="p">[</span><span class="s2">&quot;气温&quot;</span><span class="p">])</span>     <span class="c1"># 字典式访问变量</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">ds</span><span class="o">.</span><span class="n">气压</span><span class="p">)</span>        <span class="c1"># 属性式访问（点号）同样可行</span>
+</pre></div>
+</div>
+</section>
+</section>
+<section id="id1">
+<h2>8.2 坐标与维度：Xarray 的「灵魂」<a class="headerlink" href="#id1" title="Link to this heading">#</a></h2>
+<p>把 <a class="reference internal" href="../../api/ch08_terms.html#term-dim"><span class="xref std std-term">维度 dim</span></a> 与 <a class="reference internal" href="../../api/ch08_terms.html#term-coords"><span class="xref std std-term">坐标 coords</span></a> 分清，是高效用 Xarray 的第一关：</p>
+<ul class="simple">
+<li><p><strong>维度（dim）</strong>：轴的名字。<code class="docutils literal notranslate"><span class="pre">ds.dims</span></code> 打印出 <code class="docutils literal notranslate"><span class="pre">{'站点':</span> <span class="pre">3,</span> <span class="pre">'时间':</span> <span class="pre">4}</span></code>，只说明「沿哪个方向、有多少格」，不含具体数值；</p></li>
+<li><p><strong>坐标（coords）</strong>：轴上每个位置的具体取值。<code class="docutils literal notranslate"><span class="pre">ds.coords</span></code> 打印出每个站点叫什么、每个时间是哪一天。</p></li>
+</ul>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="nb">print</span><span class="p">(</span><span class="n">ds</span><span class="o">.</span><span class="n">dims</span><span class="p">)</span>     <span class="c1"># {&#39;站点&#39;: 3, &#39;时间&#39;: 4}        轴的名字 + 长度</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">ds</span><span class="o">.</span><span class="n">站点</span><span class="p">)</span>     <span class="c1"># [&#39;北京&#39;, &#39;上海&#39;, &#39;广州&#39;]       轴上的真实取值</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">ds</span><span class="o">.</span><span class="n">coords</span><span class="p">)</span>   <span class="c1"># 所有坐标一览</span>
+</pre></div>
+</div>
+<p>有了坐标，索引就不用记「第几个」了——直接 <code class="docutils literal notranslate"><span class="pre">ds.sel(时间=&quot;2026-08-15&quot;)</span></code> 按名字抓，这在动辄四维（时间×高度×纬度×经度）的气象数据里，意义不是好看，而是<strong>不犯错</strong>。</p>
+</section>
+<section id="open-dataset">
+<h2>8.3 数据读取：open_dataset 与惰性加载<a class="headerlink" href="#open-dataset" title="Link to this heading">#</a></h2>
+<p>气象格点数据最常见格式是 <strong>NetCDF</strong> （后缀 <code class="docutils literal notranslate"><span class="pre">.nc</span></code>，<a class="reference internal" href="../../api/ch08_terms.html#term-NetCDF"><span class="xref std std-term">NetCDF</span></a> 词条讲清了它为什么是「密封档案盒」）。Xarray 的 <code class="docutils literal notranslate"><span class="pre">xr.open_dataset</span></code> 是读取的标准入口：</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="c1"># 读取单个 NetCDF 文件</span>
+<span class="n">ds</span> <span class="o">=</span> <span class="n">xr</span><span class="o">.</span><span class="n">open_dataset</span><span class="p">(</span><span class="s2">&quot;era5_temperature_2026.nc&quot;</span><span class="p">)</span>
+
+<span class="c1"># 实际生产中的推荐参数</span>
+<span class="n">ds</span> <span class="o">=</span> <span class="n">xr</span><span class="o">.</span><span class="n">open_dataset</span><span class="p">(</span>
+    <span class="s2">&quot;era5_temperature_2026.nc&quot;</span><span class="p">,</span>
+    <span class="n">engine</span><span class="o">=</span><span class="s2">&quot;netcdf4&quot;</span><span class="p">,</span>          <span class="c1"># 可选：netcdf4 / h5netcdf / cfgrib</span>
+    <span class="n">decode_times</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span>         <span class="c1"># 自动解析时间坐标</span>
+    <span class="n">chunks</span><span class="o">=</span><span class="p">{</span><span class="s2">&quot;time&quot;</span><span class="p">:</span> <span class="mi">10</span><span class="p">},</span>       <span class="c1"># 分块读取（配合 Dask 用在大文件上）</span>
+<span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">ds</span><span class="p">)</span>
+</pre></div>
+</div>
+<div class="highlight-text notranslate"><div class="highlight"><pre><span></span>&lt;xarray.Dataset&gt;
+Dimensions:    (time: 365, level: 37, latitude: 721, longitude: 1440)
+Coordinates:
+  * time       (time) datetime64[ns] 2026-01-01 ... 2026-12-31
+  * level      (level) int32 1000 975 950 925 900 ... 50 30 20 10
+  * latitude   (latitude) float32 90.0 89.75 89.5 ... -89.5 -89.75 -90.0
+  * longitude  (longitude) float32 0.0 0.25 0.5 ... 359.5 359.75
+Data variables:
+    t          (time, level, latitude, longitude) float32 ...
+</pre></div>
+</div>
+<div class="admonition-lazy-loading admonition">
+<p class="admonition-title">惰性加载（Lazy Loading）——大文件的关键</p>
+<p><code class="docutils literal notranslate"><span class="pre">open_dataset</span></code> <strong>默认不把数据读进内存</strong>，只读维度、坐标、属性这些「目录」。真正要算时才加载：</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">ds</span> <span class="o">=</span> <span class="n">xr</span><span class="o">.</span><span class="n">open_dataset</span><span class="p">(</span><span class="s2">&quot;large_file.nc&quot;</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">ds</span><span class="p">)</span>          <span class="c1"># 很快——此刻只是看了目录</span>
+<span class="n">ds</span><span class="o">.</span><span class="n">load</span><span class="p">()</span>          <span class="c1"># 这一行才真正把数据搬进内存</span>
+</pre></div>
+</div>
+<p>这对 GB 乃至 TB 级的格点数据至关重要：你先看一眼结构再决定取哪些，不会一上来就把内存撑爆。</p>
+</div>
+</section>
+<section id="sel-isel">
+<h2>8.4 索引与筛选：sel 与 isel<a class="headerlink" href="#sel-isel" title="Link to this heading">#</a></h2>
+<p>和 Pandas 的 <code class="docutils literal notranslate"><span class="pre">loc</span></code>/<code class="docutils literal notranslate"><span class="pre">iloc</span></code> 一一对应，Xarray 给了两套按维度取数的方法：</p>
+<div class="pst-scrollable-table-container"><table class="table">
+<thead>
+<tr class="row-odd"><th class="head"><p>方法</p></th>
+<th class="head"><p>按什么取</p></th>
+<th class="head"><p>对应 Pandas</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">.sel(...)</span></code></p></td>
+<td><p>按<strong>坐标值</strong>（时间、经纬度）</p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">.loc</span></code></p></td>
+</tr>
+<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">.isel(...)</span></code></p></td>
+<td><p>按<strong>数组序号</strong>（第几个）</p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">.iloc</span></code></p></td>
+</tr>
+</tbody>
+</table>
+</div>
+<section id="sel">
+<h3>8.4.1 按坐标值取：sel<a class="headerlink" href="#sel" title="Link to this heading">#</a></h3>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">ds</span><span class="o">.</span><span class="n">sel</span><span class="p">(</span><span class="n">时间</span><span class="o">=</span><span class="s2">&quot;2026-08-15&quot;</span><span class="p">)</span>                              <span class="c1"># 取某一天</span>
+<span class="n">ds</span><span class="o">.</span><span class="n">sel</span><span class="p">(</span><span class="n">时间</span><span class="o">=</span><span class="nb">slice</span><span class="p">(</span><span class="s2">&quot;2026-08-14&quot;</span><span class="p">,</span> <span class="s2">&quot;2026-08-16&quot;</span><span class="p">))</span>         <span class="c1"># 取时间范围（含两端）</span>
+<span class="n">ds</span><span class="o">.</span><span class="n">sel</span><span class="p">(</span><span class="n">站点</span><span class="o">=</span><span class="s2">&quot;上海&quot;</span><span class="p">)</span>                                    <span class="c1"># 取某个站</span>
+<span class="n">ds</span><span class="o">.</span><span class="n">sel</span><span class="p">(</span><span class="n">站点</span><span class="o">=</span><span class="p">[</span><span class="s2">&quot;北京&quot;</span><span class="p">,</span> <span class="s2">&quot;广州&quot;</span><span class="p">],</span> <span class="n">时间</span><span class="o">=</span><span class="nb">slice</span><span class="p">(</span><span class="s2">&quot;2026-08-15&quot;</span><span class="p">,</span> <span class="s2">&quot;2026-08-17&quot;</span><span class="p">))</span>
+<span class="n">ds</span><span class="o">.</span><span class="n">sel</span><span class="p">(</span><span class="n">时间</span><span class="o">=</span><span class="s2">&quot;2026-08-14 12:00:00&quot;</span><span class="p">,</span> <span class="n">method</span><span class="o">=</span><span class="s2">&quot;nearest&quot;</span><span class="p">)</span>   <span class="c1"># 坐标没有精确值时取最近</span>
+</pre></div>
+</div>
+</section>
+<section id="isel">
+<h3>8.4.2 按位置取：isel<a class="headerlink" href="#isel" title="Link to this heading">#</a></h3>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">ds</span><span class="o">.</span><span class="n">isel</span><span class="p">(</span><span class="n">时间</span><span class="o">=</span><span class="mi">0</span><span class="p">)</span>                 <span class="c1"># 第 0 个时间步</span>
+<span class="n">ds</span><span class="o">.</span><span class="n">isel</span><span class="p">(</span><span class="n">站点</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>                 <span class="c1"># 第 1 个站点</span>
+<span class="n">ds</span><span class="o">.</span><span class="n">isel</span><span class="p">(</span><span class="n">时间</span><span class="o">=</span><span class="nb">slice</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">2</span><span class="p">))</span>       <span class="c1"># 前 2 个时间步</span>
+<span class="n">ds</span><span class="o">.</span><span class="n">isel</span><span class="p">(</span><span class="n">站点</span><span class="o">=</span><span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="mi">2</span><span class="p">],</span> <span class="n">时间</span><span class="o">=</span><span class="p">[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">3</span><span class="p">])</span>
+</pre></div>
+</div>
+<div class="admonition warning">
+<p class="admonition-title">警告</p>
+<p>也别小看方括号：<code class="docutils literal notranslate"><span class="pre">da[0,</span> <span class="pre">1]</span></code> 用的是位置，可读性差，还容易数错维度。<strong>气象工作流的铁律：一律用 ``sel``/``isel`` 搭配维度名</strong>，别依赖维度顺序。</p>
+</div>
+</section>
+</section>
+<section id="id2">
+<h2>8.5 简单绘图<a class="headerlink" href="#id2" title="Link to this heading">#</a></h2>
+<p>Xarray 内置基于 Matplotlib 的一行绘图，快速「看数据」极其方便：</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span><span class="w"> </span><span class="nn">matplotlib.pyplot</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">plt</span>
+
+<span class="n">ds</span><span class="p">[</span><span class="s2">&quot;气温&quot;</span><span class="p">]</span><span class="o">.</span><span class="n">isel</span><span class="p">(</span><span class="n">站点</span><span class="o">=</span><span class="mi">0</span><span class="p">)</span><span class="o">.</span><span class="n">plot</span><span class="p">()</span>               <span class="c1"># 一维折线：北京站时间序列</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">title</span><span class="p">(</span><span class="s2">&quot;北京站逐日最高气温&quot;</span><span class="p">);</span> <span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
+
+<span class="c1"># 二维空间场填色（假设有格点数据 ds_grid：time, lat, lon）</span>
+<span class="n">ds_grid</span><span class="p">[</span><span class="s2">&quot;t&quot;</span><span class="p">]</span><span class="o">.</span><span class="n">isel</span><span class="p">(</span><span class="n">time</span><span class="o">=</span><span class="mi">0</span><span class="p">)</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span>
+    <span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">10</span><span class="p">,</span> <span class="mi">6</span><span class="p">),</span> <span class="n">cmap</span><span class="o">=</span><span class="s2">&quot;RdBu_r&quot;</span><span class="p">,</span>
+    <span class="n">cbar_kwargs</span><span class="o">=</span><span class="p">{</span><span class="s2">&quot;label&quot;</span><span class="p">:</span> <span class="s2">&quot;温度 (°C)&quot;</span><span class="p">},</span>
+<span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">title</span><span class="p">(</span><span class="s2">&quot;2026-08-14 地面气温空间分布&quot;</span><span class="p">);</span> <span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
+
+<span class="n">ds</span><span class="p">[</span><span class="s2">&quot;气温&quot;</span><span class="p">]</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">col</span><span class="o">=</span><span class="s2">&quot;站点&quot;</span><span class="p">,</span> <span class="n">marker</span><span class="o">=</span><span class="s2">&quot;o&quot;</span><span class="p">)</span>      <span class="c1"># 按站点分面</span>
+<span class="n">ds</span><span class="p">[</span><span class="s2">&quot;气温&quot;</span><span class="p">]</span><span class="o">.</span><span class="n">plot</span><span class="o">.</span><span class="n">hist</span><span class="p">(</span><span class="n">bins</span><span class="o">=</span><span class="mi">20</span><span class="p">)</span>                <span class="c1"># 直方图看分布</span>
+</pre></div>
+</div>
+<p>常用参数：<code class="docutils literal notranslate"><span class="pre">col</span></code>/<code class="docutils literal notranslate"><span class="pre">row</span></code> 分面、<code class="docutils literal notranslate"><span class="pre">cmap</span></code> 色带、<code class="docutils literal notranslate"><span class="pre">cbar_kwargs</span></code> 色标、<code class="docutils literal notranslate"><span class="pre">marker</span></code> 折线记号。更专业的绘图（地图投影等）留给模块三。</p>
+</section>
+<section id="groupby">
+<h2>8.6 提升拓展（一）：groupby 时间分组<a class="headerlink" href="#groupby" title="Link to this heading">#</a></h2>
+<p>与 Pandas 的 <a class="reference internal" href="../../api/ch07_terms.html#term-1"><span class="xref std std-term">分组聚合</span></a> 类似，Xarray 的 <code class="docutils literal notranslate"><span class="pre">groupby</span></code> 可沿坐标分组聚合，是气候统计的常客——比如算多年各月平均（气候态）。</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="c1"># 按月份分组：逐月气候平均 / 标准差</span>
+<span class="n">monthly_clim</span> <span class="o">=</span> <span class="n">ds</span><span class="o">.</span><span class="n">groupby</span><span class="p">(</span><span class="s2">&quot;time.month&quot;</span><span class="p">)</span><span class="o">.</span><span class="n">mean</span><span class="p">()</span>
+<span class="n">monthly_std</span>  <span class="o">=</span> <span class="n">ds</span><span class="o">.</span><span class="n">groupby</span><span class="p">(</span><span class="s2">&quot;time.month&quot;</span><span class="p">)</span><span class="o">.</span><span class="n">std</span><span class="p">()</span>
+
+<span class="c1"># 按「一年中的第几天」分组：逐日气候态，再算每一天的距平（Anomaly）</span>
+<span class="n">clim</span>      <span class="o">=</span> <span class="n">ds</span><span class="o">.</span><span class="n">groupby</span><span class="p">(</span><span class="s2">&quot;time.dayofyear&quot;</span><span class="p">)</span><span class="o">.</span><span class="n">mean</span><span class="p">()</span>
+<span class="n">anomaly</span>   <span class="o">=</span> <span class="n">ds</span><span class="o">.</span><span class="n">groupby</span><span class="p">(</span><span class="s2">&quot;time.dayofyear&quot;</span><span class="p">)</span> <span class="o">-</span> <span class="n">clim</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">anomaly</span><span class="p">)</span>
+</pre></div>
+</div>
+<section id="id3">
+<h3>8.6.1 自定义分组：季节<a class="headerlink" href="#id3" title="Link to this heading">#</a></h3>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="k">def</span><span class="w"> </span><span class="nf">get_season</span><span class="p">(</span><span class="n">month</span><span class="p">):</span>
+    <span class="k">if</span> <span class="n">month</span> <span class="ow">in</span> <span class="p">[</span><span class="mi">12</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">]:</span> <span class="k">return</span> <span class="s2">&quot;DJF&quot;</span>    <span class="c1"># 冬</span>
+    <span class="k">if</span> <span class="n">month</span> <span class="ow">in</span> <span class="p">[</span><span class="mi">3</span><span class="p">,</span> <span class="mi">4</span><span class="p">,</span> <span class="mi">5</span><span class="p">]:</span>  <span class="k">return</span> <span class="s2">&quot;MAM&quot;</span>    <span class="c1"># 春</span>
+    <span class="k">if</span> <span class="n">month</span> <span class="ow">in</span> <span class="p">[</span><span class="mi">6</span><span class="p">,</span> <span class="mi">7</span><span class="p">,</span> <span class="mi">8</span><span class="p">]:</span>  <span class="k">return</span> <span class="s2">&quot;JJA&quot;</span>    <span class="c1"># 夏</span>
+    <span class="k">return</span> <span class="s2">&quot;SON&quot;</span>                             <span class="c1"># 秋</span>
+
+<span class="n">seasonal</span> <span class="o">=</span> <span class="n">ds</span><span class="o">.</span><span class="n">groupby</span><span class="p">(</span><span class="n">ds</span><span class="o">.</span><span class="n">time</span><span class="o">.</span><span class="n">dt</span><span class="o">.</span><span class="n">month</span><span class="o">.</span><span class="n">map</span><span class="p">(</span><span class="n">get_season</span><span class="p">))</span><span class="o">.</span><span class="n">mean</span><span class="p">()</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">seasonal</span><span class="p">)</span>
+</pre></div>
+</div>
+<div class="admonition note">
+<p class="admonition-title">备注</p>
+<p>常用时间属性（经 <code class="docutils literal notranslate"><span class="pre">.dt</span></code> 访问）：<code class="docutils literal notranslate"><span class="pre">.year</span></code> / <code class="docutils literal notranslate"><span class="pre">.month</span></code> / <code class="docutils literal notranslate"><span class="pre">.day</span></code> / <code class="docutils literal notranslate"><span class="pre">.dayofyear</span></code>（一年第几天）/ <code class="docutils literal notranslate"><span class="pre">.season</span></code> / <code class="docutils literal notranslate"><span class="pre">.quarter</span></code>。</p>
+</div>
+</section>
+</section>
+<section id="resample">
+<h2>8.7 提升拓展（二）：resample 重采样<a class="headerlink" href="#resample" title="Link to this heading">#</a></h2>
+<p><a class="reference internal" href="../../api/ch08_terms.html#term-resample"><span class="xref std std-term">重采样 resample</span></a> 只针对<strong>时间维度</strong>做频率聚合，可降采样（日→月）也可升采样（月→日）。</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="c1"># 降采样：日 → 月平均、月降水总量、年最大值</span>
+<span class="n">ds_month</span>    <span class="o">=</span> <span class="n">ds</span><span class="o">.</span><span class="n">resample</span><span class="p">(</span><span class="n">time</span><span class="o">=</span><span class="s2">&quot;ME&quot;</span><span class="p">)</span><span class="o">.</span><span class="n">mean</span><span class="p">()</span>      <span class="c1"># ME=月末间隔</span>
+<span class="n">precip_month</span> <span class="o">=</span> <span class="n">ds</span><span class="p">[</span><span class="s2">&quot;降水量&quot;</span><span class="p">]</span><span class="o">.</span><span class="n">resample</span><span class="p">(</span><span class="n">time</span><span class="o">=</span><span class="s2">&quot;ME&quot;</span><span class="p">)</span><span class="o">.</span><span class="n">sum</span><span class="p">()</span>
+<span class="n">max_annual</span>  <span class="o">=</span> <span class="n">ds</span><span class="p">[</span><span class="s2">&quot;气温&quot;</span><span class="p">]</span><span class="o">.</span><span class="n">resample</span><span class="p">(</span><span class="n">time</span><span class="o">=</span><span class="s2">&quot;YE&quot;</span><span class="p">)</span><span class="o">.</span><span class="n">max</span><span class="p">()</span>     <span class="c1"># YE=年末</span>
+
+<span class="c1"># 升采样（会引入缺失，需填充或插值）：月 → 日</span>
+<span class="n">ds_daily_ffill</span>  <span class="o">=</span> <span class="n">ds_month</span><span class="o">.</span><span class="n">resample</span><span class="p">(</span><span class="n">time</span><span class="o">=</span><span class="s2">&quot;D&quot;</span><span class="p">)</span><span class="o">.</span><span class="n">ffill</span><span class="p">()</span>           <span class="c1"># 向前填充</span>
+<span class="n">ds_daily_lin</span>    <span class="o">=</span> <span class="n">ds_month</span><span class="o">.</span><span class="n">resample</span><span class="p">(</span><span class="n">time</span><span class="o">=</span><span class="s2">&quot;D&quot;</span><span class="p">)</span><span class="o">.</span><span class="n">interpolate</span><span class="p">(</span><span class="s2">&quot;linear&quot;</span><span class="p">)</span>   <span class="c1"># 线性插值</span>
+</pre></div>
+</div>
+<div class="admonition- admonition">
+<p class="admonition-title">常用频率串</p>
+<p><code class="docutils literal notranslate"><span class="pre">&quot;D&quot;</span></code> 日、<code class="docutils literal notranslate"><span class="pre">&quot;W&quot;</span></code> 周、<code class="docutils literal notranslate"><span class="pre">&quot;ME&quot;</span></code> 月末（新版本优先于 <code class="docutils literal notranslate"><span class="pre">&quot;M&quot;</span></code>）、<code class="docutils literal notranslate"><span class="pre">&quot;MS&quot;</span></code> 月初、<code class="docutils literal notranslate"><span class="pre">&quot;YE&quot;</span></code> 年末、<code class="docutils literal notranslate"><span class="pre">&quot;H&quot;</span></code> 时、<code class="docutils literal notranslate"><span class="pre">&quot;5D&quot;</span></code> 候（5 天）。</p>
+</div>
+</section>
+<section id="id4">
+<h2>8.8 提升拓展（三）：面积加权平均【气象核心】<a class="headerlink" href="#id4" title="Link to this heading">#</a></h2>
+<p>地球是球体——同一份经纬网里，<strong>越靠两极的网格面积越小</strong>。直接对格点做算术平均，会高估极地地区（网格多但占比小）的贡献，产生系统偏差。因此计算区域平均气温的标准做法，是用 <code class="docutils literal notranslate"><span class="pre">cos(lat)</span></code> 当作纬度权重（面积正比于该纬度带的球面宽度）。</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="c1"># 假设 ds 含格点变量 t，维度 (time, lat, lon)</span>
+<span class="n">weights</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">cos</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">deg2rad</span><span class="p">(</span><span class="n">ds</span><span class="o">.</span><span class="n">lat</span><span class="p">))</span>            <span class="c1"># 纬度权重：cos(lat 弧度)</span>
+<span class="n">weights</span> <span class="o">=</span> <span class="n">weights</span><span class="o">.</span><span class="n">broadcast_like</span><span class="p">(</span><span class="n">ds</span><span class="p">[</span><span class="s2">&quot;t&quot;</span><span class="p">])</span>       <span class="c1"># 扩展到与数据同形状</span>
+
+<span class="c1"># 方法一：.weighted() 内置加权平均</span>
+<span class="n">area_avg</span> <span class="o">=</span> <span class="n">ds</span><span class="p">[</span><span class="s2">&quot;t&quot;</span><span class="p">]</span><span class="o">.</span><span class="n">weighted</span><span class="p">(</span><span class="n">weights</span><span class="p">)</span><span class="o">.</span><span class="n">mean</span><span class="p">(</span><span class="n">dim</span><span class="o">=</span><span class="p">[</span><span class="s2">&quot;lat&quot;</span><span class="p">,</span> <span class="s2">&quot;lon&quot;</span><span class="p">])</span>
+
+<span class="c1"># 方法二：等价的手写加权（概率论的加权均值公式）</span>
+<span class="n">area_avg2</span> <span class="o">=</span> <span class="p">(</span><span class="n">ds</span><span class="p">[</span><span class="s2">&quot;t&quot;</span><span class="p">]</span> <span class="o">*</span> <span class="n">weights</span><span class="p">)</span><span class="o">.</span><span class="n">sum</span><span class="p">(</span><span class="n">dim</span><span class="o">=</span><span class="p">[</span><span class="s2">&quot;lat&quot;</span><span class="p">,</span> <span class="s2">&quot;lon&quot;</span><span class="p">])</span> <span class="o">/</span> <span class="n">weights</span><span class="o">.</span><span class="n">sum</span><span class="p">(</span><span class="n">dim</span><span class="o">=</span><span class="p">[</span><span class="s2">&quot;lat&quot;</span><span class="p">,</span> <span class="s2">&quot;lon&quot;</span><span class="p">])</span>
+</pre></div>
+</div>
+<div class="admonition-xarray admonition">
+<p class="admonition-title">Xarray 官方示例</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">air</span> <span class="o">=</span> <span class="n">xr</span><span class="o">.</span><span class="n">tutorial</span><span class="o">.</span><span class="n">load_dataset</span><span class="p">(</span><span class="s2">&quot;air_temperature&quot;</span><span class="p">)</span>
+<span class="n">w</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">cos</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">deg2rad</span><span class="p">(</span><span class="n">air</span><span class="o">.</span><span class="n">lat</span><span class="p">))</span>
+<span class="n">air_weighted</span> <span class="o">=</span> <span class="n">air</span><span class="p">[</span><span class="s2">&quot;air&quot;</span><span class="p">]</span><span class="o">.</span><span class="n">weighted</span><span class="p">(</span><span class="n">w</span><span class="p">)</span><span class="o">.</span><span class="n">mean</span><span class="p">(</span><span class="n">dim</span><span class="o">=</span><span class="p">[</span><span class="s2">&quot;lat&quot;</span><span class="p">,</span> <span class="s2">&quot;lon&quot;</span><span class="p">])</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">air_weighted</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>权重数组必须是 DataArray，且不能含缺失值（有缺失可用 <code class="docutils literal notranslate"><span class="pre">weights.fillna(0)</span></code>）。这是本章<strong>最值得记住的物理要点</strong>——直接算术平均是气象格点分析最常见错误之一。</p>
+</div>
+</section>
+<section id="era5">
+<h2>8.9 综合实战：ERA5 格点气温分析<a class="headerlink" href="#era5" title="Link to this heading">#</a></h2>
+<p>串起全章的完整任务：<strong>读取 ERA5 逐日气温，计算夏季（JJA）区域平均气温的逐年变化趋势</strong>。</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span><span class="w"> </span><span class="nn">numpy</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">np</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">xarray</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">xr</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">matplotlib.pyplot</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">plt</span>
+
+<span class="c1"># 1. 读取多年逐日再分析数据</span>
+<span class="n">ds</span> <span class="o">=</span> <span class="n">xr</span><span class="o">.</span><span class="n">open_dataset</span><span class="p">(</span><span class="s2">&quot;era5_t2m_2010_2020.nc&quot;</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">ds</span><span class="p">)</span>   <span class="c1"># time: 4015, latitude: 181, longitude: 360</span>
+
+<span class="c1"># 2. 单位换算：开尔文 → 摄氏度</span>
+<span class="n">ds</span><span class="p">[</span><span class="s2">&quot;t2m&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">ds</span><span class="p">[</span><span class="s2">&quot;t2m&quot;</span><span class="p">]</span> <span class="o">-</span> <span class="mf">273.15</span>
+
+<span class="c1"># 3. 筛选夏季月份（6、7、8 月）</span>
+<span class="n">ds_summer</span> <span class="o">=</span> <span class="n">ds</span><span class="o">.</span><span class="n">isel</span><span class="p">(</span><span class="n">time</span><span class="o">=</span><span class="n">ds</span><span class="o">.</span><span class="n">time</span><span class="o">.</span><span class="n">dt</span><span class="o">.</span><span class="n">month</span><span class="o">.</span><span class="n">isin</span><span class="p">([</span><span class="mi">6</span><span class="p">,</span> <span class="mi">7</span><span class="p">,</span> <span class="mi">8</span><span class="p">]))</span>
+
+<span class="c1"># 4. 纬度权重</span>
+<span class="n">w</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">cos</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">deg2rad</span><span class="p">(</span><span class="n">ds</span><span class="o">.</span><span class="n">latitude</span><span class="p">))</span><span class="o">.</span><span class="n">broadcast_like</span><span class="p">(</span><span class="n">ds</span><span class="p">[</span><span class="s2">&quot;t2m&quot;</span><span class="p">])</span>
+
+<span class="c1"># 5. 先做区域（空间）加权平均 → 得到逐日的区域平均气温序列</span>
+<span class="c1">#    再按年份分组取平均 → 得到逐年 JJA 区域平均</span>
+<span class="n">daily_series</span>   <span class="o">=</span> <span class="n">ds_summer</span><span class="p">[</span><span class="s2">&quot;t2m&quot;</span><span class="p">]</span><span class="o">.</span><span class="n">weighted</span><span class="p">(</span><span class="n">w</span><span class="p">)</span><span class="o">.</span><span class="n">mean</span><span class="p">(</span><span class="n">dim</span><span class="o">=</span><span class="p">[</span><span class="s2">&quot;latitude&quot;</span><span class="p">,</span> <span class="s2">&quot;longitude&quot;</span><span class="p">])</span>
+<span class="n">yearly_summer</span>  <span class="o">=</span> <span class="n">daily_series</span><span class="o">.</span><span class="n">groupby</span><span class="p">(</span><span class="s2">&quot;time.year&quot;</span><span class="p">)</span><span class="o">.</span><span class="n">mean</span><span class="p">()</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">yearly_summer</span><span class="p">)</span>
+
+<span class="c1"># 6. 逐年变化趋势</span>
+<span class="n">yearly_summer</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">marker</span><span class="o">=</span><span class="s2">&quot;o&quot;</span><span class="p">,</span> <span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">10</span><span class="p">,</span> <span class="mi">5</span><span class="p">))</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">xlabel</span><span class="p">(</span><span class="s2">&quot;年份&quot;</span><span class="p">);</span> <span class="n">plt</span><span class="o">.</span><span class="n">ylabel</span><span class="p">(</span><span class="s2">&quot;夏季平均气温 (°C)&quot;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">title</span><span class="p">(</span><span class="s2">&quot;2010–2020 年夏季区域平均气温变化&quot;</span><span class="p">);</span> <span class="n">plt</span><span class="o">.</span><span class="n">grid</span><span class="p">(</span><span class="kc">True</span><span class="p">);</span> <span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
+
+<span class="c1"># 7. 结果存回 NetCDF，供后续分析或画图复用</span>
+<span class="n">yearly_summer</span><span class="o">.</span><span class="n">to_netcdf</span><span class="p">(</span><span class="s2">&quot;summer_temp_trend.nc&quot;</span><span class="p">)</span>
+</pre></div>
+</div>
+<div class="admonition- admonition">
+<p class="admonition-title">一步一线索（读这段代码的顺序）</p>
+<p>第 4–5 行是核心：先<strong>空间</strong>压缩（纬度加权平均）把三维压成一维时间序列，再<strong>时间</strong>分组（按年取平均）得到逐年值。两层「平均」完全正交：一个是经纬加权、一个是年份分组。</p>
+</div>
+</section>
+<section id="id5">
+<h2>8.10 常见陷阱与性能优化<a class="headerlink" href="#id5" title="Link to this heading">#</a></h2>
+<ol class="arabic simple">
+<li><p><strong>永远不要依赖维度顺序</strong>：<code class="docutils literal notranslate"><span class="pre">ds[&quot;t&quot;][:,</span> <span class="pre">0,</span> <span class="pre">:]</span></code> 鬼知道第 2 维是什么，请写 <code class="docutils literal notranslate"><span class="pre">ds[&quot;t&quot;].isel(level=0)</span></code>；</p></li>
+<li><p><strong>先核对单位再动手</strong>：再分析资料气温默认开尔文 K，减 <code class="docutils literal notranslate"><span class="pre">273.15</span></code> 才是 ℃——不核对单位，结果整体差出两百多度；</p></li>
+<li><p><strong>大文件配合 Dask 分块</strong>：<code class="docutils literal notranslate"><span class="pre">xr.open_dataset(&quot;huge.nc&quot;,</span> <span class="pre">chunks={&quot;time&quot;:</span> <span class="pre">10})</span></code> 惰性加载、按需计算；</p></li>
+<li><p><strong>坐标对齐产生的 NaN</strong>：两个 Dataset 合并时维度不完全一致会在错格点处产生 NaN，显式 <code class="docutils literal notranslate"><span class="pre">ds1.reindex_like(ds2,</span> <span class="pre">method=&quot;nearest&quot;)</span></code> 可对齐；</p></li>
+<li><p><strong>区域平均必须纬度加权</strong>：见 8.8，禁止算术平均，防止高纬网格权重虚高。</p></li>
+</ol>
+<p>读取、切片、加权平均、绘图、导出的<strong>全套工程化流程与雷区</strong>，见下节最佳实践。</p>
+</section>
+<section id="netcdf">
+<h2>最佳实践：NetCDF 气温场处理<a class="headerlink" href="#netcdf" title="Link to this heading">#</a></h2>
+<p>业务任务：读取 NetCDF 气温场、区域平均、时间切片、简单绘图。</p>
+<p>最佳实践一句话：<strong>气象 nc 文件要安全读取、正确核对维度（time/lat/lon）与单位（K↔℃），区域平均必须做纬度加权（cos(lat)），合理切片、绘图屏蔽缺测，保证结果可复现。</strong></p>
+<p>完整标准化工作流程如下：</p>
+<ol class="arabic simple">
+<li><p>导入依赖库（<code class="docutils literal notranslate"><span class="pre">xarray</span></code>、<code class="docutils literal notranslate"><span class="pre">numpy</span></code>、<code class="docutils literal notranslate"><span class="pre">matplotlib</span></code>）；</p></li>
+<li><p>读取 NetCDF 文件，检查维度、变量、缺测值 <code class="docutils literal notranslate"><span class="pre">_FillValue</span></code>；</p></li>
+<li><p>时间切片：选取指定时间范围，裁剪时间维度；</p></li>
+<li><p>空间裁剪：截取目标经纬度研究区域；</p></li>
+<li><p><strong>区域加权平均</strong>：纬度加权计算区域平均气温（气象必须纬度加权，不能直接算术平均）；</p></li>
+<li><p>空间场切片：取出某时刻的空间气温场；</p></li>
+<li><p>简单绘图：绘制气温空间填色图，自动屏蔽缺测 NaN；</p></li>
+<li><p>输出结果，保存图片与序列数据。</p></li>
+</ol>
+<section id="id6">
+<h3>读取 NetCDF 气温场<a class="headerlink" href="#id6" title="Link to this heading">#</a></h3>
+<p>✅ <strong>最佳实践</strong></p>
+<ol class="arabic simple">
+<li><p>优先用 <code class="docutils literal notranslate"><span class="pre">xarray</span></code> 的 <code class="docutils literal notranslate"><span class="pre">xr.open_dataset</span></code> 读取 nc，它会<strong>自动识别缺测 ``_FillValue``</strong> 并转为 NaN、自动解析坐标 <code class="docutils literal notranslate"><span class="pre">time/lat/lon</span></code>；</p></li>
+<li><p>读取后 <code class="docutils literal notranslate"><span class="pre">print(ds)</span></code> 核对维度顺序，气象场一般为 <code class="docutils literal notranslate"><span class="pre">(time,</span> <span class="pre">lat,</span> <span class="pre">lon)</span></code>；</p></li>
+<li><p>确认气温变量名，检查单位：海量再分析资料默认 <strong>K（开尔文）</strong>，需要转 ℃ 时减 <code class="docutils literal notranslate"><span class="pre">273.15</span></code>。</p></li>
+</ol>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span><span class="w"> </span><span class="nn">xarray</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">xr</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">numpy</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">np</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">matplotlib.pyplot</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">plt</span>
+
+<span class="c1"># 读取 nc 文件（实际项目中的项目数据文件）</span>
+<span class="n">ds</span> <span class="o">=</span> <span class="n">xr</span><span class="o">.</span><span class="n">open_dataset</span><span class="p">(</span><span class="s2">&quot;temp_field.nc&quot;</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">ds</span><span class="p">)</span>                 <span class="c1"># 用 print 一眼核对维度、变量、单位、_FillValue</span>
+
+<span class="c1"># 提取气温变量，注意部分数据单位是 K</span>
+<span class="n">temp</span> <span class="o">=</span> <span class="n">ds</span><span class="p">[</span><span class="s2">&quot;temp&quot;</span><span class="p">]</span>
+
+<span class="c1"># 开尔文 K 转摄氏度 ℃；若数据已经是 ℃，注释掉这一行</span>
+<span class="n">temp</span> <span class="o">=</span> <span class="n">temp</span> <span class="o">-</span> <span class="mf">273.15</span>
+
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;气温维度 (time, lat, lon):&quot;</span><span class="p">,</span> <span class="n">temp</span><span class="o">.</span><span class="n">shape</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>⚠️ <strong>风险点</strong></p>
+<ul class="simple">
+<li><p>不看单位直接使用开尔文数值，气温结果完全错误（差 273.15）；</p></li>
+<li><p>忽略 <code class="docutils literal notranslate"><span class="pre">_FillValue</span></code> 缺测标识，缺测被当成正常大数值参与计算；</p></li>
+<li><p>维度顺序错乱，<code class="docutils literal notranslate"><span class="pre">time/lat/lon</span></code> 搞混，切片、平均全部出错。</p></li>
+</ul>
+</section>
+<section id="id7">
+<h3>时间切片（选取指定时间段）<a class="headerlink" href="#id7" title="Link to this heading">#</a></h3>
+<p>✅ <strong>最佳实践</strong></p>
+<p>用 <code class="docutils literal notranslate"><span class="pre">sel()</span></code> 按时间字符串区间切片（<code class="docutils literal notranslate"><span class="pre">time</span></code> 坐标必须是 datetime 类型）。<code class="docutils literal notranslate"><span class="pre">slice(start,</span> <span class="pre">end)</span></code> 是<strong>左闭右含</strong>的，边界日期本身也会被包含进来。</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="c1"># 时间切片：选取 2000-01-01 ~ 2010-12-31</span>
+<span class="n">temp_time_slice</span> <span class="o">=</span> <span class="n">temp</span><span class="o">.</span><span class="n">sel</span><span class="p">(</span><span class="n">time</span><span class="o">=</span><span class="nb">slice</span><span class="p">(</span><span class="s2">&quot;2000-01-01&quot;</span><span class="p">,</span> <span class="s2">&quot;2010-12-31&quot;</span><span class="p">))</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;切片后维度:&quot;</span><span class="p">,</span> <span class="n">temp_time_slice</span><span class="o">.</span><span class="n">shape</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>⚠️ <strong>风险点</strong></p>
+<ul class="simple">
+<li><p>时间字符串格式不匹配（例如写成 <code class="docutils literal notranslate"><span class="pre">&quot;2000/01/01&quot;</span></code>）会返回空数据；</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">sel()</span></code> 是按<strong>坐标值</strong>筛选；<code class="docutils literal notranslate"><span class="pre">isel(time=0)</span></code> 是按<strong>第几个时次</strong>取，只取序号，不做时间筛选。</p></li>
+</ul>
+</section>
+<section id="id8">
+<h3>空间经纬度裁剪，截取研究区域<a class="headerlink" href="#id8" title="Link to this heading">#</a></h3>
+<p>✅ <strong>最佳实践</strong></p>
+<p>用 <code class="docutils literal notranslate"><span class="pre">sel</span> <span class="pre">+</span> <span class="pre">slice</span></code> 裁剪目标经纬度范围。注意 lat 方向：部分再分析资料的纬度是<strong>从大到小（北纬 → 南纬）排列</strong>，此时要写 <code class="docutils literal notranslate"><span class="pre">slice(大lat,</span> <span class="pre">小lat)</span></code> 才能取到目标区域。</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="c1"># 裁剪研究区域 lon:70-110E ；lat:30-40N</span>
+<span class="c1"># 本例样本文件纬度仍为从小到大排列，故写 slice(30, 40)</span>
+<span class="n">temp_region</span> <span class="o">=</span> <span class="n">temp_time_slice</span><span class="o">.</span><span class="n">sel</span><span class="p">(</span><span class="n">lon</span><span class="o">=</span><span class="nb">slice</span><span class="p">(</span><span class="mi">70</span><span class="p">,</span> <span class="mi">110</span><span class="p">),</span> <span class="n">lat</span><span class="o">=</span><span class="nb">slice</span><span class="p">(</span><span class="mi">30</span><span class="p">,</span> <span class="mi">40</span><span class="p">))</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;裁剪后维度 (time, lat, lon):&quot;</span><span class="p">,</span> <span class="n">temp_region</span><span class="o">.</span><span class="n">shape</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>⚠️ <strong>风险点</strong></p>
+<ul class="simple">
+<li><p>lat 上下限写反：若数据集纬度由北向南递减，应写 <code class="docutils literal notranslate"><span class="pre">sel(lat=slice(大,</span> <span class="pre">小))</span></code>；</p></li>
+<li><p>经纬度超出文件实际范围，裁剪结果全为 NaN，后续平均全是缺测。</p></li>
+</ul>
+</section>
+<section id="id9">
+<h3>纬度加权区域平均【气象核心】<a class="headerlink" href="#id9" title="Link to this heading">#</a></h3>
+<p>✅ <strong>最佳实践</strong></p>
+<p>地球球面网格<strong>越靠两极、面积越小</strong>，直接 <code class="docutils literal notranslate"><span class="pre">np.mean</span></code> 算术平均会让高纬格点权重偏大、造成系统偏差。必须用 <code class="docutils literal notranslate"><span class="pre">cos(np.radians(lat))</span></code> 作纬度权重（面积正比于 <code class="docutils literal notranslate"><span class="pre">cos(lat)</span></code>），配合 xarray 内置的 <code class="docutils literal notranslate"><span class="pre">.weighted()</span></code> 与方法链 <code class="docutils literal notranslate"><span class="pre">.mean(dim=[...])</span></code> 求区域平均，得到一维时间序列。</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="c1"># 纬度权重：纬度的弧度余弦，正比于该纬度带的球面宽度</span>
+<span class="n">lat_weight</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">cos</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">radians</span><span class="p">(</span><span class="n">temp_region</span><span class="o">.</span><span class="n">lat</span><span class="p">))</span>
+
+<span class="c1"># 纬度加权求区域平均，得到一维时间序列 (time,)</span>
+<span class="n">temp_area_mean</span> <span class="o">=</span> <span class="n">temp_region</span><span class="o">.</span><span class="n">weighted</span><span class="p">(</span><span class="n">lat_weight</span><span class="p">)</span><span class="o">.</span><span class="n">mean</span><span class="p">(</span><span class="n">dim</span><span class="o">=</span><span class="p">[</span><span class="s2">&quot;lat&quot;</span><span class="p">,</span> <span class="s2">&quot;lon&quot;</span><span class="p">])</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;区域平均气温序列维度:&quot;</span><span class="p">,</span> <span class="n">temp_area_mean</span><span class="o">.</span><span class="n">shape</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>⚠️ <strong>风险点</strong></p>
+<ul class="simple">
+<li><p>直接 <code class="docutils literal notranslate"><span class="pre">.mean(dim=[&quot;lat&quot;,&quot;lon&quot;])</span></code> 做算术平均，高纬网格权重偏大，结果有系统偏差——这是气象格点分析最常见的错误之一；</p></li>
+<li><p>使用 <code class="docutils literal notranslate"><span class="pre">.weighted()</span></code> 务必保证权重一维坐标与 <code class="docutils literal notranslate"><span class="pre">lat</span></code> 对齐，且维度名一致，否则维度不匹配会报错。</p></li>
+</ul>
+</section>
+<section id="id10">
+<h3>空间场切片：取出某一个时刻的空间二维场<a class="headerlink" href="#id10" title="Link to this heading">#</a></h3>
+<p>✅ <strong>最佳实践</strong></p>
+<p><code class="docutils literal notranslate"><span class="pre">isel(time=idx)</span></code> 按序号取第 idx 个时次；<code class="docutils literal notranslate"><span class="pre">sel(time=&quot;2001-01-01&quot;)</span></code> 按具体日期取，得到 <code class="docutils literal notranslate"><span class="pre">(lat,</span> <span class="pre">lon)</span></code> 二维空间场。</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="c1"># 取第 0 个时刻的 (lat, lon) 二维空间场</span>
+<span class="n">temp_snapshot</span> <span class="o">=</span> <span class="n">temp_region</span><span class="o">.</span><span class="n">isel</span><span class="p">(</span><span class="n">time</span><span class="o">=</span><span class="mi">0</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;单时刻空间场维度 (lat, lon):&quot;</span><span class="p">,</span> <span class="n">temp_snapshot</span><span class="o">.</span><span class="n">shape</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>⚠️ <strong>风险点</strong></p>
+<p>误用 <code class="docutils literal notranslate"><span class="pre">sel(time=0)</span></code> 把 time 当成数字坐标去匹配，会因坐标中不存在「0」而报错；取时刻序号务必用 <code class="docutils literal notranslate"><span class="pre">isel()</span></code>。</p>
+</section>
+<section id="id11">
+<h3>简单绘图，绘制气温空间填色图<a class="headerlink" href="#id11" title="Link to this heading">#</a></h3>
+<p>✅ <strong>最佳实践</strong></p>
+<p>用 xarray 内置 <code class="docutils literal notranslate"><span class="pre">.plot()</span></code> 绘制填色图，它能<strong>自动跳过 NaN 缺测</strong>不渲染。配好 colorbar 标签、标题，保存时用 <code class="docutils literal notranslate"><span class="pre">bbox_inches=&quot;tight&quot;</span></code> 防止标题被截断，绘图结束 <code class="docutils literal notranslate"><span class="pre">plt.close()</span></code> 释放画布。中文标题记得配置中文字体。</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">plt</span><span class="o">.</span><span class="n">rcParams</span><span class="p">[</span><span class="s2">&quot;font.sans-serif&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="p">[</span><span class="s2">&quot;Microsoft YaHei&quot;</span><span class="p">,</span> <span class="s2">&quot;SimHei&quot;</span><span class="p">]</span>  <span class="c1"># 中文字体</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">figure</span><span class="p">(</span><span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">8</span><span class="p">,</span> <span class="mi">5</span><span class="p">))</span>
+<span class="n">temp_snapshot</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">cmap</span><span class="o">=</span><span class="s2">&quot;RdBu_r&quot;</span><span class="p">,</span> <span class="n">cbar_kwargs</span><span class="o">=</span><span class="p">{</span><span class="s2">&quot;label&quot;</span><span class="p">:</span> <span class="s2">&quot;气温 ℃&quot;</span><span class="p">})</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">title</span><span class="p">(</span><span class="s2">&quot;某时刻区域气温场&quot;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">savefig</span><span class="p">(</span><span class="s2">&quot;temp_map.png&quot;</span><span class="p">,</span> <span class="n">dpi</span><span class="o">=</span><span class="mi">150</span><span class="p">,</span> <span class="n">bbox_inches</span><span class="o">=</span><span class="s2">&quot;tight&quot;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">close</span><span class="p">()</span>
+</pre></div>
+</div>
+<p>⚠️ <strong>风险点</strong></p>
+<ul class="simple">
+<li><p>不 <code class="docutils literal notranslate"><span class="pre">plt.close()</span></code>，多次绘图导致多图内容重叠到同一画布；</p></li>
+<li><p>不设置 <code class="docutils literal notranslate"><span class="pre">bbox_inches=&quot;tight&quot;</span></code>，图片标题与坐标标签被截断；</p></li>
+<li><p>不配置中文字体，<code class="docutils literal notranslate"><span class="pre">plt.title</span></code> 中文渲染成方块。</p></li>
+</ul>
+</section>
+<section id="id12">
+<h3>输出时间序列结果<a class="headerlink" href="#id12" title="Link to this heading">#</a></h3>
+<p>✅ <strong>最佳实践</strong></p>
+<p>xarray 序列 <code class="docutils literal notranslate"><span class="pre">.to_dataframe()</span></code> 转成 DataFrame 后用 <code class="docutils literal notranslate"><span class="pre">.to_csv</span></code> 导出，可把时间坐标一并保留。</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">temp_area_mean</span><span class="o">.</span><span class="n">to_dataframe</span><span class="p">()</span><span class="o">.</span><span class="n">to_csv</span><span class="p">(</span><span class="s2">&quot;area_mean_temp.csv&quot;</span><span class="p">,</span> <span class="n">encoding</span><span class="o">=</span><span class="s2">&quot;utf-8-sig&quot;</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>⚠️ <strong>风险点</strong></p>
+<p><code class="docutils literal notranslate"><span class="pre">encoding=&quot;utf-8-sig&quot;</span></code> 是为了让 Excel 不乱码；若省略则为纯 UTF-8，中文列名在旧版 Excel 中可能乱码。</p>
+</section>
+<section id="id13">
+<h3>完整总代码<a class="headerlink" href="#id13" title="Link to this heading">#</a></h3>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span><span class="w"> </span><span class="nn">xarray</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">xr</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">numpy</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">np</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">matplotlib.pyplot</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">plt</span>
+
+<span class="c1"># ---- 1 读取 NetCDF 气温场 ----</span>
+<span class="n">ds</span> <span class="o">=</span> <span class="n">xr</span><span class="o">.</span><span class="n">open_dataset</span><span class="p">(</span><span class="s2">&quot;temp_field.nc&quot;</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">ds</span><span class="p">)</span>
+<span class="n">temp</span> <span class="o">=</span> <span class="n">ds</span><span class="p">[</span><span class="s2">&quot;temp&quot;</span><span class="p">]</span>
+<span class="n">temp</span> <span class="o">=</span> <span class="n">temp</span> <span class="o">-</span> <span class="mf">273.15</span>                      <span class="c1"># 单位转换：K → ℃（已是℃则注释）</span>
+
+<span class="c1"># ---- 2 时间切片 ----</span>
+<span class="n">temp_time_slice</span> <span class="o">=</span> <span class="n">temp</span><span class="o">.</span><span class="n">sel</span><span class="p">(</span><span class="n">time</span><span class="o">=</span><span class="nb">slice</span><span class="p">(</span><span class="s2">&quot;2000-01-01&quot;</span><span class="p">,</span> <span class="s2">&quot;2010-12-31&quot;</span><span class="p">))</span>
+
+<span class="c1"># ---- 3 空间裁剪（注意 lat 方向，样本文件纬度为从小到大）----</span>
+<span class="n">temp_region</span> <span class="o">=</span> <span class="n">temp_time_slice</span><span class="o">.</span><span class="n">sel</span><span class="p">(</span><span class="n">lon</span><span class="o">=</span><span class="nb">slice</span><span class="p">(</span><span class="mi">70</span><span class="p">,</span> <span class="mi">110</span><span class="p">),</span> <span class="n">lat</span><span class="o">=</span><span class="nb">slice</span><span class="p">(</span><span class="mi">30</span><span class="p">,</span> <span class="mi">40</span><span class="p">))</span>
+
+<span class="c1"># ---- 4 纬度加权区域平均（气象核心，禁止算术平均）----</span>
+<span class="n">lat_weight</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">cos</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">radians</span><span class="p">(</span><span class="n">temp_region</span><span class="o">.</span><span class="n">lat</span><span class="p">))</span>
+<span class="n">temp_area_mean</span> <span class="o">=</span> <span class="n">temp_region</span><span class="o">.</span><span class="n">weighted</span><span class="p">(</span><span class="n">lat_weight</span><span class="p">)</span><span class="o">.</span><span class="n">mean</span><span class="p">(</span><span class="n">dim</span><span class="o">=</span><span class="p">[</span><span class="s2">&quot;lat&quot;</span><span class="p">,</span> <span class="s2">&quot;lon&quot;</span><span class="p">])</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;区域平均气温序列:</span><span class="se">\n</span><span class="s2">&quot;</span><span class="p">,</span> <span class="n">temp_area_mean</span><span class="p">)</span>
+
+<span class="c1"># ---- 5 取单个时刻空间场 ----</span>
+<span class="n">temp_snapshot</span> <span class="o">=</span> <span class="n">temp_region</span><span class="o">.</span><span class="n">isel</span><span class="p">(</span><span class="n">time</span><span class="o">=</span><span class="mi">0</span><span class="p">)</span>
+
+<span class="c1"># ---- 6 绘图保存 ----</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">rcParams</span><span class="p">[</span><span class="s2">&quot;font.sans-serif&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="p">[</span><span class="s2">&quot;Microsoft YaHei&quot;</span><span class="p">,</span> <span class="s2">&quot;SimHei&quot;</span><span class="p">]</span>  <span class="c1"># 中文字体</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">figure</span><span class="p">(</span><span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">8</span><span class="p">,</span> <span class="mi">5</span><span class="p">))</span>
+<span class="n">temp_snapshot</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">cmap</span><span class="o">=</span><span class="s2">&quot;RdBu_r&quot;</span><span class="p">,</span> <span class="n">cbar_kwargs</span><span class="o">=</span><span class="p">{</span><span class="s2">&quot;label&quot;</span><span class="p">:</span> <span class="s2">&quot;气温 ℃&quot;</span><span class="p">})</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">title</span><span class="p">(</span><span class="s2">&quot;单时刻区域气温场&quot;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">savefig</span><span class="p">(</span><span class="s2">&quot;temp_map.png&quot;</span><span class="p">,</span> <span class="n">dpi</span><span class="o">=</span><span class="mi">150</span><span class="p">,</span> <span class="n">bbox_inches</span><span class="o">=</span><span class="s2">&quot;tight&quot;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">close</span><span class="p">()</span>
+
+<span class="c1"># ---- 7 输出时间序列 ----</span>
+<span class="n">temp_area_mean</span><span class="o">.</span><span class="n">to_dataframe</span><span class="p">()</span><span class="o">.</span><span class="n">to_csv</span><span class="p">(</span><span class="s2">&quot;area_mean_temp.csv&quot;</span><span class="p">,</span> <span class="n">encoding</span><span class="o">=</span><span class="s2">&quot;utf-8-sig&quot;</span><span class="p">)</span>
+</pre></div>
+</div>
+</section>
+<section id="id14">
+<h3>要点总结<a class="headerlink" href="#id14" title="Link to this heading">#</a></h3>
+<ol class="arabic simple">
+<li><p><strong>NetCDF 读取</strong>：优先用 <code class="docutils literal notranslate"><span class="pre">xarray</span></code>，自动处理 <code class="docutils literal notranslate"><span class="pre">_FillValue</span></code> 缺测；务必核对气温单位，区分开尔文 K 与摄氏度 ℃；</p></li>
+<li><p><strong>切片原则</strong>：<code class="docutils literal notranslate"><span class="pre">sel()</span></code> 按坐标值（时间、经纬度），<code class="docutils literal notranslate"><span class="pre">isel()</span></code> 按数组序号；注意纬度数组排序方向，许多样本数据纬度从北到南递减；</p></li>
+<li><p><strong>区域平均关键</strong>：气象格点数据<strong>禁止直接算术平均</strong>，必须用纬度余弦 <code class="docutils literal notranslate"><span class="pre">cos(lat)</span></code> 加权，消除不同纬度网格面积差异——这是本章最佳实践的物理核心；</p></li>
+<li><p><strong>NaN 安全</strong>：xarray 运算自动跳过缺测，不要手动填充缺测值；</p></li>
+<li><p><strong>绘图规范</strong>：配置中文字体、使用 <code class="docutils literal notranslate"><span class="pre">bbox_inches=&quot;tight&quot;</span></code> 防止标题截断；绘图完成 <code class="docutils literal notranslate"><span class="pre">plt.close()</span></code> 释放画布，避免多图重叠；</p></li>
+<li><p><strong>校验习惯</strong>：每一步 <code class="docutils literal notranslate"><span class="pre">print(shape)</span></code> 核对维度 <code class="docutils literal notranslate"><span class="pre">(time,</span> <span class="pre">lat,</span> <span class="pre">lon)</span></code>，及时发现维度错乱。</p></li>
+</ol>
+<div class="admonition seealso">
+<p class="admonition-title">参见</p>
+<p>术语参考：<a class="reference internal" href="../../api/ch08_terms.html"><span class="doc">第 8 章术语：气象数据分析（二）Xarray</span></a>　·　示例画廊 <a class="reference internal" href="../../gallery/plot_numpy/index.html"><span class="doc">NumPy 计算示例</span></a>。</p>
+</div>
+</section>
+</section>
+</section>
+
+
+                </article>
+              
+              
+              
+              
+              
+                <footer class="prev-next-footer d-print-none">
+                  
+<div class="prev-next-area">
+    <a class="left-prev"
+       href="pandas.html"
+       title="上一页">
+      <i class="fa-solid fa-angle-left"></i>
+      <div class="prev-next-info">
+        <p class="prev-next-subtitle">上一页</p>
+        <p class="prev-next-title">气象数据分析（一）Pandas</p>
+      </div>
+    </a>
+    <a class="right-next"
+       href="../viz/index.html"
+       title="下一页">
+      <div class="prev-next-info">
+        <p class="prev-next-subtitle">下一页</p>
+        <p class="prev-next-title">模块三 气象数据可视化</p>
+      </div>
+      <i class="fa-solid fa-angle-right"></i>
+    </a>
+</div>
+                </footer>
+              
+            </div>
+            
+            
+              
+                <dialog id="pst-secondary-sidebar-modal"></dialog>
+                <div id="pst-secondary-sidebar" class="bd-sidebar-secondary bd-toc"><div class="sidebar-secondary-items sidebar-secondary__inner">
+
+
+  <div class="sidebar-secondary-item">
+<div
+    id="pst-page-navigation-heading-2"
+    class="page-toc tocsection onthispage">
+    <i class="fa-solid fa-list"></i> 当前页面
+  </div>
+  <nav id="pst-page-toc-nav" class="page-toc" aria-labelledby="pst-page-navigation-heading-2">
+    <ul class="pst-show_toc_level nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#dataarray-dataset">8.1 DataArray 与 Dataset：带标签的多维数组</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#dataarray">8.1.1 DataArray：给数字贴上标签</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#dataset">8.1.2 Dataset：一整本气象档案册</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id1">8.2 坐标与维度：Xarray 的「灵魂」</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#open-dataset">8.3 数据读取：open_dataset 与惰性加载</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#sel-isel">8.4 索引与筛选：sel 与 isel</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#sel">8.4.1 按坐标值取：sel</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#isel">8.4.2 按位置取：isel</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id2">8.5 简单绘图</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#groupby">8.6 提升拓展（一）：groupby 时间分组</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#id3">8.6.1 自定义分组：季节</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#resample">8.7 提升拓展（二）：resample 重采样</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id4">8.8 提升拓展（三）：面积加权平均【气象核心】</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#era5">8.9 综合实战：ERA5 格点气温分析</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id5">8.10 常见陷阱与性能优化</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#netcdf">最佳实践：NetCDF 气温场处理</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#id6">读取 NetCDF 气温场</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#id7">时间切片（选取指定时间段）</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#id8">空间经纬度裁剪，截取研究区域</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#id9">纬度加权区域平均【气象核心】</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#id10">空间场切片：取出某一个时刻的空间二维场</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#id11">简单绘图，绘制气温空间填色图</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#id12">输出时间序列结果</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#id13">完整总代码</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#id14">要点总结</a></li>
+</ul>
+</li>
+</ul>
+  </nav></div>
+
+</div></div>
+              
+            
+          </div>
+          <footer class="bd-footer-content">
+            
+          </footer>
+        
+      </main>
+    </div>
+  </div>
+  
+  <!-- Scripts loaded after <body> so the DOM is not blocked -->
+  <script defer src="../../_static/scripts/bootstrap.js?digest=90905a2f556bf617f1a9"></script>
+<script defer src="../../_static/scripts/pydata-sphinx-theme.js?digest=90905a2f556bf617f1a9"></script>
+
+  <footer class="bd-footer">
+<div class="bd-footer__inner bd-page-width">
+  
+    <div class="footer-items__start">
+      
+        <div class="footer-item">
+
+  <p class="copyright">
+    
+      © Copyright 2026, 兰州大学大气科学学院编程社区.
+      <br/>
+    
+  </p>
+</div>
+      
+        <div class="footer-item">
+
+  <p class="sphinx-version">
+    由 <a href="https://www.sphinx-doc.org/">Sphinx</a> 8.2.3创建。
+    <br/>
+  </p>
+</div>
+      
+    </div>
+  
+  
+  
+    <div class="footer-items__end">
+      
+        <div class="footer-item">
+<p class="theme-version">
+  <!-- # L10n: Setting the PST URL as an argument as this does not need to be localized -->
+  使用 <a href="https://pydata-sphinx-theme.readthedocs.io/en/stable/index.html">PyData Sphinx Theme</a> 0.20.0构建.
+</p></div>
+      
+    </div>
+  
+</div>
+
+  </footer>
+  </body>
+</html>

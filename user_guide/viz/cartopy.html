@@ -1,0 +1,1249 @@
+
+<!DOCTYPE html>
+
+
+<html lang="zh-CN" data-content_root="../../" >
+
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
+    <title>气象数据绘图（二）Cartopy &#8212; MeteoPython</title>
+  
+  
+  
+  <script data-cfasync="false">
+    document.documentElement.dataset.mode = localStorage.getItem("mode") || "";
+    document.documentElement.dataset.theme = localStorage.getItem("theme") || "";
+  </script>
+  <!--
+    this give us a css class that will be invisible only if js is disabled
+  -->
+  <noscript>
+    <style>
+      .pst-js-only { display: none !important; }
+
+    </style>
+  </noscript>
+  
+  <!-- Loaded before other Sphinx assets -->
+  <link href="../../_static/styles/theme.css?digest=90905a2f556bf617f1a9" rel="stylesheet" />
+<link href="../../_static/styles/pydata-sphinx-theme.css?digest=90905a2f556bf617f1a9" rel="stylesheet" />
+
+    <link rel="stylesheet" type="text/css" href="../../_static/pygments.css?v=8f2a1f02" />
+    <link rel="stylesheet" type="text/css" href="../../_static/copybutton.css?v=76b2166b" />
+    <link rel="stylesheet" type="text/css" href="../../_static/sg_gallery.css?v=fd6457a4" />
+    <link rel="stylesheet" type="text/css" href="../../_static/sg_gallery-binder.css?v=f4aeca0c" />
+    <link rel="stylesheet" type="text/css" href="../../_static/sg_gallery-dataframe.css?v=2082cf3c" />
+    <link rel="stylesheet" type="text/css" href="../../_static/sg_gallery-rendered-html.css?v=1277b6f3" />
+    <link rel="stylesheet" type="text/css" href="../../_static/sphinx-design.min.css?v=95c83b7e" />
+    <link rel="stylesheet" type="text/css" href="../../_static/./custom.css?v=fbe1f034" />
+  
+  <!-- So that users can add custom icons -->
+  <script defer src="../../_static/scripts/fontawesome.js?digest=90905a2f556bf617f1a9"></script>
+  <!-- Pre-loaded scripts that we'll load fully later -->
+  <link rel="preload" as="script" href="../../_static/scripts/bootstrap.js?digest=90905a2f556bf617f1a9" />
+<link rel="preload" as="script" href="../../_static/scripts/pydata-sphinx-theme.js?digest=90905a2f556bf617f1a9" />
+
+    <script src="../../_static/documentation_options.js?v=9becfed8"></script>
+    <script src="../../_static/doctools.js?v=9bcbadda"></script>
+    <script src="../../_static/sphinx_highlight.js?v=dc90522c"></script>
+    <script src="../../_static/sg-tags.js?v=d80f6fa4"></script>
+    <script src="../../_static/clipboard.min.js?v=a7894cd8"></script>
+    <script src="../../_static/copybutton.js?v=fd10adb8"></script>
+    <script src="../../_static/translations.js?v=beaddf03"></script>
+    <script src="../../_static/design-tabs.js?v=f930bc37"></script>
+    <script>DOCUMENTATION_OPTIONS.pagename = 'user_guide/viz/cartopy';</script>
+    <script>
+        DOCUMENTATION_OPTIONS.theme_version = '0.20.0';
+        DOCUMENTATION_OPTIONS.theme_switcher_json_url = '_static/switcher.json';
+        DOCUMENTATION_OPTIONS.theme_switcher_version_match = '0.1.0';
+        DOCUMENTATION_OPTIONS.show_version_warning_banner =
+            false;
+        </script>
+    <script>DOCUMENTATION_OPTIONS.search_as_you_type = false;</script>
+    <link rel="icon" href="../../_static/favicon.svg"/>
+    <link rel="index" title="索引" href="../../genindex.html" />
+    <link rel="search" title="搜索" href="../../search.html" />
+    <link rel="next" title="练习" href="../../tutorials/index.html" />
+    <link rel="prev" title="气象数据绘图（一）Matplotlib" href="matplotlib.html" />
+  <meta name="viewport" content="width=device-width, initial-scale=1"/>
+  <meta name="docsearch:language" content="zh-CN"/>
+  <meta name="docsearch:version" content="0.1" />
+    <meta name="docbuild:last-update" content="2026-08-20"/>
+  
+    
+    <script src="../../_static/searchtools.js"></script>
+    <script src="../../_static/language_data.js"></script>
+    <script src="../../searchindex.js"></script>
+  
+  </head>
+  <body data-default-mode="">
+  
+  
+  <div id="pst-skip-link" class="skip-link d-print-none"><a href="#main-content">跳转至主要内容</a></div>
+
+  
+  <div id="pst-scroll-pixel-helper"></div>
+  
+  <button type="button" class="btn rounded-pill" id="pst-back-to-top">
+    <i class="fa-solid fa-arrow-up"></i>回到顶部</button>
+  
+  
+  
+  
+  <dialog id="pst-search-dialog">
+    
+<form class="bd-search d-flex align-items-center"
+      action="../../search.html"
+      method="get">
+  <i class="fa-solid fa-magnifying-glass"></i>
+  <input type="search"
+         class="form-control"
+         name="q"
+         placeholder="搜索文档…"
+         aria-label="搜索文档…"
+         autocomplete="off"
+         autocorrect="off"
+         autocapitalize="off"
+         spellcheck="false"/>
+  <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd>K</kbd></span>
+</form>
+  </dialog>
+
+  <div class="pst-async-banner-revealer d-none">
+  <aside id="bd-header-version-warning" class="d-none d-print-none" aria-label="版本警告"></aside>
+</div>
+
+  
+    <header id="pst-header" class="bd-header navbar navbar-expand-lg bd-navbar d-print-none">
+<div class="bd-header__inner bd-page-width">
+  <button class="pst-navbar-icon sidebar-toggle primary-toggle" aria-label="网页导航">
+    <span class="fa-solid fa-bars"></span>
+  </button>
+  
+  
+  <div class="col-lg-3 navbar-header-items__start">
+    
+      <div class="navbar-item">
+
+  
+    
+  
+
+<a class="navbar-brand logo" href="../../index.html">
+  
+  
+  
+  
+  
+    
+    
+      
+    
+    
+    <img src="../../_static/logo.svg" class="logo__image only-light" alt="MeteoPython - Home"/>
+    <img src="../../_static/logo.svg" class="logo__image only-dark pst-js-only" alt="MeteoPython - Home"/>
+  
+  
+</a></div>
+    
+  </div>
+  
+  <div class="col-lg-9 navbar-header-items">
+    
+    <div class="me-auto navbar-header-items__center">
+      
+        <div class="navbar-item">
+<nav>
+  <ul class="bd-navbar-elements navbar-nav">
+    
+<li class="nav-item current active">
+  <a class="nav-link nav-internal" href="../index.html">
+    教程
+  </a>
+</li>
+
+
+<li class="nav-item ">
+  <a class="nav-link nav-internal" href="../../tutorials/index.html">
+    练习
+  </a>
+</li>
+
+
+<li class="nav-item ">
+  <a class="nav-link nav-internal" href="../../gallery/index.html">
+    示例
+  </a>
+</li>
+
+
+<li class="nav-item ">
+  <a class="nav-link nav-internal" href="../../api/index.html">
+    术语参考
+  </a>
+</li>
+
+
+<li class="nav-item ">
+  <a class="nav-link nav-internal" href="../../qa/index.html">
+    常见问题 Q&A
+  </a>
+</li>
+
+  </ul>
+</nav></div>
+      
+    </div>
+    
+    
+    <div class="navbar-header-items__end">
+      
+        <div class="navbar-item navbar-persistent--container">
+          
+
+<button class="btn search-button-field search-button__button pst-js-only" title="搜索" aria-label="搜索" data-bs-placement="bottom" data-bs-toggle="tooltip">
+ <i class="fa-solid fa-magnifying-glass"></i>
+ <span class="search-button__default-text">搜索</span>
+ <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd class="kbd-shortcut__modifier">K</kbd></span>
+</button>
+        </div>
+      
+      
+        <div class="navbar-item">
+
+<div class="theme-switch-container dropdown pst-js-only" data-bs-toggle="tooltip" data-bs-placement="bottom" title="Color mode">
+  <button class="btn btn-sm nav-link pst-navbar-icon theme-switch-button dropdown-toggle" aria-label="Color mode" data-bs-toggle="dropdown">
+    <i class="theme-switch fa-solid fa-sun fa-lg fa-fw" data-mode="light" title="亮色"></i>
+    <i class="theme-switch fa-solid fa-moon fa-lg fa-fw" data-mode="dark" title="暗色"></i>
+    <i class="theme-switch fa-solid fa-circle-half-stroke fa-lg fa-fw" data-mode="auto" title="System Settings"></i>
+  </button>
+  <ul class="dropdown-menu dropdown-menu-end">
+    <li><button class="dropdown-item d-flex align-items-center theme-change-button" data-mode="auto"><i class="fa-solid fa-circle-half-stroke fa-lg fa-fw me-1"></i>System Settings</button></li>
+    <li><button class="dropdown-item d-flex align-items-center theme-change-button" data-mode="light"><i class="fa-solid fa-sun fa-lg fa-fw me-1"></i>亮色</button></li>
+    <li><button class="dropdown-item d-flex align-items-center theme-change-button" data-mode="dark"><i class="fa-solid fa-moon fa-lg fa-fw me-1"></i>暗色</button></li>
+  </ul>
+</div></div>
+      
+        <div class="navbar-item"><ul class="navbar-icon-links"
+    aria-label="Icon Links">
+</ul></div>
+      
+    </div>
+    
+  </div>
+  
+  
+    <div class="navbar-persistent--mobile">
+
+<button class="btn search-button-field search-button__button pst-js-only" title="搜索" aria-label="搜索" data-bs-placement="bottom" data-bs-toggle="tooltip">
+ <i class="fa-solid fa-magnifying-glass"></i>
+ <span class="search-button__default-text">搜索</span>
+ <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd class="kbd-shortcut__modifier">K</kbd></span>
+</button>
+    </div>
+  
+
+  
+    <button class="pst-navbar-icon sidebar-toggle secondary-toggle" aria-label="当前页面">
+      <span class="fa-solid fa-outdent"></span>
+    </button>
+  
+</div>
+
+    </header>
+  
+
+  <div class="bd-container">
+    <div class="bd-container__inner bd-page-width">
+      
+      
+      
+      <dialog id="pst-primary-sidebar-modal"></dialog>
+      <div id="pst-primary-sidebar" class="bd-sidebar-primary bd-sidebar">
+        
+
+  
+  <div class="sidebar-header-items sidebar-primary__section">
+    
+    
+      <div class="sidebar-header-items__center">
+        
+          
+          
+            <div class="navbar-item">
+<nav>
+  <ul class="bd-navbar-elements navbar-nav">
+    
+<li class="nav-item current active">
+  <a class="nav-link nav-internal" href="../index.html">
+    教程
+  </a>
+</li>
+
+
+<li class="nav-item ">
+  <a class="nav-link nav-internal" href="../../tutorials/index.html">
+    练习
+  </a>
+</li>
+
+
+<li class="nav-item ">
+  <a class="nav-link nav-internal" href="../../gallery/index.html">
+    示例
+  </a>
+</li>
+
+
+<li class="nav-item ">
+  <a class="nav-link nav-internal" href="../../api/index.html">
+    术语参考
+  </a>
+</li>
+
+
+<li class="nav-item ">
+  <a class="nav-link nav-internal" href="../../qa/index.html">
+    常见问题 Q&A
+  </a>
+</li>
+
+  </ul>
+</nav></div>
+          
+        
+      </div>
+    
+    
+    
+      <div class="sidebar-header-items__end">
+        
+          <div class="navbar-item">
+
+<div class="theme-switch-container dropdown pst-js-only" data-bs-toggle="tooltip" data-bs-placement="bottom" title="Color mode">
+  <button class="btn btn-sm nav-link pst-navbar-icon theme-switch-button dropdown-toggle" aria-label="Color mode" data-bs-toggle="dropdown">
+    <i class="theme-switch fa-solid fa-sun fa-lg fa-fw" data-mode="light" title="亮色"></i>
+    <i class="theme-switch fa-solid fa-moon fa-lg fa-fw" data-mode="dark" title="暗色"></i>
+    <i class="theme-switch fa-solid fa-circle-half-stroke fa-lg fa-fw" data-mode="auto" title="System Settings"></i>
+  </button>
+  <ul class="dropdown-menu dropdown-menu-end">
+    <li><button class="dropdown-item d-flex align-items-center theme-change-button" data-mode="auto"><i class="fa-solid fa-circle-half-stroke fa-lg fa-fw me-1"></i>System Settings</button></li>
+    <li><button class="dropdown-item d-flex align-items-center theme-change-button" data-mode="light"><i class="fa-solid fa-sun fa-lg fa-fw me-1"></i>亮色</button></li>
+    <li><button class="dropdown-item d-flex align-items-center theme-change-button" data-mode="dark"><i class="fa-solid fa-moon fa-lg fa-fw me-1"></i>暗色</button></li>
+  </ul>
+</div></div>
+        
+          <div class="navbar-item"><ul class="navbar-icon-links"
+    aria-label="Icon Links">
+</ul></div>
+        
+      </div>
+    
+  </div>
+  
+    <div class="sidebar-primary-items__start sidebar-primary__section">
+        <div class="sidebar-primary-item pst-sidebar-collapse"><button id="pst-collapse-sidebar-button" aria-expanded="true" aria-controls="pst-primary-sidebar">
+  <svg class="pst-icon" role="img" aria-hidden="true" focusable="false" viewBox="0 0 16 16" xmlns="http://www.w3.org/2000/svg">
+    <path fill="currentColor" d="M3 15.5C2.36232 15.5 1.74874 15.2564 1.28478 14.8189C0.820828 14.3815 0.541576 13.7832 0.504167 13.1467L0.5 13L0.5 3C0.499965 2.36232 0.743605 1.74874 1.18107 1.28478C1.61854 0.820828 2.21676 0.541576 2.85333 0.504167L3 0.5L13 0.5C13.6377 0.499965 14.2513 0.743605 14.7152 1.18107C15.1792 1.61854 15.4584 2.21676 15.4958 2.85333L15.5 3L15.5 13C15.5 13.6377 15.2564 14.2513 14.8189 14.7152C14.3815 15.1792 13.7832 15.4584 13.1467 15.4958L13 15.5L3 15.5ZM3 13.8333L10.5 13.8333L10.5 2.16667L3 2.16667C2.79589 2.16669 2.59889 2.24163 2.44636 2.37726C2.29383 2.5129 2.19638 2.69979 2.1725 2.9025L2.16667 3L2.16667 13C2.16669 13.2041 2.24163 13.4011 2.37726 13.5536C2.5129 13.7062 2.69979 13.8036 2.9025 13.8275L3 13.8333ZM6.65583 10.325L6.5775 10.2558L4.91083 8.58917C4.76735 8.44567 4.68116 8.25476 4.66843 8.05223C4.65569 7.84971 4.71729 7.6495 4.84167 7.48917L4.91083 7.41083L6.5775 5.74417C6.72747 5.59471 6.9287 5.50794 7.14032 5.50148C7.35194 5.49502 7.55809 5.56935 7.7169 5.70937C7.8757 5.8494 7.97525 6.04463 7.99533 6.25539C8.01541 6.46616 7.95451 6.67667 7.825 6.84417L7.75583 6.9225L6.67917 8L7.75583 9.0775C7.89931 9.22099 7.98551 9.41191 7.99824 9.61443C8.01097 9.81695 7.94938 10.0172 7.825 10.1775L7.75583 10.2558C7.61234 10.3993 7.42142 10.4855 7.2189 10.4982C7.01638 10.511 6.81617 10.4494 6.65583 10.325Z"/>
+  </svg>
+  <span class="pst-collapse-sidebar-label">Collapse Sidebar</span>
+  <span class="pst-expand-sidebar-label">Expand Sidebar</span>
+</button></div>
+        <div class="sidebar-primary-item">
+
+<nav class="bd-docs-nav bd-links"
+     aria-label="章节导航">
+  <p class="bd-links__title" role="heading" aria-level="1">章节导航</p>
+  <div class="bd-toc-item navbar-nav"><ul class="current nav bd-sidenav">
+<li class="toctree-l1 has-children"><a class="reference internal" href="../basics/index.html">模块一 Python 编程基础</a><details open="open"><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
+<li class="toctree-l2"><a class="reference internal" href="../basics/python_conda.html">Python 与 Conda 简介</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../basics/datatypes.html">基本数据类型、变量和运算符</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../basics/flow.html">分支、条件与循环</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../basics/functions.html">函数及变量作用域、模块和包</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../basics/oop.html">面向对象与高级语法</a></li>
+</ul>
+</details></li>
+<li class="toctree-l1 has-children"><a class="reference internal" href="../data/index.html">模块二 气象数据处理</a><details open="open"><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
+<li class="toctree-l2"><a class="reference internal" href="../data/numpy.html">气象数据计算 NumPy</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../data/pandas.html">气象数据分析（一）Pandas</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../data/xarray.html">气象数据分析（二）Xarray</a></li>
+</ul>
+</details></li>
+<li class="toctree-l1 current active has-children"><a class="reference internal" href="index.html">模块三 气象数据可视化</a><details open="open"><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="matplotlib.html">气象数据绘图（一）Matplotlib</a></li>
+<li class="toctree-l2 current active"><a class="current reference internal" href="#">气象数据绘图（二）Cartopy</a></li>
+</ul>
+</details></li>
+</ul>
+</div>
+</nav></div>
+    </div>
+  
+  
+  <div class="sidebar-primary-items__end sidebar-primary__section">
+      <div class="sidebar-primary-item">
+<div id="ethical-ad-placement"
+      class="flat"
+      data-ea-publisher="readthedocs"
+      data-ea-type="readthedocs-sidebar"
+      data-ea-manual="true">
+</div></div>
+  </div>
+
+
+      </div>
+      
+      <main id="main-content" class="bd-main" role="main">
+        
+        
+          <div class="bd-content">
+            <div class="bd-article-container">
+              
+              <div class="bd-header-article d-print-none">
+<div class="header-article-items header-article__inner">
+  
+    <div class="header-article-items__start">
+      
+        <div class="header-article-item">
+
+<nav aria-label="Breadcrumb" class="d-print-none">
+  <ul class="bd-breadcrumbs">
+    
+    <li class="breadcrumb-item breadcrumb-home">
+      <a href="../../index.html" class="nav-link" aria-label="初始页面">
+        <i class="fa-solid fa-home"></i>
+      </a>
+    </li>
+    
+    <li class="breadcrumb-item"><a href="../index.html" class="nav-link">教程</a></li>
+    
+    
+    <li class="breadcrumb-item"><a href="index.html" class="nav-link">模块三 气象数据可视化</a></li>
+    
+    <li class="breadcrumb-item active" aria-current="page"><span class="ellipsis">气象数据绘图（二）Cartopy</span></li>
+  </ul>
+</nav>
+</div>
+      
+    </div>
+  
+  
+</div>
+</div>
+              
+              
+              
+                
+<div id="searchbox"></div>
+                <article class="bd-article">
+                  
+  <section id="cartopy">
+<span id="tut-cartopy"></span><h1>气象数据绘图（二）Cartopy<a class="headerlink" href="#cartopy" title="Link to this heading">#</a></h1>
+<p>第 10 节 · 模块三 气象数据可视化
+贯穿项目第 10 步：绘制西北地区气温空间分布图（等值线填色 + 海岸线）。</p>
+<section id="id1">
+<h2>Cartopy 概述与选取理由<a class="headerlink" href="#id1" title="Link to this heading">#</a></h2>
+<section id="id2">
+<h3>为什么气象格点绘图选用 Cartopy<a class="headerlink" href="#id2" title="Link to this heading">#</a></h3>
+<p>把一张气温「表格」变成一张「地图」，比想象中要难得多——地球是个球，纸是平的。气象格点数据里的每一个温度，都带着它的经纬度「身份证」；而 Cartopy 就是那个能帮你把球面上的数据摊平到纸面上、还不至于画得面目全非的「绘图地图册」。</p>
+<ol class="arabic simple">
+<li><p>原生适配气象科研场景：Cartopy 专为地球地理坐标系设计，完美对接 NetCDF 再分析气温场、区域气候模拟数据，内置经纬度坐标转换逻辑，无需手动做坐标换算。</p></li>
+<li><p>内置全球地理矢量要素：自带有海岸线、国界、省界、河流、湖泊等 Natural Earth 地理数据，无需再费劲下载地图底图 shp 文件。</p></li>
+<li><p>多类地图投影完整支持：涵盖气象绘图最常用的等经纬度投影、墨卡托、兰伯特等面积投影，适配全球、中国区域、西北区域不同绘图需求。</p></li>
+<li><p>与 Matplotlib 无缝联动：Cartopy 基于 Matplotlib 二次开发，可直接复用 <code class="docutils literal notranslate"><span class="pre">contourf</span></code>、<code class="docutils literal notranslate"><span class="pre">contour</span></code>、<code class="docutils literal notranslate"><span class="pre">quiver</span></code>、<code class="docutils literal notranslate"><span class="pre">colorbar</span></code> 等绘图接口，与前文 Matplotlib 绘图语法完全统一，学习成本更低。</p></li>
+<li><p>适配本项目实战目标：本章核心任务绘制<strong>西北地区气温空间填色分布图</strong>，Cartopy 是完成该图的标准工业工具，也是大气科学专业毕业论文、期刊附图的通用绘图库。</p></li>
+</ol>
+</section>
+<section id="id3">
+<h3>本章承接贯穿项目说明<a class="headerlink" href="#id3" title="Link to this heading">#</a></h3>
+<p>本章为整套《兰州气温观测数据分析与可视化系统》的最终可视化章节，承接前文全部内容：</p>
+<ol class="arabic simple">
+<li><p><strong>数据来源</strong>：T-001 统一提供西北地区 NetCDF 气温格点数据（Xarray 读取逻辑见第 8 章）；</p></li>
+<li><p><strong>前置基础</strong>：第 6 章 NumPy 数组运算、第 8 章 Xarray 格点数据切片、第 9 章 Matplotlib 画布与子图语法；</p></li>
+<li><p><strong>本章产出</strong>：完整西北地区气温等值线填色地图，包含投影转换、地理边界、色标、标题、坐标刻度等完整要素，可直接作为项目报告附图；</p></li>
+<li><p><strong>全书闭环逻辑</strong>：环境搭建 → 基础语法 → 数据处理 → 数值计算 → 表格分析 → 格点读取 → 空间地图可视化。</p></li>
+</ol>
+</section>
+<section id="id4">
+<h3>本章学习目标<a class="headerlink" href="#id4" title="Link to this heading">#</a></h3>
+<ol class="arabic simple">
+<li><p>理解地图投影原理，区分气象常用的 3 种投影适用场景；</p></li>
+<li><p>掌握 Cartopy 创建地理画布、绑定坐标变换 <code class="docutils literal notranslate"><span class="pre">transform</span></code> 参数；</p></li>
+<li><p>学会叠加海岸线、国界、区域边界等地理矢量要素；</p></li>
+<li><p>使用 <code class="docutils literal notranslate"><span class="pre">contourf</span></code> 完成气温场等值线填色，配置配套色标 <code class="docutils literal notranslate"><span class="pre">colorbar</span></code>；</p></li>
+<li><p>限定绘图区域裁剪西北地区范围，输出规范科研风格地图；</p></li>
+<li><p>拓展：绘制风场矢量、兰伯特投影切换、批量逐月绘图、分季节多子图对比。</p></li>
+</ol>
+</section>
+</section>
+<section id="id5">
+<h2>基础概念与核心组件<a class="headerlink" href="#id5" title="Link to this heading">#</a></h2>
+<section id="id6">
+<h3>核心基础名词解释<a class="headerlink" href="#id6" title="Link to this heading">#</a></h3>
+<ol class="arabic simple">
+<li><p><strong>地图投影</strong>：把三维球面的经纬度数据映射到二维平面画布的数学变换。你可以把地球想象成一张橘子皮——想把它完整摊平在桌上，四周就会裂开、变形，这种「摊平」就是投影。不同投影会产生不同形变，气象绘图需根据研究区域选择对应投影。</p></li>
+<li><p><strong>transform 坐标变换</strong>：NetCDF 数据默认是球面地理坐标（带「经纬度标签」），而画布是平面像素坐标。<code class="docutils literal notranslate"><span class="pre">transform</span></code> 就像给一个个散落的格点贴上经纬度标签，告诉 Cartopy「这份数据真实的家在哪里」，只有这样才能把数据准确「贴在」地图上。<strong>这一步最容易被遗漏。</strong></p></li>
+<li><p><strong>GeoAxes</strong>：Cartopy 专用的地理坐标轴，替代普通 Matplotlib 的 Axes，自带经纬度刻度、地理要素加载能力。</p></li>
+<li><p><strong>Natural Earth</strong>：开源免费的全球地理矢量数据集，Cartopy 内置自动调用，首次使用会自动下载，无需手动找 shp 文件。</p></li>
+</ol>
+</section>
+<section id="id7">
+<h3>气象绘图三大主流投影详解<a class="headerlink" href="#id7" title="Link to this heading">#</a></h3>
+<p>（1）PlateCarree 等经纬度投影（日常最常用）</p>
+<ul class="simple">
+<li><p>特点：经纬线互相垂直，无角度形变，经纬度刻度均匀分布，「横平竖直、简单直观」；</p></li>
+<li><p>适用场景：全球大范围图、中国区域、西北地区气温填色图（本项目统一使用）；</p></li>
+<li><p>代码创建方式：<code class="docutils literal notranslate"><span class="pre">ccrs.PlateCarree()</span></code>。</p></li>
+</ul>
+<p>（2）Mercator 墨卡托投影</p>
+<ul class="simple">
+<li><p>特点：保证角度不变（等角投影），船舶航线画成直线，但高纬度区域面积被严重拉伸——格陵兰在图上大得像整个非洲；</p></li>
+<li><p>适用场景：航海图、低纬度区域气候图，<strong>不推荐</strong>做中高纬度气象场绘图。</p></li>
+</ul>
+<p>（3）LambertAzimuthalEqualArea 兰伯特等面积投影</p>
+<ul class="simple">
+<li><p>特点：区域面积无畸变（等面积投影），中心区域形变最小；</p></li>
+<li><p>适用场景：中纬度区域气候、季风、区域气候模拟（如东亚、西北干旱区专题图）；</p></li>
+<li><p>拓展内容会提供西北区域专用的兰伯特投影配置代码。</p></li>
+</ul>
+<div class="admonition note">
+<p class="admonition-title">备注</p>
+<p>一句话记忆：<strong>PlateCarree 图省事、Mercator 保角度、Lambert 保面积</strong>。日常西北气温图用 PlateCarree 就够；做区域面积对比专题时再请出兰伯特。</p>
+</div>
+</section>
+<section id="id8">
+<h3>Cartopy 标准绘图固定流程<a class="headerlink" href="#id8" title="Link to this heading">#</a></h3>
+<p>完整标准化流程，本章所有示例、练习统一遵循（编号与后续各小节一一对应）：</p>
+<ol class="arabic simple">
+<li><p>导入库：<code class="docutils literal notranslate"><span class="pre">matplotlib</span></code>、<code class="docutils literal notranslate"><span class="pre">cartopy</span></code>、<code class="docutils literal notranslate"><span class="pre">cartopy.crs</span></code>、<code class="docutils literal notranslate"><span class="pre">xarray</span></code>、<code class="docutils literal notranslate"><span class="pre">numpy</span></code>；</p></li>
+<li><p>创建画布与地理子图，指定画布投影；</p></li>
+<li><p>读取 NetCDF 气温场，用 Xarray <code class="docutils literal notranslate"><span class="pre">sel</span></code> 截取西北区域；</p></li>
+<li><p>调用 <code class="docutils literal notranslate"><span class="pre">contourf</span></code> 绘制气温填色场，绑定地理坐标 <code class="docutils literal notranslate"><span class="pre">transform</span></code>；</p></li>
+<li><p>添加海岸线、国界、省界、河流等地理要素；</p></li>
+<li><p>设置经纬度刻度、画布范围（裁剪西北地区）；</p></li>
+<li><p>添加色标 <code class="docutils literal notranslate"><span class="pre">colorbar</span></code>、标题、坐标轴标签；</p></li>
+<li><p>高清导出图片，设置 DPI、画布尺寸。</p></li>
+</ol>
+</section>
+</section>
+<section id="id9">
+<h2>基础绘图：西北地区气温填色图完整实操<a class="headerlink" href="#id9" title="Link to this heading">#</a></h2>
+<section id="met-p312">
+<h3>前置库安装（met_p312 环境）<a class="headerlink" href="#met-p312" title="Link to this heading">#</a></h3>
+<p>确保虚拟环境已安装依赖，未安装则执行命令：</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>conda<span class="w"> </span>install<span class="w"> </span>cartopy<span class="w"> </span>xarray<span class="w"> </span>netcdf4<span class="w"> </span>numpy<span class="w"> </span>matplotlib
+</pre></div>
+</div>
+<div class="admonition warning">
+<p class="admonition-title">警告</p>
+<p>Cartopy 捆绑了不少地理底层库（GEOS、Proj），<strong>优先用 conda 安装</strong>，不要只用 pip——pip 通常装不出能正常加载海岸线的版本。</p>
+</div>
+</section>
+<section id="id10">
+<h3>完整基础绘图可运行代码<a class="headerlink" href="#id10" title="Link to this heading">#</a></h3>
+<p>首先说明数据文件：本项目 T-001 统一提供的格点数据文件 <code class="docutils literal notranslate"><span class="pre">./data/northwest_temp.nc</span></code> 内含三个变量——经度 <code class="docutils literal notranslate"><span class="pre">lon</span></code>（一维，单位 °E）、纬度 <code class="docutils literal notranslate"><span class="pre">lat</span></code>（一维，单位 °N）和气温 <code class="docutils literal notranslate"><span class="pre">temp</span></code>（二维，(lat, lon)，单位 ℃），覆盖西北地区范围（东经 90°~112°，北纬 32°~43°）。主轴入仓后，直接读取绘图即可。</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="c1"># 第10章 Cartopy 西北地区气温填色图</span>
+
+<span class="kn">import</span><span class="w"> </span><span class="nn">matplotlib.pyplot</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">plt</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">cartopy.crs</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">ccrs</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">cartopy.feature</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">cfeature</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">xarray</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">xr</span>
+
+<span class="c1"># 1. 读取 T-001 提供的西北 NetCDF 气温数据（字段：lon/lat/temp）</span>
+<span class="n">ds</span> <span class="o">=</span> <span class="n">xr</span><span class="o">.</span><span class="n">open_dataset</span><span class="p">(</span><span class="s2">&quot;./data/northwest_temp.nc&quot;</span><span class="p">)</span>
+<span class="n">temp</span> <span class="o">=</span> <span class="n">ds</span><span class="o">.</span><span class="n">temp</span>   <span class="c1"># 气温变量（二维，(lat, lon)）</span>
+<span class="n">lon</span> <span class="o">=</span> <span class="n">ds</span><span class="o">.</span><span class="n">lon</span>     <span class="c1"># 经度（一维，°E）</span>
+<span class="n">lat</span> <span class="o">=</span> <span class="n">ds</span><span class="o">.</span><span class="n">lat</span>     <span class="c1"># 纬度（一维，°N）</span>
+
+<span class="c1"># 2. 创建画布，指定等经纬度投影</span>
+<span class="n">fig</span><span class="p">,</span> <span class="n">ax</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">subplots</span><span class="p">(</span><span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">10</span><span class="p">,</span> <span class="mi">6</span><span class="p">),</span>
+                       <span class="n">subplot_kw</span><span class="o">=</span><span class="p">{</span><span class="s2">&quot;projection&quot;</span><span class="p">:</span> <span class="n">ccrs</span><span class="o">.</span><span class="n">PlateCarree</span><span class="p">()})</span>
+
+<span class="c1"># 3. 绘制气温等值线填色，必须指定 transform</span>
+<span class="n">contour</span> <span class="o">=</span> <span class="n">ax</span><span class="o">.</span><span class="n">contourf</span><span class="p">(</span><span class="n">lon</span><span class="p">,</span> <span class="n">lat</span><span class="p">,</span> <span class="n">temp</span><span class="p">,</span> <span class="n">levels</span><span class="o">=</span><span class="mi">20</span><span class="p">,</span> <span class="n">cmap</span><span class="o">=</span><span class="s2">&quot;coolwarm&quot;</span><span class="p">,</span>
+                      <span class="n">transform</span><span class="o">=</span><span class="n">ccrs</span><span class="o">.</span><span class="n">PlateCarree</span><span class="p">())</span>
+
+<span class="c1"># 4. 叠加基础地理要素</span>
+<span class="n">ax</span><span class="o">.</span><span class="n">coastlines</span><span class="p">(</span><span class="n">linewidth</span><span class="o">=</span><span class="mf">0.8</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="s2">&quot;black&quot;</span><span class="p">)</span>                 <span class="c1"># 海岸线</span>
+<span class="n">ax</span><span class="o">.</span><span class="n">add_feature</span><span class="p">(</span><span class="n">cfeature</span><span class="o">.</span><span class="n">BORDERS</span><span class="p">,</span> <span class="n">linewidth</span><span class="o">=</span><span class="mf">0.8</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="s2">&quot;black&quot;</span><span class="p">)</span>  <span class="c1"># 国界</span>
+<span class="n">ax</span><span class="o">.</span><span class="n">add_feature</span><span class="p">(</span><span class="n">cfeature</span><span class="o">.</span><span class="n">RIVERS</span><span class="p">,</span> <span class="n">linewidth</span><span class="o">=</span><span class="mf">0.5</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="s2">&quot;blue&quot;</span><span class="p">)</span>    <span class="c1"># 河流</span>
+
+<span class="c1"># 5. 限定绘图范围：西北地区经纬度</span>
+<span class="n">ax</span><span class="o">.</span><span class="n">set_extent</span><span class="p">([</span><span class="mi">90</span><span class="p">,</span> <span class="mi">112</span><span class="p">,</span> <span class="mi">32</span><span class="p">,</span> <span class="mi">43</span><span class="p">],</span> <span class="n">crs</span><span class="o">=</span><span class="n">ccrs</span><span class="o">.</span><span class="n">PlateCarree</span><span class="p">())</span>
+
+<span class="c1"># 6. 添加经纬度刻度</span>
+<span class="n">ax</span><span class="o">.</span><span class="n">gridlines</span><span class="p">(</span><span class="n">draw_labels</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">linestyle</span><span class="o">=</span><span class="s2">&quot;--&quot;</span><span class="p">,</span> <span class="n">alpha</span><span class="o">=</span><span class="mf">0.6</span><span class="p">)</span>
+
+<span class="c1"># 7. 色标、标题</span>
+<span class="n">cbar</span> <span class="o">=</span> <span class="n">fig</span><span class="o">.</span><span class="n">colorbar</span><span class="p">(</span><span class="n">contour</span><span class="p">,</span> <span class="n">shrink</span><span class="o">=</span><span class="mf">0.8</span><span class="p">)</span>
+<span class="n">cbar</span><span class="o">.</span><span class="n">set_label</span><span class="p">(</span><span class="s2">&quot;气温 ℃&quot;</span><span class="p">)</span>
+<span class="n">ax</span><span class="o">.</span><span class="n">set_title</span><span class="p">(</span><span class="s2">&quot;西北地区2024年平均气温空间分布图&quot;</span><span class="p">,</span> <span class="n">fontsize</span><span class="o">=</span><span class="mi">14</span><span class="p">)</span>
+
+<span class="c1"># 8. 导出高清图片</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">savefig</span><span class="p">(</span><span class="s2">&quot;./figures/northwest_temp_map.png&quot;</span><span class="p">,</span> <span class="n">dpi</span><span class="o">=</span><span class="mi">300</span><span class="p">,</span> <span class="n">bbox_inches</span><span class="o">=</span><span class="s2">&quot;tight&quot;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
+</pre></div>
+</div>
+<div class="admonition note">
+<p class="admonition-title">备注</p>
+<p>无文件时的构造数据备选。如果本地一时拿不到 <code class="docutils literal notranslate"><span class="pre">northwest_temp.nc</span></code>（例如想先在自己的电脑上练手），可以用下面这段代码临时构造一份「伪格点场」，字段结构与真实文件完全一致，替换掉上面的数据读取部分即可运行：</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span><span class="w"> </span><span class="nn">numpy</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">np</span>
+
+<span class="c1"># 构造西北范围经纬度网格（与 T-001 文件字段 lon/lat/temp 一致）</span>
+<span class="n">lon</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">linspace</span><span class="p">(</span><span class="mi">90</span><span class="p">,</span> <span class="mi">112</span><span class="p">,</span> <span class="mi">45</span><span class="p">)</span>      <span class="c1"># 东经 90°~112°</span>
+<span class="n">lat</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">linspace</span><span class="p">(</span><span class="mi">32</span><span class="p">,</span> <span class="mi">43</span><span class="p">,</span> <span class="mi">33</span><span class="p">)</span>       <span class="c1"># 北纬 32°~43°</span>
+<span class="n">lon</span><span class="p">,</span> <span class="n">lat</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">meshgrid</span><span class="p">(</span><span class="n">lon</span><span class="p">,</span> <span class="n">lat</span><span class="p">)</span>    <span class="c1"># 变成二维网格，和 temp 形状匹配</span>
+
+<span class="c1"># 合成气温场：随纬度线性变化（南暖北冷），并加入一点经向起伏</span>
+<span class="n">temp</span> <span class="o">=</span> <span class="mi">15</span> <span class="o">+</span> <span class="mf">0.5</span> <span class="o">*</span> <span class="p">(</span><span class="mi">40</span> <span class="o">-</span> <span class="n">lat</span><span class="p">)</span> <span class="o">-</span> <span class="mf">0.02</span> <span class="o">*</span> <span class="p">(</span><span class="n">lon</span> <span class="o">-</span> <span class="mi">101</span><span class="p">)</span> <span class="o">**</span> <span class="mi">2</span>
+</pre></div>
+</div>
+<p>之后把上面的 <code class="docutils literal notranslate"><span class="pre">contourf</span></code>/<code class="docutils literal notranslate"><span class="pre">scatter</span></code> 等依赖 <code class="docutils literal notranslate"><span class="pre">ds.lon</span></code> 的地方，改成直接用局部变量 <code class="docutils literal notranslate"><span class="pre">lon</span></code>、<code class="docutils literal notranslate"><span class="pre">lat</span></code>、<code class="docutils literal notranslate"><span class="pre">temp</span></code> 即可。</p>
+</div>
+</section>
+<section id="id11">
+<h3>代码分步解析<a class="headerlink" href="#id11" title="Link to this heading">#</a></h3>
+<ol class="arabic simple">
+<li><p><strong>数据读取</strong>：对接项目 <code class="docutils literal notranslate"><span class="pre">data</span></code> 目录下 NetCDF 文件，和第 8 章 Xarray 读取逻辑保持统一。记住文件字段是 <code class="docutils literal notranslate"><span class="pre">lon</span></code> / <code class="docutils literal notranslate"><span class="pre">lat</span></code> / <code class="docutils literal notranslate"><span class="pre">temp</span></code> 三个变量。</p></li>
+<li><p><strong>subplot_kw 关键参数</strong>：<code class="docutils literal notranslate"><span class="pre">projection=ccrs.PlateCarree()</span></code> 把普通 Axes 转换成地理绘图的 GeoAxes——这一行决定了「纸往哪张地图坐标架上铺」。</p></li>
+<li><p><strong>contourf 核心参数说明</strong>：
+- <code class="docutils literal notranslate"><span class="pre">levels</span></code>：等值分层数量，数值越大色彩过渡越细腻；
+- <code class="docutils literal notranslate"><span class="pre">cmap</span></code>：色带，<code class="docutils literal notranslate"><span class="pre">coolwarm</span></code> 冷-暖色系是气温绘图的标准配色（蓝色冷、红色暖）；
+- <code class="docutils literal notranslate"><span class="pre">transform=ccrs.PlateCarree()</span></code>：<strong>最容易遗漏的核心参数</strong>，缺失会导致格点地图错位——没有它，Cartopy 根本不知道这份散落的数据该贴在地图哪个经纬度上。</p></li>
+<li><p><strong>set_extent</strong>：裁剪画布范围，锁定西北区域，去掉无关的空白区域，让图面更聚焦。</p></li>
+<li><p><strong>gridlines(draw_labels=True)</strong>：自动生成经纬度刻度标注。</p></li>
+<li><p><strong>savefig</strong>：300 DPI 满足课程报告、论文附图的清晰度标准。</p></li>
+</ol>
+</section>
+</section>
+<section id="id12">
+<h2>地理要素自定义与精细化美化<a class="headerlink" href="#id12" title="Link to this heading">#</a></h2>
+<section id="id13">
+<h3>调整线条样式、颜色、粗细<a class="headerlink" href="#id13" title="Link to this heading">#</a></h3>
+<p>想让国界限粗黑、省界用浅灰细线、河流用淡蓝，只需在调用时指定参数即可：</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span><span class="w"> </span><span class="nn">cartopy.feature</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">cfeature</span>
+
+<span class="c1"># 国界：粗一些、纯黑，作为最上一层的阅读骨架</span>
+<span class="n">ax</span><span class="o">.</span><span class="n">add_feature</span><span class="p">(</span><span class="n">cfeature</span><span class="o">.</span><span class="n">BORDERS</span><span class="p">,</span> <span class="n">linewidth</span><span class="o">=</span><span class="mf">1.2</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="s2">&quot;black&quot;</span><span class="p">)</span>
+
+<span class="c1"># 海岸线：中等粗细，深灰</span>
+<span class="n">ax</span><span class="o">.</span><span class="n">coastlines</span><span class="p">(</span><span class="n">linewidth</span><span class="o">=</span><span class="mf">0.8</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="s2">&quot;dimgray&quot;</span><span class="p">)</span>
+
+<span class="c1"># 河流：浅蓝细线，不抢气温填色场的主视觉</span>
+<span class="n">ax</span><span class="o">.</span><span class="n">add_feature</span><span class="p">(</span><span class="n">cfeature</span><span class="o">.</span><span class="n">RIVERS</span><span class="p">,</span> <span class="n">linewidth</span><span class="o">=</span><span class="mf">0.4</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="s2">&quot;#4488dd&quot;</span><span class="p">)</span>
+
+<span class="c1"># 湖泊：淡蓝填充，透明度低一些更好</span>
+<span class="n">ax</span><span class="o">.</span><span class="n">add_feature</span><span class="p">(</span><span class="n">cfeature</span><span class="o">.</span><span class="n">LAKES</span><span class="p">,</span> <span class="n">edgecolor</span><span class="o">=</span><span class="s2">&quot;none&quot;</span><span class="p">,</span> <span class="n">facecolor</span><span class="o">=</span><span class="s2">&quot;#aaddff&quot;</span><span class="p">,</span> <span class="n">alpha</span><span class="o">=</span><span class="mf">0.6</span><span class="p">)</span>
+</pre></div>
+</div>
+<div class="admonition note">
+<p class="admonition-title">备注</p>
+<p>图层层次感口诀：<strong>主图（气温填色）最显眼，地名河流靠边站，国界海岸来收边，站点标记点最上端。</strong></p>
+</div>
+</section>
+<section id="id14">
+<h3>自定义经纬度刻度间隔<a class="headerlink" href="#id14" title="Link to this heading">#</a></h3>
+<p>自动刻度可能在西北这种窄条区域显得拥挤，可以手动指定经度每 5°、纬度每 3° 一条刻度：</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span><span class="w"> </span><span class="nn">matplotlib.ticker</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">mticker</span>
+
+<span class="n">gl</span> <span class="o">=</span> <span class="n">ax</span><span class="o">.</span><span class="n">gridlines</span><span class="p">(</span><span class="n">draw_labels</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">linestyle</span><span class="o">=</span><span class="s2">&quot;--&quot;</span><span class="p">,</span> <span class="n">alpha</span><span class="o">=</span><span class="mf">0.6</span><span class="p">)</span>
+<span class="n">gl</span><span class="o">.</span><span class="n">xlocator</span> <span class="o">=</span> <span class="n">mticker</span><span class="o">.</span><span class="n">FixedLocator</span><span class="p">([</span><span class="mi">90</span><span class="p">,</span> <span class="mi">95</span><span class="p">,</span> <span class="mi">100</span><span class="p">,</span> <span class="mi">105</span><span class="p">,</span> <span class="mi">110</span><span class="p">])</span>  <span class="c1"># 经度每5°</span>
+<span class="n">gl</span><span class="o">.</span><span class="n">ylocator</span> <span class="o">=</span> <span class="n">mticker</span><span class="o">.</span><span class="n">FixedLocator</span><span class="p">([</span><span class="mi">32</span><span class="p">,</span> <span class="mi">35</span><span class="p">,</span> <span class="mi">38</span><span class="p">,</span> <span class="mi">41</span><span class="p">,</span> <span class="mi">43</span><span class="p">])</span>     <span class="c1"># 纬度每3°</span>
+</pre></div>
+</div>
+</section>
+<section id="id15">
+<h3>色标自定义配置<a class="headerlink" href="#id15" title="Link to this heading">#</a></h3>
+<ol class="arabic simple">
+<li><p>手动设定气温等值区间，让分级更贴近论文图例需求：</p></li>
+</ol>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">levels</span> <span class="o">=</span> <span class="p">[</span><span class="o">-</span><span class="mi">10</span><span class="p">,</span> <span class="o">-</span><span class="mi">5</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">5</span><span class="p">,</span> <span class="mi">10</span><span class="p">,</span> <span class="mi">15</span><span class="p">,</span> <span class="mi">20</span><span class="p">,</span> <span class="mi">25</span><span class="p">]</span>
+<span class="n">contour</span> <span class="o">=</span> <span class="n">ax</span><span class="o">.</span><span class="n">contourf</span><span class="p">(</span><span class="n">lon</span><span class="p">,</span> <span class="n">lat</span><span class="p">,</span> <span class="n">temp</span><span class="p">,</span> <span class="n">levels</span><span class="o">=</span><span class="n">levels</span><span class="p">,</span> <span class="n">cmap</span><span class="o">=</span><span class="s2">&quot;coolwarm&quot;</span><span class="p">,</span>
+                      <span class="n">transform</span><span class="o">=</span><span class="n">ccrs</span><span class="o">.</span><span class="n">PlateCarree</span><span class="p">())</span>
+</pre></div>
+</div>
+<ol class="arabic simple" start="2">
+<li><p>修改色标位置、尺寸、文字字号：</p></li>
+</ol>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">cbar</span> <span class="o">=</span> <span class="n">fig</span><span class="o">.</span><span class="n">colorbar</span><span class="p">(</span><span class="n">contour</span><span class="p">,</span> <span class="n">ax</span><span class="o">=</span><span class="n">ax</span><span class="p">,</span> <span class="n">shrink</span><span class="o">=</span><span class="mf">0.8</span><span class="p">,</span> <span class="n">pad</span><span class="o">=</span><span class="mf">0.02</span><span class="p">)</span>
+<span class="n">cbar</span><span class="o">.</span><span class="n">set_label</span><span class="p">(</span><span class="s2">&quot;气温 ℃&quot;</span><span class="p">,</span> <span class="n">fontsize</span><span class="o">=</span><span class="mi">12</span><span class="p">)</span>
+<span class="n">cbar</span><span class="o">.</span><span class="n">ax</span><span class="o">.</span><span class="n">tick_params</span><span class="p">(</span><span class="n">labelsize</span><span class="o">=</span><span class="mi">10</span><span class="p">)</span>
+</pre></div>
+</div>
+<ol class="arabic simple" start="3">
+<li><p>反色带、自定义渐变色：若想「暖色表示低温」，直接在 cmap 后加 <code class="docutils literal notranslate"><span class="pre">_r</span></code>（<code class="docutils literal notranslate"><span class="pre">&quot;coolwarm_r&quot;</span></code>）；想要连续渐变色带，用 <code class="docutils literal notranslate"><span class="pre">matplotlib.colors.LinearSegmentedColormap</span></code> 从调色板拼接自定义色带。</p></li>
+</ol>
+</section>
+<section id="id16">
+<h3>叠加城市站点标记<a class="headerlink" href="#id16" title="Link to this heading">#</a></h3>
+<p>在地图上标注兰州站点坐标，对接本项目兰州观测站数据（第 2、3、4、5 章都用过它的信息）：</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="c1"># 兰州站固定坐标：lon=103.83°E, lat=36.06°N</span>
+<span class="n">ax</span><span class="o">.</span><span class="n">scatter</span><span class="p">(</span><span class="mf">103.83</span><span class="p">,</span> <span class="mf">36.06</span><span class="p">,</span> <span class="n">c</span><span class="o">=</span><span class="s2">&quot;black&quot;</span><span class="p">,</span> <span class="n">marker</span><span class="o">=</span><span class="s2">&quot;o&quot;</span><span class="p">,</span> <span class="n">s</span><span class="o">=</span><span class="mi">30</span><span class="p">,</span>
+           <span class="n">transform</span><span class="o">=</span><span class="n">ccrs</span><span class="o">.</span><span class="n">PlateCarree</span><span class="p">())</span>
+<span class="n">ax</span><span class="o">.</span><span class="n">text</span><span class="p">(</span><span class="mf">104.2</span><span class="p">,</span> <span class="mf">36.06</span><span class="p">,</span> <span class="s2">&quot;兰州站&quot;</span><span class="p">,</span> <span class="n">fontsize</span><span class="o">=</span><span class="mi">9</span><span class="p">,</span>
+        <span class="n">transform</span><span class="o">=</span><span class="n">ccrs</span><span class="o">.</span><span class="n">PlateCarree</span><span class="p">())</span>
+</pre></div>
+</div>
+<div class="admonition warning">
+<p class="admonition-title">警告</p>
+<p>注意：<code class="docutils literal notranslate"><span class="pre">scatter</span></code> 和 <code class="docutils literal notranslate"><span class="pre">text</span></code> 也必须带 <code class="docutils literal notranslate"><span class="pre">transform=ccrs.PlateCarree()</span></code>！否则点会画到地图外或错位——这和 <code class="docutils literal notranslate"><span class="pre">contourf</span></code> 是同一个道理：不贴经纬度标签，就贴不到正确的位置。</p>
+</div>
+</section>
+</section>
+<section id="id17">
+<h2>拓展提升板块<a class="headerlink" href="#id17" title="Link to this heading">#</a></h2>
+<section id="id18">
+<h3>多投影切换：兰伯特等面积投影绘制西北图<a class="headerlink" href="#id18" title="Link to this heading">#</a></h3>
+<p>区域面积对比宜用兰伯特等面积投影，中心对准西北腹地（经度 101°E、纬度 38°N），形变最小。替换整段画布创建与裁剪代码即可，绘图逻辑与 PlateCarree 完全一致：</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span><span class="w"> </span><span class="nn">cartopy.crs</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">ccrs</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">xarray</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">xr</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">matplotlib.pyplot</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">plt</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">cartopy.feature</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">cfeature</span>
+
+<span class="n">ds</span> <span class="o">=</span> <span class="n">xr</span><span class="o">.</span><span class="n">open_dataset</span><span class="p">(</span><span class="s2">&quot;./data/northwest_temp.nc&quot;</span><span class="p">)</span>
+
+<span class="c1"># 兰伯特等面积投影，中心对准西北腹地</span>
+<span class="n">proj</span> <span class="o">=</span> <span class="n">ccrs</span><span class="o">.</span><span class="n">LambertAzimuthalEqualArea</span><span class="p">(</span><span class="n">central_longitude</span><span class="o">=</span><span class="mi">101</span><span class="p">,</span> <span class="n">central_latitude</span><span class="o">=</span><span class="mi">38</span><span class="p">)</span>
+<span class="n">fig</span><span class="p">,</span> <span class="n">ax</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">subplots</span><span class="p">(</span><span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">10</span><span class="p">,</span> <span class="mi">7</span><span class="p">),</span> <span class="n">subplot_kw</span><span class="o">=</span><span class="p">{</span><span class="s2">&quot;projection&quot;</span><span class="p">:</span> <span class="n">proj</span><span class="p">})</span>
+
+<span class="n">contour</span> <span class="o">=</span> <span class="n">ax</span><span class="o">.</span><span class="n">contourf</span><span class="p">(</span><span class="n">ds</span><span class="o">.</span><span class="n">lon</span><span class="p">,</span> <span class="n">ds</span><span class="o">.</span><span class="n">lat</span><span class="p">,</span> <span class="n">ds</span><span class="o">.</span><span class="n">temp</span><span class="p">,</span> <span class="n">levels</span><span class="o">=</span><span class="mi">20</span><span class="p">,</span> <span class="n">cmap</span><span class="o">=</span><span class="s2">&quot;coolwarm&quot;</span><span class="p">,</span>
+                      <span class="n">transform</span><span class="o">=</span><span class="n">ccrs</span><span class="o">.</span><span class="n">PlateCarree</span><span class="p">())</span>
+
+<span class="n">ax</span><span class="o">.</span><span class="n">coastlines</span><span class="p">(</span><span class="n">linewidth</span><span class="o">=</span><span class="mf">0.8</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="s2">&quot;black&quot;</span><span class="p">)</span>
+<span class="n">ax</span><span class="o">.</span><span class="n">add_feature</span><span class="p">(</span><span class="n">cfeature</span><span class="o">.</span><span class="n">BORDERS</span><span class="p">,</span> <span class="n">linewidth</span><span class="o">=</span><span class="mf">0.8</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="s2">&quot;black&quot;</span><span class="p">)</span>
+
+<span class="c1"># 注意：set_extent 的经纬度范围以 PlateCarree 坐标给出，并显式指定 crs</span>
+<span class="n">ax</span><span class="o">.</span><span class="n">set_extent</span><span class="p">([</span><span class="mi">90</span><span class="p">,</span> <span class="mi">112</span><span class="p">,</span> <span class="mi">32</span><span class="p">,</span> <span class="mi">43</span><span class="p">],</span> <span class="n">crs</span><span class="o">=</span><span class="n">ccrs</span><span class="o">.</span><span class="n">PlateCarree</span><span class="p">())</span>
+
+<span class="n">ax</span><span class="o">.</span><span class="n">gridlines</span><span class="p">(</span><span class="n">draw_labels</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">linestyle</span><span class="o">=</span><span class="s2">&quot;--&quot;</span><span class="p">,</span> <span class="n">alpha</span><span class="o">=</span><span class="mf">0.6</span><span class="p">)</span>
+
+<span class="n">cbar</span> <span class="o">=</span> <span class="n">fig</span><span class="o">.</span><span class="n">colorbar</span><span class="p">(</span><span class="n">contour</span><span class="p">,</span> <span class="n">shrink</span><span class="o">=</span><span class="mf">0.8</span><span class="p">)</span>
+<span class="n">cbar</span><span class="o">.</span><span class="n">set_label</span><span class="p">(</span><span class="s2">&quot;气温 ℃&quot;</span><span class="p">)</span>
+
+<span class="n">plt</span><span class="o">.</span><span class="n">savefig</span><span class="p">(</span><span class="s2">&quot;./figures/northwest_temp_lambert_annual.png&quot;</span><span class="p">,</span>
+            <span class="n">dpi</span><span class="o">=</span><span class="mi">300</span><span class="p">,</span> <span class="n">bbox_inches</span><span class="o">=</span><span class="s2">&quot;tight&quot;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
+</pre></div>
+</div>
+<div class="admonition note">
+<p class="admonition-title">备注</p>
+<p>观察对比：同一份数据，兰伯特投影下西北这片高纬、拉伸小的区域面积关系更贴近真实，适合「面积比较」类专题图；而 PlateCarree 经纬线横平竖直，更便于直接读数。两者按需求选用，没有绝对的好坏。</p>
+</div>
+</section>
+<section id="quiver">
+<h3>叠加风场矢量 quiver 绘图<a class="headerlink" href="#quiver" title="Link to this heading">#</a></h3>
+<p>在气温填色底图上叠加风矢量箭头，实现「温风联合」空间图。风场数据同样来自 NetCDF 文件中的 <code class="docutils literal notranslate"><span class="pre">u</span></code>（纬向风）、<code class="docutils literal notranslate"><span class="pre">v</span></code>（经向风）变量，均需注意坐标方向和 <code class="docutils literal notranslate"><span class="pre">transform</span></code>：</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span><span class="w"> </span><span class="nn">cartopy.crs</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">ccrs</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">matplotlib.pyplot</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">plt</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">xarray</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">xr</span>
+
+<span class="n">ds</span> <span class="o">=</span> <span class="n">xr</span><span class="o">.</span><span class="n">open_dataset</span><span class="p">(</span><span class="s2">&quot;./data/northwest_temp.nc&quot;</span><span class="p">)</span>
+<span class="n">u</span> <span class="o">=</span> <span class="n">ds</span><span class="o">.</span><span class="n">u</span>   <span class="c1"># 纬向风（m/s）</span>
+<span class="n">v</span> <span class="o">=</span> <span class="n">ds</span><span class="o">.</span><span class="n">v</span>   <span class="c1"># 经向风（m/s）</span>
+
+<span class="n">fig</span><span class="p">,</span> <span class="n">ax</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">subplots</span><span class="p">(</span><span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">10</span><span class="p">,</span> <span class="mi">6</span><span class="p">),</span>
+                       <span class="n">subplot_kw</span><span class="o">=</span><span class="p">{</span><span class="s2">&quot;projection&quot;</span><span class="p">:</span> <span class="n">ccrs</span><span class="o">.</span><span class="n">PlateCarree</span><span class="p">()})</span>
+
+<span class="n">contour</span> <span class="o">=</span> <span class="n">ax</span><span class="o">.</span><span class="n">contourf</span><span class="p">(</span><span class="n">ds</span><span class="o">.</span><span class="n">lon</span><span class="p">,</span> <span class="n">ds</span><span class="o">.</span><span class="n">lat</span><span class="p">,</span> <span class="n">ds</span><span class="o">.</span><span class="n">temp</span><span class="p">,</span> <span class="n">levels</span><span class="o">=</span><span class="mi">20</span><span class="p">,</span> <span class="n">cmap</span><span class="o">=</span><span class="s2">&quot;coolwarm&quot;</span><span class="p">,</span>
+                      <span class="n">transform</span><span class="o">=</span><span class="n">ccrs</span><span class="o">.</span><span class="n">PlateCarree</span><span class="p">())</span>
+
+<span class="c1"># 每第4个格点取一个箭头，避免箭头过密</span>
+<span class="n">ax</span><span class="o">.</span><span class="n">quiver</span><span class="p">(</span><span class="n">ds</span><span class="o">.</span><span class="n">lon</span><span class="p">[::</span><span class="mi">4</span><span class="p">],</span> <span class="n">ds</span><span class="o">.</span><span class="n">lat</span><span class="p">[::</span><span class="mi">4</span><span class="p">],</span> <span class="n">u</span><span class="p">[::</span><span class="mi">4</span><span class="p">,</span> <span class="p">::</span><span class="mi">4</span><span class="p">],</span> <span class="n">v</span><span class="p">[::</span><span class="mi">4</span><span class="p">,</span> <span class="p">::</span><span class="mi">4</span><span class="p">],</span>
+          <span class="n">scale</span><span class="o">=</span><span class="mi">20</span><span class="p">,</span> <span class="n">transform</span><span class="o">=</span><span class="n">ccrs</span><span class="o">.</span><span class="n">PlateCarree</span><span class="p">())</span>
+
+<span class="n">ax</span><span class="o">.</span><span class="n">coastlines</span><span class="p">(</span><span class="n">linewidth</span><span class="o">=</span><span class="mf">0.8</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="s2">&quot;black&quot;</span><span class="p">)</span>
+<span class="n">ax</span><span class="o">.</span><span class="n">add_feature</span><span class="p">(</span><span class="n">cfeature</span><span class="o">.</span><span class="n">BORDERS</span><span class="p">,</span> <span class="n">linewidth</span><span class="o">=</span><span class="mf">0.8</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="s2">&quot;black&quot;</span><span class="p">)</span>
+<span class="n">ax</span><span class="o">.</span><span class="n">set_extent</span><span class="p">([</span><span class="mi">90</span><span class="p">,</span> <span class="mi">112</span><span class="p">,</span> <span class="mi">32</span><span class="p">,</span> <span class="mi">43</span><span class="p">],</span> <span class="n">crs</span><span class="o">=</span><span class="n">ccrs</span><span class="o">.</span><span class="n">PlateCarree</span><span class="p">())</span>
+
+<span class="n">cbar</span> <span class="o">=</span> <span class="n">fig</span><span class="o">.</span><span class="n">colorbar</span><span class="p">(</span><span class="n">contour</span><span class="p">,</span> <span class="n">shrink</span><span class="o">=</span><span class="mf">0.8</span><span class="p">)</span>
+<span class="n">cbar</span><span class="o">.</span><span class="n">set_label</span><span class="p">(</span><span class="s2">&quot;气温 ℃&quot;</span><span class="p">)</span>
+
+<span class="n">plt</span><span class="o">.</span><span class="n">savefig</span><span class="p">(</span><span class="s2">&quot;./figures/northwest_temp_uv_annual.png&quot;</span><span class="p">,</span> <span class="n">dpi</span><span class="o">=</span><span class="mi">300</span><span class="p">,</span> <span class="n">bbox_inches</span><span class="o">=</span><span class="s2">&quot;tight&quot;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
+</pre></div>
+</div>
+<div class="admonition warning">
+<p class="admonition-title">警告</p>
+<p><code class="docutils literal notranslate"><span class="pre">quiver</span></code> 传参注意：风矢量的起点坐标是「经纬度数组」，箭头分量是 <code class="docutils literal notranslate"><span class="pre">u</span></code>、<code class="docutils literal notranslate"><span class="pre">v</span></code>（经向风、纬向风），不要与 x、y 混用。坐标与分量缺一不可，同样都要带上 <code class="docutils literal notranslate"><span class="pre">transform</span></code>。</p>
+</div>
+</section>
+<section id="id19">
+<h3>批量绘制逐月气温地图循环代码<a class="headerlink" href="#id19" title="Link to this heading">#</a></h3>
+<p>用 <code class="docutils literal notranslate"><span class="pre">for</span></code> 循环遍历 NetCDF 时间维度，自动生成 12 个月西北气温图，批量保存到 <code class="docutils literal notranslate"><span class="pre">figures</span></code> 文件夹：</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span><span class="w"> </span><span class="nn">os</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">matplotlib.pyplot</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">plt</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">cartopy.crs</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">ccrs</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">cartopy.feature</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">cfeature</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">xarray</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">xr</span>
+
+<span class="n">ds</span> <span class="o">=</span> <span class="n">xr</span><span class="o">.</span><span class="n">open_dataset</span><span class="p">(</span><span class="s2">&quot;./data/northwest_temp.nc&quot;</span><span class="p">)</span>
+<span class="n">os</span><span class="o">.</span><span class="n">makedirs</span><span class="p">(</span><span class="s2">&quot;./figures&quot;</span><span class="p">,</span> <span class="n">exist_ok</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+
+<span class="n">months</span> <span class="o">=</span> <span class="n">ds</span><span class="o">.</span><span class="n">time</span><span class="o">.</span><span class="n">values</span>   <span class="c1"># 假定时维名为 time，取值形如 2024-01 等</span>
+
+<span class="k">for</span> <span class="n">m</span> <span class="ow">in</span> <span class="n">ds</span><span class="o">.</span><span class="n">time</span><span class="p">:</span>
+    <span class="n">month_temp</span> <span class="o">=</span> <span class="n">ds</span><span class="o">.</span><span class="n">temp</span><span class="o">.</span><span class="n">sel</span><span class="p">(</span><span class="n">time</span><span class="o">=</span><span class="n">m</span><span class="p">)</span>   <span class="c1"># 取出单月气温场</span>
+    <span class="c1"># 统一色标范围，保证 12 张图冷暖尺可互相比较</span>
+    <span class="n">vmin</span><span class="p">,</span> <span class="n">vmax</span> <span class="o">=</span> <span class="o">-</span><span class="mi">12</span><span class="p">,</span> <span class="mi">28</span>
+
+    <span class="n">fig</span><span class="p">,</span> <span class="n">ax</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">subplots</span><span class="p">(</span><span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">10</span><span class="p">,</span> <span class="mi">6</span><span class="p">),</span>
+                           <span class="n">subplot_kw</span><span class="o">=</span><span class="p">{</span><span class="s2">&quot;projection&quot;</span><span class="p">:</span> <span class="n">ccrs</span><span class="o">.</span><span class="n">PlateCarree</span><span class="p">()})</span>
+    <span class="n">contour</span> <span class="o">=</span> <span class="n">ax</span><span class="o">.</span><span class="n">contourf</span><span class="p">(</span><span class="n">ds</span><span class="o">.</span><span class="n">lon</span><span class="p">,</span> <span class="n">ds</span><span class="o">.</span><span class="n">lat</span><span class="p">,</span> <span class="n">month_temp</span><span class="p">,</span>
+                          <span class="n">levels</span><span class="o">=</span><span class="mi">20</span><span class="p">,</span> <span class="n">cmap</span><span class="o">=</span><span class="s2">&quot;coolwarm&quot;</span><span class="p">,</span>
+                          <span class="n">vmin</span><span class="o">=</span><span class="n">vmin</span><span class="p">,</span> <span class="n">vmax</span><span class="o">=</span><span class="n">vmax</span><span class="p">,</span>
+                          <span class="n">transform</span><span class="o">=</span><span class="n">ccrs</span><span class="o">.</span><span class="n">PlateCarree</span><span class="p">())</span>
+    <span class="n">ax</span><span class="o">.</span><span class="n">coastlines</span><span class="p">(</span><span class="n">linewidth</span><span class="o">=</span><span class="mf">0.8</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="s2">&quot;black&quot;</span><span class="p">)</span>
+    <span class="n">ax</span><span class="o">.</span><span class="n">add_feature</span><span class="p">(</span><span class="n">cfeature</span><span class="o">.</span><span class="n">BORDERS</span><span class="p">,</span> <span class="n">linewidth</span><span class="o">=</span><span class="mf">0.8</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="s2">&quot;black&quot;</span><span class="p">)</span>
+    <span class="n">ax</span><span class="o">.</span><span class="n">set_extent</span><span class="p">([</span><span class="mi">90</span><span class="p">,</span> <span class="mi">112</span><span class="p">,</span> <span class="mi">32</span><span class="p">,</span> <span class="mi">43</span><span class="p">],</span> <span class="n">crs</span><span class="o">=</span><span class="n">ccrs</span><span class="o">.</span><span class="n">PlateCarree</span><span class="p">())</span>
+
+    <span class="n">cbar</span> <span class="o">=</span> <span class="n">fig</span><span class="o">.</span><span class="n">colorbar</span><span class="p">(</span><span class="n">contour</span><span class="p">,</span> <span class="n">shrink</span><span class="o">=</span><span class="mf">0.8</span><span class="p">)</span>
+    <span class="n">cbar</span><span class="o">.</span><span class="n">set_label</span><span class="p">(</span><span class="s2">&quot;气温 ℃&quot;</span><span class="p">)</span>
+    <span class="n">ax</span><span class="o">.</span><span class="n">set_title</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;西北 </span><span class="si">{</span><span class="n">m</span><span class="si">}</span><span class="s2"> 气温分布图&quot;</span><span class="p">)</span>
+
+    <span class="c1"># 文件名用月份字符串，存进 figures 文件夹</span>
+    <span class="n">plt</span><span class="o">.</span><span class="n">savefig</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;./figures/northwest_temp_</span><span class="si">{</span><span class="n">m</span><span class="o">.</span><span class="n">year</span><span class="si">}{</span><span class="n">m</span><span class="o">.</span><span class="n">month</span><span class="si">:</span><span class="s2">02d</span><span class="si">}</span><span class="s2">.png&quot;</span><span class="p">,</span>
+                <span class="n">dpi</span><span class="o">=</span><span class="mi">300</span><span class="p">,</span> <span class="n">bbox_inches</span><span class="o">=</span><span class="s2">&quot;tight&quot;</span><span class="p">)</span>
+    <span class="n">plt</span><span class="o">.</span><span class="n">close</span><span class="p">(</span><span class="n">fig</span><span class="p">)</span>   <span class="c1"># 循环里务必关闭画布，否则内存溢出、运行卡顿</span>
+</pre></div>
+</div>
+<div class="admonition warning">
+<p class="admonition-title">警告</p>
+<p>批量绘图三黄金法则：<strong>循环里统一 ``vmin/vmax``（可比性）、画完 ``plt.close()``（释放内存）、文件名按时间命名（可检索）。</strong> 缺一不可。</p>
+</div>
+</section>
+<section id="id20">
+<h3>多子图布局：分季节气温对比地图<a class="headerlink" href="#id20" title="Link to this heading">#</a></h3>
+<p>2 行 2 列子图，分别绘制春、夏、秋、冬的气温场，统一色标便于季节对比：</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span><span class="w"> </span><span class="nn">matplotlib.pyplot</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">plt</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">cartopy.crs</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">ccrs</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">cartopy.feature</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">cfeature</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">xarray</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">xr</span>
+
+<span class="n">ds</span> <span class="o">=</span> <span class="n">xr</span><span class="o">.</span><span class="n">open_dataset</span><span class="p">(</span><span class="s2">&quot;./data/northwest_temp.nc&quot;</span><span class="p">)</span>
+
+<span class="n">seasons</span> <span class="o">=</span> <span class="p">{</span>
+    <span class="s2">&quot;春季&quot;</span><span class="p">:</span> <span class="p">(</span><span class="s2">&quot;2024-03-01T00&quot;</span><span class="p">,</span> <span class="s2">&quot;2024-05-01T00&quot;</span><span class="p">),</span>   <span class="c1"># 起止时间切片用</span>
+    <span class="s2">&quot;夏季&quot;</span><span class="p">:</span> <span class="p">(</span><span class="s2">&quot;2024-06-01T00&quot;</span><span class="p">,</span> <span class="s2">&quot;2024-08-01T00&quot;</span><span class="p">),</span>
+    <span class="s2">&quot;秋季&quot;</span><span class="p">:</span> <span class="p">(</span><span class="s2">&quot;2024-09-01T00&quot;</span><span class="p">,</span> <span class="s2">&quot;2024-11-01T00&quot;</span><span class="p">),</span>
+    <span class="s2">&quot;冬季&quot;</span><span class="p">:</span> <span class="p">(</span><span class="s2">&quot;2024-12-01T00&quot;</span><span class="p">,</span> <span class="s2">&quot;2025-02-01T00&quot;</span><span class="p">),</span>
+<span class="p">}</span>
+<span class="n">vmin</span><span class="p">,</span> <span class="n">vmax</span> <span class="o">=</span> <span class="o">-</span><span class="mi">20</span><span class="p">,</span> <span class="mi">30</span>   <span class="c1"># 四图统一色标范围</span>
+
+<span class="n">fig</span><span class="p">,</span> <span class="n">axes</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">subplots</span><span class="p">(</span>
+    <span class="mi">2</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">12</span><span class="p">,</span> <span class="mi">9</span><span class="p">),</span>
+    <span class="n">subplot_kw</span><span class="o">=</span><span class="p">{</span><span class="s2">&quot;projection&quot;</span><span class="p">:</span> <span class="n">ccrs</span><span class="o">.</span><span class="n">PlateCarree</span><span class="p">()})</span>
+
+<span class="k">for</span> <span class="n">ax</span><span class="p">,</span> <span class="p">(</span><span class="n">season</span><span class="p">,</span> <span class="p">(</span><span class="n">t0</span><span class="p">,</span> <span class="n">t1</span><span class="p">))</span> <span class="ow">in</span> <span class="nb">zip</span><span class="p">(</span><span class="n">axes</span><span class="o">.</span><span class="n">flat</span><span class="p">,</span> <span class="n">seasons</span><span class="o">.</span><span class="n">items</span><span class="p">()):</span>
+    <span class="n">season_temp</span> <span class="o">=</span> <span class="n">ds</span><span class="o">.</span><span class="n">temp</span><span class="o">.</span><span class="n">sel</span><span class="p">(</span><span class="n">time</span><span class="o">=</span><span class="nb">slice</span><span class="p">(</span><span class="n">t0</span><span class="p">,</span> <span class="n">t1</span><span class="p">))</span><span class="o">.</span><span class="n">mean</span><span class="p">(</span><span class="n">dim</span><span class="o">=</span><span class="s2">&quot;time&quot;</span><span class="p">)</span>  <span class="c1"># 季节平均</span>
+
+    <span class="n">contour</span> <span class="o">=</span> <span class="n">ax</span><span class="o">.</span><span class="n">contourf</span><span class="p">(</span><span class="n">ds</span><span class="o">.</span><span class="n">lon</span><span class="p">,</span> <span class="n">ds</span><span class="o">.</span><span class="n">lat</span><span class="p">,</span> <span class="n">season_temp</span><span class="p">,</span>
+                          <span class="n">levels</span><span class="o">=</span><span class="mi">20</span><span class="p">,</span> <span class="n">cmap</span><span class="o">=</span><span class="s2">&quot;coolwarm&quot;</span><span class="p">,</span>
+                          <span class="n">vmin</span><span class="o">=</span><span class="n">vmin</span><span class="p">,</span> <span class="n">vmax</span><span class="o">=</span><span class="n">vmax</span><span class="p">,</span>
+                          <span class="n">transform</span><span class="o">=</span><span class="n">ccrs</span><span class="o">.</span><span class="n">PlateCarree</span><span class="p">())</span>
+    <span class="n">ax</span><span class="o">.</span><span class="n">coastlines</span><span class="p">(</span><span class="n">linewidth</span><span class="o">=</span><span class="mf">0.8</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="s2">&quot;black&quot;</span><span class="p">)</span>
+    <span class="n">ax</span><span class="o">.</span><span class="n">add_feature</span><span class="p">(</span><span class="n">cfeature</span><span class="o">.</span><span class="n">BORDERS</span><span class="p">,</span> <span class="n">linewidth</span><span class="o">=</span><span class="mf">0.8</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="s2">&quot;black&quot;</span><span class="p">)</span>
+    <span class="n">ax</span><span class="o">.</span><span class="n">set_extent</span><span class="p">([</span><span class="mi">90</span><span class="p">,</span> <span class="mi">112</span><span class="p">,</span> <span class="mi">32</span><span class="p">,</span> <span class="mi">43</span><span class="p">],</span> <span class="n">crs</span><span class="o">=</span><span class="n">ccrs</span><span class="o">.</span><span class="n">PlateCarree</span><span class="p">())</span>
+    <span class="n">ax</span><span class="o">.</span><span class="n">set_title</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;西北地区</span><span class="si">{</span><span class="n">season</span><span class="si">}</span><span class="s2">平均气温&quot;</span><span class="p">)</span>
+
+<span class="c1"># 四张子图共用一只色标，只给最后一列显示纬度刻度以免重叠，此处统一用一个 cbar</span>
+<span class="n">fig</span><span class="o">.</span><span class="n">colorbar</span><span class="p">(</span><span class="n">contour</span><span class="p">,</span> <span class="n">ax</span><span class="o">=</span><span class="n">axes</span><span class="p">,</span> <span class="n">shrink</span><span class="o">=</span><span class="mf">0.8</span><span class="p">,</span> <span class="n">pad</span><span class="o">=</span><span class="mf">0.02</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="s2">&quot;气温 ℃&quot;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">tight_layout</span><span class="p">()</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">savefig</span><span class="p">(</span><span class="s2">&quot;./figures/northwest_temp_seasons.png&quot;</span><span class="p">,</span> <span class="n">dpi</span><span class="o">=</span><span class="mi">300</span><span class="p">,</span> <span class="n">bbox_inches</span><span class="o">=</span><span class="s2">&quot;tight&quot;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
+</pre></div>
+</div>
+<div class="admonition note">
+<p class="admonition-title">备注</p>
+<p>2×2 子图的色标用 <code class="docutils literal notranslate"><span class="pre">fig.colorbar(contour,</span> <span class="pre">ax=axes)</span></code> 可以让四张图共享一个大色条，视觉更整齐；配合统一的 <code class="docutils literal notranslate"><span class="pre">vmin/vmax</span></code>，四季冷暖差异一目了然。</p>
+</div>
+</section>
+<section id="id21">
+<h3>常见报错核心解决方案<a class="headerlink" href="#id21" title="Link to this heading">#</a></h3>
+<ol class="arabic simple">
+<li><p><strong>地图格点严重错位</strong>：漏写 <code class="docutils literal notranslate"><span class="pre">transform=ccrs.PlateCarree()</span></code>。排查 <code class="docutils literal notranslate"><span class="pre">contourf</span></code>、<code class="docutils literal notranslate"><span class="pre">scatter</span></code>、<code class="docutils literal notranslate"><span class="pre">quiver</span></code> 是否都带了 <code class="docutils literal notranslate"><span class="pre">transform</span></code>。</p></li>
+<li><p><strong>set_extent 无裁剪效果</strong>：<code class="docutils literal notranslate"><span class="pre">extent</span></code> 经纬度范围写反（顺序应为 <code class="docutils literal notranslate"><span class="pre">[西经,</span> <span class="pre">东经,</span> <span class="pre">南纬,</span> <span class="pre">北纬]</span></code>，即 <code class="docutils literal notranslate"><span class="pre">[90,</span> <span class="pre">112,</span> <span class="pre">32,</span> <span class="pre">43]</span></code>）、或 <code class="docutils literal notranslate"><span class="pre">crs</span></code> 参数缺失。</p></li>
+<li><p><strong>海岸线加载缓慢</strong>：第一次运行会自动下载 Natural Earth 矢量文件，耐心等待一次即可；也可提前配置本地缓存路径，避免课堂绘图中途卡顿。</p></li>
+<li><p><strong>图片导出边缘缺失</strong>：<code class="docutils literal notranslate"><span class="pre">savefig</span></code> 添加 <code class="docutils literal notranslate"><span class="pre">bbox_inches=&quot;tight&quot;</span></code>。</p></li>
+<li><p><strong>cartopy 安装失败</strong>：优先 <code class="docutils literal notranslate"><span class="pre">conda</span> <span class="pre">install</span> <span class="pre">cartopy</span></code>，不要只用 pip（地理底层依赖 pip 无法自动配置）。</p></li>
+</ol>
+</section>
+</section>
+<section id="id22">
+<h2>本章小结<a class="headerlink" href="#id22" title="Link to this heading">#</a></h2>
+<ol class="arabic simple">
+<li><p>掌握 Cartopy 三种气象常用地图投影的原理与适用场景（PlateCarree 图省事、Mercator 保角度、Lambert 保面积）；</p></li>
+<li><p>熟练使用 GeoAxes、<code class="docutils literal notranslate"><span class="pre">transform</span></code> 参数，解决气象格点数据地图错位问题；</p></li>
+<li><p>独立完成西北地区气温填色地图，叠加海岸线、国界、河流、刻度、色标全套要素；</p></li>
+<li><p>掌握画布区域裁剪（<code class="docutils literal notranslate"><span class="pre">set_extent([90,</span> <span class="pre">112,</span> <span class="pre">32,</span> <span class="pre">43])</span></code>）、图片高清导出（<code class="docutils literal notranslate"><span class="pre">dpi=300</span></code> + <code class="docutils literal notranslate"><span class="pre">bbox_inches=&quot;tight&quot;</span></code>）、地图美化细节调整；</p></li>
+<li><p>拓展学会兰伯特投影、风场叠加、批量时序绘图、多子图季节对比等进阶绘图技巧；</p></li>
+<li><p>完整完成本项目最终可视化成果，形成一套从环境搭建到空间地图的完整气象 Python 分析流程。</p></li>
+</ol>
+</section>
+<section id="id23">
+<h2>最佳实践：Cartopy 地图成果规范<a class="headerlink" href="#id23" title="Link to this heading">#</a></h2>
+<p>下面的规范是一套可以照抄的西北气温地图「施工规范」：每节先给结论（✅），再给常见坑（⚠️），代码均为可直接复制的标准写法。</p>
+<section id="weather-project">
+<h3>项目目录文件规范（与全书 weather_project 统一）<a class="headerlink" href="#weather-project" title="Link to this heading">#</a></h3>
+<p>所有 Cartopy 地图脚本、输出图片、数据严格遵循固定路径，避免路径报错、文件杂乱：</p>
+<ol class="arabic simple">
+<li><p>✅ 格点数据读取路径：<code class="docutils literal notranslate"><span class="pre">./data/northwest_temp.nc</span></code>（T-001 统一提供模拟 NetCDF 气温文件，<strong>禁止写绝对本地磁盘路径</strong>）；</p></li>
+<li><p>✅ 绘图脚本存放路径：<code class="docutils literal notranslate"><span class="pre">./scripts/plot_cartopy_temp.py</span></code>；</p></li>
+<li><p>✅ 地图输出保存路径：<code class="docutils literal notranslate"><span class="pre">./figures/</span></code>，所有地图统一存入该文件夹，不散落根目录；</p></li>
+<li><p>✅ 输出文件命名规范：<code class="docutils literal notranslate"><span class="pre">区域_要素_投影_时间.png</span></code>，例如 <code class="docutils literal notranslate"><span class="pre">northwest_temp_platecarree_annual.png</span></code>、<code class="docutils literal notranslate"><span class="pre">northwest_temp_lambert_july.png</span></code>。</p></li>
+</ol>
+<p>路径最佳实践代码模板：</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span><span class="w"> </span><span class="nn">os</span>
+
+<span class="c1"># 统一路径定义，全局复用</span>
+<span class="n">data_path</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="s2">&quot;./data&quot;</span><span class="p">,</span> <span class="s2">&quot;northwest_temp.nc&quot;</span><span class="p">)</span>
+<span class="n">fig_save_path</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="s2">&quot;./figures&quot;</span><span class="p">,</span> <span class="s2">&quot;northwest_temp_map.png&quot;</span><span class="p">)</span>
+
+<span class="c1"># 自动创建图片文件夹，避免无目录保存报错</span>
+<span class="n">os</span><span class="o">.</span><span class="n">makedirs</span><span class="p">(</span><span class="s2">&quot;./figures&quot;</span><span class="p">,</span> <span class="n">exist_ok</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+</pre></div>
+</div>
+<div class="admonition warning">
+<p class="admonition-title">警告</p>
+<p>不做 <code class="docutils literal notranslate"><span class="pre">os.makedirs(...,</span> <span class="pre">exist_ok=True)</span></code>，目录不存在时 <code class="docutils literal notranslate"><span class="pre">savefig</span></code> 会直接报 <code class="docutils literal notranslate"><span class="pre">FileNotFoundError</span></code>——批量绘图时最常见的第一声「哎呀」。</p>
+</div>
+</section>
+<section id="id24">
+<h3>虚拟环境与库安装规范<a class="headerlink" href="#id24" title="Link to this heading">#</a></h3>
+<ol class="arabic simple">
+<li><p>✅ 绘图固定使用 <code class="docutils literal notranslate"><span class="pre">met_p312</span></code> Python 3.12 虚拟环境，不使用系统默认 Python；</p></li>
+<li><p>✅ Cartopy 优先 conda 安装，禁止单独 pip 安装（底层地理依赖 pip 无法自动配置）。</p></li>
+</ol>
+<p>标准安装命令：</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>conda<span class="w"> </span>install<span class="w"> </span>cartopy<span class="w"> </span>xarray<span class="w"> </span>netcdf4<span class="w"> </span>numpy<span class="w"> </span>matplotlib
+</pre></div>
+</div>
+<ol class="arabic simple" start="3">
+<li><p>⚠️ 禁止混用多源安装方式（一部分 conda、一部分 pip），防止版本冲突、海岸线加载失败。</p></li>
+</ol>
+</section>
+<section id="id25">
+<h3>地图画布与投影选型规范（西北区域专用）<a class="headerlink" href="#id25" title="Link to this heading">#</a></h3>
+<ol class="arabic simple">
+<li><p>✅ 常规年度/逐月气温分布图：<code class="docutils literal notranslate"><span class="pre">PlateCarree</span></code> 等经纬度投影（项目默认）。
+- 画布尺寸固定：单张子图 <code class="docutils literal notranslate"><span class="pre">figsize=(10,</span> <span class="pre">6)</span></code>，双列子图 <code class="docutils literal notranslate"><span class="pre">figsize=(12,</span> <span class="pre">5)</span></code>，四季对比 2×2 子图 <code class="docutils literal notranslate"><span class="pre">figsize=(12,</span> <span class="pre">9)</span></code>；
+- 强制书写 <code class="docutils literal notranslate"><span class="pre">subplot_kw={&quot;projection&quot;:</span> <span class="pre">ccrs.PlateCarree()}</span></code>，不可省略地理投影参数。</p></li>
+<li><p>✅ 区域气候专题分析图：<code class="docutils literal notranslate"><span class="pre">LambertAzimuthalEqualArea</span></code> 兰伯特等面积投影，西北区域统一投影中心配置，减少区域形变：</p></li>
+</ol>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">proj</span> <span class="o">=</span> <span class="n">ccrs</span><span class="o">.</span><span class="n">LambertAzimuthalEqualArea</span><span class="p">(</span><span class="n">central_longitude</span><span class="o">=</span><span class="mi">101</span><span class="p">,</span> <span class="n">central_latitude</span><span class="o">=</span><span class="mi">38</span><span class="p">)</span>
+<span class="n">fig</span><span class="p">,</span> <span class="n">ax</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">subplots</span><span class="p">(</span><span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">10</span><span class="p">,</span> <span class="mi">7</span><span class="p">),</span> <span class="n">subplot_kw</span><span class="o">=</span><span class="p">{</span><span class="s2">&quot;projection&quot;</span><span class="p">:</span> <span class="n">proj</span><span class="p">})</span>
+</pre></div>
+</div>
+<ol class="arabic simple" start="3">
+<li><p>⚠️ <strong>禁止行为</strong>：不使用 Mercator 墨卡托投影绘制西北中纬度气温图——高纬面积被严重拉伸，不符合气象期刊绘图标准。</p></li>
+</ol>
+</section>
+<section id="contourf">
+<h3>核心绘图参数标准化（contourf 气温填色统一规范）<a class="headerlink" href="#contourf" title="Link to this heading">#</a></h3>
+<ol class="arabic simple">
+<li><p>✅ 气温填色 <code class="docutils literal notranslate"><span class="pre">levels</span></code> 分层：常规气温场统一设置 <code class="docutils literal notranslate"><span class="pre">levels=20</span></code>，过渡平滑；如需自定义分级（用于论文分级图例）手动传入数值列表：</p></li>
+</ol>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">levels</span> <span class="o">=</span> <span class="p">[</span><span class="o">-</span><span class="mi">10</span><span class="p">,</span> <span class="o">-</span><span class="mi">5</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">5</span><span class="p">,</span> <span class="mi">10</span><span class="p">,</span> <span class="mi">15</span><span class="p">,</span> <span class="mi">20</span><span class="p">,</span> <span class="mi">25</span><span class="p">]</span>
+</pre></div>
+</div>
+<ol class="arabic simple" start="2">
+<li><p>✅ 色带固定选用 <code class="docutils literal notranslate"><span class="pre">cmap=&quot;coolwarm&quot;</span></code>（冷蓝-暖红，气象气温通用配色），<strong>禁止</strong>使用七彩杂乱色带 <code class="docutils literal notranslate"><span class="pre">jet</span></code>；</p></li>
+<li><p>✅ 强制添加 <code class="docutils literal notranslate"><span class="pre">transform=ccrs.PlateCarree()</span></code> 至 <code class="docutils literal notranslate"><span class="pre">contourf</span></code>，这是地图不偏移的硬性规范，所有示例脚本必须包含该参数。</p></li>
+</ol>
+<p>标准填色代码片段：</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">contour</span> <span class="o">=</span> <span class="n">ax</span><span class="o">.</span><span class="n">contourf</span><span class="p">(</span>
+    <span class="n">ds</span><span class="o">.</span><span class="n">lon</span><span class="p">,</span> <span class="n">ds</span><span class="o">.</span><span class="n">lat</span><span class="p">,</span> <span class="n">ds</span><span class="o">.</span><span class="n">temp</span><span class="p">,</span>
+    <span class="n">levels</span><span class="o">=</span><span class="mi">20</span><span class="p">,</span>
+    <span class="n">cmap</span><span class="o">=</span><span class="s2">&quot;coolwarm&quot;</span><span class="p">,</span>
+    <span class="n">transform</span><span class="o">=</span><span class="n">ccrs</span><span class="o">.</span><span class="n">PlateCarree</span><span class="p">()</span>
+<span class="p">)</span>
+</pre></div>
+</div>
+<div class="admonition warning">
+<p class="admonition-title">警告</p>
+<p><code class="docutils literal notranslate"><span class="pre">transform</span></code> 相当于给每个格点贴「经纬度标签」。漏写它，Cartopy 不知道数据该贴在地图哪个位置，整片色块会错位、跑偏甚至消失。所有空间绘图（<code class="docutils literal notranslate"><span class="pre">contourf</span></code>、<code class="docutils literal notranslate"><span class="pre">scatter</span></code>、<code class="docutils literal notranslate"><span class="pre">quiver</span></code>、<code class="docutils literal notranslate"><span class="pre">text</span></code>）都要记得贴这个标签。</p>
+</div>
+</section>
+<section id="id26">
+<h3>地理要素叠加样式统一标准<a class="headerlink" href="#id26" title="Link to this heading">#</a></h3>
+<p>为保证整套项目图表视觉统一，固定各类地理线条粗细、颜色：</p>
+<ol class="arabic simple">
+<li><p>✅ 海岸线：<code class="docutils literal notranslate"><span class="pre">ax.coastlines(linewidth=0.8,</span> <span class="pre">color=&quot;black&quot;)</span></code></p></li>
+<li><p>✅ 国界线：<code class="docutils literal notranslate"><span class="pre">cfeature.BORDERS</span></code>，<code class="docutils literal notranslate"><span class="pre">linewidth=0.8,</span> <span class="pre">color=&quot;black&quot;</span></code></p></li>
+<li><p>✅ 河流：<code class="docutils literal notranslate"><span class="pre">cfeature.RIVERS</span></code>，<code class="docutils literal notranslate"><span class="pre">linewidth=0.4,</span> <span class="pre">color=&quot;#4488dd&quot;</span></code></p></li>
+<li><p>✅ 省界（拓展绘图）：自定义 shp 省界文件，线条宽度 0.5、浅灰色，不遮盖气温填色场</p></li>
+<li><p>✅ 图层绘制顺序规范（由底层到顶层）：<strong>气温填色场 → 河流 → 海岸线 → 国界 → 站点标记散点</strong></p></li>
+</ol>
+<div class="admonition warning">
+<p class="admonition-title">警告</p>
+<p>图层顺序错了：如果先画国界/海岸线、再画气温填色，兜底上去的色块会把国界、海岸线整个埋住，图上一片「糊」——先铺底图色，再画边框与标记，顺序绝不能倒。</p>
+</div>
+</section>
+<section id="id27">
+<h3>研究区域裁剪（西北地区固定经纬度范围）<a class="headerlink" href="#id27" title="Link to this heading">#</a></h3>
+<p>所有西北气温地图统一裁剪范围，杜绝图表大小不一：</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="c1"># 西北标准经纬度：东经90°~112°，北纬32°~43°</span>
+<span class="n">ax</span><span class="o">.</span><span class="n">set_extent</span><span class="p">([</span><span class="mi">90</span><span class="p">,</span> <span class="mi">112</span><span class="p">,</span> <span class="mi">32</span><span class="p">,</span> <span class="mi">43</span><span class="p">],</span> <span class="n">crs</span><span class="o">=</span><span class="n">ccrs</span><span class="o">.</span><span class="n">PlateCarree</span><span class="p">())</span>
+</pre></div>
+</div>
+<p>配套网格刻度规范：</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="c1"># 显示经纬度标签，虚线网格，降低透明度不抢视觉重心</span>
+<span class="n">ax</span><span class="o">.</span><span class="n">gridlines</span><span class="p">(</span><span class="n">draw_labels</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">linestyle</span><span class="o">=</span><span class="s2">&quot;--&quot;</span><span class="p">,</span> <span class="n">alpha</span><span class="o">=</span><span class="mf">0.6</span><span class="p">)</span>
+</pre></div>
+</div>
+<div class="admonition warning">
+<p class="admonition-title">警告</p>
+<p><code class="docutils literal notranslate"><span class="pre">set_extent</span></code> 的列表顺序是 <code class="docutils literal notranslate"><span class="pre">[西经,</span> <span class="pre">东经,</span> <span class="pre">南纬,</span> <span class="pre">北纬]</span></code>，即 <code class="docutils literal notranslate"><span class="pre">[90,</span> <span class="pre">112,</span> <span class="pre">32,</span> <span class="pre">43]</span></code>。写反成 <code class="docutils literal notranslate"><span class="pre">[32,</span> <span class="pre">43,</span> <span class="pre">90,</span> <span class="pre">112]</span></code> 或漏掉 <code class="docutils literal notranslate"><span class="pre">crs=ccrs.PlateCarree()</span></code>，裁剪就会失效。</p>
+</div>
+</section>
+<section id="colorbar">
+<h3>色标 colorbar 标准化规范<a class="headerlink" href="#colorbar" title="Link to this heading">#</a></h3>
+<ol class="arabic simple">
+<li><p>✅ 缩放比例统一 <code class="docutils literal notranslate"><span class="pre">shrink=0.8</span></code>，避免色条过长/过短与画布不协调；</p></li>
+<li><p>✅ 色标标签固定：<code class="docutils literal notranslate"><span class="pre">cbar.set_label(&quot;气温</span> <span class="pre">℃&quot;,</span> <span class="pre">fontsize=11)</span></code>；</p></li>
+<li><p>✅ 字号统一：标题 14 号、坐标轴与色标文字 11 号、刻度 10 号。</p></li>
+</ol>
+<p>完整色标代码：</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">cbar</span> <span class="o">=</span> <span class="n">fig</span><span class="o">.</span><span class="n">colorbar</span><span class="p">(</span><span class="n">contour</span><span class="p">,</span> <span class="n">shrink</span><span class="o">=</span><span class="mf">0.8</span><span class="p">)</span>
+<span class="n">cbar</span><span class="o">.</span><span class="n">set_label</span><span class="p">(</span><span class="s2">&quot;气温 ℃&quot;</span><span class="p">,</span> <span class="n">fontsize</span><span class="o">=</span><span class="mi">11</span><span class="p">)</span>
+<span class="n">ax</span><span class="o">.</span><span class="n">set_title</span><span class="p">(</span><span class="s2">&quot;西北地区2024年平均气温空间分布图&quot;</span><span class="p">,</span> <span class="n">fontsize</span><span class="o">=</span><span class="mi">14</span><span class="p">)</span>
+</pre></div>
+</div>
+</section>
+<section id="id28">
+<h3>图片导出高清规范（课程报告/期刊附图通用）<a class="headerlink" href="#id28" title="Link to this heading">#</a></h3>
+<ol class="arabic simple">
+<li><p>✅ DPI 固定 300，满足印刷清晰度标准；</p></li>
+<li><p>✅ 增加 <code class="docutils literal notranslate"><span class="pre">bbox_inches=&quot;tight&quot;</span></code> 自动裁剪空白白边，无需手动截图裁剪；</p></li>
+<li><p>✅ 图片格式统一 PNG，兼顾清晰度与文件体积。</p></li>
+</ol>
+<p>标准保存代码：</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">plt</span><span class="o">.</span><span class="n">savefig</span><span class="p">(</span><span class="n">fig_save_path</span><span class="p">,</span> <span class="n">dpi</span><span class="o">=</span><span class="mi">300</span><span class="p">,</span> <span class="n">bbox_inches</span><span class="o">=</span><span class="s2">&quot;tight&quot;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">close</span><span class="p">()</span>   <span class="c1"># 绘图完成关闭画布，释放内存，批量绘图必备</span>
+</pre></div>
+</div>
+<div class="admonition warning">
+<p class="admonition-title">警告</p>
+<p>批量绘图最佳实践：循环绘图后必须 <code class="docutils literal notranslate"><span class="pre">plt.close()</span></code>，否则会累积大量画布导致内存溢出、运行卡顿——开一次 <code class="docutils literal notranslate"><span class="pre">fig</span></code> 就相当于打开一扇窗，画完不关，窗会越叠越多。</p>
+</div>
+</section>
+<section id="id29">
+<h3>兰州站点标记统一规范（串联全书实战项目）<a class="headerlink" href="#id29" title="Link to this heading">#</a></h3>
+<p>每张西北气温地图统一标注兰州观测站点，串联第 2、3、4、5 章站点信息数据：</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="c1"># 兰州站固定坐标 lon=103.83, lat=36.06</span>
+<span class="n">ax</span><span class="o">.</span><span class="n">scatter</span><span class="p">(</span><span class="mf">103.83</span><span class="p">,</span> <span class="mf">36.06</span><span class="p">,</span> <span class="n">c</span><span class="o">=</span><span class="s2">&quot;black&quot;</span><span class="p">,</span> <span class="n">marker</span><span class="o">=</span><span class="s2">&quot;o&quot;</span><span class="p">,</span> <span class="n">s</span><span class="o">=</span><span class="mi">30</span><span class="p">,</span> <span class="n">transform</span><span class="o">=</span><span class="n">ccrs</span><span class="o">.</span><span class="n">PlateCarree</span><span class="p">())</span>
+<span class="n">ax</span><span class="o">.</span><span class="n">text</span><span class="p">(</span><span class="mf">104.2</span><span class="p">,</span> <span class="mf">36.06</span><span class="p">,</span> <span class="s2">&quot;兰州站&quot;</span><span class="p">,</span> <span class="n">fontsize</span><span class="o">=</span><span class="mi">9</span><span class="p">,</span> <span class="n">transform</span><span class="o">=</span><span class="n">ccrs</span><span class="o">.</span><span class="n">PlateCarree</span><span class="p">())</span>
+</pre></div>
+</div>
+<div class="admonition warning">
+<p class="admonition-title">警告</p>
+<p><code class="docutils literal notranslate"><span class="pre">scatter</span></code> 与 <code class="docutils literal notranslate"><span class="pre">text</span></code> 必须带 <code class="docutils literal notranslate"><span class="pre">transform=ccrs.PlateCarree()</span></code>，否则站点标在地图外或错位，跟 <code class="docutils literal notranslate"><span class="pre">contourf</span></code> 是同一个道理。</p>
+</div>
+</section>
+<section id="id30">
+<h3>批量绘图、多子图通用规范<a class="headerlink" href="#id30" title="Link to this heading">#</a></h3>
+<ol class="arabic simple">
+<li><p>✅ 逐月循环绘图：使用 xarray 内置 <code class="docutils literal notranslate"><span class="pre">groupby(&quot;time&quot;)</span></code> 或 <code class="docutils literal notranslate"><span class="pre">sel(time=...)</span></code> 遍历时间，搭配 <code class="docutils literal notranslate"><span class="pre">for</span></code> 循环批量出图，自动命名存储；</p></li>
+<li><p>✅ 四季对比 2×2 子图：统一色标范围 <code class="docutils literal notranslate"><span class="pre">vmin</span></code>、<code class="docutils literal notranslate"><span class="pre">vmax</span></code>，保证四张图冷暖色标尺完全一致，便于对比季节差异。</p></li>
+</ol>
+<p>示例统一色标约束：</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">vmin</span><span class="p">,</span> <span class="n">vmax</span> <span class="o">=</span> <span class="o">-</span><span class="mi">12</span><span class="p">,</span> <span class="mi">28</span>
+
+<span class="n">contour</span> <span class="o">=</span> <span class="n">ax</span><span class="o">.</span><span class="n">contourf</span><span class="p">(</span>
+    <span class="n">ds</span><span class="o">.</span><span class="n">lon</span><span class="p">,</span> <span class="n">ds</span><span class="o">.</span><span class="n">lat</span><span class="p">,</span> <span class="n">ds</span><span class="o">.</span><span class="n">temp</span><span class="p">,</span>
+    <span class="n">levels</span><span class="o">=</span><span class="mi">20</span><span class="p">,</span> <span class="n">cmap</span><span class="o">=</span><span class="s2">&quot;coolwarm&quot;</span><span class="p">,</span>
+    <span class="n">vmin</span><span class="o">=</span><span class="n">vmin</span><span class="p">,</span> <span class="n">vmax</span><span class="o">=</span><span class="n">vmax</span><span class="p">,</span>
+    <span class="n">transform</span><span class="o">=</span><span class="n">ccrs</span><span class="o">.</span><span class="n">PlateCarree</span><span class="p">()</span>
+<span class="p">)</span>
+</pre></div>
+</div>
+<div class="admonition warning">
+<p class="admonition-title">警告</p>
+<p>多子图若各自自动定色标，每张图的冷暖含义就完全不同——图 A 的「暖红」可能是 15℃、图 B 却是 25℃。统一 <code class="docutils literal notranslate"><span class="pre">vmin/vmax</span></code> 才能保证「同一颜色=同一温度」，季节比较才成立。</p>
+</div>
+</section>
+<section id="id31">
+<h3>避坑最佳实践（高频报错预防规范）<a class="headerlink" href="#id31" title="Link to this heading">#</a></h3>
+<ol class="arabic simple">
+<li><p>⚠️ 禁止省略 <code class="docutils literal notranslate"><span class="pre">transform</span></code> 参数：所有空间绘图函数 <code class="docutils literal notranslate"><span class="pre">contourf</span></code>、<code class="docutils literal notranslate"><span class="pre">scatter</span></code>、<code class="docutils literal notranslate"><span class="pre">quiver</span></code>、<code class="docutils literal notranslate"><span class="pre">text</span></code> 均必须携带 <code class="docutils literal notranslate"><span class="pre">transform</span></code>，防止地图坐标错位；</p></li>
+<li><p>⚠️ 不使用中文路径、中文文件名：NetCDF 读取、图片保存路径全程英文，避免系统编码报错；</p></li>
+<li><p>⚠️ 第一次运行 Cartopy 提前缓存地理文件：Natural Earth 矢量文件首次加载会自动下载，可提前配置缓存路径，避免课堂绘图卡顿；</p></li>
+<li><p>✅ 环境锁定：项目交付附带 <code class="docutils literal notranslate"><span class="pre">met_p312_env.yml</span></code> 环境配置文件，保证不同设备绘图效果完全一致；</p></li>
+<li><p>✅ 代码可移植：全程使用相对路径，不写入 <code class="docutils literal notranslate"><span class="pre">D:/xxx</span></code>、<code class="docutils literal notranslate"><span class="pre">C:/User/xxx</span></code> 等绝对磁盘路径，机房、小组协作可直接运行。</p></li>
+</ol>
+</section>
+<section id="id32">
+<h3>科研绘图通用审美规范<a class="headerlink" href="#id32" title="Link to this heading">#</a></h3>
+<ol class="arabic simple">
+<li><p>✅ 图表元素精简：不堆砌多余装饰，核心突出气温填色场；</p></li>
+<li><p>✅ 网格透明度降低，仅作为坐标参考，不干扰主图；</p></li>
+<li><p>✅ 线条深浅分层：国界粗、省界细、河流浅蓝，层次分明；</p></li>
+<li><p>✅ 标题简洁规范：统一格式「区域+时段+气象要素空间分布图」，无冗余文字；</p></li>
+<li><p>✅ 字体统一使用无衬线字体，避免系统缺失字体导致文字乱码（中文字体配置见相应章节，如 <code class="docutils literal notranslate"><span class="pre">SimHei</span></code>/<code class="docutils literal notranslate"><span class="pre">Microsoft</span> <span class="pre">YaHei</span></code>）。</p></li>
+</ol>
+<div class="admonition seealso">
+<p class="admonition-title">参见</p>
+<p>配套练习：第 10 章练习《Cartopy 气象地图》将在随后交付后上线（链接到时补全）　·　示例画廊 <a class="reference internal" href="../../gallery/plot_viz/index.html"><span class="doc">气象数据可视化示例</span></a></p>
+</div>
+</section>
+</section>
+</section>
+
+
+                </article>
+              
+              
+              
+              
+              
+                <footer class="prev-next-footer d-print-none">
+                  
+<div class="prev-next-area">
+    <a class="left-prev"
+       href="matplotlib.html"
+       title="上一页">
+      <i class="fa-solid fa-angle-left"></i>
+      <div class="prev-next-info">
+        <p class="prev-next-subtitle">上一页</p>
+        <p class="prev-next-title">气象数据绘图（一）Matplotlib</p>
+      </div>
+    </a>
+    <a class="right-next"
+       href="../../tutorials/index.html"
+       title="下一页">
+      <div class="prev-next-info">
+        <p class="prev-next-subtitle">下一页</p>
+        <p class="prev-next-title">练习</p>
+      </div>
+      <i class="fa-solid fa-angle-right"></i>
+    </a>
+</div>
+                </footer>
+              
+            </div>
+            
+            
+              
+                <dialog id="pst-secondary-sidebar-modal"></dialog>
+                <div id="pst-secondary-sidebar" class="bd-sidebar-secondary bd-toc"><div class="sidebar-secondary-items sidebar-secondary__inner">
+
+
+  <div class="sidebar-secondary-item">
+<div
+    id="pst-page-navigation-heading-2"
+    class="page-toc tocsection onthispage">
+    <i class="fa-solid fa-list"></i> 当前页面
+  </div>
+  <nav id="pst-page-toc-nav" class="page-toc" aria-labelledby="pst-page-navigation-heading-2">
+    <ul class="pst-show_toc_level nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id1">Cartopy 概述与选取理由</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#id2">为什么气象格点绘图选用 Cartopy</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#id3">本章承接贯穿项目说明</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#id4">本章学习目标</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id5">基础概念与核心组件</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#id6">核心基础名词解释</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#id7">气象绘图三大主流投影详解</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#id8">Cartopy 标准绘图固定流程</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id9">基础绘图：西北地区气温填色图完整实操</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#met-p312">前置库安装（met_p312 环境）</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#id10">完整基础绘图可运行代码</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#id11">代码分步解析</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id12">地理要素自定义与精细化美化</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#id13">调整线条样式、颜色、粗细</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#id14">自定义经纬度刻度间隔</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#id15">色标自定义配置</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#id16">叠加城市站点标记</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id17">拓展提升板块</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#id18">多投影切换：兰伯特等面积投影绘制西北图</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#quiver">叠加风场矢量 quiver 绘图</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#id19">批量绘制逐月气温地图循环代码</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#id20">多子图布局：分季节气温对比地图</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#id21">常见报错核心解决方案</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id22">本章小结</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id23">最佳实践：Cartopy 地图成果规范</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#weather-project">项目目录文件规范（与全书 weather_project 统一）</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#id24">虚拟环境与库安装规范</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#id25">地图画布与投影选型规范（西北区域专用）</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#contourf">核心绘图参数标准化（contourf 气温填色统一规范）</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#id26">地理要素叠加样式统一标准</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#id27">研究区域裁剪（西北地区固定经纬度范围）</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#colorbar">色标 colorbar 标准化规范</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#id28">图片导出高清规范（课程报告/期刊附图通用）</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#id29">兰州站点标记统一规范（串联全书实战项目）</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#id30">批量绘图、多子图通用规范</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#id31">避坑最佳实践（高频报错预防规范）</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#id32">科研绘图通用审美规范</a></li>
+</ul>
+</li>
+</ul>
+  </nav></div>
+
+</div></div>
+              
+            
+          </div>
+          <footer class="bd-footer-content">
+            
+          </footer>
+        
+      </main>
+    </div>
+  </div>
+  
+  <!-- Scripts loaded after <body> so the DOM is not blocked -->
+  <script defer src="../../_static/scripts/bootstrap.js?digest=90905a2f556bf617f1a9"></script>
+<script defer src="../../_static/scripts/pydata-sphinx-theme.js?digest=90905a2f556bf617f1a9"></script>
+
+  <footer class="bd-footer">
+<div class="bd-footer__inner bd-page-width">
+  
+    <div class="footer-items__start">
+      
+        <div class="footer-item">
+
+  <p class="copyright">
+    
+      © Copyright 2026, 兰州大学大气科学学院编程社区.
+      <br/>
+    
+  </p>
+</div>
+      
+        <div class="footer-item">
+
+  <p class="sphinx-version">
+    由 <a href="https://www.sphinx-doc.org/">Sphinx</a> 8.2.3创建。
+    <br/>
+  </p>
+</div>
+      
+    </div>
+  
+  
+  
+    <div class="footer-items__end">
+      
+        <div class="footer-item">
+<p class="theme-version">
+  <!-- # L10n: Setting the PST URL as an argument as this does not need to be localized -->
+  使用 <a href="https://pydata-sphinx-theme.readthedocs.io/en/stable/index.html">PyData Sphinx Theme</a> 0.20.0构建.
+</p></div>
+      
+    </div>
+  
+</div>
+
+  </footer>
+  </body>
+</html>

@@ -1,0 +1,1756 @@
+
+<!DOCTYPE html>
+
+
+<html lang="zh-CN" data-content_root="../../" >
+
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
+    <title>基本数据类型、变量和运算符 Q&amp;A &#8212; MeteoPython</title>
+  
+  
+  
+  <script data-cfasync="false">
+    document.documentElement.dataset.mode = localStorage.getItem("mode") || "";
+    document.documentElement.dataset.theme = localStorage.getItem("theme") || "";
+  </script>
+  <!--
+    this give us a css class that will be invisible only if js is disabled
+  -->
+  <noscript>
+    <style>
+      .pst-js-only { display: none !important; }
+
+    </style>
+  </noscript>
+  
+  <!-- Loaded before other Sphinx assets -->
+  <link href="../../_static/styles/theme.css?digest=90905a2f556bf617f1a9" rel="stylesheet" />
+<link href="../../_static/styles/pydata-sphinx-theme.css?digest=90905a2f556bf617f1a9" rel="stylesheet" />
+
+    <link rel="stylesheet" type="text/css" href="../../_static/pygments.css?v=8f2a1f02" />
+    <link rel="stylesheet" type="text/css" href="../../_static/copybutton.css?v=76b2166b" />
+    <link rel="stylesheet" type="text/css" href="../../_static/sg_gallery.css?v=fd6457a4" />
+    <link rel="stylesheet" type="text/css" href="../../_static/sg_gallery-binder.css?v=f4aeca0c" />
+    <link rel="stylesheet" type="text/css" href="../../_static/sg_gallery-dataframe.css?v=2082cf3c" />
+    <link rel="stylesheet" type="text/css" href="../../_static/sg_gallery-rendered-html.css?v=1277b6f3" />
+    <link rel="stylesheet" type="text/css" href="../../_static/sphinx-design.min.css?v=95c83b7e" />
+    <link rel="stylesheet" type="text/css" href="../../_static/./custom.css?v=fbe1f034" />
+  
+  <!-- So that users can add custom icons -->
+  <script defer src="../../_static/scripts/fontawesome.js?digest=90905a2f556bf617f1a9"></script>
+  <!-- Pre-loaded scripts that we'll load fully later -->
+  <link rel="preload" as="script" href="../../_static/scripts/bootstrap.js?digest=90905a2f556bf617f1a9" />
+<link rel="preload" as="script" href="../../_static/scripts/pydata-sphinx-theme.js?digest=90905a2f556bf617f1a9" />
+
+    <script src="../../_static/documentation_options.js?v=9becfed8"></script>
+    <script src="../../_static/doctools.js?v=9bcbadda"></script>
+    <script src="../../_static/sphinx_highlight.js?v=dc90522c"></script>
+    <script src="../../_static/sg-tags.js?v=d80f6fa4"></script>
+    <script src="../../_static/clipboard.min.js?v=a7894cd8"></script>
+    <script src="../../_static/copybutton.js?v=fd10adb8"></script>
+    <script src="../../_static/translations.js?v=beaddf03"></script>
+    <script src="../../_static/design-tabs.js?v=f930bc37"></script>
+    <script>DOCUMENTATION_OPTIONS.pagename = 'qa/basics/02-数据类型与运算符-QA';</script>
+    <script>
+        DOCUMENTATION_OPTIONS.theme_version = '0.20.0';
+        DOCUMENTATION_OPTIONS.theme_switcher_json_url = '_static/switcher.json';
+        DOCUMENTATION_OPTIONS.theme_switcher_version_match = '0.1.0';
+        DOCUMENTATION_OPTIONS.show_version_warning_banner =
+            false;
+        </script>
+    <script>DOCUMENTATION_OPTIONS.search_as_you_type = false;</script>
+    <link rel="icon" href="../../_static/favicon.svg"/>
+    <link rel="index" title="索引" href="../../genindex.html" />
+    <link rel="search" title="搜索" href="../../search.html" />
+    <link rel="next" title="分支、条件与循环 Q&amp;A" href="03-%E5%88%86%E6%94%AF%E6%9D%A1%E4%BB%B6%E5%BE%AA%E7%8E%AF-QA.html" />
+    <link rel="prev" title="Python 简介及安装环境 Q&amp;A" href="01-Python%E7%AE%80%E4%BB%8B%E4%B8%8EConda%E7%8E%AF%E5%A2%83-QA.html" />
+  <meta name="viewport" content="width=device-width, initial-scale=1"/>
+  <meta name="docsearch:language" content="zh-CN"/>
+  <meta name="docsearch:version" content="0.1" />
+    <meta name="docbuild:last-update" content="2026-08-20"/>
+  
+    
+    <script src="../../_static/searchtools.js"></script>
+    <script src="../../_static/language_data.js"></script>
+    <script src="../../searchindex.js"></script>
+  
+  </head>
+  <body data-default-mode="">
+  
+  
+  <div id="pst-skip-link" class="skip-link d-print-none"><a href="#main-content">跳转至主要内容</a></div>
+
+  
+  <div id="pst-scroll-pixel-helper"></div>
+  
+  <button type="button" class="btn rounded-pill" id="pst-back-to-top">
+    <i class="fa-solid fa-arrow-up"></i>回到顶部</button>
+  
+  
+  
+  
+  <dialog id="pst-search-dialog">
+    
+<form class="bd-search d-flex align-items-center"
+      action="../../search.html"
+      method="get">
+  <i class="fa-solid fa-magnifying-glass"></i>
+  <input type="search"
+         class="form-control"
+         name="q"
+         placeholder="搜索文档…"
+         aria-label="搜索文档…"
+         autocomplete="off"
+         autocorrect="off"
+         autocapitalize="off"
+         spellcheck="false"/>
+  <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd>K</kbd></span>
+</form>
+  </dialog>
+
+  <div class="pst-async-banner-revealer d-none">
+  <aside id="bd-header-version-warning" class="d-none d-print-none" aria-label="版本警告"></aside>
+</div>
+
+  
+    <header id="pst-header" class="bd-header navbar navbar-expand-lg bd-navbar d-print-none">
+<div class="bd-header__inner bd-page-width">
+  <button class="pst-navbar-icon sidebar-toggle primary-toggle" aria-label="网页导航">
+    <span class="fa-solid fa-bars"></span>
+  </button>
+  
+  
+  <div class="col-lg-3 navbar-header-items__start">
+    
+      <div class="navbar-item">
+
+  
+    
+  
+
+<a class="navbar-brand logo" href="../../index.html">
+  
+  
+  
+  
+  
+    
+    
+      
+    
+    
+    <img src="../../_static/logo.svg" class="logo__image only-light" alt="MeteoPython - Home"/>
+    <img src="../../_static/logo.svg" class="logo__image only-dark pst-js-only" alt="MeteoPython - Home"/>
+  
+  
+</a></div>
+    
+  </div>
+  
+  <div class="col-lg-9 navbar-header-items">
+    
+    <div class="me-auto navbar-header-items__center">
+      
+        <div class="navbar-item">
+<nav>
+  <ul class="bd-navbar-elements navbar-nav">
+    
+<li class="nav-item ">
+  <a class="nav-link nav-internal" href="../../user_guide/index.html">
+    教程
+  </a>
+</li>
+
+
+<li class="nav-item ">
+  <a class="nav-link nav-internal" href="../../tutorials/index.html">
+    练习
+  </a>
+</li>
+
+
+<li class="nav-item ">
+  <a class="nav-link nav-internal" href="../../gallery/index.html">
+    示例
+  </a>
+</li>
+
+
+<li class="nav-item ">
+  <a class="nav-link nav-internal" href="../../api/index.html">
+    术语参考
+  </a>
+</li>
+
+
+<li class="nav-item current active">
+  <a class="nav-link nav-internal" href="../index.html">
+    常见问题 Q&A
+  </a>
+</li>
+
+  </ul>
+</nav></div>
+      
+    </div>
+    
+    
+    <div class="navbar-header-items__end">
+      
+        <div class="navbar-item navbar-persistent--container">
+          
+
+<button class="btn search-button-field search-button__button pst-js-only" title="搜索" aria-label="搜索" data-bs-placement="bottom" data-bs-toggle="tooltip">
+ <i class="fa-solid fa-magnifying-glass"></i>
+ <span class="search-button__default-text">搜索</span>
+ <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd class="kbd-shortcut__modifier">K</kbd></span>
+</button>
+        </div>
+      
+      
+        <div class="navbar-item">
+
+<div class="theme-switch-container dropdown pst-js-only" data-bs-toggle="tooltip" data-bs-placement="bottom" title="Color mode">
+  <button class="btn btn-sm nav-link pst-navbar-icon theme-switch-button dropdown-toggle" aria-label="Color mode" data-bs-toggle="dropdown">
+    <i class="theme-switch fa-solid fa-sun fa-lg fa-fw" data-mode="light" title="亮色"></i>
+    <i class="theme-switch fa-solid fa-moon fa-lg fa-fw" data-mode="dark" title="暗色"></i>
+    <i class="theme-switch fa-solid fa-circle-half-stroke fa-lg fa-fw" data-mode="auto" title="System Settings"></i>
+  </button>
+  <ul class="dropdown-menu dropdown-menu-end">
+    <li><button class="dropdown-item d-flex align-items-center theme-change-button" data-mode="auto"><i class="fa-solid fa-circle-half-stroke fa-lg fa-fw me-1"></i>System Settings</button></li>
+    <li><button class="dropdown-item d-flex align-items-center theme-change-button" data-mode="light"><i class="fa-solid fa-sun fa-lg fa-fw me-1"></i>亮色</button></li>
+    <li><button class="dropdown-item d-flex align-items-center theme-change-button" data-mode="dark"><i class="fa-solid fa-moon fa-lg fa-fw me-1"></i>暗色</button></li>
+  </ul>
+</div></div>
+      
+        <div class="navbar-item"><ul class="navbar-icon-links"
+    aria-label="Icon Links">
+</ul></div>
+      
+    </div>
+    
+  </div>
+  
+  
+    <div class="navbar-persistent--mobile">
+
+<button class="btn search-button-field search-button__button pst-js-only" title="搜索" aria-label="搜索" data-bs-placement="bottom" data-bs-toggle="tooltip">
+ <i class="fa-solid fa-magnifying-glass"></i>
+ <span class="search-button__default-text">搜索</span>
+ <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd class="kbd-shortcut__modifier">K</kbd></span>
+</button>
+    </div>
+  
+
+  
+    <button class="pst-navbar-icon sidebar-toggle secondary-toggle" aria-label="当前页面">
+      <span class="fa-solid fa-outdent"></span>
+    </button>
+  
+</div>
+
+    </header>
+  
+
+  <div class="bd-container">
+    <div class="bd-container__inner bd-page-width">
+      
+      
+      
+      <dialog id="pst-primary-sidebar-modal"></dialog>
+      <div id="pst-primary-sidebar" class="bd-sidebar-primary bd-sidebar">
+        
+
+  
+  <div class="sidebar-header-items sidebar-primary__section">
+    
+    
+      <div class="sidebar-header-items__center">
+        
+          
+          
+            <div class="navbar-item">
+<nav>
+  <ul class="bd-navbar-elements navbar-nav">
+    
+<li class="nav-item ">
+  <a class="nav-link nav-internal" href="../../user_guide/index.html">
+    教程
+  </a>
+</li>
+
+
+<li class="nav-item ">
+  <a class="nav-link nav-internal" href="../../tutorials/index.html">
+    练习
+  </a>
+</li>
+
+
+<li class="nav-item ">
+  <a class="nav-link nav-internal" href="../../gallery/index.html">
+    示例
+  </a>
+</li>
+
+
+<li class="nav-item ">
+  <a class="nav-link nav-internal" href="../../api/index.html">
+    术语参考
+  </a>
+</li>
+
+
+<li class="nav-item current active">
+  <a class="nav-link nav-internal" href="../index.html">
+    常见问题 Q&A
+  </a>
+</li>
+
+  </ul>
+</nav></div>
+          
+        
+      </div>
+    
+    
+    
+      <div class="sidebar-header-items__end">
+        
+          <div class="navbar-item">
+
+<div class="theme-switch-container dropdown pst-js-only" data-bs-toggle="tooltip" data-bs-placement="bottom" title="Color mode">
+  <button class="btn btn-sm nav-link pst-navbar-icon theme-switch-button dropdown-toggle" aria-label="Color mode" data-bs-toggle="dropdown">
+    <i class="theme-switch fa-solid fa-sun fa-lg fa-fw" data-mode="light" title="亮色"></i>
+    <i class="theme-switch fa-solid fa-moon fa-lg fa-fw" data-mode="dark" title="暗色"></i>
+    <i class="theme-switch fa-solid fa-circle-half-stroke fa-lg fa-fw" data-mode="auto" title="System Settings"></i>
+  </button>
+  <ul class="dropdown-menu dropdown-menu-end">
+    <li><button class="dropdown-item d-flex align-items-center theme-change-button" data-mode="auto"><i class="fa-solid fa-circle-half-stroke fa-lg fa-fw me-1"></i>System Settings</button></li>
+    <li><button class="dropdown-item d-flex align-items-center theme-change-button" data-mode="light"><i class="fa-solid fa-sun fa-lg fa-fw me-1"></i>亮色</button></li>
+    <li><button class="dropdown-item d-flex align-items-center theme-change-button" data-mode="dark"><i class="fa-solid fa-moon fa-lg fa-fw me-1"></i>暗色</button></li>
+  </ul>
+</div></div>
+        
+          <div class="navbar-item"><ul class="navbar-icon-links"
+    aria-label="Icon Links">
+</ul></div>
+        
+      </div>
+    
+  </div>
+  
+    <div class="sidebar-primary-items__start sidebar-primary__section">
+        <div class="sidebar-primary-item pst-sidebar-collapse"><button id="pst-collapse-sidebar-button" aria-expanded="true" aria-controls="pst-primary-sidebar">
+  <svg class="pst-icon" role="img" aria-hidden="true" focusable="false" viewBox="0 0 16 16" xmlns="http://www.w3.org/2000/svg">
+    <path fill="currentColor" d="M3 15.5C2.36232 15.5 1.74874 15.2564 1.28478 14.8189C0.820828 14.3815 0.541576 13.7832 0.504167 13.1467L0.5 13L0.5 3C0.499965 2.36232 0.743605 1.74874 1.18107 1.28478C1.61854 0.820828 2.21676 0.541576 2.85333 0.504167L3 0.5L13 0.5C13.6377 0.499965 14.2513 0.743605 14.7152 1.18107C15.1792 1.61854 15.4584 2.21676 15.4958 2.85333L15.5 3L15.5 13C15.5 13.6377 15.2564 14.2513 14.8189 14.7152C14.3815 15.1792 13.7832 15.4584 13.1467 15.4958L13 15.5L3 15.5ZM3 13.8333L10.5 13.8333L10.5 2.16667L3 2.16667C2.79589 2.16669 2.59889 2.24163 2.44636 2.37726C2.29383 2.5129 2.19638 2.69979 2.1725 2.9025L2.16667 3L2.16667 13C2.16669 13.2041 2.24163 13.4011 2.37726 13.5536C2.5129 13.7062 2.69979 13.8036 2.9025 13.8275L3 13.8333ZM6.65583 10.325L6.5775 10.2558L4.91083 8.58917C4.76735 8.44567 4.68116 8.25476 4.66843 8.05223C4.65569 7.84971 4.71729 7.6495 4.84167 7.48917L4.91083 7.41083L6.5775 5.74417C6.72747 5.59471 6.9287 5.50794 7.14032 5.50148C7.35194 5.49502 7.55809 5.56935 7.7169 5.70937C7.8757 5.8494 7.97525 6.04463 7.99533 6.25539C8.01541 6.46616 7.95451 6.67667 7.825 6.84417L7.75583 6.9225L6.67917 8L7.75583 9.0775C7.89931 9.22099 7.98551 9.41191 7.99824 9.61443C8.01097 9.81695 7.94938 10.0172 7.825 10.1775L7.75583 10.2558C7.61234 10.3993 7.42142 10.4855 7.2189 10.4982C7.01638 10.511 6.81617 10.4494 6.65583 10.325Z"/>
+  </svg>
+  <span class="pst-collapse-sidebar-label">Collapse Sidebar</span>
+  <span class="pst-expand-sidebar-label">Expand Sidebar</span>
+</button></div>
+        <div class="sidebar-primary-item">
+
+<nav class="bd-docs-nav bd-links"
+     aria-label="章节导航">
+  <p class="bd-links__title" role="heading" aria-level="1">章节导航</p>
+  <div class="bd-toc-item navbar-nav"><ul class="current nav bd-sidenav">
+<li class="toctree-l1 current active has-children"><a class="reference internal" href="index.html">模块一 Python 编程基础（常见问题 Q&amp;A）</a><details open="open"><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="00-%E9%80%9A%E7%94%A8%E6%8E%92%E9%94%99%E6%8C%87%E5%8D%97.html">通用排错方法论：从「看不懂报错」到「有的放矢」 Q&amp;A</a></li>
+<li class="toctree-l2"><a class="reference internal" href="01-Python%E7%AE%80%E4%BB%8B%E4%B8%8EConda%E7%8E%AF%E5%A2%83-QA.html">Python 简介及安装环境 Q&amp;A</a></li>
+<li class="toctree-l2 current active"><a class="current reference internal" href="#">基本数据类型、变量和运算符 Q&amp;A</a></li>
+<li class="toctree-l2"><a class="reference internal" href="03-%E5%88%86%E6%94%AF%E6%9D%A1%E4%BB%B6%E5%BE%AA%E7%8E%AF-QA.html">分支、条件与循环 Q&amp;A</a></li>
+<li class="toctree-l2"><a class="reference internal" href="04-%E5%87%BD%E6%95%B0%E4%BD%9C%E7%94%A8%E5%9F%9F%E6%A8%A1%E5%9D%97%E5%8C%85-QA.html">函数、变量作用域、模块与包 Q&amp;A</a></li>
+<li class="toctree-l2"><a class="reference internal" href="05-%E9%9D%A2%E5%90%91%E5%AF%B9%E8%B1%A1%E5%87%BD%E6%95%B0%E5%BC%8F%E9%AB%98%E7%BA%A7%E8%AF%AD%E6%B3%95-QA.html">面向对象、函数式编程与高级语法 Q&amp;A</a></li>
+</ul>
+</details></li>
+<li class="toctree-l1 has-children"><a class="reference internal" href="../data/index.html">模块二 气象数据处理（常见问题 Q&amp;A）</a><details open="open"><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
+<li class="toctree-l2"><a class="reference internal" href="../data/06-NumPy%E6%B0%94%E8%B1%A1%E8%AE%A1%E7%AE%97-QA.html">气象数据计算 NumPy Q&amp;A</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../data/07-Pandas%E6%B0%94%E8%B1%A1%E5%88%86%E6%9E%90-QA.html">气象数据分析（一）Pandas Q&amp;A</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../data/08-Xarray%E6%B0%94%E8%B1%A1%E5%88%86%E6%9E%90-QA.html">Xarray 气象数据处理（二）Q&amp;A</a></li>
+</ul>
+</details></li>
+<li class="toctree-l1 has-children"><a class="reference internal" href="../viz/index.html">模块三 气象数据可视化（常见问题 Q&amp;A）</a><details open="open"><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
+<li class="toctree-l2"><a class="reference internal" href="../viz/09-Matplotlib%E6%B0%94%E8%B1%A1%E7%BB%98%E5%9B%BE-QA.html">气象数据绘图（一）Matplotlib Q&amp;A</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../viz/10-Cartopy%E6%B0%94%E8%B1%A1%E7%BB%98%E5%9B%BE-QA.html">气象数据绘图（二）Cartopy Q&amp;A</a></li>
+</ul>
+</details></li>
+</ul>
+</div>
+</nav></div>
+    </div>
+  
+  
+  <div class="sidebar-primary-items__end sidebar-primary__section">
+      <div class="sidebar-primary-item">
+<div id="ethical-ad-placement"
+      class="flat"
+      data-ea-publisher="readthedocs"
+      data-ea-type="readthedocs-sidebar"
+      data-ea-manual="true">
+</div></div>
+  </div>
+
+
+      </div>
+      
+      <main id="main-content" class="bd-main" role="main">
+        
+        
+          <div class="bd-content">
+            <div class="bd-article-container">
+              
+              <div class="bd-header-article d-print-none">
+<div class="header-article-items header-article__inner">
+  
+    <div class="header-article-items__start">
+      
+        <div class="header-article-item">
+
+<nav aria-label="Breadcrumb" class="d-print-none">
+  <ul class="bd-breadcrumbs">
+    
+    <li class="breadcrumb-item breadcrumb-home">
+      <a href="../../index.html" class="nav-link" aria-label="初始页面">
+        <i class="fa-solid fa-home"></i>
+      </a>
+    </li>
+    
+    <li class="breadcrumb-item"><a href="../index.html" class="nav-link">常见问题 Q&amp;A</a></li>
+    
+    
+    <li class="breadcrumb-item"><a href="index.html" class="nav-link">模块一 Python 编程基础（常见问题 Q&amp;A）</a></li>
+    
+    <li class="breadcrumb-item active" aria-current="page"><span class="ellipsis">基本数据类型、变量和运算符 Q&amp;A</span></li>
+  </ul>
+</nav>
+</div>
+      
+    </div>
+  
+  
+</div>
+</div>
+              
+              
+              
+                
+<div id="searchbox"></div>
+                <article class="bd-article">
+                  
+  <section id="q-a">
+<h1>基本数据类型、变量和运算符 Q&amp;A<a class="headerlink" href="#q-a" title="Link to this heading">#</a></h1>
+<blockquote>
+<div><p>章节定位：第 2 章（模块一）· 对应用户指南
+<code class="docutils literal notranslate"><span class="pre">user_guide/basics/datatypes.rst</span></code> 通用排错方法论见
+<a class="reference internal" href="00-%E9%80%9A%E7%94%A8%E6%8E%92%E9%94%99%E6%8C%87%E5%8D%97.html"><span class="doc">00-通用排错指南</span></a>。本文全部报错均为本机
+Python 环境实测、Traceback 原文照录（个别环境差异已注明）。
+本章讲的是“数据<strong>长什么样</strong>、名字<strong>怎么叫</strong>、数字<strong>怎么算</strong>”。报错也基本围绕这三件事：<strong>类型不对（Type）、名字越界/没定义（Name/Index/Key/Attribute）、语法不规整（Syntax）</strong>。</p>
+</div></blockquote>
+<hr class="docutils" />
+<section id="id1">
+<span id="id2"></span><h2>2.0 本章报错总览表<a class="headerlink" href="#id1" title="Link to this heading">#</a></h2>
+<div class="pst-scrollable-table-container"><table class="table">
+<thead>
+<tr class="row-odd"><th class="head"><p>报错关键词（按出现频率）</p></th>
+<th class="head"><p>一句话原因</p></th>
+<th class="head"><p>对应条目</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">SyntaxError:</span> <span class="pre">unterminated</span> <span class="pre">string</span> <span class="pre">literal</span></code> / <code class="docutils literal notranslate"><span class="pre">unexpected</span> <span class="pre">EOF</span> <span class="pre">while</span> <span class="pre">parsing</span></code></p></td>
+<td><p>引号/括号没闭合，解析器读了空头</p></td>
+<td><p>2.1.1、2.1.2</p></td>
+</tr>
+<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">SyntaxError:</span> <span class="pre">invalid</span> <span class="pre">character</span> <span class="pre">'，'</span> <span class="pre">(U+FF0C)</span></code> /
+<code class="docutils literal notranslate"><span class="pre">invalid</span> <span class="pre">non-printable</span> <span class="pre">character</span></code></p></td>
+<td><p>代码里混进了中文标点/全角符号</p></td>
+<td><p>2.1.3</p></td>
+</tr>
+<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">SyntaxError:</span> <span class="pre">invalid</span> <span class="pre">syntax</span></code>（引号嵌套处）</p></td>
+<td><p>字符串内部要引号，没用转义或换引号</p></td>
+<td><p>2.1.4</p></td>
+</tr>
+<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">TypeError:</span> <span class="pre">unsupported</span> <span class="pre">operand</span> <span class="pre">type(s)</span> <span class="pre">for</span> <span class="pre">+:</span> <span class="pre">'int'</span> <span class="pre">and</span> <span class="pre">'str'</span></code></p></td>
+<td><p>数字和字符串混着做运算</p></td>
+<td><p>2.2.1</p></td>
+</tr>
+<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">SyntaxError:</span> <span class="pre">invalid</span> <span class="pre">syntax</span></code>（<code class="docutils literal notranslate"><span class="pre">if</span> <span class="pre">=</span> <span class="pre">25</span></code>）/
+<code class="docutils literal notranslate"><span class="pre">invalid</span> <span class="pre">decimal</span> <span class="pre">literal</span></code>（<code class="docutils literal notranslate"><span class="pre">1temp</span></code>）</p></td>
+<td><p>变量名用了关键字 / 数字开头</p></td>
+<td><p>2.4.1、2.4.2</p></td>
+</tr>
+<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">AttributeError:</span> <span class="pre">'list'</span> <span class="pre">object</span> <span class="pre">has</span> <span class="pre">no</span> <span class="pre">attribute</span> <span class="pre">'find'</span></code></p></td>
+<td><p>列表没有 <code class="docutils literal notranslate"><span class="pre">find</span></code> 方法，应
+<code class="docutils literal notranslate"><span class="pre">.index()</span></code></p></td>
+<td><p>2.5.1</p></td>
+</tr>
+<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">ValueError:</span> <span class="pre">substring</span> <span class="pre">not</span> <span class="pre">found</span></code>（<code class="docutils literal notranslate"><span class="pre">str.index</span></code>）/
+<code class="docutils literal notranslate"><span class="pre">-1</span></code>（<code class="docutils literal notranslate"><span class="pre">str.find</span></code>）</p></td>
+<td><p>字符串子串查找：<code class="docutils literal notranslate"><span class="pre">find</span></code>
+静默返回 -1、<code class="docutils literal notranslate"><span class="pre">index</span></code> 抛异常</p></td>
+<td><p>2.5.2</p></td>
+</tr>
+<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">AttributeError:</span> <span class="pre">'set'</span> <span class="pre">object</span> <span class="pre">has</span> <span class="pre">no</span> <span class="pre">attribute</span> <span class="pre">'append'</span></code></p></td>
+<td><p>集合没有顺序，用 <code class="docutils literal notranslate"><span class="pre">.add()</span></code></p></td>
+<td><p>2.5.3</p></td>
+</tr>
+<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">IndexError:</span> <span class="pre">list</span> <span class="pre">index</span> <span class="pre">out</span> <span class="pre">of</span> <span class="pre">range</span></code></p></td>
+<td><p>下标越界（含负数、空列表）</p></td>
+<td><p>2.5.4</p></td>
+</tr>
+<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">KeyError:</span> <span class="pre">'xxx'</span></code></p></td>
+<td><p>字典取了不存在的键，用 <code class="docutils literal notranslate"><span class="pre">.get()</span></code></p></td>
+<td><p>2.5.5</p></td>
+</tr>
+<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">ZeroDivisionError:</span> <span class="pre">division</span> <span class="pre">by</span> <span class="pre">zero</span></code> / <code class="docutils literal notranslate"><span class="pre">float</span> <span class="pre">division</span> <span class="pre">by</span> <span class="pre">zero</span></code> /
+<code class="docutils literal notranslate"><span class="pre">integer</span> <span class="pre">modulo</span> <span class="pre">by</span> <span class="pre">zero</span></code></p></td>
+<td><p>除以 0（含取模/整除）</p></td>
+<td><p>2.2.2</p></td>
+</tr>
+<tr class="row-odd"><td><p>无报错但 <code class="docutils literal notranslate"><span class="pre">0.1</span> <span class="pre">+</span> <span class="pre">0.2</span> <span class="pre">!=</span> <span class="pre">0.3</span></code></p></td>
+<td><p>浮点精度误差</p></td>
+<td><p>2.2.3</p></td>
+</tr>
+<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">ValueError:</span> <span class="pre">invalid</span> <span class="pre">literal</span> <span class="pre">for</span> <span class="pre">int()</span> <span class="pre">with</span> <span class="pre">base</span> <span class="pre">10:</span> <span class="pre">'abc'</span></code></p></td>
+<td><p>字符串转数字，内容不是合法数字</p></td>
+<td><p>2.3.1</p></td>
+</tr>
+<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">TypeError:</span> <span class="pre">can</span> <span class="pre">only</span> <span class="pre">concatenate</span> <span class="pre">str</span> <span class="pre">...</span></code>（<code class="docutils literal notranslate"><span class="pre">input()</span></code> 场景）</p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">input()</span></code> 返回 str，要
+<code class="docutils literal notranslate"><span class="pre">int(input(...))</span></code></p></td>
+<td><p>2.3.2</p></td>
+</tr>
+<tr class="row-even"><td><p>无报错但 <code class="docutils literal notranslate"><span class="pre">2</span> <span class="pre">^</span> <span class="pre">3</span> <span class="pre">==</span> <span class="pre">1</span></code></p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">^</span></code> 是异或不是幂，幂是 <code class="docutils literal notranslate"><span class="pre">**</span></code></p></td>
+<td><p>2.2.4</p></td>
+</tr>
+<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">7</span></code> vs <code class="docutils literal notranslate"><span class="pre">10</span></code>（<code class="docutils literal notranslate"><span class="pre">3+2*2</span></code> vs <code class="docutils literal notranslate"><span class="pre">(3+2)*2</span></code>）</p></td>
+<td><p>运算符优先级，拿不准加括号</p></td>
+<td><p>2.2.5</p></td>
+</tr>
+<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">TypeError:</span> <span class="pre">'str'</span> <span class="pre">object</span> <span class="pre">does</span> <span class="pre">not</span> <span class="pre">support</span> <span class="pre">item</span> <span class="pre">assignment</span></code></p></td>
+<td><p>字符串不可变，改字符只能生成新串</p></td>
+<td><p>2.5.6</p></td>
+</tr>
+<tr class="row-odd"><td><p>切片越界不报错 vs 索引越界报错</p></td>
+<td><p>切片静默放行，索引会抛 IndexError</p></td>
+<td><p>2.5.7</p></td>
+</tr>
+<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">len(s)</span> <span class="pre">==</span> <span class="pre">7</span></code> 但 <code class="docutils literal notranslate"><span class="pre">s[7]</span></code> 是什么？ / <code class="docutils literal notranslate"><span class="pre">s[-1]</span></code></p></td>
+<td><p>长度和下标差 1；负索引取末位</p></td>
+<td><p>2.5.8</p></td>
+</tr>
+<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">TypeError:</span> <span class="pre">unsupported</span> <span class="pre">operand</span> <span class="pre">...</span> <span class="pre">'NoneType'</span> <span class="pre">and</span> <span class="pre">'float'</span></code></p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">None</span></code> 不是 0，不能当数值算</p></td>
+<td><p>2.6.1</p></td>
+</tr>
+<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">SyntaxError:</span> <span class="pre">invalid</span> <span class="pre">syntax.</span> <span class="pre">Maybe</span> <span class="pre">you</span> <span class="pre">meant</span> <span class="pre">'=='</span> <span class="pre">...</span></code>（<code class="docutils literal notranslate"><span class="pre">if</span> <span class="pre">a</span> <span class="pre">=</span> <span class="pre">1</span></code>）</p></td>
+<td><p>条件判断里误用 <code class="docutils literal notranslate"><span class="pre">=</span></code>，应为
+<code class="docutils literal notranslate"><span class="pre">==</span></code></p></td>
+<td><p>2.6.2</p></td>
+</tr>
+</tbody>
+</table>
+</div>
+<hr class="docutils" />
+</section>
+<section id="syntaxerror">
+<span id="id3"></span><h2>2.1 引号、标点与括号：代码“没对上号”的 SyntaxError<a class="headerlink" href="#syntaxerror" title="Link to this heading">#</a></h2>
+<blockquote>
+<div><p>这类错误是<strong>词法/语法层面</strong>的：程序根本没跑起来，<code class="docutils literal notranslate"><span class="pre">SyntaxError</span></code>（语法错误）在“读代码”阶段就被判了死刑。它们占大一新生报错的一大半。核心记忆：<strong>代码只能认得英文半角符号</strong>（<code class="docutils literal notranslate"><span class="pre">，（）；</span></code>
+这种全角中文符号一概不认），以及<strong>引号、括号必须成双配对</strong>。</p>
+</div></blockquote>
+<hr class="docutils" />
+<section id="id4">
+<span id="id5"></span><h3>2.1.1 引号不闭合（单/双/三引号）→ <code class="docutils literal notranslate"><span class="pre">SyntaxError</span></code><a class="headerlink" href="#id4" title="Link to this heading">#</a></h3>
+<p><strong>现象 / 真实报错信息</strong></p>
+<p>单引号未闭合（<code class="docutils literal notranslate"><span class="pre">s</span> <span class="pre">=</span> <span class="pre">'兰州今天有雷暴</span></code>）：</p>
+<div class="highlight-text notranslate"><div class="highlight"><pre><span></span>  File &quot;...\sim\ch02\e01_single_quote_unclosed.py&quot;, line 3
+    s = &#39;兰州今天有雷暴
+        ^
+SyntaxError: unterminated string literal (detected at line 3)
+</pre></div>
+</div>
+<p>双引号未闭合（<code class="docutils literal notranslate"><span class="pre">s</span> <span class="pre">=</span> <span class="pre">&quot;本站气压</span> <span class="pre">848.6</span> <span class="pre">hPa</span></code>）：</p>
+<div class="highlight-text notranslate"><div class="highlight"><pre><span></span>  File &quot;...\e02_double_quote_unclosed.py&quot;, line 3
+    s = &quot;本站气压 848.6 hPa
+        ^
+SyntaxError: unterminated string literal (detected at line 3)
+</pre></div>
+</div>
+<p>三引号（多行字符串）未闭合（<code class="docutils literal notranslate"><span class="pre">doc</span> <span class="pre">=</span> <span class="pre">&quot;&quot;&quot;</span></code> 开了头没封口）：</p>
+<div class="highlight-text notranslate"><div class="highlight"><pre><span></span>  File &quot;...\e03_triple_quote_unclosed.py&quot;, line 3
+    doc = &quot;&quot;&quot;
+          ^
+SyntaxError: unterminated triple-quoted string literal (detected at line 5)
+</pre></div>
+</div>
+<p><strong>重要版本差异</strong>：上面是 <strong>3.12</strong>
+的真实输出，报错已经很“贴心”。在较老的
+Python（3.6–3.9）里，这类情况统称报：</p>
+<div class="highlight-text notranslate"><div class="highlight"><pre><span></span>SyntaxError: unexpected EOF while parsing
+</pre></div>
+</div>
+<p><code class="docutils literal notranslate"><span class="pre">EOF</span></code> 是 End Of File（文件末尾），<code class="docutils literal notranslate"><span class="pre">unexpected</span> <span class="pre">EOF</span> <span class="pre">while</span> <span class="pre">parsing</span></code>
+直译“解析中意外地撞到文件结尾”——意思就是：<strong>该闭合的东西没闭合，Python
+从头读到文件最后一格都没等到那个收尾引号/括号</strong>。通用方法论 0.6
+节那张“关键词→联想”表里，就把 <code class="docutils literal notranslate"><span class="pre">unexpected</span> <span class="pre">EOF</span> <span class="pre">while</span> <span class="pre">parsing</span></code>
+对应到“引号或括号没闭合，到下个空行才报”。<strong>在本环境实践中，看懂上面三种
+``unterminated ...`` 即可，见到 ``unexpected EOF`` 时能对上号就行。</strong></p>
+<p><strong>关于“整条字符串沿打印到空行才报错”的现象</strong>：当引号没闭合时，Python
+会把<strong>后面所有没引号的内容全当作这个字符串的一部分</strong>（这叫“字符串吞掉后续行”）。所以错误往往报在“应合而未合”处，甚至报在很靠后的空行。上表
+<code class="docutils literal notranslate"><span class="pre">e03</span></code> 报在 “detected at line 5”（最后一行），就是因为 <code class="docutils literal notranslate"><span class="pre">&quot;&quot;&quot;</span></code>
+一路吞到脚本末尾才撞上
+EOF。<strong>定位口诀</strong>：报错行不是你真正出错的逻辑，往上找字符串的开头引号，大概率就是漏了收尾。</p>
+<p><strong>原因</strong>：字符串字面量需要一个成对的引号包裹。开了一个引号却没在合理的地方闭合，解析器一路往后吃，直到文件结尾，于是抛错。</p>
+<p><strong>解决办法</strong>（补上收尾引号）</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">s</span> <span class="o">=</span> <span class="s1">&#39;兰州今天有雷暴&#39;</span>            <span class="c1"># 单引号闭合</span>
+<span class="n">s2</span> <span class="o">=</span> <span class="s2">&quot;本站气压 848.6 hPa&quot;</span>      <span class="c1"># 双引号闭合</span>
+<span class="n">doc</span> <span class="o">=</span> <span class="s2">&quot;&quot;&quot;                      # 三引号闭合成对</span>
+<span class="s2">兰州站天气实况：</span>
+<span class="s2">午后有较强对流云团发展。</span>
+<span class="s2">&quot;&quot;&quot;</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">s</span><span class="p">,</span> <span class="n">s2</span><span class="p">);</span> <span class="nb">print</span><span class="p">(</span><span class="n">doc</span><span class="p">)</span>
+</pre></div>
+</div>
+<blockquote>
+<div><p><strong>气象场景一句话</strong>：就像一份电报发了“今天有雷阵雨”却没写收尾的站点名和发报时次，报文处理程序读到文件末尾都拼不完整一行记录，干脆拒收整份报文——补全闭合，报文才能“着落”。</p>
+</div></blockquote>
+<hr class="docutils" />
+</section>
+<section id="was-never-closed-unexpected-eof-while-parsing">
+<span id="id6"></span><h3>2.1.2 括号/花括号不闭合 → <code class="docutils literal notranslate"><span class="pre">'('</span> <span class="pre">was</span> <span class="pre">never</span> <span class="pre">closed</span></code> / <code class="docutils literal notranslate"><span class="pre">unexpected</span> <span class="pre">EOF</span> <span class="pre">while</span> <span class="pre">parsing</span></code><a class="headerlink" href="#was-never-closed-unexpected-eof-while-parsing" title="Link to this heading">#</a></h3>
+<p><strong>现象 / 真实报错信息</strong></p>
+<p>圆括号未闭合（<code class="docutils literal notranslate"><span class="pre">x</span> <span class="pre">=</span> <span class="pre">(1</span> <span class="pre">+</span> <span class="pre">2</span></code>）：</p>
+<div class="highlight-text notranslate"><div class="highlight"><pre><span></span>  File &quot;...\e00_unclosed_paren.py&quot;, line 3
+    x = (1 + 2
+        ^
+SyntaxError: &#39;(&#39; was never closed
+</pre></div>
+</div>
+<p>花括号/字典未闭合（<code class="docutils literal notranslate"><span class="pre">d</span> <span class="pre">=</span> <span class="pre">{'a':</span> <span class="pre">1,</span> <span class="pre">'b':</span> <span class="pre">2</span></code>）：</p>
+<div class="highlight-text notranslate"><div class="highlight"><pre><span></span>  File &quot;...\e00b_unclosed_brace.py&quot;, line 3
+    d = {&#39;a&#39;: 1, &#39;b&#39;: 2
+        ^
+SyntaxError: &#39;{&#39; was never closed
+</pre></div>
+</div>
+<p>（老版本统一报 <code class="docutils literal notranslate"><span class="pre">SyntaxError:</span> <span class="pre">unexpected</span> <span class="pre">EOF</span> <span class="pre">while</span> <span class="pre">parsing</span></code>。）</p>
+<p><strong>原因</strong>：<code class="docutils literal notranslate"><span class="pre">(</span></code> <code class="docutils literal notranslate"><span class="pre">)</span></code>、<code class="docutils literal notranslate"><span class="pre">[</span></code> <code class="docutils literal notranslate"><span class="pre">]</span></code>、<code class="docutils literal notranslate"><span class="pre">{</span></code>
+<code class="docutils literal notranslate"><span class="pre">}</span></code>、引号——这些符号 Python
+要求“成对出现”。漏掉右半边，解析器就满怀期待地读到文件末尾，却在结尾撞上“意外结束”。报错信息清晰地告诉你是哪一个符号
+“<code class="docutils literal notranslate"><span class="pre">'('</span> <span class="pre">was</span> <span class="pre">never</span> <span class="pre">closed</span></code>”（<code class="docutils literal notranslate"><span class="pre">(</span></code> 没被闭合）。</p>
+<p><strong>解决办法</strong>：补上对应的右括号/右花括号。日常小技巧：<strong>先写闭合再填内容</strong>，或写完用
+<code class="docutils literal notranslate"><span class="pre">Ctrl+[空格]</span></code>/格式化工具（如 VSCode 的 Prettier）自动配对检查。</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">x</span> <span class="o">=</span> <span class="p">(</span><span class="mi">1</span> <span class="o">+</span> <span class="mi">2</span><span class="p">)</span> <span class="o">*</span> <span class="mi">3</span>
+<span class="n">d</span> <span class="o">=</span> <span class="p">{</span><span class="s1">&#39;a&#39;</span><span class="p">:</span> <span class="mi">1</span><span class="p">,</span> <span class="s1">&#39;b&#39;</span><span class="p">:</span> <span class="mi">2</span><span class="p">}</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">d</span><span class="p">)</span>
+</pre></div>
+</div>
+<blockquote>
+<div><p><strong>气象场景一句话</strong>：括号没配对就像探空气球本该绑“一个升空一个回收”的成对平衡器，结果只放飞了(a
+没合上)，整个回执数据流到地就断档，观测站只能干等。</p>
+</div></blockquote>
+<hr class="docutils" />
+</section>
+<section id="syntaxerror-invalid-character-u-ff0c">
+<span id="syntaxerror-invalid-character-uff0c"></span><h3>2.1.3 中文标点混入 → <code class="docutils literal notranslate"><span class="pre">SyntaxError:</span> <span class="pre">invalid</span> <span class="pre">character</span> <span class="pre">'，'</span> <span class="pre">(U+FF0C)</span></code><a class="headerlink" href="#syntaxerror-invalid-character-u-ff0c" title="Link to this heading">#</a></h3>
+<p><strong>现象 / 真实报错信息</strong></p>
+<p>中文逗号出现在 <code class="docutils literal notranslate"><span class="pre">print</span></code> 参数分隔处：</p>
+<div class="highlight-text notranslate"><div class="highlight"><pre><span></span>  File &quot;...\e04_chinese_comma.py&quot;, line 3
+    print(&quot;气温&quot;, 35.6， &quot;湿度&quot;, 45)
+                    ^
+SyntaxError: invalid character &#39;，&#39; (U+FF0C)
+</pre></div>
+</div>
+<p>中文逗号出现在列表元素分隔处：</p>
+<div class="highlight-text notranslate"><div class="highlight"><pre><span></span>    stations = [&#39;兰州&#39;，&#39;敦煌&#39;，&#39;西宁&#39;]
+                    ^
+SyntaxError: invalid character &#39;，&#39; (U+FF0C)
+</pre></div>
+</div>
+<p>中文（全角）圆括号当作函数调用括号：</p>
+<div class="highlight-text notranslate"><div class="highlight"><pre><span></span>    print（&quot;高温预警&quot;）
+         ^
+SyntaxError: invalid character &#39;（&#39; (U+FF08)
+</pre></div>
+</div>
+<p>中文（全角）分号当作语句分隔：</p>
+<div class="highlight-text notranslate"><div class="highlight"><pre><span></span>    temp = 35.6；湿度 = 45
+               ^
+SyntaxError: invalid character &#39;；&#39; (U+FF1B)
+</pre></div>
+</div>
+<blockquote>
+<div><p>同类还有：中文引号 <code class="docutils literal notranslate"><span class="pre">“</span> <span class="pre">”</span></code>、全角冒号 <code class="docutils literal notranslate"><span class="pre">：</span></code>、全角句号
+<code class="docutils literal notranslate"><span class="pre">。</span></code>。报错里都有一个括号，里面是 <strong>``U+FFxx`` 这样一个 Unicode
+码点</strong>——那是全角符号的身份证号（<code class="docutils literal notranslate"><span class="pre">U+FF0C</span></code>=中文逗号、<code class="docutils literal notranslate"><span class="pre">U+FF08</span></code>=中文左括号、<code class="docutils literal notranslate"><span class="pre">U+FF1B</span></code>=中文分号）。看到
+“<code class="docutils literal notranslate"><span class="pre">invalid</span> <span class="pre">character</span></code> + U+FFFF”
+就立刻知道：<strong>代码里混进中文字体输入的标点了</strong>。若非法字符更隐蔽（如复制网页代码带进来的特殊空白），会报
+<code class="docutils literal notranslate"><span class="pre">invalid</span> <span class="pre">non-printable</span> <span class="pre">character</span></code>。</p>
+</div></blockquote>
+<p><strong>原因</strong>：Python（和其它大多数语言）只认<strong>英文半角</strong>的
+<code class="docutils literal notranslate"><span class="pre">,</span> <span class="pre">(</span> <span class="pre">)</span> <span class="pre">;</span> <span class="pre">:</span></code>
+等符号。你在中文输入法状态下按的是“中文逗号”，它长得和英文逗号几乎一样，但字节完全不同，Python
+不认账。注意：<strong>字符串内部</strong>用中文没事（<code class="docutils literal notranslate"><span class="pre">&quot;兰州，晴&quot;</span></code>
+合法），出错的都是<strong>字符串外层</strong>那些作为语法符号的标点。</p>
+<p><strong>解决办法</strong>：把报错行所有中文标点改回英文半角。切换到<strong>英文输入法</strong>再写代码；若是从
+Word/网页复制来的代码，先粘贴成<strong>纯文本</strong>，再用编辑器的“替换”把全角
+<code class="docutils literal notranslate"><span class="pre">，</span></code> 换成半角 <code class="docutils literal notranslate"><span class="pre">,</span></code>。</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="nb">print</span><span class="p">(</span><span class="s2">&quot;气温&quot;</span><span class="p">,</span> <span class="mf">35.6</span><span class="p">,</span> <span class="s2">&quot;湿度&quot;</span><span class="p">,</span> <span class="mi">45</span><span class="p">)</span>
+<span class="n">stations</span> <span class="o">=</span> <span class="p">[</span><span class="s1">&#39;兰州&#39;</span><span class="p">,</span> <span class="s1">&#39;敦煌&#39;</span><span class="p">,</span> <span class="s1">&#39;西宁&#39;</span><span class="p">]</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;高温预警&quot;</span><span class="p">)</span>
+<span class="n">temp</span> <span class="o">=</span> <span class="mf">35.6</span>
+<span class="n">humidity</span> <span class="o">=</span> <span class="mi">45</span>
+</pre></div>
+</div>
+<blockquote>
+<div><p><strong>气象场景一句话</strong>：英文代码把中文逗号当分隔符，就像地面填报表本该用半角逗号切分要素列，却混进一个全角逗号，整行
+CSV 的列数对不上，读数的程序当场翻脸。</p>
+</div></blockquote>
+<hr class="docutils" />
+</section>
+<section id="invalid-syntax">
+<span id="id7"></span><h3>2.1.4 字符串内部还要引号 → 引号嵌套错误 <code class="docutils literal notranslate"><span class="pre">invalid</span> <span class="pre">syntax</span></code><a class="headerlink" href="#invalid-syntax" title="Link to this heading">#</a></h3>
+<p><strong>现象 / 真实报错信息</strong></p>
+<p>想在双引号字符串里再放一个双引号（“兰州真热”），直接写成外层内层都用双引号：</p>
+<div class="highlight-text notranslate"><div class="highlight"><pre><span></span>  File &quot;...\e07_quote_nesting_bad.py&quot;, line 3
+    s = &quot;他说&quot;兰州真热&quot;&quot;
+            ^^^^
+SyntaxError: invalid syntax
+</pre></div>
+</div>
+<p><strong>原因</strong>：<code class="docutils literal notranslate"><span class="pre">s</span> <span class="pre">=</span> <span class="pre">&quot;他说&quot;</span></code>
+其实是一个完整字符串（内容是“他说”），后面的 <code class="docutils literal notranslate"><span class="pre">兰州真热</span></code>
+就成了“裸奔”的非法文字，Python 不知道它是什么，于是
+<code class="docutils literal notranslate"><span class="pre">invalid</span> <span class="pre">syntax</span></code>。本质是<strong>引号撞车</strong>：内外的引号同一型号，解析器分不清哪一对包谁。</p>
+<p><strong>解决办法</strong>：三种正确做法，任选其一，含义完全相同：</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="c1"># 做法1：外单内双   —— 最直观，推荐默认</span>
+<span class="n">a</span> <span class="o">=</span> <span class="s1">&#39;他说&quot;兰州真热&quot;&#39;</span>
+
+<span class="c1"># 做法2：外双内单</span>
+<span class="n">b</span> <span class="o">=</span> <span class="s2">&quot;他说&#39;兰州真热&#39;&quot;</span>
+
+<span class="c1"># 做法3：转义符 \&quot;   —— 外层引号前加反斜杠，让&quot;成为普通字符</span>
+<span class="n">c</span> <span class="o">=</span> <span class="s2">&quot;他说</span><span class="se">\&quot;</span><span class="s2">兰州真热</span><span class="se">\&quot;</span><span class="s2">&quot;</span>
+
+<span class="c1"># 做法4：三引号（万一内层单双都要出现）</span>
+<span class="n">d</span> <span class="o">=</span> <span class="s1">&#39;&#39;&#39;他说&quot;兰州真热&quot;&#39;&#39;&#39;</span>
+
+<span class="nb">print</span><span class="p">(</span><span class="n">a</span><span class="p">);</span> <span class="nb">print</span><span class="p">(</span><span class="n">b</span><span class="p">);</span> <span class="nb">print</span><span class="p">(</span><span class="n">c</span><span class="p">);</span> <span class="nb">print</span><span class="p">(</span><span class="n">d</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>运行输出（e07b 实测）：</p>
+<div class="highlight-text notranslate"><div class="highlight"><pre><span></span>他说&quot;兰州真热&quot;
+他说&#39;兰州真热&#39;
+他说&quot;兰州真热&quot;
+他说&quot;兰州真热&quot;
+</pre></div>
+</div>
+<blockquote>
+<div><p><strong>气象场景一句话</strong>：就像在警报文案里要加引号（“暴雨红色预警信号”），标题本身又带引号，你得用“单引号套双引号”或转义，别让引号互相“抢地盘”。</p>
+</div></blockquote>
+<hr class="docutils" />
+</section>
+</section>
+<section id="id8">
+<span id="id9"></span><h2>2.2 数字与运算符：算错了，是类型问题还是精度问题？<a class="headerlink" href="#id8" title="Link to this heading">#</a></h2>
+<blockquote>
+<div><p>这一分区处理“我在算数”时会碰到的三类坑：<strong>类型不对</strong>（数字 vs
+字符串混算，TypeError）、<strong>除以零</strong>（ZeroDivisionError）、<strong>浮点精度/幂运算符</strong>（不报错但结果错——这一类最阴险）。</p>
+</div></blockquote>
+<hr class="docutils" />
+<section id="typeerror-unsupported-operand-type-s-for-int-and-str">
+<span id="typeerror-unsupported-operand-types-for-int-and-str"></span><h3>2.2.1 数字和字符串混着算 → <code class="docutils literal notranslate"><span class="pre">TypeError:</span> <span class="pre">unsupported</span> <span class="pre">operand</span> <span class="pre">type(s)</span> <span class="pre">for</span> <span class="pre">+:</span> <span class="pre">'int'</span> <span class="pre">and</span> <span class="pre">'str'</span></code><a class="headerlink" href="#typeerror-unsupported-operand-type-s-for-int-and-str" title="Link to this heading">#</a></h3>
+<p><strong>现象 / 真实报错信息</strong></p>
+<p>整数 + 字符串：</p>
+<div class="highlight-text notranslate"><div class="highlight"><pre><span></span>  File &quot;...\e08_int_add_str.py&quot;, line 3, in &lt;module&gt;
+    print(25 + &quot;5&quot;)
+          ~~~^~~~~
+TypeError: unsupported operand type(s) for +: &#39;int&#39; and &#39;str&#39;
+</pre></div>
+</div>
+<p>带引号的数字 + 整数（<code class="docutils literal notranslate"><span class="pre">'5'</span> <span class="pre">+</span> <span class="pre">9</span></code>）：</p>
+<div class="highlight-text notranslate"><div class="highlight"><pre><span></span>  File &quot;...\e09_str_add_int.py&quot;, line 3, in &lt;module&gt;
+    print(&#39;5&#39; + 9)
+          ~~~~^~~
+TypeError: can only concatenate str (not &quot;int&quot;) to str
+</pre></div>
+</div>
+<p><strong>原因</strong>：<code class="docutils literal notranslate"><span class="pre">+</span></code> 对 <code class="docutils literal notranslate"><span class="pre">int</span></code> 是做加法，对 <code class="docutils literal notranslate"><span class="pre">str</span></code> 是拼接。Python
+<strong>拒绝猜测</strong>你到底是想要导数值还是合并文本，于是直接报
+<code class="docutils literal notranslate"><span class="pre">TypeError</span></code>（类型错误）——<code class="docutils literal notranslate"><span class="pre">unsupported</span> <span class="pre">operand</span> <span class="pre">type(s)</span></code>
+意思是“这两类操作数不支持 <code class="docutils literal notranslate"><span class="pre">+</span></code> 这个运算”。第二种报错
+<code class="docutils literal notranslate"><span class="pre">can</span> <span class="pre">only</span> <span class="pre">concatenate</span> <span class="pre">str</span> <span class="pre">(not</span> <span class="pre">&quot;int&quot;)</span> <span class="pre">to</span> <span class="pre">str</span></code> 是 Python 3.9+
+的细化提示：“字符串只能拼接字符串”，同样一个性质。</p>
+<p><strong>解决办法</strong>：先想清楚要哪种结果。</p>
+<ul class="simple">
+<li><p>想要<strong>数值相加</strong> → 把字符串转数字 <code class="docutils literal notranslate"><span class="pre">int(&quot;5&quot;)</span> <span class="pre">+</span> <span class="pre">25</span></code>；</p></li>
+<li><p>想要<strong>文本拼接</strong> → 把数字转字符串
+<code class="docutils literal notranslate"><span class="pre">str(25)</span> <span class="pre">+</span> <span class="pre">&quot;5&quot;</span></code>，或<strong>更推荐用 f-string</strong>。</p></li>
+</ul>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="nb">print</span><span class="p">(</span><span class="nb">int</span><span class="p">(</span><span class="s2">&quot;5&quot;</span><span class="p">)</span> <span class="o">+</span> <span class="mi">25</span><span class="p">)</span>        <span class="c1"># 30：转数字再加</span>
+<span class="nb">print</span><span class="p">(</span><span class="nb">str</span><span class="p">(</span><span class="mi">25</span><span class="p">)</span> <span class="o">+</span> <span class="s2">&quot;5&quot;</span><span class="p">)</span>        <span class="c1"># 255：转字符串拼接</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="mi">25</span><span class="si">}</span><span class="s2">5&quot;</span><span class="p">)</span>             <span class="c1"># 255：f-string 拼接，最省心</span>
+</pre></div>
+</div>
+<p>对应正文 <code class="docutils literal notranslate"><span class="pre">datatypes.rst</span></code> 的警示：“<code class="docutils literal notranslate"><span class="pre">&quot;25&quot;</span></code> 是文本，<code class="docutils literal notranslate"><span class="pre">&quot;25&quot;</span> <span class="pre">+</span> <span class="pre">5</span></code>
+直接抛 TypeError，须先转换 <code class="docutils literal notranslate"><span class="pre">int(&quot;25&quot;)</span> <span class="pre">+</span> <span class="pre">5</span></code>。”</p>
+<blockquote>
+<div><p><strong>气象场景一句话</strong>：就像把湿度 <code class="docutils literal notranslate"><span class="pre">65%</span></code> 的“百分比文本”混进数值列表去
+<code class="docutils literal notranslate"><span class="pre">sum</span></code>，或把整站气温 <code class="docutils literal notranslate"><span class="pre">35</span></code> 和站名 <code class="docutils literal notranslate"><span class="pre">&quot;兰州&quot;</span></code> 硬加——Python
+不背这个锅。排查方向：先 <code class="docutils literal notranslate"><span class="pre">print(type(...))</span></code>
+确认两边到底是不是同一类。</p>
+</div></blockquote>
+<hr class="docutils" />
+</section>
+<section id="zerodivisionerror">
+<span id="id10"></span><h3>2.2.2 除以 0 → <code class="docutils literal notranslate"><span class="pre">ZeroDivisionError</span></code>（整数/浮点/取模/整除）<a class="headerlink" href="#zerodivisionerror" title="Link to this heading">#</a></h3>
+<p><strong>现象 / 真实报错信息</strong></p>
+<p>整数除以 0：</p>
+<div class="highlight-text notranslate"><div class="highlight"><pre><span></span>  File &quot;...\e17_division_by_zero.py&quot;, line 3, in &lt;module&gt;
+    print(10 / 0)
+          ~~~^~~
+ZeroDivisionError: division by zero
+</pre></div>
+</div>
+<p>浮点数除以 <code class="docutils literal notranslate"><span class="pre">0.0</span></code>（除数写成了 0.0，同样是 0）：</p>
+<div class="highlight-text notranslate"><div class="highlight"><pre><span></span>  File &quot;...\e17b_div_by_zero_float.py&quot;, line 3, in &lt;module&gt;
+    print(10 / 0.0)
+          ~~~^~~~~
+ZeroDivisionError: float division by zero
+</pre></div>
+</div>
+<p>取模（余数）除以 0：</p>
+<div class="highlight-text notranslate"><div class="highlight"><pre><span></span>  File &quot;...\e17c_mod_zero.py&quot;, line 3, in &lt;module&gt;
+    print(10 % 0)
+          ~~~^~~
+ZeroDivisionError: integer modulo by zero
+</pre></div>
+</div>
+<p><strong>原因</strong>：<code class="docutils literal notranslate"><span class="pre">0</span></code> 和 <code class="docutils literal notranslate"><span class="pre">0.0</span></code>
+都是零，任何数除以零在数学上无定义。<code class="docutils literal notranslate"><span class="pre">/</span></code>、<code class="docutils literal notranslate"><span class="pre">//</span></code>、<code class="docutils literal notranslate"><span class="pre">%</span></code>
+这三种“除”都会触发 <code class="docutils literal notranslate"><span class="pre">ZeroDivisionError</span></code>（属于 <code class="docutils literal notranslate"><span class="pre">ArithmeticError</span></code>
+家族）。注意报错文案也有细微差别：整行为
+<code class="docutils literal notranslate"><span class="pre">division</span> <span class="pre">by</span> <span class="pre">zero</span></code>，浮点行为 <code class="docutils literal notranslate"><span class="pre">float</span> <span class="pre">division</span> <span class="pre">by</span> <span class="pre">zero</span></code>，取模为
+<code class="docutils literal notranslate"><span class="pre">integer</span> <span class="pre">modulo</span> <span class="pre">by</span> <span class="pre">zero</span></code>——<strong>关键词 ``ZeroDivisionError``
+就是主菜</strong>。</p>
+<p><strong>解决办法</strong>：除数先判零再算，或对除数来源做好校验。</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">divisor</span> <span class="o">=</span> <span class="mi">0</span>
+<span class="k">if</span> <span class="n">divisor</span> <span class="o">!=</span> <span class="mi">0</span><span class="p">:</span>
+    <span class="nb">print</span><span class="p">(</span><span class="mi">10</span> <span class="o">/</span> <span class="n">divisor</span><span class="p">)</span>
+<span class="k">else</span><span class="p">:</span>
+    <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;除数为 0，跳过（这是缺测/空数据常客）&quot;</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>气象里的典型雷区：<strong>求平均风速时 ``sum / len``
+而列表为空</strong>，或某天降水缺测填了 0 当除数。空/零源都会炸
+<code class="docutils literal notranslate"><span class="pre">ZeroDivisionError</span></code>，处理数据前先 <code class="docutils literal notranslate"><span class="pre">len()</span></code> 和判零。</p>
+<blockquote>
+<div><p><strong>气象场景一句话</strong>：除以 0 就像算“日变率”时用“平均间隔 0
+天”当分母——观测日期没拉开、甚至重复给了同一天，变率就变得无穷大，必须检查分母是否非零。</p>
+</div></blockquote>
+<hr class="docutils" />
+</section>
+<section id="id11">
+<span id="id12"></span><h3>2.2.3 浮点精度：<code class="docutils literal notranslate"><span class="pre">0.1</span> <span class="pre">+</span> <span class="pre">0.2</span> <span class="pre">!=</span> <span class="pre">0.3</span></code>（不报错，但结果错）<a class="headerlink" href="#id11" title="Link to this heading">#</a></h3>
+<p><strong>现象 / 真实报错信息</strong>（e18 实测，注意是<strong>无报错但结果不对</strong>）</p>
+<div class="highlight-text notranslate"><div class="highlight"><pre><span></span>0.30000000000000004
+False
+True
+True
+</pre></div>
+</div>
+<p>展开：<code class="docutils literal notranslate"><span class="pre">print(0.1</span> <span class="pre">+</span> <span class="pre">0.2)</span></code> 出的是 <code class="docutils literal notranslate"><span class="pre">0.30000000000000004</span></code>，于是
+<code class="docutils literal notranslate"><span class="pre">0.1</span> <span class="pre">+</span> <span class="pre">0.2</span> <span class="pre">==</span> <span class="pre">0.3</span></code> 是 <code class="docutils literal notranslate"><span class="pre">False</span></code>；改成容差比较
+<code class="docutils literal notranslate"><span class="pre">abs((0.1+0.2)-0.3)</span> <span class="pre">&lt;</span> <span class="pre">1e-9</span></code> 得
+<code class="docutils literal notranslate"><span class="pre">True</span></code>，<code class="docutils literal notranslate"><span class="pre">round(...)</span> <span class="pre">==</span> <span class="pre">round(...)</span></code> 也得 <code class="docutils literal notranslate"><span class="pre">True</span></code>。</p>
+<p><strong>原因</strong>：浮点数按 <strong>IEEE 754
+标准</strong>用二进制存储，<code class="docutils literal notranslate"><span class="pre">0.1</span></code>、<code class="docutils literal notranslate"><span class="pre">0.3</span></code>
+这样的十进制小数无法被二进制<strong>精确</strong>表示，只能存成“最接近的值”。两个近似值一加，误差攒到第
+16 位之后，<code class="docutils literal notranslate"><span class="pre">==</span></code>
+就判不相等了。<strong>程序百分百“正常”跑完，却也百分之百“算错了”</strong>——正是通用方法论
+0.1 节说的最阴险的“异常现象（无报错）”。</p>
+<p><strong>解决办法</strong>：</p>
+<ul class="simple">
+<li><p><strong>判等用容差</strong>：<code class="docutils literal notranslate"><span class="pre">abs(a</span> <span class="pre">-</span> <span class="pre">b)</span> <span class="pre">&lt;</span> <span class="pre">1e-9</span></code>（正文推荐）；</p></li>
+<li><p><strong>先四舍五入再比</strong>：<code class="docutils literal notranslate"><span class="pre">round(0.1+0.2,</span> <span class="pre">10)</span> <span class="pre">==</span> <span class="pre">round(0.3,</span> <span class="pre">10)</span></code>；</p></li>
+<li><p><strong>必须出报告值</strong>（观测建档、经费核算）用标准库
+<code class="docutils literal notranslate"><span class="pre">Decimal</span></code>，用<strong>字符串</strong>构造：</p></li>
+</ul>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span><span class="w"> </span><span class="nn">decimal</span><span class="w"> </span><span class="kn">import</span> <span class="n">Decimal</span><span class="p">,</span> <span class="n">getcontext</span>
+<span class="n">getcontext</span><span class="p">()</span><span class="o">.</span><span class="n">prec</span> <span class="o">=</span> <span class="mi">5</span>
+<span class="n">x</span><span class="p">,</span> <span class="n">y</span> <span class="o">=</span> <span class="n">Decimal</span><span class="p">(</span><span class="s2">&quot;0.1&quot;</span><span class="p">),</span> <span class="n">Decimal</span><span class="p">(</span><span class="s2">&quot;0.2&quot;</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">x</span> <span class="o">+</span> <span class="n">y</span><span class="p">)</span>                                  <span class="c1"># 0.3  精确</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">x</span> <span class="o">+</span> <span class="n">y</span> <span class="o">==</span> <span class="n">Decimal</span><span class="p">(</span><span class="s2">&quot;0.3&quot;</span><span class="p">))</span>                <span class="c1"># True</span>
+</pre></div>
+</div>
+<blockquote>
+<div><p>正文 <code class="docutils literal notranslate"><span class="pre">datatypes.rst</span></code> 特别提醒：气象上“判断两个温度相等”别直接用
+<code class="docutils literal notranslate"><span class="pre">==</span></code>；对科学计算保留 <code class="docutils literal notranslate"><span class="pre">float</span></code> 就够，10⁻¹⁷
+量级误差远小于观测精度，<code class="docutils literal notranslate"><span class="pre">Decimal</span></code> 知道有这回事即可。</p>
+<p><strong>气象场景一句话</strong>：0.1
+这种小数在“二进制观测台”上永远差那么一万亿分之一克，就像一张电子温度记录，第
+16 位小数总有几个“假抖动”；同款两次取样判“相等”就会翻车，得给“相等”留
+0.000001 的容差尺。</p>
+</div></blockquote>
+<hr class="docutils" />
+</section>
+<section id="id13">
+<span id="id14"></span><h3>2.2.4 <code class="docutils literal notranslate"><span class="pre">^</span></code> 不是幂：是异或（不报错，但算出来全错）<a class="headerlink" href="#id13" title="Link to this heading">#</a></h3>
+<p><strong>现象 / 真实报错信息</strong>（e21 实测）</p>
+<div class="highlight-text notranslate"><div class="highlight"><pre><span></span>8
+1
+9
+1
+</pre></div>
+</div>
+<p>即：<code class="docutils literal notranslate"><span class="pre">2</span> <span class="pre">**</span> <span class="pre">3</span></code> 得 <code class="docutils literal notranslate"><span class="pre">8</span></code>（正确的幂）；<code class="docutils literal notranslate"><span class="pre">2</span> <span class="pre">^</span> <span class="pre">3</span></code> 得
+<code class="docutils literal notranslate"><span class="pre">1</span></code>——<strong>不报错</strong>，但 `2^3=2³=8`
+的直觉在这里是<code class="docutils literal notranslate"><span class="pre">1</span></code>！<code class="docutils literal notranslate"><span class="pre">3</span> <span class="pre">**</span> <span class="pre">2</span></code> 得 <code class="docutils literal notranslate"><span class="pre">9</span></code>，<code class="docutils literal notranslate"><span class="pre">3</span> <span class="pre">^</span> <span class="pre">2</span></code> 也得
+<code class="docutils literal notranslate"><span class="pre">1</span></code>。</p>
+<p><strong>原因</strong>：学过 C/数学符号的你惯性认为 <code class="docutils literal notranslate"><span class="pre">^</span></code> 是“几次方”，但 Python 里
+<code class="docutils literal notranslate"><span class="pre">^</span></code> 是<strong>按位异或（XOR）</strong>（对着二进制逐位比，相同得 0、不同得
+1），其优先级还很低。<strong>幂运算只有一个符号：``**``</strong>。这是想当然埋下的“静默污染”——程序不报错，结果却离谱。</p>
+<p><strong>解决办法</strong>：一律用 <code class="docutils literal notranslate"><span class="pre">**</span></code> 表幂。</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="nb">print</span><span class="p">(</span><span class="mi">2</span> <span class="o">**</span> <span class="mi">3</span><span class="p">)</span>     <span class="c1"># 8</span>
+<span class="nb">print</span><span class="p">(</span><span class="mi">3</span> <span class="o">**</span> <span class="mi">2</span><span class="p">)</span>     <span class="c1"># 9</span>
+<span class="c1"># 风速合成：u² + v² 再开方</span>
+<span class="n">u</span><span class="p">,</span> <span class="n">v</span> <span class="o">=</span> <span class="mf">3.0</span><span class="p">,</span> <span class="mf">4.0</span>
+<span class="nb">print</span><span class="p">((</span><span class="n">u</span><span class="o">**</span><span class="mi">2</span> <span class="o">+</span> <span class="n">v</span><span class="o">**</span><span class="mi">2</span><span class="p">)</span> <span class="o">**</span> <span class="mf">0.5</span><span class="p">)</span>   <span class="c1"># 5.0</span>
+</pre></div>
+</div>
+<blockquote>
+<div><p>可顺带记住 Python 的位运算符
+<code class="docutils literal notranslate"><span class="pre">&amp;</span></code>（与）<code class="docutils literal notranslate"><span class="pre">|</span></code>（或）<code class="docutils literal notranslate"><span class="pre">^</span></code>（亦或）在<strong>集合</strong>上还有特殊含义：对
+<code class="docutils literal notranslate"><span class="pre">set</span></code>，<code class="docutils literal notranslate"><span class="pre">&amp;</span></code> 是交集、<code class="docutils literal notranslate"><span class="pre">|</span></code> 是并集、<code class="docutils literal notranslate"><span class="pre">^</span></code>
+是对称差（正文集合一节）。对象不同含义不同——<strong>算子号前先看操作数是数还是集合</strong>。</p>
+<p><strong>气象场景一句话</strong>：想算“风速平方”却用了
+<code class="docutils literal notranslate"><span class="pre">^</span></code>，等于把风矢量按位异或了一把，画出来风场全是乱的——这是“不报错但全错”的典型，发现异常先查运算符对不对。</p>
+</div></blockquote>
+<hr class="docutils" />
+</section>
+<section id="id15">
+<span id="id16"></span><h3>2.2.5 运算符优先级：<code class="docutils literal notranslate"><span class="pre">3</span> <span class="pre">+</span> <span class="pre">2</span> <span class="pre">*</span> <span class="pre">2</span></code> 与 <code class="docutils literal notranslate"><span class="pre">(3</span> <span class="pre">+</span> <span class="pre">2)</span> <span class="pre">*</span> <span class="pre">2</span></code><a class="headerlink" href="#id15" title="Link to this heading">#</a></h3>
+<p><strong>现象 / 真实输出</strong>（e22 实测）</p>
+<div class="highlight-text notranslate"><div class="highlight"><pre><span></span>7
+10
+5.0
+16.102993301316015
+</pre></div>
+</div>
+<p>即：<code class="docutils literal notranslate"><span class="pre">3</span> <span class="pre">+</span> <span class="pre">2</span> <span class="pre">*</span> <span class="pre">2</span></code> 得 <code class="docutils literal notranslate"><span class="pre">7</span></code>（先乘后加），<code class="docutils literal notranslate"><span class="pre">(3</span> <span class="pre">+</span> <span class="pre">2)</span> <span class="pre">*</span> <span class="pre">2</span></code> 得
+<code class="docutils literal notranslate"><span class="pre">10</span></code>（括号优先）；<code class="docutils literal notranslate"><span class="pre">(u**2</span> <span class="pre">+</span> <span class="pre">v**2)</span> <span class="pre">**</span> <span class="pre">0.5</span></code> 对 <code class="docutils literal notranslate"><span class="pre">u=3.0,v=4.0</span></code> 得
+<code class="docutils literal notranslate"><span class="pre">5.0</span></code>（规范的 3-4-5
+勾股风速）；而一旦不加括号写成可误解的形式，就会算出怪数。</p>
+<p><strong>原因</strong>：Python 有一个算术优先级（从高到低）<code class="docutils literal notranslate"><span class="pre">**</span></code> → 一元负号 →
+<code class="docutils literal notranslate"><span class="pre">*</span> <span class="pre">/</span> <span class="pre">//</span> <span class="pre">%</span></code> → <code class="docutils literal notranslate"><span class="pre">+</span> <span class="pre">-</span></code> → 比较 → <code class="docutils literal notranslate"><span class="pre">not</span></code> → <code class="docutils literal notranslate"><span class="pre">and</span></code> →
+<code class="docutils literal notranslate"><span class="pre">or</span></code>。拿不准时程序不会报错，只会<strong>按你以为的顺序</strong>做“错事”。正文的忠告是：“<strong>加括号——括号不要钱，可读性值千金。</strong>”</p>
+<p><strong>解决办法</strong>：<strong>复杂的表达式一律加括号</strong>，让意图一目了然：</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">speed</span> <span class="o">=</span> <span class="p">(</span><span class="n">u</span><span class="o">**</span><span class="mi">2</span> <span class="o">+</span> <span class="n">v</span><span class="o">**</span><span class="mi">2</span><span class="p">)</span> <span class="o">**</span> <span class="mf">0.5</span>     <span class="c1"># 风速 = sqrt(u²+v²)（归一写法）</span>
+<span class="n">temp_in_celsius</span> <span class="o">=</span> <span class="p">(</span><span class="n">temp_f</span> <span class="o">-</span> <span class="mi">32</span><span class="p">)</span> <span class="o">*</span> <span class="mi">5</span> <span class="o">/</span> <span class="mi">9</span>   <span class="c1"># 华氏转摄氏</span>
+<span class="nb">print</span><span class="p">(</span><span class="mi">3</span> <span class="o">+</span> <span class="mi">2</span> <span class="o">*</span> <span class="mi">2</span><span class="p">)</span>      <span class="c1"># 7</span>
+<span class="nb">print</span><span class="p">((</span><span class="mi">3</span> <span class="o">+</span> <span class="mi">2</span><span class="p">)</span> <span class="o">*</span> <span class="mi">2</span><span class="p">)</span>    <span class="c1"># 10</span>
+</pre></div>
+</div>
+<blockquote>
+<div><p><strong>气象场景一句话</strong>：预报员把写好的公式按自己“心里的括号”读，程序却按“默认优先级”算——多点一对括号，就像公式前后各夹一个台风环流闭合线，圈定范围就再也不歧义。</p>
+</div></blockquote>
+<hr class="docutils" />
+</section>
+</section>
+<section id="id17">
+<span id="id18"></span><h2>2.3 类型转换：把字符串“翻译”成数字<a class="headerlink" href="#id17" title="Link to this heading">#</a></h2>
+<blockquote>
+<div><p>str → int/float
+是类型转换（<code class="docutils literal notranslate"><span class="pre">int(...)</span></code>、<code class="docutils literal notranslate"><span class="pre">float(...)</span></code>）。转换不是魔法：<strong>你给的字符串必须是“数”的样子</strong>，否则抛
+ValueError；而 <code class="docutils literal notranslate"><span class="pre">input()</span></code> 天生返回字符串，算数前必须显式转换。</p>
+</div></blockquote>
+<hr class="docutils" />
+<section id="int-abc-float-23-3x-valueerror">
+<span id="intabc-float233x-valueerror"></span><h3>2.3.1 <code class="docutils literal notranslate"><span class="pre">int(&quot;abc&quot;)</span></code> / <code class="docutils literal notranslate"><span class="pre">float(&quot;23.3x&quot;)</span></code> → <code class="docutils literal notranslate"><span class="pre">ValueError</span></code>（字符串不是合法数字）<a class="headerlink" href="#int-abc-float-23-3x-valueerror" title="Link to this heading">#</a></h3>
+<p><strong>现象 / 真实报错信息</strong></p>
+<p><code class="docutils literal notranslate"><span class="pre">int(&quot;abc&quot;)</span></code>：</p>
+<div class="highlight-text notranslate"><div class="highlight"><pre><span></span>  File &quot;...\e19_int_abc.py&quot;, line 3, in &lt;module&gt;
+    print(int(&quot;abc&quot;))
+          ^^^^^^^^^^
+ValueError: invalid literal for int() with base 10: &#39;abc&#39;
+</pre></div>
+</div>
+<p><code class="docutils literal notranslate"><span class="pre">float(&quot;23.3x&quot;)</span></code>：</p>
+<div class="highlight-text notranslate"><div class="highlight"><pre><span></span>  File &quot;...\e19b_float_23x.py&quot;, line 3, in &lt;module&gt;
+    print(float(&quot;23.3x&quot;))
+          ^^^^^^^^^^^^^^
+ValueError: could not convert string to float: &#39;23.3x&#39;
+</pre></div>
+</div>
+<p><code class="docutils literal notranslate"><span class="pre">int(&quot;25.6&quot;)</span></code>（有小数点也不能直接转 int）：</p>
+<div class="highlight-text notranslate"><div class="highlight"><pre><span></span>ValueError: invalid literal for int() with base 10: &#39;25.6&#39;
+</pre></div>
+</div>
+<p><strong>原因</strong>：<code class="docutils literal notranslate"><span class="pre">int()</span></code>
+要求参数是<strong>纯整数形式的字符串</strong>（可带正负号，但不能有小数点、字母、空格等任何杂质）；<code class="docutils literal notranslate"><span class="pre">float()</span></code>
+要求是“合法的浮点数字符串”。内容不是，就抛 <code class="docutils literal notranslate"><span class="pre">ValueError</span></code>。“invalid
+literal for int() with base 10” 里的 <code class="docutils literal notranslate"><span class="pre">base</span> <span class="pre">10</span></code>
+表示十进制，“这个十进制的字面量是无效的”。注意这是<strong>Value</strong>
+Error（类型对、值非法），不是 TypeError。</p>
+<p><strong>解决办法</strong>：先确认字符串长什么样，再选对转换函数：</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="nb">print</span><span class="p">(</span><span class="nb">int</span><span class="p">(</span><span class="s2">&quot;25&quot;</span><span class="p">))</span>      <span class="c1"># 25         纯整数串 OK</span>
+<span class="nb">print</span><span class="p">(</span><span class="nb">float</span><span class="p">(</span><span class="s2">&quot;12.7&quot;</span><span class="p">))</span>  <span class="c1"># 12.7       浮点串用 float</span>
+<span class="nb">print</span><span class="p">(</span><span class="nb">float</span><span class="p">(</span><span class="s2">&quot;25&quot;</span><span class="p">))</span>    <span class="c1"># 25.0       &quot;25&quot; 也能转 float</span>
+<span class="c1"># int(&quot;25.6&quot;) 不行——要先把&quot;25.6&quot;读成 float 再取整：</span>
+<span class="nb">print</span><span class="p">(</span><span class="nb">int</span><span class="p">(</span><span class="nb">float</span><span class="p">(</span><span class="s2">&quot;25.6&quot;</span><span class="p">)))</span>   <span class="c1"># 25（int() 截断）</span>
+<span class="nb">print</span><span class="p">(</span><span class="nb">round</span><span class="p">(</span><span class="nb">float</span><span class="p">(</span><span class="s2">&quot;25.6&quot;</span><span class="p">)))</span> <span class="c1"># 26（round() 四舍五入）</span>
+</pre></div>
+</div>
+<blockquote>
+<div><p>正文类型转换清单强调：<code class="docutils literal notranslate"><span class="pre">float</span> <span class="pre">→</span> <span class="pre">int</span></code>
+是<strong>截断</strong>不是四舍五入（<code class="docutils literal notranslate"><span class="pre">int(25.9)</span></code> 得 <code class="docutils literal notranslate"><span class="pre">25</span></code>，要四舍五入用
+<code class="docutils literal notranslate"><span class="pre">round</span></code>）；<code class="docutils literal notranslate"><span class="pre">str</span> <span class="pre">→</span> <span class="pre">number</span></code> 随时可能抛
+ValueError，读外部数据（CSV、键盘输入）时最好先用 <code class="docutils literal notranslate"><span class="pre">try/except</span></code>
+兜底（第 3 章再实践）。</p>
+<p><strong>气象场景一句话</strong>：想把报文里的站点号串 <code class="docutils literal notranslate"><span class="pre">&quot;52889&quot;</span></code>
+转成数，结果混进个站名 <code class="docutils literal notranslate"><span class="pre">&quot;兰州&quot;</span></code>——<code class="docutils literal notranslate"><span class="pre">int()</span></code>
+看到“兰州”写进数字位，瞳孔地震：这个“字面量”根本不是数字，果断 Value
+Error 拒收。</p>
+</div></blockquote>
+<hr class="docutils" />
+</section>
+<section id="input-str-typeerror">
+<span id="id19"></span><h3>2.3.2 <code class="docutils literal notranslate"><span class="pre">input()</span></code> 返回的是 str：直接当数字算 → TypeError<a class="headerlink" href="#input-str-typeerror" title="Link to this heading">#</a></h3>
+<p><strong>现象 / 真实报错信息</strong>（e20 实测，<code class="docutils literal notranslate"><span class="pre">age</span> <span class="pre">=</span> <span class="pre">input()</span></code> 后输入
+<code class="docutils literal notranslate"><span class="pre">18</span></code>，接着 <code class="docutils literal notranslate"><span class="pre">age</span> <span class="pre">+</span> <span class="pre">5</span></code>）</p>
+<div class="highlight-text notranslate"><div class="highlight"><pre><span></span>请输入年龄：                                 # 你在键盘敲: 18
+  File &quot;...\e20_input_str_add.py&quot;, line 4, in &lt;module&gt;
+    print(age + 5)
+          ~~~~^~~
+TypeError: can only concatenate str (not &quot;int&quot;) to str
+</pre></div>
+</div>
+<p>正确写法（<code class="docutils literal notranslate"><span class="pre">int(input(...))</span></code>，e20b 实测）：</p>
+<div class="highlight-text notranslate"><div class="highlight"><pre><span></span>请输入年龄：                                 # 输入 18
+23                                            # age+5
+&lt;class &#39;int&#39;&gt;
+</pre></div>
+</div>
+<p><strong>原因</strong>：<strong>``input()`` 无论你输入什么，一律返回字符串
+``str``</strong>。你以为用户“输入的是数字 18”，Python 拿到的是文本
+<code class="docutils literal notranslate"><span class="pre">'18'</span></code>。文本和数字做 <code class="docutils literal notranslate"><span class="pre">+</span></code>，自然是 2.2.1 同款
+<code class="docutils literal notranslate"><span class="pre">TypeError</span></code>。这是大一新课最容易踩的“格式化数据入口坑”。</p>
+<p><strong>解决办法</strong>：凡要参与算术，输入后立刻 <code class="docutils literal notranslate"><span class="pre">int(...)</span></code> 或
+<code class="docutils literal notranslate"><span class="pre">float(...)</span></code>：</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">age</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="nb">input</span><span class="p">(</span><span class="s2">&quot;请输入年龄：&quot;</span><span class="p">))</span>    <span class="c1"># 直接强转成 int</span>
+<span class="n">temp_c</span> <span class="o">=</span> <span class="nb">float</span><span class="p">(</span><span class="nb">input</span><span class="p">(</span><span class="s2">&quot;请输入气温：&quot;</span><span class="p">))</span>  <span class="c1"># 天气时要带小数，用 float</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">age</span> <span class="o">+</span> <span class="mi">5</span><span class="p">)</span>          <span class="c1"># 23（作为数）</span>
+</pre></div>
+</div>
+<p>若用户可能输入“非数字”，光 <code class="docutils literal notranslate"><span class="pre">int()</span></code> 会抛 2.3.1 的
+<code class="docutils literal notranslate"><span class="pre">ValueError</span></code>——稳妥做法是 <code class="docutils literal notranslate"><span class="pre">try/except</span></code>（第 3 章讲异常后呼应）。</p>
+<blockquote>
+<div><p><strong>气象场景一句话</strong>：观测员从键盘输入“35”，电脑收到的是文本字符
+<code class="docutils literal notranslate"><span class="pre">'3''5'</span></code> 而不是值
+35——保温瓶的旋钮你拧的是“度数”，程序读到的是“刻度编号”。要它当度数，就得先转成数值刻度。</p>
+</div></blockquote>
+<hr class="docutils" />
+</section>
+</section>
+<section id="id20">
+<span id="id21"></span><h2>2.4 变量命名：名字要合法、能认识<a class="headerlink" href="#id20" title="Link to this heading">#</a></h2>
+<blockquote>
+<div><p>变量名有四条硬规矩（正文 PEP 8
+摘要）：只能用字母/数字/下划线、<strong>不能数字开头</strong>、<strong>不能是关键字</strong>、大小写敏感。违反前三者都是
+<code class="docutils literal notranslate"><span class="pre">SyntaxError</span></code>（语法错误）——程序根本不给你跑。</p>
+</div></blockquote>
+<hr class="docutils" />
+<section id="syntaxerror-invalid-syntax">
+<span id="id22"></span><h3>2.4.1 变量名用了关键字（保留字）→ <code class="docutils literal notranslate"><span class="pre">SyntaxError:</span> <span class="pre">invalid</span> <span class="pre">syntax</span></code><a class="headerlink" href="#syntaxerror-invalid-syntax" title="Link to this heading">#</a></h3>
+<p><strong>现象 / 真实报错信息</strong>（e10 实测，<code class="docutils literal notranslate"><span class="pre">if</span> <span class="pre">=</span> <span class="pre">25</span></code>）</p>
+<div class="highlight-text notranslate"><div class="highlight"><pre><span></span>  File &quot;...\e10_keyword_var.py&quot;, line 3
+    if = 25
+       ^
+SyntaxError: invalid syntax
+</pre></div>
+</div>
+<p>35 个关键字包括
+<code class="docutils literal notranslate"><span class="pre">if</span> <span class="pre">elif</span> <span class="pre">else</span> <span class="pre">for</span> <span class="pre">while</span> <span class="pre">def</span> <span class="pre">class</span> <span class="pre">return</span> <span class="pre">import</span> <span class="pre">in</span> <span class="pre">is</span> <span class="pre">and</span> <span class="pre">or</span> <span class="pre">not</span> <span class="pre">True</span> <span class="pre">False</span> <span class="pre">None</span> <span class="pre">lambda</span></code>
+等（PPT 第 17 页列了完整清单）。把 <code class="docutils literal notranslate"><span class="pre">if</span></code>、<code class="docutils literal notranslate"><span class="pre">for</span></code>、<code class="docutils literal notranslate"><span class="pre">class</span></code>
+当变量名，Python 会立刻报 <code class="docutils literal notranslate"><span class="pre">invalid</span> <span class="pre">syntax</span></code>。</p>
+<p><strong>原因</strong>：关键字是 Python
+的“法定保留词汇”，用于组织语言结构本身，不能被占用为变量名。这就像你不能把自己的名字改叫“并且”“如果”——语法词不能当名词用。</p>
+<p><strong>解决办法</strong>：换一个不与关键字重名的名字（必要时加后缀/加下划线）。</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">if_flag</span> <span class="o">=</span> <span class="mi">25</span>       <span class="c1"># ✓ 加后缀避开 if</span>
+<span class="n">for_count</span> <span class="o">=</span> <span class="mi">3</span>      <span class="c1"># ✓</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">if_flag</span><span class="p">,</span> <span class="n">for_count</span><span class="p">)</span>
+</pre></div>
+</div>
+<blockquote>
+<div><p><strong>气象场景一句话</strong>：给探空仪数据文件命名时用了
+<code class="docutils literal notranslate"><span class="pre">class</span></code>、<code class="docutils literal notranslate"><span class="pre">for</span></code>
+这种保留字，就像在某气旋的编号里塞进“台风”这两个字当普通数字——系统语义立刻冲突，归档接口当场宕机。</p>
+</div></blockquote>
+<hr class="docutils" />
+</section>
+<section id="id23">
+<span id="id24"></span><h3>2.4.2 变量名以数字开头 / 含非法字符 → <code class="docutils literal notranslate"><span class="pre">SyntaxError</span></code><a class="headerlink" href="#id23" title="Link to this heading">#</a></h3>
+<p><strong>现象 / 真实报错信息</strong>（e11 实测，<code class="docutils literal notranslate"><span class="pre">1temp</span> <span class="pre">=</span> <span class="pre">36.5</span></code>）</p>
+<div class="highlight-text notranslate"><div class="highlight"><pre><span></span>  File &quot;...\e11_digit_leading.py&quot;, line 3
+    1temp = 36.5
+    ^
+SyntaxError: invalid decimal literal
+</pre></div>
+</div>
+<p><code class="docutils literal notranslate"><span class="pre">1temp</span> <span class="pre">=</span> <span class="pre">36.5</span></code> 报
+<code class="docutils literal notranslate"><span class="pre">invalid</span> <span class="pre">decimal</span> <span class="pre">literal</span></code>（“无效的十进制字面量”）。若名字里夹着空格（<code class="docutils literal notranslate"><span class="pre">my</span> <span class="pre">temp</span> <span class="pre">=</span> <span class="pre">1</span></code>）等其它非法字符，也会报
+<code class="docutils literal notranslate"><span class="pre">invalid</span> <span class="pre">syntax</span></code>。</p>
+<p><strong>原因</strong>：<strong>变量名不能以数字开头</strong>（数字开头会被当成“数字字面量”，后面又跟字母，就成了非法的十进制数）。合法的开头是字母或下划线。同时名字里不能有空格、连字符等。</p>
+<p><strong>解决办法</strong>：数字挪到开头以后，或用下划线连接。</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">temp_1</span> <span class="o">=</span> <span class="mf">36.5</span>       <span class="c1"># ✓ 数字放末尾</span>
+<span class="n">temp1</span> <span class="o">=</span> <span class="mf">36.5</span>        <span class="c1"># ✓</span>
+<span class="n">t1</span> <span class="o">=</span> <span class="mf">36.5</span>           <span class="c1"># ✓  但见名知义更好</span>
+<span class="n">today_temp</span> <span class="o">=</span> <span class="mf">36.5</span>   <span class="c1"># ✓ 推荐</span>
+</pre></div>
+</div>
+<blockquote>
+<div><p><strong>气象场景一句话</strong>：给站点文件起名
+<code class="docutils literal notranslate"><span class="pre">1station_temperature.txt</span></code>，读文件名的那套程序把“1station”当成个非法数字读崩——命名先坐下，数字不许站在最前面。</p>
+</div></blockquote>
+<hr class="docutils" />
+</section>
+</section>
+<section id="list-tuple-set-dict-str">
+<span id="id25"></span><h2>2.5 容器：list / tuple / set / dict / str 的操作误用<a class="headerlink" href="#list-tuple-set-dict-str" title="Link to this heading">#</a></h2>
+<blockquote>
+<div><p>这一分区是本章报错“浓度”最高的地方，全是“<strong>该用这个对象的方法/下标，却用了另一个的</strong>”。</p>
+</div></blockquote>
+<hr class="docutils" />
+<section id="list-find-attributeerror-list-object-has-no-attribute-find-index">
+<span id="listfind-attributeerror-list-object-has-no-attribute-find-index"></span><h3>2.5.1 用 <code class="docutils literal notranslate"><span class="pre">list.find()</span></code> → <code class="docutils literal notranslate"><span class="pre">AttributeError:</span> <span class="pre">'list'</span> <span class="pre">object</span> <span class="pre">has</span> <span class="pre">no</span> <span class="pre">attribute</span> <span class="pre">'find'</span></code>（应 <code class="docutils literal notranslate"><span class="pre">.index()</span></code>）<a class="headerlink" href="#list-find-attributeerror-list-object-has-no-attribute-find-index" title="Link to this heading">#</a></h3>
+<p><strong>现象 / 真实报错信息</strong>（e12 实测，<code class="docutils literal notranslate"><span class="pre">stations.find('敦煌')</span></code>）</p>
+<div class="highlight-text notranslate"><div class="highlight"><pre><span></span>  File &quot;...\e12_list_find.py&quot;, line 4, in &lt;module&gt;
+    idx = stations.find(&#39;敦煌&#39;)
+          ^^^^^^^^^^^^^
+AttributeError: &#39;list&#39; object has no attribute &#39;find&#39;
+</pre></div>
+</div>
+<p><strong>原因</strong>：<code class="docutils literal notranslate"><span class="pre">find()</span></code>
+是<strong>字符串</strong>的方法（查子串位置），<strong>列表没有</strong>
+<code class="docutils literal notranslate"><span class="pre">find</span></code>。你把字符串的习惯套在列表上，Python 翻遍列表的方法表找不到
+<code class="docutils literal notranslate"><span class="pre">find</span></code>，抛 <code class="docutils literal notranslate"><span class="pre">AttributeError</span></code>——“列表对象没有名叫 find
+的成员”。这是典型的“对象调错方法”。</p>
+<p><strong>解决办法</strong>：列表找元素用
+<code class="docutils literal notranslate"><span class="pre">.index()</span></code>（返回第一个匹配的下标）。注意 <code class="docutils literal notranslate"><span class="pre">list.index()</span></code>
+找不到元素会抛 <code class="docutils literal notranslate"><span class="pre">ValueError</span></code>（见下一节对比）。</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">stations</span> <span class="o">=</span> <span class="p">[</span><span class="s1">&#39;兰州&#39;</span><span class="p">,</span> <span class="s1">&#39;敦煌&#39;</span><span class="p">,</span> <span class="s1">&#39;西宁&#39;</span><span class="p">]</span>
+<span class="n">idx</span> <span class="o">=</span> <span class="n">stations</span><span class="o">.</span><span class="n">index</span><span class="p">(</span><span class="s1">&#39;敦煌&#39;</span><span class="p">)</span>   <span class="c1"># 1</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">idx</span><span class="p">)</span>
+</pre></div>
+</div>
+<blockquote>
+<div><p><strong>气象场景一句话</strong>：想在站点清单 <code class="docutils literal notranslate"><span class="pre">['兰州','敦煌','西宁']</span></code>
+里找“敦煌”排第几位，却沿用了文本里 <code class="docutils literal notranslate"><span class="pre">find()</span></code>
+的老习惯——列表这排“抽屉”根本没有 find 这把钥匙，只有 index
+拼音是对的路。</p>
+</div></blockquote>
+<hr class="docutils" />
+</section>
+<section id="str-find-1-vs-str-index-valueerror">
+<span id="strfind-1-vs-strindex-valueerror"></span><h3>2.5.2 <code class="docutils literal notranslate"><span class="pre">str.find()</span></code> 找不到返回 <code class="docutils literal notranslate"><span class="pre">-1</span></code>（不报错） vs <code class="docutils literal notranslate"><span class="pre">str.index()</span></code> 找不到抛 <code class="docutils literal notranslate"><span class="pre">ValueError</span></code>——“不报错反而更危险”<a class="headerlink" href="#str-find-1-vs-str-index-valueerror" title="Link to this heading">#</a></h3>
+<p><strong>现象 / 真实报错信息</strong></p>
+<p><code class="docutils literal notranslate"><span class="pre">str.find()</span></code> 找不到子串（e13 实测，查 <code class="docutils literal notranslate"><span class="pre">&quot;暴雪&quot;</span></code>
+不存在的串，程序<strong>照常往下跑</strong>，打印出 <code class="docutils literal notranslate"><span class="pre">-1</span></code>，不报错）：</p>
+<div class="highlight-text notranslate"><div class="highlight"><pre><span></span>-1
+L
+</pre></div>
+</div>
+<p><code class="docutils literal notranslate"><span class="pre">str.index()</span></code> 找不到子串（e13b 实测，同样查 <code class="docutils literal notranslate"><span class="pre">&quot;暴雪&quot;</span></code>）：</p>
+<div class="highlight-text notranslate"><div class="highlight"><pre><span></span>  File &quot;...\e13b_str_index_not_found.py&quot;, line 4, in &lt;module&gt;
+    idx = text.index(&quot;暴雪&quot;)
+          ^^^^^^^^^^^^^^^^^^
+ValueError: substring not found
+</pre></div>
+</div>
+<p><strong>原因</strong>：</p>
+<ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">find()</span></code> 找不到时<strong>返回
+``-1``</strong>（设计成“可断言、免抛异常开销”），<strong>不报错</strong>；</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">index()</span></code> 找不到时<strong>抛 ``ValueError``</strong>。
+两者的陷阱恰好相反——<code class="docutils literal notranslate"><span class="pre">find</span></code> 的 <code class="docutils literal notranslate"><span class="pre">-1</span></code>
+很“安静”，若你紧接着拿它当下标或当“找到了”用，就会算错/取错却不自知（静默污染）；<code class="docutils literal notranslate"><span class="pre">-1</span></code>
+本身不报错，所以你可能根本没注意到。</p></li>
+</ul>
+<p><strong>解决办法</strong>：根据“子串是否必须存在”二选一，并始终检查返回值：</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">text</span> <span class="o">=</span> <span class="s2">&quot;Lanzhou, sunny, 25.6C&quot;</span>
+<span class="c1"># 场景A：允许&quot;找不到&quot;，用 find 并主动判 -1</span>
+<span class="n">sub</span> <span class="o">=</span> <span class="s2">&quot;暴雪&quot;</span>
+<span class="n">i</span> <span class="o">=</span> <span class="n">text</span><span class="o">.</span><span class="n">find</span><span class="p">(</span><span class="n">sub</span><span class="p">)</span>
+<span class="k">if</span> <span class="n">i</span> <span class="o">==</span> <span class="o">-</span><span class="mi">1</span><span class="p">:</span>
+    <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;没查到，跳过这块（常见于缺测/字段缺失）&quot;</span><span class="p">)</span>
+<span class="k">else</span><span class="p">:</span>
+    <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;在第 </span><span class="si">{</span><span class="n">i</span><span class="si">}</span><span class="s2"> 位&quot;</span><span class="p">)</span>
+<span class="c1"># 场景B：确定必须存在、找不到就该停，用 index（会抛 ValueError 提醒你）</span>
+<span class="k">try</span><span class="p">:</span>
+    <span class="nb">print</span><span class="p">(</span><span class="n">text</span><span class="o">.</span><span class="n">index</span><span class="p">(</span><span class="s2">&quot;暴雪&quot;</span><span class="p">))</span>
+<span class="k">except</span> <span class="ne">ValueError</span><span class="p">:</span>
+    <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;暴雪确实不在本观测记录里（业务上就该中断提醒）&quot;</span><span class="p">)</span>
+</pre></div>
+</div>
+<blockquote>
+<div><p><strong>气象场景一句话</strong>：<code class="docutils literal notranslate"><span class="pre">find</span></code> 找不到给你一个静默的
+<code class="docutils literal notranslate"><span class="pre">-1</span></code>，像雷达图上那片“本该有回波却空白”的缺口——不回波、不报警，等你当真没降水去下结论才发现有问题；<code class="docutils literal notranslate"><span class="pre">index</span></code>
+则像缺测站直接打“本站空缺”红标，逼你正视。<strong>用哪个要想清楚：能不能接受静默。</strong></p>
+</div></blockquote>
+<hr class="docutils" />
+</section>
+<section id="set-append-attributeerror-add">
+<span id="setappend-attributeerror-add"></span><h3>2.5.3 用 <code class="docutils literal notranslate"><span class="pre">set.append()</span></code> → <code class="docutils literal notranslate"><span class="pre">AttributeError</span></code>（集合应用 <code class="docutils literal notranslate"><span class="pre">.add()</span></code>）<a class="headerlink" href="#set-append-attributeerror-add" title="Link to this heading">#</a></h3>
+<p><strong>现象 / 真实报错信息</strong>（e14 实测，<code class="docutils literal notranslate"><span class="pre">phenomena.append('扬沙')</span></code>）</p>
+<div class="highlight-text notranslate"><div class="highlight"><pre><span></span>  File &quot;...\e14_set_append.py&quot;, line 4, in &lt;module&gt;
+    phenomena.append(&#39;扬沙&#39;)
+    ^^^^^^^^^^^^^^^^
+AttributeError: &#39;set&#39; object has no attribute &#39;append&#39;
+</pre></div>
+</div>
+<p><strong>原因</strong>：<code class="docutils literal notranslate"><span class="pre">append()</span></code>
+是<strong>列表/字符串</strong>“增加末尾元素”的方法，但<strong>集合无序</strong>，没有“末尾”这个概念，所以压根没有
+<code class="docutils literal notranslate"><span class="pre">append</span></code>。集合加单个元素用 <code class="docutils literal notranslate"><span class="pre">.add()</span></code>（<code class="docutils literal notranslate"><span class="pre">set</span></code>
+也没有下标索引，<code class="docutils literal notranslate"><span class="pre">s[1]</span></code> 也会报错）。</p>
+<p><strong>解决办法</strong>：</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">phenomena</span> <span class="o">=</span> <span class="p">{</span><span class="s1">&#39;晴&#39;</span><span class="p">,</span> <span class="s1">&#39;多云&#39;</span><span class="p">}</span>
+<span class="n">phenomena</span><span class="o">.</span><span class="n">add</span><span class="p">(</span><span class="s1">&#39;扬沙&#39;</span><span class="p">)</span>      <span class="c1"># 正确</span>
+<span class="n">phenomena</span><span class="o">.</span><span class="n">update</span><span class="p">([</span><span class="s1">&#39;扬沙&#39;</span><span class="p">,</span> <span class="s1">&#39;雷暴&#39;</span><span class="p">])</span>   <span class="c1"># 批量加用 update</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">phenomena</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>运行输出（e14b 实测）：<code class="docutils literal notranslate"><span class="pre">{'晴',</span> <span class="pre">'多云',</span> <span class="pre">'扬沙'}</span></code>。</p>
+<blockquote>
+<div><p><strong>气象场景一句话</strong>：把“本月出现过的天气现象”存成集合，却想用
+<code class="docutils literal notranslate"><span class="pre">append</span></code> 往“队尾”塞——集合是个无序的云滴团，没有队尾可排，只能用
+<code class="docutils literal notranslate"><span class="pre">add</span></code> 把新云滴吸进去。</p>
+</div></blockquote>
+<hr class="docutils" />
+</section>
+<section id="indexerror-list-index-out-of-range">
+<span id="id26"></span><h3>2.5.4 列表索引越界 → <code class="docutils literal notranslate"><span class="pre">IndexError:</span> <span class="pre">list</span> <span class="pre">index</span> <span class="pre">out</span> <span class="pre">of</span> <span class="pre">range</span></code>（含负数、空列表）<a class="headerlink" href="#indexerror-list-index-out-of-range" title="Link to this heading">#</a></h3>
+<p><strong>现象 / 真实报错信息</strong></p>
+<p>正索引越界（长度 3 却取下标 5）：</p>
+<div class="highlight-text notranslate"><div class="highlight"><pre><span></span>  File &quot;...\e15_index_out_of_range.py&quot;, line 4, in &lt;module&gt;
+    print(temps[5])
+          ~~~~~^^^
+IndexError: list index out of range
+</pre></div>
+</div>
+<p>负索引越前（<code class="docutils literal notranslate"><span class="pre">temps[-5]</span></code>）：</p>
+<div class="highlight-text notranslate"><div class="highlight"><pre><span></span>    print(temps[-5])
+          ~~~~~^^^^
+IndexError: list index out of range
+</pre></div>
+</div>
+<p>空列表取 <code class="docutils literal notranslate"><span class="pre">[0]</span></code>：</p>
+<div class="highlight-text notranslate"><div class="highlight"><pre><span></span>    print(temps[0])
+          ~~~~~^^^
+IndexError: list index out of range
+</pre></div>
+</div>
+<p><strong>原因</strong>：合法下标范围是 <code class="docutils literal notranslate"><span class="pre">0</span> <span class="pre">~</span> <span class="pre">len-1</span></code>（或负数
+<code class="docutils literal notranslate"><span class="pre">-len</span> <span class="pre">~</span> <span class="pre">-1</span></code>）。取下标超出这个范围就是越界，抛
+<code class="docutils literal notranslate"><span class="pre">IndexError:</span> <span class="pre">list</span> <span class="pre">index</span> <span class="pre">out</span> <span class="pre">of</span> <span class="pre">range</span></code>。<strong>空列表 ``[]`` 长度是
+0，下标从 0 到 -1 哪儿都取不到</strong>，<code class="docutils literal notranslate"><span class="pre">[0]</span></code>
+必然越界。常见触发：循环里用死下标、对经过筛选/空化的列表仍按固定下标取、把
+<code class="docutils literal notranslate"><span class="pre">-1</span></code> 当“安全取末尾”却遇到空列表。</p>
+<p><strong>解决办法</strong>：取之前先查长度，或用安全取值方式：</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">temps</span> <span class="o">=</span> <span class="p">[</span><span class="mf">32.6</span><span class="p">,</span> <span class="mf">34.1</span><span class="p">,</span> <span class="mf">36.9</span><span class="p">]</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">temps</span><span class="p">[</span><span class="mi">2</span><span class="p">],</span> <span class="n">temps</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">])</span>     <span class="c1"># 36.9 36.9  取最后一个用 -1</span>
+<span class="k">if</span> <span class="n">temps</span><span class="p">:</span>                      <span class="c1"># 先判非空</span>
+    <span class="nb">print</span><span class="p">(</span><span class="n">temps</span><span class="p">[</span><span class="mi">0</span><span class="p">])</span>
+<span class="k">else</span><span class="p">:</span>
+    <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;序列为空，无元素可取&quot;</span><span class="p">)</span>
+</pre></div>
+</div>
+<blockquote>
+<div><p>结合 2.5.8 记住<strong>长度和下标差 1</strong>：长度为 <code class="docutils literal notranslate"><span class="pre">len(L)</span></code>
+的列表，最大合法正下标是 <code class="docutils literal notranslate"><span class="pre">len(L)-1</span></code>，最大合法负下标（最后一个）是
+<code class="docutils literal notranslate"><span class="pre">-1</span></code>。</p>
+<p><strong>气象场景一句话</strong>：逐日气温列表只有 3 天，程序却要去取“第 6
+天的最高温”——观测还没发生，下标就扑了个空；现实里常因“筛选出空序列”还硬要取
+<code class="docutils literal notranslate"><span class="pre">[0]</span></code> 而炸。</p>
+</div></blockquote>
+<hr class="docutils" />
+</section>
+<section id="keyerror">
+<span id="id27"></span><h3>2.5.5 字典取不存在的键 → <code class="docutils literal notranslate"><span class="pre">KeyError</span></code><a class="headerlink" href="#keyerror" title="Link to this heading">#</a></h3>
+<p><strong>现象 / 真实报错信息</strong>（e16 实测，<code class="docutils literal notranslate"><span class="pre">station['pressure']</span></code>
+而字典里没有 <code class="docutils literal notranslate"><span class="pre">pressure</span></code>）</p>
+<div class="highlight-text notranslate"><div class="highlight"><pre><span></span>  File &quot;...\e16_keyerror.py&quot;, line 4, in &lt;module&gt;
+    print(station[&#39;pressure&#39;])   # 没有 pressure 键
+          ~~~~~~~^^^^^^^^^^^^
+KeyError: &#39;pressure&#39;
+</pre></div>
+</div>
+<p><strong>原因</strong>：字典按“键”（key）取值，<code class="docutils literal notranslate"><span class="pre">station['pressure']</span></code> 要求键
+<code class="docutils literal notranslate"><span class="pre">'pressure'</span></code> 必须存在。键不在，就抛 <code class="docutils literal notranslate"><span class="pre">KeyError:'pressure'</span></code>。这与
+<code class="docutils literal notranslate"><span class="pre">IndexError</span></code> 同属 <code class="docutils literal notranslate"><span class="pre">LookupError</span></code> 家族——<code class="docutils literal notranslate"><span class="pre">list</span></code> 按下标取爆了是
+IndexError，<code class="docutils literal notranslate"><span class="pre">dict</span></code> 按键取不到是 KeyError，判断方向要分开。</p>
+<p><strong>解决办法</strong>：用 <code class="docutils literal notranslate"><span class="pre">.get(键,</span> <span class="pre">缺省值)</span></code> 安全取值，或先 <code class="docutils literal notranslate"><span class="pre">in</span></code> 判键。</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">station</span> <span class="o">=</span> <span class="p">{</span><span class="s1">&#39;name&#39;</span><span class="p">:</span> <span class="s1">&#39;兰州&#39;</span><span class="p">,</span> <span class="s1">&#39;temp&#39;</span><span class="p">:</span> <span class="mf">35.6</span><span class="p">}</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">station</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s1">&#39;pressure&#39;</span><span class="p">,</span> <span class="s1">&#39;缺测&#39;</span><span class="p">))</span>   <span class="c1"># 缺测（不报错）</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">station</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s1">&#39;temp&#39;</span><span class="p">,</span> <span class="s1">&#39;缺测&#39;</span><span class="p">))</span>        <span class="c1"># 35.6</span>
+<span class="nb">print</span><span class="p">(</span><span class="s1">&#39;pressure&#39;</span> <span class="ow">in</span> <span class="n">station</span><span class="p">)</span>             <span class="c1"># False</span>
+</pre></div>
+</div>
+<p>运行输出（e16b 实测）：<code class="docutils literal notranslate"><span class="pre">缺测</span></code> <code class="docutils literal notranslate"><span class="pre">35.6</span></code> <code class="docutils literal notranslate"><span class="pre">False</span></code>。</p>
+<blockquote>
+<div><p><strong>气象场景一句话</strong>：档案柜里只有“气温、湿度”两格，你却报“请给我压强的数”——柜子翻不到这格抽屉就嚎出
+KeyError。缺测要素要么先 <code class="docutils literal notranslate"><span class="pre">in</span></code> 确认，要么用 <code class="docutils literal notranslate"><span class="pre">.get(key,</span> <span class="pre">缺省值)</span></code>
+优雅兜底。</p>
+</div></blockquote>
+<hr class="docutils" />
+</section>
+<section id="s-0-a-typeerror">
+<span id="s0-a-typeerror"></span><h3>2.5.6 字符串不可变：<code class="docutils literal notranslate"><span class="pre">s[0]</span> <span class="pre">=</span> <span class="pre">'a'</span></code> → <code class="docutils literal notranslate"><span class="pre">TypeError</span></code>（列表可变，可对比）<a class="headerlink" href="#s-0-a-typeerror" title="Link to this heading">#</a></h3>
+<p><strong>现象 / 真实报错信息</strong>（e23 实测，<code class="docutils literal notranslate"><span class="pre">s[0]</span> <span class="pre">=</span> <span class="pre">&quot;H&quot;</span></code>）</p>
+<div class="highlight-text notranslate"><div class="highlight"><pre><span></span>  File &quot;...\e23_str_immutable.py&quot;, line 4, in &lt;module&gt;
+    s[0] = &quot;H&quot;
+    ~^^^
+TypeError: &#39;str&#39; object does not support item assignment
+</pre></div>
+</div>
+<p><strong>原因</strong>：字符串是<strong>不可变（immutable）类型，创建后不能原地改</strong>某个字符——<code class="docutils literal notranslate"><span class="pre">s[0]='H'</span></code>
+想给索引位置赋值，Python
+明确拒绝：<code class="docutils literal notranslate"><span class="pre">'str'</span> <span class="pre">object</span> <span class="pre">does</span> <span class="pre">not</span> <span class="pre">support</span> <span class="pre">item</span> <span class="pre">assignment</span></code>（字符串对象不支持“按项赋值”）。而<strong>列表可变</strong>，<code class="docutils literal notranslate"><span class="pre">L[0]='x'</span></code>
+完全合法（见对照 e23b 实测：<code class="docutils literal notranslate"><span class="pre">['兰州','敦煌']</span></code> 改
+<code class="docutils literal notranslate"><span class="pre">['兰州新区','敦煌']</span></code> 成功）。</p>
+<p><strong>解决办法</strong>：既然不能就地改，就<strong>生成新串</strong>——<code class="docutils literal notranslate"><span class="pre">s</span> <span class="pre">=</span> <span class="pre">&quot;H&quot;</span> <span class="pre">+</span> <span class="pre">s[1:]</span></code>
+或用 <code class="docutils literal notranslate"><span class="pre">.replace()</span></code>：</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">s</span> <span class="o">=</span> <span class="s2">&quot;Lanzhou&quot;</span>
+<span class="n">s</span> <span class="o">=</span> <span class="s2">&quot;H&quot;</span> <span class="o">+</span> <span class="n">s</span><span class="p">[</span><span class="mi">1</span><span class="p">:]</span>          <span class="c1"># Hanzhou   （保留第1字符后续，替换首字符）</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">s</span><span class="p">)</span>
+<span class="n">s2</span> <span class="o">=</span> <span class="s2">&quot;Lanzhou&quot;</span><span class="o">.</span><span class="n">replace</span><span class="p">(</span><span class="s2">&quot;L&quot;</span><span class="p">,</span> <span class="s2">&quot;H&quot;</span><span class="p">)</span>   <span class="c1"># 或用 replace</span>
+</pre></div>
+</div>
+<blockquote>
+<div><p><strong>气象场景一句话</strong>：字符串像镌刻在碑文上的站名，刻错了只能重刻整块碑（生成新串），不能拿凿子只凿其中一个字；列表则像可擦写白板，擦哪个格子都行。</p>
+</div></blockquote>
+<hr class="docutils" />
+</section>
+<section id="vs-vs">
+<span id="id28"></span><h3>2.5.7 切片越界不报错 vs 索引越界报错（静默放行 vs 抛错）<a class="headerlink" href="#vs-vs" title="Link to this heading">#</a></h3>
+<p><strong>现象 / 真实输出</strong>（e24 实测）</p>
+<div class="highlight-text notranslate"><div class="highlight"><pre><span></span>anzhou        # &quot;Lanzhou&quot;[1:99]：终点远超长度，不报错
+              # &quot;&quot;   （[99:] 空串，不报错）
+[1, 2, 3]     # [1,2,3][0:99] 不报错
+[]            # [1,2,3][99:] 空列表，不报错
+IndexError: list index out of range   # 同一列表用 [99] 索引却报错
+</pre></div>
+</div>
+<p><strong>原因</strong>：<strong>切片 ``[a:b]`` 越界是“静默放行”</strong>——哪怕 <code class="docutils literal notranslate"><span class="pre">b</span></code>
+远超大，Python
+也只是“切到能切的地方为止”，返回缩短的结果或空容器，<strong>不抛异常</strong>。而<strong>索引
+``s[99]`` 取单个元素越界会抛
+``IndexError``</strong>。这个差异很反直觉：切片让你“想当然”以为没问题，是另一处“不报错更危险”的静默点。</p>
+<p><strong>解决办法</strong>：切片有意取不到就取空时，先想清楚是否该用索引；真正要“限制长度”时，主动用
+<code class="docutils literal notranslate"><span class="pre">min</span></code> 或先 <code class="docutils literal notranslate"><span class="pre">len</span></code>
+判断。能接受空结果就用切片，不能（必须取到）就用索引并配好越界处理。</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">temps</span> <span class="o">=</span> <span class="p">[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">]</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">temps</span><span class="p">[</span><span class="mi">1</span><span class="p">:</span><span class="mi">99</span><span class="p">])</span>   <span class="c1"># [2, 3]         安全、静默截断</span>
+<span class="c1"># 若要&quot;一定有个元素&quot;，先判非空再取索引</span>
+<span class="k">if</span> <span class="n">temps</span><span class="p">:</span>
+    <span class="nb">print</span><span class="p">(</span><span class="n">temps</span><span class="p">[</span><span class="mi">0</span><span class="p">])</span>
+</pre></div>
+</div>
+<blockquote>
+<div><p><strong>气象场景一句话</strong>：切片像“取整段天气实况的前 N
+小时”，数据不够就静默返回这么多个小时，不喊疼；而 <code class="docutils literal notranslate"><span class="pre">[99]</span></code> 是“非要第
+100 小时的温度”，没有就当场报警。看你想要“宽松截断”还是“严格必取”。</p>
+</div></blockquote>
+<hr class="docutils" />
+</section>
+<section id="len-0-s-1">
+<span id="id29"></span><h3>2.5.8 <code class="docutils literal notranslate"><span class="pre">len()</span></code> 结果与下标从 0 开始、<code class="docutils literal notranslate"><span class="pre">s[-1]</span></code> 取末位<a class="headerlink" href="#len-0-s-1" title="Link to this heading">#</a></h3>
+<p><strong>现象 / 真实输出</strong>（e25 实测，<code class="docutils literal notranslate"><span class="pre">s</span> <span class="pre">=</span> <span class="pre">&quot;Lanzhou&quot;</span></code>）</p>
+<div class="highlight-text notranslate"><div class="highlight"><pre><span></span>7        # len(s)
+L        # s[0]  第一个字符
+u        # s[6]  下标 = len-1，最后一个
+u        # s[-1] 负索引取末位
+u        # s[len(s)-1]
+</pre></div>
+</div>
+<p><strong>原因（不是报错，但常导致 2.5.4 的
+IndexError）</strong>：<code class="docutils literal notranslate"><span class="pre">len(s)</span> <span class="pre">==</span> <span class="pre">7</span></code>，但合法下标是 <code class="docutils literal notranslate"><span class="pre">0..6</span></code>——<strong>最末下标
+= len - 1</strong>。不差这一格，<code class="docutils literal notranslate"><span class="pre">s[7]</span></code> 就报 <code class="docutils literal notranslate"><span class="pre">IndexError</span></code>。<code class="docutils literal notranslate"><span class="pre">-1</span></code>
+是取“倒数第 1 个”（末位），<code class="docutils literal notranslate"><span class="pre">-2</span></code> 取倒数第 2 个……负索引从尾部数、从 -1
+开始，正好与正索引 <code class="docutils literal notranslate"><span class="pre">0..len-1</span></code> 互补。</p>
+<p><strong>解决办法</strong>：需要“最后一个”时优先写 <code class="docutils literal notranslate"><span class="pre">s[-1]</span></code>，别写成
+<code class="docutils literal notranslate"><span class="pre">s[len(s)]</span></code>（必越界）或 <code class="docutils literal notranslate"><span class="pre">s[len(s)-1]</span></code>（也能用但啰嗦）。</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">s</span> <span class="o">=</span> <span class="s2">&quot;Lanzhou&quot;</span>
+<span class="nb">print</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">s</span><span class="p">))</span>    <span class="c1"># 7</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">s</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">])</span>     <span class="c1"># u   推荐</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">s</span><span class="p">[</span><span class="mi">0</span><span class="p">])</span>      <span class="c1"># L   第一个</span>
+</pre></div>
+</div>
+<blockquote>
+<div><p><strong>气象场景一句话</strong>：序列就像一趟摆好的 7 节车厢，编号却是 0~6（不是
+1~7）——亮 7 节不代表有 7 号车厢可进；“末节车厢”用负号 <code class="docutils literal notranslate"><span class="pre">-1</span></code>
+从尾巴数最稳，就像从队尾点名报到。</p>
+</div></blockquote>
+<hr class="docutils" />
+</section>
+</section>
+<section id="none">
+<span id="id30"></span><h2>2.6 布尔、None 与判断：真真假假与空值<a class="headerlink" href="#none" title="Link to this heading">#</a></h2>
+<section id="none-0-typeerror">
+<span id="id31"></span><h3>2.6.1 None 不是 0：直接拿来算 → <code class="docutils literal notranslate"><span class="pre">TypeError</span></code><a class="headerlink" href="#none-0-typeerror" title="Link to this heading">#</a></h3>
+<p><strong>现象 / 真实报错信息</strong>（e26 实测）</p>
+<p>先看布尔：<code class="docutils literal notranslate"><span class="pre">True</span></code> 在算术里会被当作 <code class="docutils literal notranslate"><span class="pre">1</span></code>，<code class="docutils literal notranslate"><span class="pre">False</span></code> 当作
+<code class="docutils literal notranslate"><span class="pre">0</span></code>——<code class="docutils literal notranslate"><span class="pre">True</span> <span class="pre">+</span> <span class="pre">1</span></code> 得 <code class="docutils literal notranslate"><span class="pre">2</span></code>，<code class="docutils literal notranslate"><span class="pre">True</span> <span class="pre">==</span> <span class="pre">1</span></code> 得 <code class="docutils literal notranslate"><span class="pre">True</span></code>（合法）：</p>
+<div class="highlight-text notranslate"><div class="highlight"><pre><span></span>2
+1
+True
+</pre></div>
+</div>
+<p>而把 <code class="docutils literal notranslate"><span class="pre">None</span></code>（缺测值）直接拿去加数（e26 最后一行
+<code class="docutils literal notranslate"><span class="pre">precip</span> <span class="pre">+</span> <span class="pre">0.5</span></code>）：</p>
+<div class="highlight-text notranslate"><div class="highlight"><pre><span></span>  File &quot;...\e26_bool_none.py&quot;, line 8, in &lt;module&gt;
+    print(precip + 0.5)
+          ~~~~~~~^~~~~
+TypeError: unsupported operand type(s) for +: &#39;NoneType&#39; and &#39;float&#39;
+</pre></div>
+</div>
+<p><strong>原因</strong>：正文强调——<code class="docutils literal notranslate"><span class="pre">None</span></code> 是独立的 <code class="docutils literal notranslate"><span class="pre">NoneType</span></code>
+类型，表示“<strong>这里还没观测</strong>”，<strong>不是
+0，也不是空串</strong>。<code class="docutils literal notranslate"><span class="pre">True</span></code>/<code class="docutils literal notranslate"><span class="pre">False</span></code> 作为 <code class="docutils literal notranslate"><span class="pre">bool</span></code>（<code class="docutils literal notranslate"><span class="pre">int</span></code>
+的子类）可以参与算术，但 <code class="docutils literal notranslate"><span class="pre">None</span></code> 不能当数值。把缺测值 <code class="docutils literal notranslate"><span class="pre">None</span></code>
+直接累加/求平均，就报 <code class="docutils literal notranslate"><span class="pre">TypeError</span></code>。判空值一律用 <code class="docutils literal notranslate"><span class="pre">is</span> <span class="pre">None</span></code>（不用
+<code class="docutils literal notranslate"><span class="pre">==</span></code>）。</p>
+<p><strong>解决办法</strong>：把缺测 <code class="docutils literal notranslate"><span class="pre">None</span></code> 转成实际占位（如 <code class="docutils literal notranslate"><span class="pre">0.0</span></code>
+或显式跳过）再算：</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">precip</span> <span class="o">=</span> <span class="kc">None</span>          <span class="c1"># 缺测</span>
+<span class="k">if</span> <span class="n">precip</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>     <span class="c1"># 判空用 is，不用 ==</span>
+    <span class="n">precip</span> <span class="o">=</span> <span class="mf">0.0</span>       <span class="c1"># 业务上&quot;当作没下雨&quot;或跳过该日</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">precip</span> <span class="o">+</span> <span class="mf">0.5</span><span class="p">)</span>    <span class="c1"># 0.5</span>
+</pre></div>
+</div>
+<blockquote>
+<div><p><strong>气象场景一句话</strong>：<code class="docutils literal notranslate"><span class="pre">None</span></code>（没观测）和
+<code class="docutils literal notranslate"><span class="pre">0.0</span></code>（观测到没下雨）是两码事，把缺测直接塞进求和公式，就像把“今天没测降水”当成“今天降水
+0 毫米”算进月总量——类型先行，先 <code class="docutils literal notranslate"><span class="pre">is</span> <span class="pre">None</span></code> 判一下。</p>
+</div></blockquote>
+<hr class="docutils" />
+</section>
+<section id="if-a-1-syntaxerror">
+<span id="id32"></span><h3>2.6.2 条件里误用单等号：<code class="docutils literal notranslate"><span class="pre">if</span> <span class="pre">a</span> <span class="pre">=</span> <span class="pre">1</span></code> → <code class="docutils literal notranslate"><span class="pre">SyntaxError</span></code>（应为 <code class="docutils literal notranslate"><span class="pre">==</span></code>）<a class="headerlink" href="#if-a-1-syntaxerror" title="Link to this heading">#</a></h3>
+<p><strong>现象 / 真实报错信息</strong>（e27 实测）</p>
+<div class="highlight-text notranslate"><div class="highlight"><pre><span></span>  File &quot;...\e27_if_single_equals.py&quot;, line 4
+    if a = 1:
+       ^^^^^
+SyntaxError: invalid syntax. Maybe you meant &#39;==&#39; or &#39;:=&#39; instead of &#39;=&#39;?
+</pre></div>
+</div>
+<p>Python 3.12 甚至“贴心”提示：你是不是想写 <code class="docutils literal notranslate"><span class="pre">==</span></code>（判断相等）或
+<code class="docutils literal notranslate"><span class="pre">:=</span></code>（海象赋值）？老版本就只报 <code class="docutils literal notranslate"><span class="pre">SyntaxError:</span> <span class="pre">invalid</span> <span class="pre">syntax</span></code>。</p>
+<p><strong>原因</strong>：<code class="docutils literal notranslate"><span class="pre">=</span></code> 是<strong>赋值</strong>（把右边值赋给左边变量），<code class="docutils literal notranslate"><span class="pre">==</span></code>
+是<strong>比较</strong>（判断两边是否相等）。<code class="docutils literal notranslate"><span class="pre">if</span></code>
+的条件必须是一个“能判断真假的表达式”，而 <code class="docutils literal notranslate"><span class="pre">a</span> <span class="pre">=</span> <span class="pre">1</span></code> 是一条赋值语句，放进
+<code class="docutils literal notranslate"><span class="pre">if</span></code> 里 Python 直接判语法非法。这是 C 系语言里常见的笔误陷阱（C 里
+<code class="docutils literal notranslate"><span class="pre">if(a=1)</span></code> 还能“侥幸通过”），Python 则从语法层面就<strong>禁止在条件里用
+``=``</strong> 来保护你。</p>
+<p><strong>解决办法</strong>：写 <code class="docutils literal notranslate"><span class="pre">==</span></code>。</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">a</span> <span class="o">=</span> <span class="mi">5</span>
+<span class="k">if</span> <span class="n">a</span> <span class="o">==</span> <span class="mi">1</span><span class="p">:</span>
+    <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;是1&quot;</span><span class="p">)</span>
+<span class="k">else</span><span class="p">:</span>
+    <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;不是1&quot;</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>运行输出（e27b 实测）：<code class="docutils literal notranslate"><span class="pre">不是1</span></code>。</p>
+<blockquote>
+<div><p>记忆法：<strong>一个 ``=`` 是“给变量贴标签”（赋值），两个 ``=``
+才是“抽到牌是不是这张”（比大小）</strong>。</p>
+</div></blockquote>
+<blockquote>
+<div><p><strong>气象场景一句话</strong>：预警系统想判“温度是不是到 35°C”，却写成
+<code class="docutils literal notranslate"><span class="pre">if</span> <span class="pre">temp</span> <span class="pre">=</span> <span class="pre">35</span></code>——把“比较”写成了“把 35
+硬塞给温度”，系统直接拒绝承认这是句判断。写预判逻辑时，一个等号和两个等号是一字之差、天壤之别。</p>
+</div></blockquote>
+<hr class="docutils" />
+</section>
+</section>
+<section id="id33">
+<span id="id34"></span><h2>2.7 本章高频速查表<a class="headerlink" href="#id33" title="Link to this heading">#</a></h2>
+<blockquote>
+<div><p>复制报错里的<strong>英文关键词</strong>，到左列对号入座；再回 0.6
+节的“关键词→联想”强化记忆。</p>
+</div></blockquote>
+<div class="pst-scrollable-table-container"><table class="table">
+<thead>
+<tr class="row-odd"><th class="head"><p>报错关键词（去复制）</p></th>
+<th class="head"><p>一句话原因</p></th>
+<th class="head"><p>对应条目</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">unterminated</span> <span class="pre">string</span> <span class="pre">literal</span></code> /
+<code class="docutils literal notranslate"><span class="pre">unexpected</span> <span class="pre">EOF</span> <span class="pre">while</span> <span class="pre">parsing</span></code></p></td>
+<td><p>单/双/三引号或括号没闭合，一路吞到 EOF</p></td>
+<td><p>2.1.1、2.1.2</p></td>
+</tr>
+<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">invalid</span> <span class="pre">character</span> <span class="pre">'，'</span> <span class="pre">(U+FF0C)</span></code> /
+<code class="docutils literal notranslate"><span class="pre">invalid</span> <span class="pre">non-printable</span> <span class="pre">character</span></code></p></td>
+<td><p>混进中文/全角标点或不可见字符</p></td>
+<td><p>2.1.3</p></td>
+</tr>
+<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">invalid</span> <span class="pre">syntax</span></code>（引号嵌套处 / <code class="docutils literal notranslate"><span class="pre">if</span> <span class="pre">=</span> <span class="pre">25</span></code> / <code class="docutils literal notranslate"><span class="pre">1temp</span></code>）</p></td>
+<td><p>引号撞车、关键字命名、数字开头、条件误用
+<code class="docutils literal notranslate"><span class="pre">=</span></code></p></td>
+<td><p>2.1.4、2.4.1、2.4.2、2.6.2</p></td>
+</tr>
+<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">TypeError:</span> <span class="pre">unsupported</span> <span class="pre">operand</span> <span class="pre">type(s)</span> <span class="pre">for</span> <span class="pre">+:</span> <span class="pre">'int'</span> <span class="pre">and</span> <span class="pre">'str'</span></code></p></td>
+<td><p>数字与字符串混算</p></td>
+<td><p>2.2.1、2.6.1</p></td>
+</tr>
+<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">TypeError:</span> <span class="pre">can</span> <span class="pre">only</span> <span class="pre">concatenate</span> <span class="pre">str</span> <span class="pre">(not</span> <span class="pre">&quot;int&quot;)</span> <span class="pre">to</span> <span class="pre">str</span></code></p></td>
+<td><p>str 直接 + int 或 input() 未转类型</p></td>
+<td><p>2.2.1、2.3.2</p></td>
+</tr>
+<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">ZeroDivisionError:</span> <span class="pre">division</span> <span class="pre">by</span> <span class="pre">zero</span></code> /
+<code class="docutils literal notranslate"><span class="pre">float</span> <span class="pre">division</span> <span class="pre">by</span> <span class="pre">zero</span></code> / <code class="docutils literal notranslate"><span class="pre">integer</span> <span class="pre">modulo</span> <span class="pre">by</span> <span class="pre">zero</span></code></p></td>
+<td><p>除以 0（含 <code class="docutils literal notranslate"><span class="pre">0.0</span></code>、取模、整除）</p></td>
+<td><p>2.2.2</p></td>
+</tr>
+<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">0.30000000000000004</span></code>（无报错）</p></td>
+<td><p>浮点精度：<code class="docutils literal notranslate"><span class="pre">==</span></code> 判等慎用</p></td>
+<td><p>2.2.3</p></td>
+</tr>
+<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">4^2</span></code> 得小怪数（<code class="docutils literal notranslate"><span class="pre">2</span> <span class="pre">^</span> <span class="pre">3</span> <span class="pre">==</span> <span class="pre">1</span></code>）</p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">^</span></code> 是异或，幂用 <code class="docutils literal notranslate"><span class="pre">**</span></code></p></td>
+<td><p>2.2.4</p></td>
+</tr>
+<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">3</span> <span class="pre">+</span> <span class="pre">2</span> <span class="pre">*</span> <span class="pre">2</span></code> 得 7</p></td>
+<td><p>运算符优先级，拿不准加括号</p></td>
+<td><p>2.2.5</p></td>
+</tr>
+<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">ValueError:</span> <span class="pre">invalid</span> <span class="pre">literal</span> <span class="pre">for</span> <span class="pre">int()</span> <span class="pre">with</span> <span class="pre">base</span> <span class="pre">10:</span> <span class="pre">'abc'</span></code></p></td>
+<td><p>字符串不是合法数字就转 int</p></td>
+<td><p>2.3.1</p></td>
+</tr>
+<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">ValueError:</span> <span class="pre">could</span> <span class="pre">not</span> <span class="pre">convert</span> <span class="pre">string</span> <span class="pre">to</span> <span class="pre">float:</span> <span class="pre">'23.3x'</span></code></p></td>
+<td><p>字符串不是合法数字就转 float</p></td>
+<td><p>2.3.1</p></td>
+</tr>
+<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">ValueError:</span> <span class="pre">substring</span> <span class="pre">not</span> <span class="pre">found</span></code>（<code class="docutils literal notranslate"><span class="pre">str.index</span></code>）/ 静默
+<code class="docutils literal notranslate"><span class="pre">-1</span></code>（<code class="docutils literal notranslate"><span class="pre">str.find</span></code>）</p></td>
+<td><p>子串查找：find 静默 -1、index 抛异常</p></td>
+<td><p>2.5.2</p></td>
+</tr>
+<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">AttributeError:</span> <span class="pre">'list'</span> <span class="pre">object</span> <span class="pre">has</span> <span class="pre">no</span> <span class="pre">attribute</span> <span class="pre">'find'</span></code></p></td>
+<td><p>列表没有 find，应 <code class="docutils literal notranslate"><span class="pre">.index()</span></code></p></td>
+<td><p>2.5.1</p></td>
+</tr>
+<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">AttributeError:</span> <span class="pre">'set'</span> <span class="pre">object</span> <span class="pre">has</span> <span class="pre">no</span> <span class="pre">attribute</span> <span class="pre">'append'</span></code></p></td>
+<td><p>集合无顺序，加元素用 <code class="docutils literal notranslate"><span class="pre">.add()</span></code></p></td>
+<td><p>2.5.3</p></td>
+</tr>
+<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">IndexError:</span> <span class="pre">list</span> <span class="pre">index</span> <span class="pre">out</span> <span class="pre">of</span> <span class="pre">range</span></code></p></td>
+<td><p>下标越界（正/负指数、空列表 <code class="docutils literal notranslate"><span class="pre">[0]</span></code>）</p></td>
+<td><p>2.5.4、2.5.8</p></td>
+</tr>
+<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">KeyError:</span> <span class="pre">'xxx'</span></code></p></td>
+<td><p>字典取不存在的键，用 <code class="docutils literal notranslate"><span class="pre">.get()</span></code></p></td>
+<td><p>2.5.5</p></td>
+</tr>
+<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">TypeError:</span> <span class="pre">'str'</span> <span class="pre">object</span> <span class="pre">does</span> <span class="pre">not</span> <span class="pre">support</span> <span class="pre">item</span> <span class="pre">assignment</span></code></p></td>
+<td><p>字符串不可变，只能生成新串</p></td>
+<td><p>2.5.6</p></td>
+</tr>
+<tr class="row-odd"><td><p>切片越界静默截断/返回空（无报错）</p></td>
+<td><p>切片 vs 索引：一个静默、一个抛
+IndexError</p></td>
+<td><p>2.5.7</p></td>
+</tr>
+<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">len(s)==7</span></code> 却 <code class="docutils literal notranslate"><span class="pre">s[7]</span></code> 越界 / <code class="docutils literal notranslate"><span class="pre">s[-1]</span></code></p></td>
+<td><p>下标从 0，最末下标 = len-1；负索引取末位</p></td>
+<td><p>2.5.8</p></td>
+</tr>
+<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">SyntaxError:</span> <span class="pre">invalid</span> <span class="pre">syntax.</span> <span class="pre">Maybe</span> <span class="pre">you</span> <span class="pre">meant</span> <span class="pre">'=='</span> <span class="pre">or</span> <span class="pre">':='</span></code></p></td>
+<td><p>if 条件里误用 <code class="docutils literal notranslate"><span class="pre">=</span></code>，应为 <code class="docutils literal notranslate"><span class="pre">==</span></code></p></td>
+<td><p>2.6.2</p></td>
+</tr>
+</tbody>
+</table>
+</div>
+<hr class="docutils" />
+<section id="qa">
+<h3>附：本 QA 的实现与验证说明<a class="headerlink" href="#qa" title="Link to this heading">#</a></h3>
+<ul class="simple">
+<li><p>全部报错样例均在本机 Python 环境实测，Traceback 原文照录。</p></li>
+<li><p>因本机为 Python 3.12，引号/括号未闭合的报错文案与老版本不同（免征的
+<code class="docutils literal notranslate"><span class="pre">unterminated</span> <span class="pre">string</span> <span class="pre">literal</span></code>、<code class="docutils literal notranslate"><span class="pre">'('</span> <span class="pre">was</span> <span class="pre">never</span> <span class="pre">closed</span></code> 取代了
+3.6–3.9 里的
+<code class="docutils literal notranslate"><span class="pre">unexpected</span> <span class="pre">EOF</span> <span class="pre">while</span> <span class="pre">parsing</span></code>），文中已双轨说明，便于对照通用方法论
+0.6。</p></li>
+<li><p>本文档的易错点（引号三种写法、<code class="docutils literal notranslate"><span class="pre">^</span></code> 非幂、<code class="docutils literal notranslate"><span class="pre">append</span></code> vs
+<code class="docutils literal notranslate"><span class="pre">add</span></code>、坐标用 tuple 等）均与配套 PPT 及正文 <code class="docutils literal notranslate"><span class="pre">datatypes.rst</span></code>
+对表核对。</p></li>
+<li><p>本 QA 未对 <code class="docutils literal notranslate"><span class="pre">user_guide/basics/datatypes.rst</span></code>
+及任何教案做任何修改；仅新增 QA 文档与 PPT 提取文本。</p></li>
+</ul>
+</section>
+</section>
+</section>
+
+
+                </article>
+              
+              
+              
+              
+              
+                <footer class="prev-next-footer d-print-none">
+                  
+<div class="prev-next-area">
+    <a class="left-prev"
+       href="01-Python%E7%AE%80%E4%BB%8B%E4%B8%8EConda%E7%8E%AF%E5%A2%83-QA.html"
+       title="上一页">
+      <i class="fa-solid fa-angle-left"></i>
+      <div class="prev-next-info">
+        <p class="prev-next-subtitle">上一页</p>
+        <p class="prev-next-title">Python 简介及安装环境 Q&amp;A</p>
+      </div>
+    </a>
+    <a class="right-next"
+       href="03-%E5%88%86%E6%94%AF%E6%9D%A1%E4%BB%B6%E5%BE%AA%E7%8E%AF-QA.html"
+       title="下一页">
+      <div class="prev-next-info">
+        <p class="prev-next-subtitle">下一页</p>
+        <p class="prev-next-title">分支、条件与循环 Q&amp;A</p>
+      </div>
+      <i class="fa-solid fa-angle-right"></i>
+    </a>
+</div>
+                </footer>
+              
+            </div>
+            
+            
+              
+                <dialog id="pst-secondary-sidebar-modal"></dialog>
+                <div id="pst-secondary-sidebar" class="bd-sidebar-secondary bd-toc"><div class="sidebar-secondary-items sidebar-secondary__inner">
+
+
+  <div class="sidebar-secondary-item">
+<div
+    id="pst-page-navigation-heading-2"
+    class="page-toc tocsection onthispage">
+    <i class="fa-solid fa-list"></i> 当前页面
+  </div>
+  <nav id="pst-page-toc-nav" class="page-toc" aria-labelledby="pst-page-navigation-heading-2">
+    <ul class="pst-show_toc_level nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id1">2.0 本章报错总览表</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#syntaxerror">2.1 引号、标点与括号：代码“没对上号”的 SyntaxError</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#id4">2.1.1 引号不闭合（单/双/三引号）→ <code class="docutils literal notranslate"><span class="pre">SyntaxError</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#was-never-closed-unexpected-eof-while-parsing">2.1.2 括号/花括号不闭合 → <code class="docutils literal notranslate"><span class="pre">'('</span> <span class="pre">was</span> <span class="pre">never</span> <span class="pre">closed</span></code> / <code class="docutils literal notranslate"><span class="pre">unexpected</span> <span class="pre">EOF</span> <span class="pre">while</span> <span class="pre">parsing</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#syntaxerror-invalid-character-u-ff0c">2.1.3 中文标点混入 → <code class="docutils literal notranslate"><span class="pre">SyntaxError:</span> <span class="pre">invalid</span> <span class="pre">character</span> <span class="pre">'，'</span> <span class="pre">(U+FF0C)</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#invalid-syntax">2.1.4 字符串内部还要引号 → 引号嵌套错误 <code class="docutils literal notranslate"><span class="pre">invalid</span> <span class="pre">syntax</span></code></a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id8">2.2 数字与运算符：算错了，是类型问题还是精度问题？</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#typeerror-unsupported-operand-type-s-for-int-and-str">2.2.1 数字和字符串混着算 → <code class="docutils literal notranslate"><span class="pre">TypeError:</span> <span class="pre">unsupported</span> <span class="pre">operand</span> <span class="pre">type(s)</span> <span class="pre">for</span> <span class="pre">+:</span> <span class="pre">'int'</span> <span class="pre">and</span> <span class="pre">'str'</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#zerodivisionerror">2.2.2 除以 0 → <code class="docutils literal notranslate"><span class="pre">ZeroDivisionError</span></code>（整数/浮点/取模/整除）</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#id11">2.2.3 浮点精度：<code class="docutils literal notranslate"><span class="pre">0.1</span> <span class="pre">+</span> <span class="pre">0.2</span> <span class="pre">!=</span> <span class="pre">0.3</span></code>（不报错，但结果错）</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#id13">2.2.4 <code class="docutils literal notranslate"><span class="pre">^</span></code> 不是幂：是异或（不报错，但算出来全错）</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#id15">2.2.5 运算符优先级：<code class="docutils literal notranslate"><span class="pre">3</span> <span class="pre">+</span> <span class="pre">2</span> <span class="pre">*</span> <span class="pre">2</span></code> 与 <code class="docutils literal notranslate"><span class="pre">(3</span> <span class="pre">+</span> <span class="pre">2)</span> <span class="pre">*</span> <span class="pre">2</span></code></a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id17">2.3 类型转换：把字符串“翻译”成数字</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#int-abc-float-23-3x-valueerror">2.3.1 <code class="docutils literal notranslate"><span class="pre">int("abc")</span></code> / <code class="docutils literal notranslate"><span class="pre">float("23.3x")</span></code> → <code class="docutils literal notranslate"><span class="pre">ValueError</span></code>（字符串不是合法数字）</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#input-str-typeerror">2.3.2 <code class="docutils literal notranslate"><span class="pre">input()</span></code> 返回的是 str：直接当数字算 → TypeError</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id20">2.4 变量命名：名字要合法、能认识</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#syntaxerror-invalid-syntax">2.4.1 变量名用了关键字（保留字）→ <code class="docutils literal notranslate"><span class="pre">SyntaxError:</span> <span class="pre">invalid</span> <span class="pre">syntax</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#id23">2.4.2 变量名以数字开头 / 含非法字符 → <code class="docutils literal notranslate"><span class="pre">SyntaxError</span></code></a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#list-tuple-set-dict-str">2.5 容器：list / tuple / set / dict / str 的操作误用</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#list-find-attributeerror-list-object-has-no-attribute-find-index">2.5.1 用 <code class="docutils literal notranslate"><span class="pre">list.find()</span></code> → <code class="docutils literal notranslate"><span class="pre">AttributeError:</span> <span class="pre">'list'</span> <span class="pre">object</span> <span class="pre">has</span> <span class="pre">no</span> <span class="pre">attribute</span> <span class="pre">'find'</span></code>（应 <code class="docutils literal notranslate"><span class="pre">.index()</span></code>）</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#str-find-1-vs-str-index-valueerror">2.5.2 <code class="docutils literal notranslate"><span class="pre">str.find()</span></code> 找不到返回 <code class="docutils literal notranslate"><span class="pre">-1</span></code>（不报错） vs <code class="docutils literal notranslate"><span class="pre">str.index()</span></code> 找不到抛 <code class="docutils literal notranslate"><span class="pre">ValueError</span></code>——“不报错反而更危险”</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#set-append-attributeerror-add">2.5.3 用 <code class="docutils literal notranslate"><span class="pre">set.append()</span></code> → <code class="docutils literal notranslate"><span class="pre">AttributeError</span></code>（集合应用 <code class="docutils literal notranslate"><span class="pre">.add()</span></code>）</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#indexerror-list-index-out-of-range">2.5.4 列表索引越界 → <code class="docutils literal notranslate"><span class="pre">IndexError:</span> <span class="pre">list</span> <span class="pre">index</span> <span class="pre">out</span> <span class="pre">of</span> <span class="pre">range</span></code>（含负数、空列表）</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#keyerror">2.5.5 字典取不存在的键 → <code class="docutils literal notranslate"><span class="pre">KeyError</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#s-0-a-typeerror">2.5.6 字符串不可变：<code class="docutils literal notranslate"><span class="pre">s[0]</span> <span class="pre">=</span> <span class="pre">'a'</span></code> → <code class="docutils literal notranslate"><span class="pre">TypeError</span></code>（列表可变，可对比）</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#vs-vs">2.5.7 切片越界不报错 vs 索引越界报错（静默放行 vs 抛错）</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#len-0-s-1">2.5.8 <code class="docutils literal notranslate"><span class="pre">len()</span></code> 结果与下标从 0 开始、<code class="docutils literal notranslate"><span class="pre">s[-1]</span></code> 取末位</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#none">2.6 布尔、None 与判断：真真假假与空值</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#none-0-typeerror">2.6.1 None 不是 0：直接拿来算 → <code class="docutils literal notranslate"><span class="pre">TypeError</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#if-a-1-syntaxerror">2.6.2 条件里误用单等号：<code class="docutils literal notranslate"><span class="pre">if</span> <span class="pre">a</span> <span class="pre">=</span> <span class="pre">1</span></code> → <code class="docutils literal notranslate"><span class="pre">SyntaxError</span></code>（应为 <code class="docutils literal notranslate"><span class="pre">==</span></code>）</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id33">2.7 本章高频速查表</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#qa">附：本 QA 的实现与验证说明</a></li>
+</ul>
+</li>
+</ul>
+  </nav></div>
+
+</div></div>
+              
+            
+          </div>
+          <footer class="bd-footer-content">
+            
+          </footer>
+        
+      </main>
+    </div>
+  </div>
+  
+  <!-- Scripts loaded after <body> so the DOM is not blocked -->
+  <script defer src="../../_static/scripts/bootstrap.js?digest=90905a2f556bf617f1a9"></script>
+<script defer src="../../_static/scripts/pydata-sphinx-theme.js?digest=90905a2f556bf617f1a9"></script>
+
+  <footer class="bd-footer">
+<div class="bd-footer__inner bd-page-width">
+  
+    <div class="footer-items__start">
+      
+        <div class="footer-item">
+
+  <p class="copyright">
+    
+      © Copyright 2026, 兰州大学大气科学学院编程社区.
+      <br/>
+    
+  </p>
+</div>
+      
+        <div class="footer-item">
+
+  <p class="sphinx-version">
+    由 <a href="https://www.sphinx-doc.org/">Sphinx</a> 8.2.3创建。
+    <br/>
+  </p>
+</div>
+      
+    </div>
+  
+  
+  
+    <div class="footer-items__end">
+      
+        <div class="footer-item">
+<p class="theme-version">
+  <!-- # L10n: Setting the PST URL as an argument as this does not need to be localized -->
+  使用 <a href="https://pydata-sphinx-theme.readthedocs.io/en/stable/index.html">PyData Sphinx Theme</a> 0.20.0构建.
+</p></div>
+      
+    </div>
+  
+</div>
+
+  </footer>
+  </body>
+</html>

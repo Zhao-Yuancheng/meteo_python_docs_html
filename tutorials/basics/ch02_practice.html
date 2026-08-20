@@ -1,0 +1,859 @@
+
+<!DOCTYPE html>
+
+
+<html lang="zh-CN" data-content_root="../../" >
+
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
+    <title>第 2 章配套练习：站点信息与气温数据 &#8212; MeteoPython</title>
+  
+  
+  
+  <script data-cfasync="false">
+    document.documentElement.dataset.mode = localStorage.getItem("mode") || "";
+    document.documentElement.dataset.theme = localStorage.getItem("theme") || "";
+  </script>
+  <!--
+    this give us a css class that will be invisible only if js is disabled
+  -->
+  <noscript>
+    <style>
+      .pst-js-only { display: none !important; }
+
+    </style>
+  </noscript>
+  
+  <!-- Loaded before other Sphinx assets -->
+  <link href="../../_static/styles/theme.css?digest=90905a2f556bf617f1a9" rel="stylesheet" />
+<link href="../../_static/styles/pydata-sphinx-theme.css?digest=90905a2f556bf617f1a9" rel="stylesheet" />
+
+    <link rel="stylesheet" type="text/css" href="../../_static/pygments.css?v=8f2a1f02" />
+    <link rel="stylesheet" type="text/css" href="../../_static/copybutton.css?v=76b2166b" />
+    <link rel="stylesheet" type="text/css" href="../../_static/sg_gallery.css?v=fd6457a4" />
+    <link rel="stylesheet" type="text/css" href="../../_static/sg_gallery-binder.css?v=f4aeca0c" />
+    <link rel="stylesheet" type="text/css" href="../../_static/sg_gallery-dataframe.css?v=2082cf3c" />
+    <link rel="stylesheet" type="text/css" href="../../_static/sg_gallery-rendered-html.css?v=1277b6f3" />
+    <link rel="stylesheet" type="text/css" href="../../_static/sphinx-design.min.css?v=95c83b7e" />
+    <link rel="stylesheet" type="text/css" href="../../_static/./custom.css?v=fbe1f034" />
+  
+  <!-- So that users can add custom icons -->
+  <script defer src="../../_static/scripts/fontawesome.js?digest=90905a2f556bf617f1a9"></script>
+  <!-- Pre-loaded scripts that we'll load fully later -->
+  <link rel="preload" as="script" href="../../_static/scripts/bootstrap.js?digest=90905a2f556bf617f1a9" />
+<link rel="preload" as="script" href="../../_static/scripts/pydata-sphinx-theme.js?digest=90905a2f556bf617f1a9" />
+
+    <script src="../../_static/documentation_options.js?v=9becfed8"></script>
+    <script src="../../_static/doctools.js?v=9bcbadda"></script>
+    <script src="../../_static/sphinx_highlight.js?v=dc90522c"></script>
+    <script src="../../_static/sg-tags.js?v=d80f6fa4"></script>
+    <script src="../../_static/clipboard.min.js?v=a7894cd8"></script>
+    <script src="../../_static/copybutton.js?v=fd10adb8"></script>
+    <script src="../../_static/translations.js?v=beaddf03"></script>
+    <script src="../../_static/design-tabs.js?v=f930bc37"></script>
+    <script>DOCUMENTATION_OPTIONS.pagename = 'tutorials/basics/ch02_practice';</script>
+    <script>
+        DOCUMENTATION_OPTIONS.theme_version = '0.20.0';
+        DOCUMENTATION_OPTIONS.theme_switcher_json_url = '_static/switcher.json';
+        DOCUMENTATION_OPTIONS.theme_switcher_version_match = '0.1.0';
+        DOCUMENTATION_OPTIONS.show_version_warning_banner =
+            false;
+        </script>
+    <script>DOCUMENTATION_OPTIONS.search_as_you_type = false;</script>
+    <link rel="icon" href="../../_static/favicon.svg"/>
+    <link rel="index" title="索引" href="../../genindex.html" />
+    <link rel="search" title="搜索" href="../../search.html" />
+    <link rel="next" title="第 3 章练习：分支、循环与条件" href="ch03_practice.html" />
+    <link rel="prev" title="第 1 章练习：Python 简介及安装环境" href="ch01_practice.html" />
+  <meta name="viewport" content="width=device-width, initial-scale=1"/>
+  <meta name="docsearch:language" content="zh-CN"/>
+  <meta name="docsearch:version" content="0.1" />
+    <meta name="docbuild:last-update" content="2026-08-20"/>
+  
+    
+    <script src="../../_static/searchtools.js"></script>
+    <script src="../../_static/language_data.js"></script>
+    <script src="../../searchindex.js"></script>
+  
+  </head>
+  <body data-default-mode="">
+  
+  
+  <div id="pst-skip-link" class="skip-link d-print-none"><a href="#main-content">跳转至主要内容</a></div>
+
+  
+  <div id="pst-scroll-pixel-helper"></div>
+  
+  <button type="button" class="btn rounded-pill" id="pst-back-to-top">
+    <i class="fa-solid fa-arrow-up"></i>回到顶部</button>
+  
+  
+  
+  
+  <dialog id="pst-search-dialog">
+    
+<form class="bd-search d-flex align-items-center"
+      action="../../search.html"
+      method="get">
+  <i class="fa-solid fa-magnifying-glass"></i>
+  <input type="search"
+         class="form-control"
+         name="q"
+         placeholder="搜索文档…"
+         aria-label="搜索文档…"
+         autocomplete="off"
+         autocorrect="off"
+         autocapitalize="off"
+         spellcheck="false"/>
+  <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd>K</kbd></span>
+</form>
+  </dialog>
+
+  <div class="pst-async-banner-revealer d-none">
+  <aside id="bd-header-version-warning" class="d-none d-print-none" aria-label="版本警告"></aside>
+</div>
+
+  
+    <header id="pst-header" class="bd-header navbar navbar-expand-lg bd-navbar d-print-none">
+<div class="bd-header__inner bd-page-width">
+  <button class="pst-navbar-icon sidebar-toggle primary-toggle" aria-label="网页导航">
+    <span class="fa-solid fa-bars"></span>
+  </button>
+  
+  
+  <div class="col-lg-3 navbar-header-items__start">
+    
+      <div class="navbar-item">
+
+  
+    
+  
+
+<a class="navbar-brand logo" href="../../index.html">
+  
+  
+  
+  
+  
+    
+    
+      
+    
+    
+    <img src="../../_static/logo.svg" class="logo__image only-light" alt="MeteoPython - Home"/>
+    <img src="../../_static/logo.svg" class="logo__image only-dark pst-js-only" alt="MeteoPython - Home"/>
+  
+  
+</a></div>
+    
+  </div>
+  
+  <div class="col-lg-9 navbar-header-items">
+    
+    <div class="me-auto navbar-header-items__center">
+      
+        <div class="navbar-item">
+<nav>
+  <ul class="bd-navbar-elements navbar-nav">
+    
+<li class="nav-item ">
+  <a class="nav-link nav-internal" href="../../user_guide/index.html">
+    教程
+  </a>
+</li>
+
+
+<li class="nav-item current active">
+  <a class="nav-link nav-internal" href="../index.html">
+    练习
+  </a>
+</li>
+
+
+<li class="nav-item ">
+  <a class="nav-link nav-internal" href="../../gallery/index.html">
+    示例
+  </a>
+</li>
+
+
+<li class="nav-item ">
+  <a class="nav-link nav-internal" href="../../api/index.html">
+    术语参考
+  </a>
+</li>
+
+
+<li class="nav-item ">
+  <a class="nav-link nav-internal" href="../../qa/index.html">
+    常见问题 Q&A
+  </a>
+</li>
+
+  </ul>
+</nav></div>
+      
+    </div>
+    
+    
+    <div class="navbar-header-items__end">
+      
+        <div class="navbar-item navbar-persistent--container">
+          
+
+<button class="btn search-button-field search-button__button pst-js-only" title="搜索" aria-label="搜索" data-bs-placement="bottom" data-bs-toggle="tooltip">
+ <i class="fa-solid fa-magnifying-glass"></i>
+ <span class="search-button__default-text">搜索</span>
+ <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd class="kbd-shortcut__modifier">K</kbd></span>
+</button>
+        </div>
+      
+      
+        <div class="navbar-item">
+
+<div class="theme-switch-container dropdown pst-js-only" data-bs-toggle="tooltip" data-bs-placement="bottom" title="Color mode">
+  <button class="btn btn-sm nav-link pst-navbar-icon theme-switch-button dropdown-toggle" aria-label="Color mode" data-bs-toggle="dropdown">
+    <i class="theme-switch fa-solid fa-sun fa-lg fa-fw" data-mode="light" title="亮色"></i>
+    <i class="theme-switch fa-solid fa-moon fa-lg fa-fw" data-mode="dark" title="暗色"></i>
+    <i class="theme-switch fa-solid fa-circle-half-stroke fa-lg fa-fw" data-mode="auto" title="System Settings"></i>
+  </button>
+  <ul class="dropdown-menu dropdown-menu-end">
+    <li><button class="dropdown-item d-flex align-items-center theme-change-button" data-mode="auto"><i class="fa-solid fa-circle-half-stroke fa-lg fa-fw me-1"></i>System Settings</button></li>
+    <li><button class="dropdown-item d-flex align-items-center theme-change-button" data-mode="light"><i class="fa-solid fa-sun fa-lg fa-fw me-1"></i>亮色</button></li>
+    <li><button class="dropdown-item d-flex align-items-center theme-change-button" data-mode="dark"><i class="fa-solid fa-moon fa-lg fa-fw me-1"></i>暗色</button></li>
+  </ul>
+</div></div>
+      
+        <div class="navbar-item"><ul class="navbar-icon-links"
+    aria-label="Icon Links">
+</ul></div>
+      
+    </div>
+    
+  </div>
+  
+  
+    <div class="navbar-persistent--mobile">
+
+<button class="btn search-button-field search-button__button pst-js-only" title="搜索" aria-label="搜索" data-bs-placement="bottom" data-bs-toggle="tooltip">
+ <i class="fa-solid fa-magnifying-glass"></i>
+ <span class="search-button__default-text">搜索</span>
+ <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd class="kbd-shortcut__modifier">K</kbd></span>
+</button>
+    </div>
+  
+
+  
+    <button class="pst-navbar-icon sidebar-toggle secondary-toggle" aria-label="当前页面">
+      <span class="fa-solid fa-outdent"></span>
+    </button>
+  
+</div>
+
+    </header>
+  
+
+  <div class="bd-container">
+    <div class="bd-container__inner bd-page-width">
+      
+      
+      
+      <dialog id="pst-primary-sidebar-modal"></dialog>
+      <div id="pst-primary-sidebar" class="bd-sidebar-primary bd-sidebar">
+        
+
+  
+  <div class="sidebar-header-items sidebar-primary__section">
+    
+    
+      <div class="sidebar-header-items__center">
+        
+          
+          
+            <div class="navbar-item">
+<nav>
+  <ul class="bd-navbar-elements navbar-nav">
+    
+<li class="nav-item ">
+  <a class="nav-link nav-internal" href="../../user_guide/index.html">
+    教程
+  </a>
+</li>
+
+
+<li class="nav-item current active">
+  <a class="nav-link nav-internal" href="../index.html">
+    练习
+  </a>
+</li>
+
+
+<li class="nav-item ">
+  <a class="nav-link nav-internal" href="../../gallery/index.html">
+    示例
+  </a>
+</li>
+
+
+<li class="nav-item ">
+  <a class="nav-link nav-internal" href="../../api/index.html">
+    术语参考
+  </a>
+</li>
+
+
+<li class="nav-item ">
+  <a class="nav-link nav-internal" href="../../qa/index.html">
+    常见问题 Q&A
+  </a>
+</li>
+
+  </ul>
+</nav></div>
+          
+        
+      </div>
+    
+    
+    
+      <div class="sidebar-header-items__end">
+        
+          <div class="navbar-item">
+
+<div class="theme-switch-container dropdown pst-js-only" data-bs-toggle="tooltip" data-bs-placement="bottom" title="Color mode">
+  <button class="btn btn-sm nav-link pst-navbar-icon theme-switch-button dropdown-toggle" aria-label="Color mode" data-bs-toggle="dropdown">
+    <i class="theme-switch fa-solid fa-sun fa-lg fa-fw" data-mode="light" title="亮色"></i>
+    <i class="theme-switch fa-solid fa-moon fa-lg fa-fw" data-mode="dark" title="暗色"></i>
+    <i class="theme-switch fa-solid fa-circle-half-stroke fa-lg fa-fw" data-mode="auto" title="System Settings"></i>
+  </button>
+  <ul class="dropdown-menu dropdown-menu-end">
+    <li><button class="dropdown-item d-flex align-items-center theme-change-button" data-mode="auto"><i class="fa-solid fa-circle-half-stroke fa-lg fa-fw me-1"></i>System Settings</button></li>
+    <li><button class="dropdown-item d-flex align-items-center theme-change-button" data-mode="light"><i class="fa-solid fa-sun fa-lg fa-fw me-1"></i>亮色</button></li>
+    <li><button class="dropdown-item d-flex align-items-center theme-change-button" data-mode="dark"><i class="fa-solid fa-moon fa-lg fa-fw me-1"></i>暗色</button></li>
+  </ul>
+</div></div>
+        
+          <div class="navbar-item"><ul class="navbar-icon-links"
+    aria-label="Icon Links">
+</ul></div>
+        
+      </div>
+    
+  </div>
+  
+    <div class="sidebar-primary-items__start sidebar-primary__section">
+        <div class="sidebar-primary-item pst-sidebar-collapse"><button id="pst-collapse-sidebar-button" aria-expanded="true" aria-controls="pst-primary-sidebar">
+  <svg class="pst-icon" role="img" aria-hidden="true" focusable="false" viewBox="0 0 16 16" xmlns="http://www.w3.org/2000/svg">
+    <path fill="currentColor" d="M3 15.5C2.36232 15.5 1.74874 15.2564 1.28478 14.8189C0.820828 14.3815 0.541576 13.7832 0.504167 13.1467L0.5 13L0.5 3C0.499965 2.36232 0.743605 1.74874 1.18107 1.28478C1.61854 0.820828 2.21676 0.541576 2.85333 0.504167L3 0.5L13 0.5C13.6377 0.499965 14.2513 0.743605 14.7152 1.18107C15.1792 1.61854 15.4584 2.21676 15.4958 2.85333L15.5 3L15.5 13C15.5 13.6377 15.2564 14.2513 14.8189 14.7152C14.3815 15.1792 13.7832 15.4584 13.1467 15.4958L13 15.5L3 15.5ZM3 13.8333L10.5 13.8333L10.5 2.16667L3 2.16667C2.79589 2.16669 2.59889 2.24163 2.44636 2.37726C2.29383 2.5129 2.19638 2.69979 2.1725 2.9025L2.16667 3L2.16667 13C2.16669 13.2041 2.24163 13.4011 2.37726 13.5536C2.5129 13.7062 2.69979 13.8036 2.9025 13.8275L3 13.8333ZM6.65583 10.325L6.5775 10.2558L4.91083 8.58917C4.76735 8.44567 4.68116 8.25476 4.66843 8.05223C4.65569 7.84971 4.71729 7.6495 4.84167 7.48917L4.91083 7.41083L6.5775 5.74417C6.72747 5.59471 6.9287 5.50794 7.14032 5.50148C7.35194 5.49502 7.55809 5.56935 7.7169 5.70937C7.8757 5.8494 7.97525 6.04463 7.99533 6.25539C8.01541 6.46616 7.95451 6.67667 7.825 6.84417L7.75583 6.9225L6.67917 8L7.75583 9.0775C7.89931 9.22099 7.98551 9.41191 7.99824 9.61443C8.01097 9.81695 7.94938 10.0172 7.825 10.1775L7.75583 10.2558C7.61234 10.3993 7.42142 10.4855 7.2189 10.4982C7.01638 10.511 6.81617 10.4494 6.65583 10.325Z"/>
+  </svg>
+  <span class="pst-collapse-sidebar-label">Collapse Sidebar</span>
+  <span class="pst-expand-sidebar-label">Expand Sidebar</span>
+</button></div>
+        <div class="sidebar-primary-item">
+
+<nav class="bd-docs-nav bd-links"
+     aria-label="章节导航">
+  <p class="bd-links__title" role="heading" aria-level="1">章节导航</p>
+  <div class="bd-toc-item navbar-nav"><ul class="current nav bd-sidenav">
+<li class="toctree-l1 current active has-children"><a class="reference internal" href="index.html">模块一 Python 编程基础（配套练习）</a><details open="open"><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="ch01_practice.html">第 1 章练习：Python 简介及安装环境</a></li>
+<li class="toctree-l2 current active"><a class="current reference internal" href="#">第 2 章配套练习：站点信息与气温数据</a></li>
+<li class="toctree-l2"><a class="reference internal" href="ch03_practice.html">第 3 章练习：分支、循环与条件</a></li>
+<li class="toctree-l2"><a class="reference internal" href="ch04_practice.html">第 4 章练习：函数及变量作用域、模块和包</a></li>
+<li class="toctree-l2"><a class="reference internal" href="ch05_practice.html">第 5 章练习：面向对象与高级语法</a></li>
+</ul>
+</details></li>
+<li class="toctree-l1 has-children"><a class="reference internal" href="../data/index.html">模块二 气象数据处理（配套练习）</a><details open="open"><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
+<li class="toctree-l2"><a class="reference internal" href="../data/ch06_practice.html">第 6 章练习：气象数据计算 NumPy</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../data/ch07_practice.html">第 7 章练习：气象数据分析（一）Pandas</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../data/ch08_practice.html">第 8 章练习：气象数据分析（二）Xarray</a></li>
+</ul>
+</details></li>
+<li class="toctree-l1 has-children"><a class="reference internal" href="../viz/index.html">模块三 气象数据可视化（配套练习）</a><details open="open"><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
+<li class="toctree-l2"><a class="reference internal" href="../viz/ch09_practice.html">第 9 章练习：Matplotlib 气象绘图</a></li>
+</ul>
+</details></li>
+</ul>
+</div>
+</nav></div>
+    </div>
+  
+  
+  <div class="sidebar-primary-items__end sidebar-primary__section">
+      <div class="sidebar-primary-item">
+<div id="ethical-ad-placement"
+      class="flat"
+      data-ea-publisher="readthedocs"
+      data-ea-type="readthedocs-sidebar"
+      data-ea-manual="true">
+</div></div>
+  </div>
+
+
+      </div>
+      
+      <main id="main-content" class="bd-main" role="main">
+        
+        
+          <div class="bd-content">
+            <div class="bd-article-container">
+              
+              <div class="bd-header-article d-print-none">
+<div class="header-article-items header-article__inner">
+  
+    <div class="header-article-items__start">
+      
+        <div class="header-article-item">
+
+<nav aria-label="Breadcrumb" class="d-print-none">
+  <ul class="bd-breadcrumbs">
+    
+    <li class="breadcrumb-item breadcrumb-home">
+      <a href="../../index.html" class="nav-link" aria-label="初始页面">
+        <i class="fa-solid fa-home"></i>
+      </a>
+    </li>
+    
+    <li class="breadcrumb-item"><a href="../index.html" class="nav-link">练习</a></li>
+    
+    
+    <li class="breadcrumb-item"><a href="index.html" class="nav-link">模块一 Python 编程基础（配套练习）</a></li>
+    
+    <li class="breadcrumb-item active" aria-current="page"><span class="ellipsis">第 2 章配套练习：站点信息与气温数据</span></li>
+  </ul>
+</nav>
+</div>
+      
+    </div>
+  
+  
+</div>
+</div>
+              
+              
+              
+                
+<div id="searchbox"></div>
+                <article class="bd-article">
+                  
+  <section id="id1">
+<h1>第 2 章配套练习：站点信息与气温数据<a class="headerlink" href="#id1" title="Link to this heading">#</a></h1>
+<p>配套 <a class="reference internal" href="../../user_guide/basics/datatypes.html#tut-datatype"><span class="std std-ref">基本数据类型、变量和运算符</span></a> 使用。练习全部围绕西北地区 8 个气象站（兰州、西安、成都、银川、西宁、乌鲁木齐、喀什、敦煌）的观测数据展开，与贯穿项目&quot;兰州气温观测数据分析与可视化系统&quot;第 2 步衔接。</p>
+<div class="admonition seealso">
+<p class="admonition-title">参见</p>
+<p>配套正文：<a class="reference internal" href="../../user_guide/basics/datatypes.html"><span class="doc">基本数据类型、变量和运算符</span></a>　·　术语参考：<a class="reference internal" href="../../api/ch02_terms.html"><span class="doc">第 2 章术语：基本数据类型、变量和运算符</span></a></p>
+</div>
+<p>做题建议：先自己写，卡住了再看 💡 提示；写完点开参考答案，重点比对<strong>思路</strong>而非字符。所有代码块均可复制到本地运行验证。</p>
+<nav class="contents local" id="id2">
+<p class="topic-title">本页练习</p>
+<ul class="simple">
+<li><p><a class="reference internal" href="#f-string" id="id5">练习 1 · 站点名片（变量、多重赋值与 f-string）</a></p></li>
+<li><p><a class="reference internal" href="#list" id="id6">练习 2 · 气温列表操作（list 与统计五件套）</a></p></li>
+<li><p><a class="reference internal" href="#dict" id="id7">练习 3 · 站点档案库（dict 的增删改查与嵌套）</a></p></li>
+<li><p><a class="reference internal" href="#id3" id="id8">练习 4 · 运算符综合应用（算术、逻辑与成员运算）</a></p></li>
+<li><p><a class="reference internal" href="#set-none" id="id9">练习 5 · 天气现象统计（set 与 None 综合）</a></p></li>
+<li><p><a class="reference internal" href="#id4" id="id10">拓展挑战（选做）</a></p></li>
+</ul>
+</nav>
+<section id="f-string">
+<h2>练习 1 · 站点名片（变量、多重赋值与 f-string）<a class="headerlink" href="#f-string" title="Link to this heading">#</a></h2>
+<p><strong>任务</strong>：定义兰州站的四项元信息——站名 <code class="docutils literal notranslate"><span class="pre">&quot;兰州&quot;</span></code>、区站号 <code class="docutils literal notranslate"><span class="pre">52889</span></code>、经度 <code class="docutils literal notranslate"><span class="pre">103.83</span></code>、纬度 <code class="docutils literal notranslate"><span class="pre">36.06</span></code>（要求经纬度用<strong>一行多重赋值</strong>完成），然后用 <strong>f-string</strong> 打印出如下格式：</p>
+<div class="highlight-text notranslate"><div class="highlight"><pre><span></span>== 站点名片 ==
+站名：兰州（52889）
+位置：103.83°E, 36.06°N
+</pre></div>
+</div>
+<details class="sd-sphinx-override sd-dropdown sd-card sd-mb-3">
+<summary class="sd-summary-title sd-card-header">
+<span class="sd-summary-text">💡 提示</span><span class="sd-summary-state-marker sd-summary-chevron-right"><svg version="1.1" width="1.5em" height="1.5em" class="sd-octicon sd-octicon-chevron-right" viewBox="0 0 24 24" aria-hidden="true"><path d="M8.72 18.78a.75.75 0 0 1 0-1.06L14.44 12 8.72 6.28a.751.751 0 0 1 .018-1.042.751.751 0 0 1 1.042-.018l6.25 6.25a.75.75 0 0 1 0 1.06l-6.25 6.25a.75.75 0 0 1-1.06 0Z"></path></svg></span></summary><div class="sd-summary-content sd-card-body docutils">
+<ul class="simple">
+<li><p class="sd-card-text">多重赋值：<code class="docutils literal notranslate"><span class="pre">lon,</span> <span class="pre">lat</span> <span class="pre">=</span> <span class="pre">103.83,</span> <span class="pre">36.06</span></code>；</p></li>
+<li><p class="sd-card-text">f-string 的 <code class="docutils literal notranslate"><span class="pre">{}</span></code> 里可以放任何表达式，经度符号 <code class="docutils literal notranslate"><span class="pre">°E</span></code> 直接写在 <code class="docutils literal notranslate"><span class="pre">{}</span></code> 外面；</p></li>
+<li><p class="sd-card-text">想让三行输出各占一行，可以在一个 f-string 里用 <code class="docutils literal notranslate"><span class="pre">\n``（三引号字符串支持真实换行），也可以用多条</span> <span class="pre">``print</span></code>。</p></li>
+</ul>
+</div>
+</details><details class="sd-sphinx-override sd-dropdown sd-card sd-mb-3">
+<summary class="sd-summary-title sd-card-header">
+<span class="sd-summary-text">参考答案</span><span class="sd-summary-state-marker sd-summary-chevron-right"><svg version="1.1" width="1.5em" height="1.5em" class="sd-octicon sd-octicon-chevron-right" viewBox="0 0 24 24" aria-hidden="true"><path d="M8.72 18.78a.75.75 0 0 1 0-1.06L14.44 12 8.72 6.28a.751.751 0 0 1 .018-1.042.751.751 0 0 1 1.042-.018l6.25 6.25a.75.75 0 0 1 0 1.06l-6.25 6.25a.75.75 0 0 1-1.06 0Z"></path></svg></span></summary><div class="sd-summary-content sd-card-body docutils">
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">name</span> <span class="o">=</span> <span class="s2">&quot;兰州&quot;</span>
+<span class="n">station_id</span> <span class="o">=</span> <span class="mi">52889</span>
+<span class="n">lon</span><span class="p">,</span> <span class="n">lat</span> <span class="o">=</span> <span class="mf">103.83</span><span class="p">,</span> <span class="mf">36.06</span>        <span class="c1"># 多重赋值：经纬度成对出现</span>
+
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;&quot;&quot;== 站点名片 ==</span>
+<span class="s2">站名：</span><span class="si">{</span><span class="n">name</span><span class="si">}</span><span class="s2">（</span><span class="si">{</span><span class="n">station_id</span><span class="si">}</span><span class="s2">）</span>
+<span class="s2">位置：</span><span class="si">{</span><span class="n">lon</span><span class="si">}</span><span class="s2">°E, </span><span class="si">{</span><span class="n">lat</span><span class="si">}</span><span class="s2">°N&quot;&quot;&quot;</span><span class="p">)</span>
+</pre></div>
+</div>
+<div class="admonition attention">
+<p class="admonition-title">注意</p>
+<p class="sd-card-text">三引号 f-string 里的续行会保留缩进空格，输出格式要求严格时可改用三条 <code class="docutils literal notranslate"><span class="pre">print</span></code>。</p>
+</div>
+</div>
+</details></section>
+<section id="list">
+<h2>练习 2 · 气温列表操作（list 与统计五件套）<a class="headerlink" href="#list" title="Link to this heading">#</a></h2>
+<p><strong>任务</strong>：兰州站某周（7 月 8 日—14 日）的日最高气温为：</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">temp_max_week</span> <span class="o">=</span> <span class="p">[</span><span class="mf">28.1</span><span class="p">,</span> <span class="mf">29.4</span><span class="p">,</span> <span class="mf">31.2</span><span class="p">,</span> <span class="mf">33.6</span><span class="p">,</span> <span class="mf">34.9</span><span class="p">,</span> <span class="mf">35.7</span><span class="p">,</span> <span class="mf">33.2</span><span class="p">]</span>
+</pre></div>
+</div>
+<p>依次完成：</p>
+<ol class="arabic simple">
+<li><p>7 月 15 日升温到 <code class="docutils literal notranslate"><span class="pre">36.5</span></code>，把它<strong>追加</strong>进列表；</p></li>
+<li><p>输出本周<strong>最高</strong>、<strong>最低</strong>气温与<strong>平均</strong>气温（平均保留 1 位小数）；</p></li>
+<li><p>用<strong>切片</strong>取出周末两天的气温（列表最后两个元素）；</p></li>
+<li><p>统计本周<strong>高温日</strong>（≥35 °C）天数，输出格式如 <code class="docutils literal notranslate"><span class="pre">高温日：2</span> <span class="pre">天</span></code>。</p></li>
+</ol>
+<details class="sd-sphinx-override sd-dropdown sd-card sd-mb-3">
+<summary class="sd-summary-title sd-card-header">
+<span class="sd-summary-text">💡 提示</span><span class="sd-summary-state-marker sd-summary-chevron-right"><svg version="1.1" width="1.5em" height="1.5em" class="sd-octicon sd-octicon-chevron-right" viewBox="0 0 24 24" aria-hidden="true"><path d="M8.72 18.78a.75.75 0 0 1 0-1.06L14.44 12 8.72 6.28a.751.751 0 0 1 .018-1.042.751.751 0 0 1 1.042-.018l6.25 6.25a.75.75 0 0 1 0 1.06l-6.25 6.25a.75.75 0 0 1-1.06 0Z"></path></svg></span></summary><div class="sd-summary-content sd-card-body docutils">
+<ul class="simple">
+<li><p class="sd-card-text">统计五件套：<code class="docutils literal notranslate"><span class="pre">max</span></code> / <code class="docutils literal notranslate"><span class="pre">min</span></code> / <code class="docutils literal notranslate"><span class="pre">sum</span></code> / <code class="docutils literal notranslate"><span class="pre">len</span></code> / <code class="docutils literal notranslate"><span class="pre">sorted</span></code>；</p></li>
+<li><p class="sd-card-text">平均保留 1 位小数：<code class="docutils literal notranslate"><span class="pre">f&quot;{avg:.1f}&quot;</span></code>，别提前 <code class="docutils literal notranslate"><span class="pre">round</span></code>；</p></li>
+<li><p class="sd-card-text">高温日数可用列表推导式 <code class="docutils literal notranslate"><span class="pre">[t</span> <span class="pre">for</span> <span class="pre">t</span> <span class="pre">in</span> <span class="pre">temp_max_week</span> <span class="pre">if</span> <span class="pre">t</span> <span class="pre">&gt;=</span> <span class="pre">35]</span></code> 再取 <code class="docutils literal notranslate"><span class="pre">len</span></code>。</p></li>
+</ul>
+</div>
+</details><details class="sd-sphinx-override sd-dropdown sd-card sd-mb-3">
+<summary class="sd-summary-title sd-card-header">
+<span class="sd-summary-text">⚠️ 类型混淆 tip</span><span class="sd-summary-state-marker sd-summary-chevron-right"><svg version="1.1" width="1.5em" height="1.5em" class="sd-octicon sd-octicon-chevron-right" viewBox="0 0 24 24" aria-hidden="true"><path d="M8.72 18.78a.75.75 0 0 1 0-1.06L14.44 12 8.72 6.28a.751.751 0 0 1 .018-1.042.751.751 0 0 1 1.042-.018l6.25 6.25a.75.75 0 0 1 0 1.06l-6.25 6.25a.75.75 0 0 1-1.06 0Z"></path></svg></span></summary><div class="sd-summary-content sd-card-body docutils">
+<p class="sd-card-text"><code class="docutils literal notranslate"><span class="pre">&quot;高温日：&quot;</span> <span class="pre">+</span> <span class="pre">2</span></code> 会因 <code class="docutils literal notranslate"><span class="pre">str</span> <span class="pre">+</span> <span class="pre">int</span></code> 抛 <code class="docutils literal notranslate"><span class="pre">TypeError</span></code>——数字和文本拼接必须经过 f-string 或 <code class="docutils literal notranslate"><span class="pre">str()</span></code>。</p>
+</div>
+</details><details class="sd-sphinx-override sd-dropdown sd-card sd-mb-3">
+<summary class="sd-summary-title sd-card-header">
+<span class="sd-summary-text">参考答案</span><span class="sd-summary-state-marker sd-summary-chevron-right"><svg version="1.1" width="1.5em" height="1.5em" class="sd-octicon sd-octicon-chevron-right" viewBox="0 0 24 24" aria-hidden="true"><path d="M8.72 18.78a.75.75 0 0 1 0-1.06L14.44 12 8.72 6.28a.751.751 0 0 1 .018-1.042.751.751 0 0 1 1.042-.018l6.25 6.25a.75.75 0 0 1 0 1.06l-6.25 6.25a.75.75 0 0 1-1.06 0Z"></path></svg></span></summary><div class="sd-summary-content sd-card-body docutils">
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">temp_max_week</span> <span class="o">=</span> <span class="p">[</span><span class="mf">28.1</span><span class="p">,</span> <span class="mf">29.4</span><span class="p">,</span> <span class="mf">31.2</span><span class="p">,</span> <span class="mf">33.6</span><span class="p">,</span> <span class="mf">34.9</span><span class="p">,</span> <span class="mf">35.7</span><span class="p">,</span> <span class="mf">33.2</span><span class="p">]</span>
+
+<span class="n">temp_max_week</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="mf">36.5</span><span class="p">)</span>                          <span class="c1"># ① 追加</span>
+
+<span class="n">avg</span> <span class="o">=</span> <span class="nb">sum</span><span class="p">(</span><span class="n">temp_max_week</span><span class="p">)</span> <span class="o">/</span> <span class="nb">len</span><span class="p">(</span><span class="n">temp_max_week</span><span class="p">)</span>       <span class="c1"># ② 统计</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;最高 </span><span class="si">{</span><span class="nb">max</span><span class="p">(</span><span class="n">temp_max_week</span><span class="p">)</span><span class="si">}</span><span class="s2"> °C，最低 </span><span class="si">{</span><span class="nb">min</span><span class="p">(</span><span class="n">temp_max_week</span><span class="p">)</span><span class="si">}</span><span class="s2"> °C，平均 </span><span class="si">{</span><span class="n">avg</span><span class="si">:</span><span class="s2">.1f</span><span class="si">}</span><span class="s2"> °C&quot;</span><span class="p">)</span>
+
+<span class="n">weekend</span> <span class="o">=</span> <span class="n">temp_max_week</span><span class="p">[</span><span class="o">-</span><span class="mi">2</span><span class="p">:]</span>                        <span class="c1"># ③ 负索引切片：最后两个</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;周末两日：</span><span class="si">{</span><span class="n">weekend</span><span class="si">}</span><span class="s2"> °C&quot;</span><span class="p">)</span>
+
+<span class="n">high_days</span> <span class="o">=</span> <span class="p">[</span><span class="n">t</span> <span class="k">for</span> <span class="n">t</span> <span class="ow">in</span> <span class="n">temp_max_week</span> <span class="k">if</span> <span class="n">t</span> <span class="o">&gt;=</span> <span class="mi">35</span><span class="p">]</span>   <span class="c1"># ④ 筛选高温日</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;高温日：</span><span class="si">{</span><span class="nb">len</span><span class="p">(</span><span class="n">high_days</span><span class="p">)</span><span class="si">}</span><span class="s2"> 天&quot;</span><span class="p">)</span>
+</pre></div>
+</div>
+<p class="sd-card-text">输出：</p>
+<div class="highlight-text notranslate"><div class="highlight"><pre><span></span>最高 36.5 °C，最低 28.1 °C，平均 32.6 °C
+周末两日：[35.7, 33.2] °C
+高温日：2 天
+</pre></div>
+</div>
+</div>
+</details></section>
+<section id="dict">
+<h2>练习 3 · 站点档案库（dict 的增删改查与嵌套）<a class="headerlink" href="#dict" title="Link to this heading">#</a></h2>
+<p><strong>任务</strong>：先建立两个站的档案：</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">stations</span> <span class="o">=</span> <span class="p">{</span>
+    <span class="s2">&quot;52889&quot;</span><span class="p">:</span> <span class="p">{</span><span class="s2">&quot;name&quot;</span><span class="p">:</span> <span class="s2">&quot;兰州&quot;</span><span class="p">,</span> <span class="s2">&quot;temp&quot;</span><span class="p">:</span> <span class="mf">25.6</span><span class="p">,</span> <span class="s2">&quot;humidity&quot;</span><span class="p">:</span> <span class="mi">40</span><span class="p">},</span>
+    <span class="s2">&quot;57036&quot;</span><span class="p">:</span> <span class="p">{</span><span class="s2">&quot;name&quot;</span><span class="p">:</span> <span class="s2">&quot;西安&quot;</span><span class="p">,</span> <span class="s2">&quot;temp&quot;</span><span class="p">:</span> <span class="mf">28.1</span><span class="p">,</span> <span class="s2">&quot;humidity&quot;</span><span class="p">:</span> <span class="mi">62</span><span class="p">},</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+<p>依次完成：</p>
+<ol class="arabic simple">
+<li><p>查询并打印兰州站的气温；</p></li>
+<li><p>把西安站的湿度更新为 <code class="docutils literal notranslate"><span class="pre">55</span></code>；</p></li>
+<li><p>新增敦煌站：键 <code class="docutils literal notranslate"><span class="pre">&quot;52418&quot;</span></code>，值为 <code class="docutils literal notranslate"><span class="pre">{&quot;name&quot;:</span> <span class="pre">&quot;敦煌&quot;,</span> <span class="pre">&quot;temp&quot;:</span> <span class="pre">27.4,</span> <span class="pre">&quot;humidity&quot;:</span> <span class="pre">26}</span></code>；</p></li>
+<li><p>给<strong>每个站</strong>新增一个键 <code class="docutils literal notranslate"><span class="pre">&quot;temp_f&quot;</span></code>，值为华氏气温（换算式 <code class="docutils literal notranslate"><span class="pre">c</span> <span class="pre">*</span> <span class="pre">9</span> <span class="pre">/</span> <span class="pre">5</span> <span class="pre">+</span> <span class="pre">32</span></code>，保留 1 位小数）；</p></li>
+<li><p>遍历打印三站名片，格式如 <code class="docutils literal notranslate"><span class="pre">52889</span> <span class="pre">兰州</span> <span class="pre">25.6°C</span> <span class="pre">/</span> <span class="pre">78.1°F</span></code>。</p></li>
+</ol>
+<details class="sd-sphinx-override sd-dropdown sd-card sd-mb-3">
+<summary class="sd-summary-title sd-card-header">
+<span class="sd-summary-text">💡 提示</span><span class="sd-summary-state-marker sd-summary-chevron-right"><svg version="1.1" width="1.5em" height="1.5em" class="sd-octicon sd-octicon-chevron-right" viewBox="0 0 24 24" aria-hidden="true"><path d="M8.72 18.78a.75.75 0 0 1 0-1.06L14.44 12 8.72 6.28a.751.751 0 0 1 .018-1.042.751.751 0 0 1 1.042-.018l6.25 6.25a.75.75 0 0 1 0 1.06l-6.25 6.25a.75.75 0 0 1-1.06 0Z"></path></svg></span></summary><div class="sd-summary-content sd-card-body docutils">
+<ul class="simple">
+<li><p class="sd-card-text">第 4 问遍历 <code class="docutils literal notranslate"><span class="pre">stations.values()</span></code>，对每个内层字典直接写入 <code class="docutils literal notranslate"><span class="pre">s[&quot;temp_f&quot;]</span> <span class="pre">=</span> <span class="pre">...</span></code>；</p></li>
+<li><p class="sd-card-text">第 5 问遍历 <code class="docutils literal notranslate"><span class="pre">stations.items()</span></code> 可同时拿到站号与档案（元组解包）。</p></li>
+</ul>
+</div>
+</details><details class="sd-sphinx-override sd-dropdown sd-card sd-mb-3">
+<summary class="sd-summary-title sd-card-header">
+<span class="sd-summary-text">⚠️ 键相关 tip</span><span class="sd-summary-state-marker sd-summary-chevron-right"><svg version="1.1" width="1.5em" height="1.5em" class="sd-octicon sd-octicon-chevron-right" viewBox="0 0 24 24" aria-hidden="true"><path d="M8.72 18.78a.75.75 0 0 1 0-1.06L14.44 12 8.72 6.28a.751.751 0 0 1 .018-1.042.751.751 0 0 1 1.042-.018l6.25 6.25a.75.75 0 0 1 0 1.06l-6.25 6.25a.75.75 0 0 1-1.06 0Z"></path></svg></span></summary><div class="sd-summary-content sd-card-body docutils">
+<p class="sd-card-text">访问不存在的键会抛 <code class="docutils literal notranslate"><span class="pre">KeyError</span></code>：<code class="docutils literal notranslate"><span class="pre">stations[&quot;51463&quot;]</span></code>；不确定键是否存在时用 <code class="docutils literal notranslate"><span class="pre">stations.get(&quot;51463&quot;)</span></code>（返回 <code class="docutils literal notranslate"><span class="pre">None</span></code> 而不报错）。字典的键必须不可变——用列表当键会抛 <code class="docutils literal notranslate"><span class="pre">TypeError</span></code>；站号用字符串可避免前导零丢失。</p>
+</div>
+</details><details class="sd-sphinx-override sd-dropdown sd-card sd-mb-3">
+<summary class="sd-summary-title sd-card-header">
+<span class="sd-summary-text">参考答案</span><span class="sd-summary-state-marker sd-summary-chevron-right"><svg version="1.1" width="1.5em" height="1.5em" class="sd-octicon sd-octicon-chevron-right" viewBox="0 0 24 24" aria-hidden="true"><path d="M8.72 18.78a.75.75 0 0 1 0-1.06L14.44 12 8.72 6.28a.751.751 0 0 1 .018-1.042.751.751 0 0 1 1.042-.018l6.25 6.25a.75.75 0 0 1 0 1.06l-6.25 6.25a.75.75 0 0 1-1.06 0Z"></path></svg></span></summary><div class="sd-summary-content sd-card-body docutils">
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">stations</span> <span class="o">=</span> <span class="p">{</span>
+    <span class="s2">&quot;52889&quot;</span><span class="p">:</span> <span class="p">{</span><span class="s2">&quot;name&quot;</span><span class="p">:</span> <span class="s2">&quot;兰州&quot;</span><span class="p">,</span> <span class="s2">&quot;temp&quot;</span><span class="p">:</span> <span class="mf">25.6</span><span class="p">,</span> <span class="s2">&quot;humidity&quot;</span><span class="p">:</span> <span class="mi">40</span><span class="p">},</span>
+    <span class="s2">&quot;57036&quot;</span><span class="p">:</span> <span class="p">{</span><span class="s2">&quot;name&quot;</span><span class="p">:</span> <span class="s2">&quot;西安&quot;</span><span class="p">,</span> <span class="s2">&quot;temp&quot;</span><span class="p">:</span> <span class="mf">28.1</span><span class="p">,</span> <span class="s2">&quot;humidity&quot;</span><span class="p">:</span> <span class="mi">62</span><span class="p">},</span>
+<span class="p">}</span>
+
+<span class="nb">print</span><span class="p">(</span><span class="n">stations</span><span class="p">[</span><span class="s2">&quot;52889&quot;</span><span class="p">][</span><span class="s2">&quot;temp&quot;</span><span class="p">])</span>                    <span class="c1"># ① 两级索引</span>
+
+<span class="n">stations</span><span class="p">[</span><span class="s2">&quot;57036&quot;</span><span class="p">][</span><span class="s2">&quot;humidity&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="mi">55</span>                  <span class="c1"># ② 更新</span>
+
+<span class="n">stations</span><span class="p">[</span><span class="s2">&quot;52418&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="p">{</span><span class="s2">&quot;name&quot;</span><span class="p">:</span> <span class="s2">&quot;敦煌&quot;</span><span class="p">,</span> <span class="s2">&quot;temp&quot;</span><span class="p">:</span> <span class="mf">27.4</span><span class="p">,</span> <span class="s2">&quot;humidity&quot;</span><span class="p">:</span> <span class="mi">26</span><span class="p">}</span>   <span class="c1"># ③ 新增</span>
+
+<span class="k">for</span> <span class="n">s</span> <span class="ow">in</span> <span class="n">stations</span><span class="o">.</span><span class="n">values</span><span class="p">():</span>                          <span class="c1"># ④ 批量写入华氏温度</span>
+    <span class="n">s</span><span class="p">[</span><span class="s2">&quot;temp_f&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="nb">round</span><span class="p">(</span><span class="n">s</span><span class="p">[</span><span class="s2">&quot;temp&quot;</span><span class="p">]</span> <span class="o">*</span> <span class="mi">9</span> <span class="o">/</span> <span class="mi">5</span> <span class="o">+</span> <span class="mi">32</span><span class="p">,</span> <span class="mi">1</span><span class="p">)</span>
+
+<span class="k">for</span> <span class="n">sid</span><span class="p">,</span> <span class="n">s</span> <span class="ow">in</span> <span class="n">stations</span><span class="o">.</span><span class="n">items</span><span class="p">():</span>                      <span class="c1"># ⑤ 打印名片</span>
+    <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">sid</span><span class="si">}</span><span class="s2"> </span><span class="si">{</span><span class="n">s</span><span class="p">[</span><span class="s1">&#39;name&#39;</span><span class="p">]</span><span class="si">}</span><span class="s2"> </span><span class="si">{</span><span class="n">s</span><span class="p">[</span><span class="s1">&#39;temp&#39;</span><span class="p">]</span><span class="si">}</span><span class="s2">°C / </span><span class="si">{</span><span class="n">s</span><span class="p">[</span><span class="s1">&#39;temp_f&#39;</span><span class="p">]</span><span class="si">}</span><span class="s2">°F&quot;</span><span class="p">)</span>
+</pre></div>
+</div>
+<p class="sd-card-text">输出：</p>
+<div class="highlight-text notranslate"><div class="highlight"><pre><span></span>25.6
+52889 兰州 25.6°C / 78.1°F
+57036 西安 28.1°C / 82.6°F
+52418 敦煌 27.4°C / 81.3°F
+</pre></div>
+</div>
+</div>
+</details></section>
+<section id="id3">
+<h2>练习 4 · 运算符综合应用（算术、逻辑与成员运算）<a class="headerlink" href="#id3" title="Link to this heading">#</a></h2>
+<p><strong>任务</strong>：给定兰州站某日观测：</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">temp</span> <span class="o">=</span> <span class="mf">31.5</span>        <span class="c1"># 气温 °C</span>
+<span class="n">rh</span> <span class="o">=</span> <span class="mi">58</span>            <span class="c1"># 相对湿度 %</span>
+<span class="n">wind_deg</span> <span class="o">=</span> <span class="mi">373</span>     <span class="c1"># 风向（累积角度）</span>
+<span class="n">u</span><span class="p">,</span> <span class="n">v</span> <span class="o">=</span> <span class="mf">3.0</span><span class="p">,</span> <span class="o">-</span><span class="mf">4.0</span>   <span class="c1"># 风的 u、v 分量 m/s</span>
+<span class="n">stations_nw</span> <span class="o">=</span> <span class="p">[</span><span class="s2">&quot;兰州&quot;</span><span class="p">,</span> <span class="s2">&quot;西安&quot;</span><span class="p">,</span> <span class="s2">&quot;银川&quot;</span><span class="p">,</span> <span class="s2">&quot;西宁&quot;</span><span class="p">,</span> <span class="s2">&quot;乌鲁木齐&quot;</span><span class="p">,</span> <span class="s2">&quot;喀什&quot;</span><span class="p">,</span> <span class="s2">&quot;敦煌&quot;</span><span class="p">]</span>
+</pre></div>
+</div>
+<p>依次计算并输出：</p>
+<ol class="arabic simple">
+<li><p>气温的<strong>华氏值</strong>与<strong>开尔文值</strong>（开尔文 = 摄氏 + 273.15）；</p></li>
+<li><p>规范化风向角（提示：<code class="docutils literal notranslate"><span class="pre">%</span> <span class="pre">360</span></code>），并判断是否为北风扇区（<code class="docutils literal notranslate"><span class="pre">315</span> <span class="pre">≤</span> <span class="pre">角度</span> <span class="pre">≤</span> <span class="pre">45</span></code>，需要处理跨 0° 的情况）；</p></li>
+<li><p>风速 <code class="docutils literal notranslate"><span class="pre">√(u²</span> <span class="pre">+</span> <span class="pre">v²)</span></code>（用 <code class="docutils literal notranslate"><span class="pre">**</span></code> 运算符，不 import 任何库）；</p></li>
+<li><p>判断是否为&quot;闷热天&quot;：<code class="docutils literal notranslate"><span class="pre">temp</span> <span class="pre">≥</span> <span class="pre">30</span> <span class="pre">且</span> <span class="pre">rh</span> <span class="pre">≥</span> <span class="pre">55</span></code>，输出布尔值；</p></li>
+<li><p>判断 <code class="docutils literal notranslate"><span class="pre">&quot;成都&quot;</span></code> 是否在西北站点名单 <code class="docutils literal notranslate"><span class="pre">stations_nw</span></code> 中（按本练习名单为准）。</p></li>
+</ol>
+<details class="sd-sphinx-override sd-dropdown sd-card sd-mb-3">
+<summary class="sd-summary-title sd-card-header">
+<span class="sd-summary-text">💡 提示</span><span class="sd-summary-state-marker sd-summary-chevron-right"><svg version="1.1" width="1.5em" height="1.5em" class="sd-octicon sd-octicon-chevron-right" viewBox="0 0 24 24" aria-hidden="true"><path d="M8.72 18.78a.75.75 0 0 1 0-1.06L14.44 12 8.72 6.28a.751.751 0 0 1 .018-1.042.751.751 0 0 1 1.042-.018l6.25 6.25a.75.75 0 0 1 0 1.06l-6.25 6.25a.75.75 0 0 1-1.06 0Z"></path></svg></span></summary><div class="sd-summary-content sd-card-body docutils">
+<ul class="simple">
+<li><p class="sd-card-text">第 2 问跨 0° 处理：先 <code class="docutils literal notranslate"><span class="pre">deg</span> <span class="pre">%</span> <span class="pre">360</span></code>，北风扇区再写成 <code class="docutils literal notranslate"><span class="pre">angle</span> <span class="pre">&gt;=</span> <span class="pre">315</span> <span class="pre">or</span> <span class="pre">angle</span> <span class="pre">&lt;=</span> <span class="pre">45</span></code>；</p></li>
+<li><p class="sd-card-text">第 3 问：<code class="docutils literal notranslate"><span class="pre">(u**2</span> <span class="pre">+</span> <span class="pre">v**2)</span> <span class="pre">**</span> <span class="pre">0.5</span></code>，括号不能省。</p></li>
+</ul>
+</div>
+</details><details class="sd-sphinx-override sd-dropdown sd-card sd-mb-3">
+<summary class="sd-summary-title sd-card-header">
+<span class="sd-summary-text">⚠️ 除法与精度 tip</span><span class="sd-summary-state-marker sd-summary-chevron-right"><svg version="1.1" width="1.5em" height="1.5em" class="sd-octicon sd-octicon-chevron-right" viewBox="0 0 24 24" aria-hidden="true"><path d="M8.72 18.78a.75.75 0 0 1 0-1.06L14.44 12 8.72 6.28a.751.751 0 0 1 .018-1.042.751.751 0 0 1 1.042-.018l6.25 6.25a.75.75 0 0 1 0 1.06l-6.25 6.25a.75.75 0 0 1-1.06 0Z"></path></svg></span></summary><div class="sd-summary-content sd-card-body docutils">
+<p class="sd-card-text"><code class="docutils literal notranslate"><span class="pre">/</span></code> 结果永远是 float，<code class="docutils literal notranslate"><span class="pre">9</span> <span class="pre">/</span> <span class="pre">5</span> <span class="pre">==</span> <span class="pre">1.8</span></code>；若误用 <code class="docutils literal notranslate"><span class="pre">//</span></code> 会得到 <code class="docutils literal notranslate"><span class="pre">1</span></code>，换算悄悄错一截。判断温度恰好等于某值时避免 <code class="docutils literal notranslate"><span class="pre">==</span></code>（想想 <code class="docutils literal notranslate"><span class="pre">0.1</span> <span class="pre">+</span> <span class="pre">0.2</span></code> 的教训），本题为区间判断，无此顾虑。</p>
+</div>
+</details><details class="sd-sphinx-override sd-dropdown sd-card sd-mb-3">
+<summary class="sd-summary-title sd-card-header">
+<span class="sd-summary-text">参考答案</span><span class="sd-summary-state-marker sd-summary-chevron-right"><svg version="1.1" width="1.5em" height="1.5em" class="sd-octicon sd-octicon-chevron-right" viewBox="0 0 24 24" aria-hidden="true"><path d="M8.72 18.78a.75.75 0 0 1 0-1.06L14.44 12 8.72 6.28a.751.751 0 0 1 .018-1.042.751.751 0 0 1 1.042-.018l6.25 6.25a.75.75 0 0 1 0 1.06l-6.25 6.25a.75.75 0 0 1-1.06 0Z"></path></svg></span></summary><div class="sd-summary-content sd-card-body docutils">
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">temp</span><span class="p">,</span> <span class="n">rh</span> <span class="o">=</span> <span class="mf">31.5</span><span class="p">,</span> <span class="mi">58</span>
+<span class="n">wind_deg</span> <span class="o">=</span> <span class="mi">373</span>
+<span class="n">u</span><span class="p">,</span> <span class="n">v</span> <span class="o">=</span> <span class="mf">3.0</span><span class="p">,</span> <span class="o">-</span><span class="mf">4.0</span>
+<span class="n">stations_nw</span> <span class="o">=</span> <span class="p">[</span><span class="s2">&quot;兰州&quot;</span><span class="p">,</span> <span class="s2">&quot;西安&quot;</span><span class="p">,</span> <span class="s2">&quot;银川&quot;</span><span class="p">,</span> <span class="s2">&quot;西宁&quot;</span><span class="p">,</span> <span class="s2">&quot;乌鲁木齐&quot;</span><span class="p">,</span> <span class="s2">&quot;喀什&quot;</span><span class="p">,</span> <span class="s2">&quot;敦煌&quot;</span><span class="p">]</span>
+
+<span class="n">temp_f</span> <span class="o">=</span> <span class="n">temp</span> <span class="o">*</span> <span class="mi">9</span> <span class="o">/</span> <span class="mi">5</span> <span class="o">+</span> <span class="mi">32</span>                 <span class="c1"># ① 华氏</span>
+<span class="n">temp_k</span> <span class="o">=</span> <span class="n">temp</span> <span class="o">+</span> <span class="mf">273.15</span>                     <span class="c1">#    开尔文</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">temp</span><span class="si">}</span><span class="s2">°C = </span><span class="si">{</span><span class="n">temp_f</span><span class="si">}</span><span class="s2">°F = </span><span class="si">{</span><span class="n">temp_k</span><span class="si">}</span><span class="s2"> K&quot;</span><span class="p">)</span>
+
+<span class="n">angle</span> <span class="o">=</span> <span class="n">wind_deg</span> <span class="o">%</span> <span class="mi">360</span>                     <span class="c1"># ② 风向规范化：373 → 13</span>
+<span class="n">is_north</span> <span class="o">=</span> <span class="n">angle</span> <span class="o">&gt;=</span> <span class="mi">315</span> <span class="ow">or</span> <span class="n">angle</span> <span class="o">&lt;=</span> <span class="mi">45</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;风向 </span><span class="si">{</span><span class="n">angle</span><span class="si">}</span><span class="s2">°，北风扇区：</span><span class="si">{</span><span class="n">is_north</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+
+<span class="n">speed</span> <span class="o">=</span> <span class="p">(</span><span class="n">u</span><span class="o">**</span><span class="mi">2</span> <span class="o">+</span> <span class="n">v</span><span class="o">**</span><span class="mi">2</span><span class="p">)</span> <span class="o">**</span> <span class="mf">0.5</span>               <span class="c1"># ③ 风速</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;风速 </span><span class="si">{</span><span class="n">speed</span><span class="si">}</span><span class="s2"> m/s&quot;</span><span class="p">)</span>
+
+<span class="n">is_muggy</span> <span class="o">=</span> <span class="n">temp</span> <span class="o">&gt;=</span> <span class="mi">30</span> <span class="ow">and</span> <span class="n">rh</span> <span class="o">&gt;=</span> <span class="mi">55</span>         <span class="c1"># ④ 闷热判据</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;闷热天：</span><span class="si">{</span><span class="n">is_muggy</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;成都在名单中：&quot;</span><span class="p">,</span> <span class="s2">&quot;成都&quot;</span> <span class="ow">in</span> <span class="n">stations_nw</span><span class="p">)</span>   <span class="c1"># ⑤ 成员运算</span>
+</pre></div>
+</div>
+<p class="sd-card-text">输出：</p>
+<div class="highlight-text notranslate"><div class="highlight"><pre><span></span>31.5°C = 88.7°F = 304.65 K
+风向 13°，北风扇区：True
+风速 5.0 m/s
+闷热天：True
+成都在名单中： False
+</pre></div>
+</div>
+</div>
+</details></section>
+<section id="set-none">
+<h2>练习 5 · 天气现象统计（set 与 None 综合）<a class="headerlink" href="#set-none" title="Link to this heading">#</a></h2>
+<p><strong>任务</strong>：兰州站某旬（10 天）的天气现象记录与降水数据如下（<code class="docutils literal notranslate"><span class="pre">None</span></code> 表示当日记录缺测）：</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">phenomena</span> <span class="o">=</span> <span class="p">[</span><span class="s2">&quot;晴&quot;</span><span class="p">,</span> <span class="s2">&quot;多云&quot;</span><span class="p">,</span> <span class="s2">&quot;晴&quot;</span><span class="p">,</span> <span class="s2">&quot;扬沙&quot;</span><span class="p">,</span> <span class="s2">&quot;浮尘&quot;</span><span class="p">,</span> <span class="s2">&quot;多云&quot;</span><span class="p">,</span> <span class="s2">&quot;晴&quot;</span><span class="p">,</span> <span class="s2">&quot;小雨&quot;</span><span class="p">,</span> <span class="s2">&quot;晴&quot;</span><span class="p">,</span> <span class="kc">None</span><span class="p">]</span>
+<span class="n">precip</span> <span class="o">=</span> <span class="p">[</span><span class="mf">0.0</span><span class="p">,</span> <span class="mf">0.0</span><span class="p">,</span> <span class="mf">0.0</span><span class="p">,</span> <span class="kc">None</span><span class="p">,</span> <span class="kc">None</span><span class="p">,</span> <span class="mf">0.0</span><span class="p">,</span> <span class="mf">0.0</span><span class="p">,</span> <span class="mf">3.6</span><span class="p">,</span> <span class="mf">0.0</span><span class="p">,</span> <span class="kc">None</span><span class="p">]</span>
+</pre></div>
+</div>
+<p>依次完成：</p>
+<ol class="arabic simple">
+<li><p>统计这旬<strong>出现过哪几种</strong>天气现象（去重，缺测不计），输出集合与种数；</p></li>
+<li><p>找出<strong>有效降水日</strong>（观测值存在且 &gt;0 mm）的索引位置（从 0 开始）；</p></li>
+<li><p>统计<strong>缺测天数</strong>，并区分&quot;无降水日&quot;与&quot;缺测日&quot;分别有多少天；</p></li>
+<li><p>思考并回答：如果把 <code class="docutils literal notranslate"><span class="pre">None</span></code> 换成 <code class="docutils literal notranslate"><span class="pre">0.0</span></code> 填充，第 3 问的统计会丢失什么信息？</p></li>
+</ol>
+<details class="sd-sphinx-override sd-dropdown sd-card sd-mb-3">
+<summary class="sd-summary-title sd-card-header">
+<span class="sd-summary-text">💡 提示</span><span class="sd-summary-state-marker sd-summary-chevron-right"><svg version="1.1" width="1.5em" height="1.5em" class="sd-octicon sd-octicon-chevron-right" viewBox="0 0 24 24" aria-hidden="true"><path d="M8.72 18.78a.75.75 0 0 1 0-1.06L14.44 12 8.72 6.28a.751.751 0 0 1 .018-1.042.751.751 0 0 1 1.042-.018l6.25 6.25a.75.75 0 0 1 0 1.06l-6.25 6.25a.75.75 0 0 1-1.06 0Z"></path></svg></span></summary><div class="sd-summary-content sd-card-body docutils">
+<ul class="simple">
+<li><p class="sd-card-text">去重前先过滤 <code class="docutils literal notranslate"><span class="pre">None</span></code>：<code class="docutils literal notranslate"><span class="pre">[p</span> <span class="pre">for</span> <span class="pre">p</span> <span class="pre">in</span> <span class="pre">phenomena</span> <span class="pre">if</span> <span class="pre">p</span> <span class="pre">is</span> <span class="pre">not</span> <span class="pre">None]</span></code>；</p></li>
+<li><p class="sd-card-text">判断 <code class="docutils literal notranslate"><span class="pre">None</span></code> 一律用 <code class="docutils literal notranslate"><span class="pre">is</span> <span class="pre">not</span> <span class="pre">None</span></code>，不要用 <code class="docutils literal notranslate"><span class="pre">!=</span></code>；</p></li>
+<li><p class="sd-card-text">第 2 问可遍历 <code class="docutils literal notranslate"><span class="pre">range(len(precip))</span></code>；<code class="docutils literal notranslate"><span class="pre">enumerate</span></code> 更优雅（第 3 章预告）。</p></li>
+</ul>
+</div>
+</details><details class="sd-sphinx-override sd-dropdown sd-card sd-mb-3">
+<summary class="sd-summary-title sd-card-header">
+<span class="sd-summary-text">⚠️ 语义 tip</span><span class="sd-summary-state-marker sd-summary-chevron-right"><svg version="1.1" width="1.5em" height="1.5em" class="sd-octicon sd-octicon-chevron-right" viewBox="0 0 24 24" aria-hidden="true"><path d="M8.72 18.78a.75.75 0 0 1 0-1.06L14.44 12 8.72 6.28a.751.751 0 0 1 .018-1.042.751.751 0 0 1 1.042-.018l6.25 6.25a.75.75 0 0 1 0 1.06l-6.25 6.25a.75.75 0 0 1-1.06 0Z"></path></svg></span></summary><div class="sd-summary-content sd-card-body docutils">
+<p class="sd-card-text"><code class="docutils literal notranslate"><span class="pre">0.0</span></code> 是&quot;观测到无降水&quot;，<code class="docutils literal notranslate"><span class="pre">None</span></code> 是&quot;没有观测&quot;——降水日数与数据完整率是两个统计口径，混填会永久丢失后者的信息。</p>
+</div>
+</details><details class="sd-sphinx-override sd-dropdown sd-card sd-mb-3">
+<summary class="sd-summary-title sd-card-header">
+<span class="sd-summary-text">参考答案</span><span class="sd-summary-state-marker sd-summary-chevron-right"><svg version="1.1" width="1.5em" height="1.5em" class="sd-octicon sd-octicon-chevron-right" viewBox="0 0 24 24" aria-hidden="true"><path d="M8.72 18.78a.75.75 0 0 1 0-1.06L14.44 12 8.72 6.28a.751.751 0 0 1 .018-1.042.751.751 0 0 1 1.042-.018l6.25 6.25a.75.75 0 0 1 0 1.06l-6.25 6.25a.75.75 0 0 1-1.06 0Z"></path></svg></span></summary><div class="sd-summary-content sd-card-body docutils">
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">phenomena</span> <span class="o">=</span> <span class="p">[</span><span class="s2">&quot;晴&quot;</span><span class="p">,</span> <span class="s2">&quot;多云&quot;</span><span class="p">,</span> <span class="s2">&quot;晴&quot;</span><span class="p">,</span> <span class="s2">&quot;扬沙&quot;</span><span class="p">,</span> <span class="s2">&quot;浮尘&quot;</span><span class="p">,</span> <span class="s2">&quot;多云&quot;</span><span class="p">,</span> <span class="s2">&quot;晴&quot;</span><span class="p">,</span> <span class="s2">&quot;小雨&quot;</span><span class="p">,</span> <span class="s2">&quot;晴&quot;</span><span class="p">,</span> <span class="kc">None</span><span class="p">]</span>
+<span class="n">precip</span> <span class="o">=</span> <span class="p">[</span><span class="mf">0.0</span><span class="p">,</span> <span class="mf">0.0</span><span class="p">,</span> <span class="mf">0.0</span><span class="p">,</span> <span class="kc">None</span><span class="p">,</span> <span class="kc">None</span><span class="p">,</span> <span class="mf">0.0</span><span class="p">,</span> <span class="mf">0.0</span><span class="p">,</span> <span class="mf">3.6</span><span class="p">,</span> <span class="mf">0.0</span><span class="p">,</span> <span class="kc">None</span><span class="p">]</span>
+
+<span class="n">valid_phen</span> <span class="o">=</span> <span class="p">[</span><span class="n">p</span> <span class="k">for</span> <span class="n">p</span> <span class="ow">in</span> <span class="n">phenomena</span> <span class="k">if</span> <span class="n">p</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">]</span>   <span class="c1"># ① 剔除缺测再去重</span>
+<span class="n">kinds</span> <span class="o">=</span> <span class="nb">set</span><span class="p">(</span><span class="n">valid_phen</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;天气现象：</span><span class="si">{</span><span class="n">kinds</span><span class="si">}</span><span class="s2">，共 </span><span class="si">{</span><span class="nb">len</span><span class="p">(</span><span class="n">kinds</span><span class="p">)</span><span class="si">}</span><span class="s2"> 种&quot;</span><span class="p">)</span>
+
+<span class="n">rain_days</span> <span class="o">=</span> <span class="p">[</span><span class="n">i</span> <span class="k">for</span> <span class="n">i</span><span class="p">,</span> <span class="n">p</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="n">precip</span><span class="p">)</span> <span class="k">if</span> <span class="n">p</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span> <span class="ow">and</span> <span class="n">p</span> <span class="o">&gt;</span> <span class="mi">0</span><span class="p">]</span>   <span class="c1"># ②</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;有效降水日索引：</span><span class="si">{</span><span class="n">rain_days</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+
+<span class="n">missing</span> <span class="o">=</span> <span class="nb">sum</span><span class="p">(</span><span class="mi">1</span> <span class="k">for</span> <span class="n">p</span> <span class="ow">in</span> <span class="n">precip</span> <span class="k">if</span> <span class="n">p</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">)</span>          <span class="c1"># ③ 两套口径分开数</span>
+<span class="n">dry</span> <span class="o">=</span> <span class="nb">sum</span><span class="p">(</span><span class="mi">1</span> <span class="k">for</span> <span class="n">p</span> <span class="ow">in</span> <span class="n">precip</span> <span class="k">if</span> <span class="n">p</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span> <span class="ow">and</span> <span class="n">p</span> <span class="o">==</span> <span class="mf">0.0</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;无降水 </span><span class="si">{</span><span class="n">dry</span><span class="si">}</span><span class="s2"> 天，缺测 </span><span class="si">{</span><span class="n">missing</span><span class="si">}</span><span class="s2"> 天&quot;</span><span class="p">)</span>
+</pre></div>
+</div>
+<p class="sd-card-text">输出（集合无序，元素顺序可能不同）：</p>
+<div class="highlight-text notranslate"><div class="highlight"><pre><span></span>天气现象：{&#39;晴&#39;, &#39;多云&#39;, &#39;扬沙&#39;, &#39;浮尘&#39;, &#39;小雨&#39;}，共 5 种
+有效降水日索引：[7]
+无降水 6 天，缺测 3 天
+</pre></div>
+</div>
+<p class="sd-card-text">第 4 问：把 <code class="docutils literal notranslate"><span class="pre">None</span></code> 换成 <code class="docutils literal notranslate"><span class="pre">0.0</span></code> 后，&quot;缺测 3 天&quot;的信息永久丢失——统计出的&quot;无降水 9 天&quot;把&quot;没观测&quot;谎报成了&quot;观测到无降水&quot;，旬降水日数、数据完整率都不可信了。</p>
+</div>
+</details></section>
+<section id="id4">
+<h2>拓展挑战（选做）<a class="headerlink" href="#id4" title="Link to this heading">#</a></h2>
+<p>用本章全部知识，为贯穿项目第 2 步升级 <code class="docutils literal notranslate"><span class="pre">ch02_types.py</span></code>：把西北 8 站全部建进嵌套字典 <code class="docutils literal notranslate"><span class="pre">stations</span></code>，站点信息参考 <code class="docutils literal notranslate"><span class="pre">weather_project/data/stations_metadata.csv</span></code>；统计 8 站的平均海拔与最高海拔站，输出对齐的报表。</p>
+<div class="admonition hint">
+<p class="admonition-title">提示</p>
+<p>f-string 的 <code class="docutils literal notranslate"><span class="pre">:&gt;8</span></code> 右对齐格式可以让多行报表的列对齐。</p>
+</div>
+<div class="admonition seealso">
+<p class="admonition-title">参见</p>
+<ul class="simple">
+<li><p>返回正文：<a class="reference internal" href="../../user_guide/basics/datatypes.html#tut-datatype"><span class="std std-ref">基本数据类型、变量和运算符</span></a></p></li>
+<li><p>术语速查：<a class="reference internal" href="../../api/ch02_terms.html"><span class="doc">第 2 章术语：基本数据类型、变量和运算符</span></a></p></li>
+<li><p>可执行示例：<a class="reference internal" href="../../gallery/plot_basics/plot_datatypes.html"><span class="doc">用基本数据类型存储站点信息</span></a></p></li>
+</ul>
+</div>
+</section>
+</section>
+
+
+                </article>
+              
+              
+              
+              
+              
+                <footer class="prev-next-footer d-print-none">
+                  
+<div class="prev-next-area">
+    <a class="left-prev"
+       href="ch01_practice.html"
+       title="上一页">
+      <i class="fa-solid fa-angle-left"></i>
+      <div class="prev-next-info">
+        <p class="prev-next-subtitle">上一页</p>
+        <p class="prev-next-title">第 1 章练习：Python 简介及安装环境</p>
+      </div>
+    </a>
+    <a class="right-next"
+       href="ch03_practice.html"
+       title="下一页">
+      <div class="prev-next-info">
+        <p class="prev-next-subtitle">下一页</p>
+        <p class="prev-next-title">第 3 章练习：分支、循环与条件</p>
+      </div>
+      <i class="fa-solid fa-angle-right"></i>
+    </a>
+</div>
+                </footer>
+              
+            </div>
+            
+            
+              
+                <dialog id="pst-secondary-sidebar-modal"></dialog>
+                <div id="pst-secondary-sidebar" class="bd-sidebar-secondary bd-toc"><div class="sidebar-secondary-items sidebar-secondary__inner">
+
+
+  <div class="sidebar-secondary-item">
+<div
+    id="pst-page-navigation-heading-2"
+    class="page-toc tocsection onthispage">
+    <i class="fa-solid fa-list"></i> 当前页面
+  </div>
+  <nav id="pst-page-toc-nav" class="page-toc" aria-labelledby="pst-page-navigation-heading-2">
+    <ul class="pst-show_toc_level nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#f-string">练习 1 · 站点名片（变量、多重赋值与 f-string）</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#list">练习 2 · 气温列表操作（list 与统计五件套）</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#dict">练习 3 · 站点档案库（dict 的增删改查与嵌套）</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id3">练习 4 · 运算符综合应用（算术、逻辑与成员运算）</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#set-none">练习 5 · 天气现象统计（set 与 None 综合）</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id4">拓展挑战（选做）</a></li>
+</ul>
+  </nav></div>
+
+</div></div>
+              
+            
+          </div>
+          <footer class="bd-footer-content">
+            
+          </footer>
+        
+      </main>
+    </div>
+  </div>
+  
+  <!-- Scripts loaded after <body> so the DOM is not blocked -->
+  <script defer src="../../_static/scripts/bootstrap.js?digest=90905a2f556bf617f1a9"></script>
+<script defer src="../../_static/scripts/pydata-sphinx-theme.js?digest=90905a2f556bf617f1a9"></script>
+
+  <footer class="bd-footer">
+<div class="bd-footer__inner bd-page-width">
+  
+    <div class="footer-items__start">
+      
+        <div class="footer-item">
+
+  <p class="copyright">
+    
+      © Copyright 2026, 兰州大学大气科学学院编程社区.
+      <br/>
+    
+  </p>
+</div>
+      
+        <div class="footer-item">
+
+  <p class="sphinx-version">
+    由 <a href="https://www.sphinx-doc.org/">Sphinx</a> 8.2.3创建。
+    <br/>
+  </p>
+</div>
+      
+    </div>
+  
+  
+  
+    <div class="footer-items__end">
+      
+        <div class="footer-item">
+<p class="theme-version">
+  <!-- # L10n: Setting the PST URL as an argument as this does not need to be localized -->
+  使用 <a href="https://pydata-sphinx-theme.readthedocs.io/en/stable/index.html">PyData Sphinx Theme</a> 0.20.0构建.
+</p></div>
+      
+    </div>
+  
+</div>
+
+  </footer>
+  </body>
+</html>

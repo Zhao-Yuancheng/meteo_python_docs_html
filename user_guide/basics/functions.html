@@ -1,0 +1,1034 @@
+
+<!DOCTYPE html>
+
+
+<html lang="zh-CN" data-content_root="../../" >
+
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
+    <title>函数及变量作用域、模块和包 &#8212; MeteoPython</title>
+  
+  
+  
+  <script data-cfasync="false">
+    document.documentElement.dataset.mode = localStorage.getItem("mode") || "";
+    document.documentElement.dataset.theme = localStorage.getItem("theme") || "";
+  </script>
+  <!--
+    this give us a css class that will be invisible only if js is disabled
+  -->
+  <noscript>
+    <style>
+      .pst-js-only { display: none !important; }
+
+    </style>
+  </noscript>
+  
+  <!-- Loaded before other Sphinx assets -->
+  <link href="../../_static/styles/theme.css?digest=90905a2f556bf617f1a9" rel="stylesheet" />
+<link href="../../_static/styles/pydata-sphinx-theme.css?digest=90905a2f556bf617f1a9" rel="stylesheet" />
+
+    <link rel="stylesheet" type="text/css" href="../../_static/pygments.css?v=8f2a1f02" />
+    <link rel="stylesheet" type="text/css" href="../../_static/copybutton.css?v=76b2166b" />
+    <link rel="stylesheet" type="text/css" href="../../_static/sg_gallery.css?v=fd6457a4" />
+    <link rel="stylesheet" type="text/css" href="../../_static/sg_gallery-binder.css?v=f4aeca0c" />
+    <link rel="stylesheet" type="text/css" href="../../_static/sg_gallery-dataframe.css?v=2082cf3c" />
+    <link rel="stylesheet" type="text/css" href="../../_static/sg_gallery-rendered-html.css?v=1277b6f3" />
+    <link rel="stylesheet" type="text/css" href="../../_static/sphinx-design.min.css?v=95c83b7e" />
+    <link rel="stylesheet" type="text/css" href="../../_static/./custom.css?v=fbe1f034" />
+  
+  <!-- So that users can add custom icons -->
+  <script defer src="../../_static/scripts/fontawesome.js?digest=90905a2f556bf617f1a9"></script>
+  <!-- Pre-loaded scripts that we'll load fully later -->
+  <link rel="preload" as="script" href="../../_static/scripts/bootstrap.js?digest=90905a2f556bf617f1a9" />
+<link rel="preload" as="script" href="../../_static/scripts/pydata-sphinx-theme.js?digest=90905a2f556bf617f1a9" />
+
+    <script src="../../_static/documentation_options.js?v=9becfed8"></script>
+    <script src="../../_static/doctools.js?v=9bcbadda"></script>
+    <script src="../../_static/sphinx_highlight.js?v=dc90522c"></script>
+    <script src="../../_static/sg-tags.js?v=d80f6fa4"></script>
+    <script src="../../_static/clipboard.min.js?v=a7894cd8"></script>
+    <script src="../../_static/copybutton.js?v=fd10adb8"></script>
+    <script src="../../_static/translations.js?v=beaddf03"></script>
+    <script src="../../_static/design-tabs.js?v=f930bc37"></script>
+    <script>DOCUMENTATION_OPTIONS.pagename = 'user_guide/basics/functions';</script>
+    <script>
+        DOCUMENTATION_OPTIONS.theme_version = '0.20.0';
+        DOCUMENTATION_OPTIONS.theme_switcher_json_url = '_static/switcher.json';
+        DOCUMENTATION_OPTIONS.theme_switcher_version_match = '0.1.0';
+        DOCUMENTATION_OPTIONS.show_version_warning_banner =
+            false;
+        </script>
+    <script>DOCUMENTATION_OPTIONS.search_as_you_type = false;</script>
+    <link rel="icon" href="../../_static/favicon.svg"/>
+    <link rel="index" title="索引" href="../../genindex.html" />
+    <link rel="search" title="搜索" href="../../search.html" />
+    <link rel="next" title="面向对象与高级语法" href="oop.html" />
+    <link rel="prev" title="分支、条件与循环" href="flow.html" />
+  <meta name="viewport" content="width=device-width, initial-scale=1"/>
+  <meta name="docsearch:language" content="zh-CN"/>
+  <meta name="docsearch:version" content="0.1" />
+    <meta name="docbuild:last-update" content="2026-08-20"/>
+  
+    
+    <script src="../../_static/searchtools.js"></script>
+    <script src="../../_static/language_data.js"></script>
+    <script src="../../searchindex.js"></script>
+  
+  </head>
+  <body data-default-mode="">
+  
+  
+  <div id="pst-skip-link" class="skip-link d-print-none"><a href="#main-content">跳转至主要内容</a></div>
+
+  
+  <div id="pst-scroll-pixel-helper"></div>
+  
+  <button type="button" class="btn rounded-pill" id="pst-back-to-top">
+    <i class="fa-solid fa-arrow-up"></i>回到顶部</button>
+  
+  
+  
+  
+  <dialog id="pst-search-dialog">
+    
+<form class="bd-search d-flex align-items-center"
+      action="../../search.html"
+      method="get">
+  <i class="fa-solid fa-magnifying-glass"></i>
+  <input type="search"
+         class="form-control"
+         name="q"
+         placeholder="搜索文档…"
+         aria-label="搜索文档…"
+         autocomplete="off"
+         autocorrect="off"
+         autocapitalize="off"
+         spellcheck="false"/>
+  <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd>K</kbd></span>
+</form>
+  </dialog>
+
+  <div class="pst-async-banner-revealer d-none">
+  <aside id="bd-header-version-warning" class="d-none d-print-none" aria-label="版本警告"></aside>
+</div>
+
+  
+    <header id="pst-header" class="bd-header navbar navbar-expand-lg bd-navbar d-print-none">
+<div class="bd-header__inner bd-page-width">
+  <button class="pst-navbar-icon sidebar-toggle primary-toggle" aria-label="网页导航">
+    <span class="fa-solid fa-bars"></span>
+  </button>
+  
+  
+  <div class="col-lg-3 navbar-header-items__start">
+    
+      <div class="navbar-item">
+
+  
+    
+  
+
+<a class="navbar-brand logo" href="../../index.html">
+  
+  
+  
+  
+  
+    
+    
+      
+    
+    
+    <img src="../../_static/logo.svg" class="logo__image only-light" alt="MeteoPython - Home"/>
+    <img src="../../_static/logo.svg" class="logo__image only-dark pst-js-only" alt="MeteoPython - Home"/>
+  
+  
+</a></div>
+    
+  </div>
+  
+  <div class="col-lg-9 navbar-header-items">
+    
+    <div class="me-auto navbar-header-items__center">
+      
+        <div class="navbar-item">
+<nav>
+  <ul class="bd-navbar-elements navbar-nav">
+    
+<li class="nav-item current active">
+  <a class="nav-link nav-internal" href="../index.html">
+    教程
+  </a>
+</li>
+
+
+<li class="nav-item ">
+  <a class="nav-link nav-internal" href="../../tutorials/index.html">
+    练习
+  </a>
+</li>
+
+
+<li class="nav-item ">
+  <a class="nav-link nav-internal" href="../../gallery/index.html">
+    示例
+  </a>
+</li>
+
+
+<li class="nav-item ">
+  <a class="nav-link nav-internal" href="../../api/index.html">
+    术语参考
+  </a>
+</li>
+
+
+<li class="nav-item ">
+  <a class="nav-link nav-internal" href="../../qa/index.html">
+    常见问题 Q&A
+  </a>
+</li>
+
+  </ul>
+</nav></div>
+      
+    </div>
+    
+    
+    <div class="navbar-header-items__end">
+      
+        <div class="navbar-item navbar-persistent--container">
+          
+
+<button class="btn search-button-field search-button__button pst-js-only" title="搜索" aria-label="搜索" data-bs-placement="bottom" data-bs-toggle="tooltip">
+ <i class="fa-solid fa-magnifying-glass"></i>
+ <span class="search-button__default-text">搜索</span>
+ <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd class="kbd-shortcut__modifier">K</kbd></span>
+</button>
+        </div>
+      
+      
+        <div class="navbar-item">
+
+<div class="theme-switch-container dropdown pst-js-only" data-bs-toggle="tooltip" data-bs-placement="bottom" title="Color mode">
+  <button class="btn btn-sm nav-link pst-navbar-icon theme-switch-button dropdown-toggle" aria-label="Color mode" data-bs-toggle="dropdown">
+    <i class="theme-switch fa-solid fa-sun fa-lg fa-fw" data-mode="light" title="亮色"></i>
+    <i class="theme-switch fa-solid fa-moon fa-lg fa-fw" data-mode="dark" title="暗色"></i>
+    <i class="theme-switch fa-solid fa-circle-half-stroke fa-lg fa-fw" data-mode="auto" title="System Settings"></i>
+  </button>
+  <ul class="dropdown-menu dropdown-menu-end">
+    <li><button class="dropdown-item d-flex align-items-center theme-change-button" data-mode="auto"><i class="fa-solid fa-circle-half-stroke fa-lg fa-fw me-1"></i>System Settings</button></li>
+    <li><button class="dropdown-item d-flex align-items-center theme-change-button" data-mode="light"><i class="fa-solid fa-sun fa-lg fa-fw me-1"></i>亮色</button></li>
+    <li><button class="dropdown-item d-flex align-items-center theme-change-button" data-mode="dark"><i class="fa-solid fa-moon fa-lg fa-fw me-1"></i>暗色</button></li>
+  </ul>
+</div></div>
+      
+        <div class="navbar-item"><ul class="navbar-icon-links"
+    aria-label="Icon Links">
+</ul></div>
+      
+    </div>
+    
+  </div>
+  
+  
+    <div class="navbar-persistent--mobile">
+
+<button class="btn search-button-field search-button__button pst-js-only" title="搜索" aria-label="搜索" data-bs-placement="bottom" data-bs-toggle="tooltip">
+ <i class="fa-solid fa-magnifying-glass"></i>
+ <span class="search-button__default-text">搜索</span>
+ <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd class="kbd-shortcut__modifier">K</kbd></span>
+</button>
+    </div>
+  
+
+  
+    <button class="pst-navbar-icon sidebar-toggle secondary-toggle" aria-label="当前页面">
+      <span class="fa-solid fa-outdent"></span>
+    </button>
+  
+</div>
+
+    </header>
+  
+
+  <div class="bd-container">
+    <div class="bd-container__inner bd-page-width">
+      
+      
+      
+      <dialog id="pst-primary-sidebar-modal"></dialog>
+      <div id="pst-primary-sidebar" class="bd-sidebar-primary bd-sidebar">
+        
+
+  
+  <div class="sidebar-header-items sidebar-primary__section">
+    
+    
+      <div class="sidebar-header-items__center">
+        
+          
+          
+            <div class="navbar-item">
+<nav>
+  <ul class="bd-navbar-elements navbar-nav">
+    
+<li class="nav-item current active">
+  <a class="nav-link nav-internal" href="../index.html">
+    教程
+  </a>
+</li>
+
+
+<li class="nav-item ">
+  <a class="nav-link nav-internal" href="../../tutorials/index.html">
+    练习
+  </a>
+</li>
+
+
+<li class="nav-item ">
+  <a class="nav-link nav-internal" href="../../gallery/index.html">
+    示例
+  </a>
+</li>
+
+
+<li class="nav-item ">
+  <a class="nav-link nav-internal" href="../../api/index.html">
+    术语参考
+  </a>
+</li>
+
+
+<li class="nav-item ">
+  <a class="nav-link nav-internal" href="../../qa/index.html">
+    常见问题 Q&A
+  </a>
+</li>
+
+  </ul>
+</nav></div>
+          
+        
+      </div>
+    
+    
+    
+      <div class="sidebar-header-items__end">
+        
+          <div class="navbar-item">
+
+<div class="theme-switch-container dropdown pst-js-only" data-bs-toggle="tooltip" data-bs-placement="bottom" title="Color mode">
+  <button class="btn btn-sm nav-link pst-navbar-icon theme-switch-button dropdown-toggle" aria-label="Color mode" data-bs-toggle="dropdown">
+    <i class="theme-switch fa-solid fa-sun fa-lg fa-fw" data-mode="light" title="亮色"></i>
+    <i class="theme-switch fa-solid fa-moon fa-lg fa-fw" data-mode="dark" title="暗色"></i>
+    <i class="theme-switch fa-solid fa-circle-half-stroke fa-lg fa-fw" data-mode="auto" title="System Settings"></i>
+  </button>
+  <ul class="dropdown-menu dropdown-menu-end">
+    <li><button class="dropdown-item d-flex align-items-center theme-change-button" data-mode="auto"><i class="fa-solid fa-circle-half-stroke fa-lg fa-fw me-1"></i>System Settings</button></li>
+    <li><button class="dropdown-item d-flex align-items-center theme-change-button" data-mode="light"><i class="fa-solid fa-sun fa-lg fa-fw me-1"></i>亮色</button></li>
+    <li><button class="dropdown-item d-flex align-items-center theme-change-button" data-mode="dark"><i class="fa-solid fa-moon fa-lg fa-fw me-1"></i>暗色</button></li>
+  </ul>
+</div></div>
+        
+          <div class="navbar-item"><ul class="navbar-icon-links"
+    aria-label="Icon Links">
+</ul></div>
+        
+      </div>
+    
+  </div>
+  
+    <div class="sidebar-primary-items__start sidebar-primary__section">
+        <div class="sidebar-primary-item pst-sidebar-collapse"><button id="pst-collapse-sidebar-button" aria-expanded="true" aria-controls="pst-primary-sidebar">
+  <svg class="pst-icon" role="img" aria-hidden="true" focusable="false" viewBox="0 0 16 16" xmlns="http://www.w3.org/2000/svg">
+    <path fill="currentColor" d="M3 15.5C2.36232 15.5 1.74874 15.2564 1.28478 14.8189C0.820828 14.3815 0.541576 13.7832 0.504167 13.1467L0.5 13L0.5 3C0.499965 2.36232 0.743605 1.74874 1.18107 1.28478C1.61854 0.820828 2.21676 0.541576 2.85333 0.504167L3 0.5L13 0.5C13.6377 0.499965 14.2513 0.743605 14.7152 1.18107C15.1792 1.61854 15.4584 2.21676 15.4958 2.85333L15.5 3L15.5 13C15.5 13.6377 15.2564 14.2513 14.8189 14.7152C14.3815 15.1792 13.7832 15.4584 13.1467 15.4958L13 15.5L3 15.5ZM3 13.8333L10.5 13.8333L10.5 2.16667L3 2.16667C2.79589 2.16669 2.59889 2.24163 2.44636 2.37726C2.29383 2.5129 2.19638 2.69979 2.1725 2.9025L2.16667 3L2.16667 13C2.16669 13.2041 2.24163 13.4011 2.37726 13.5536C2.5129 13.7062 2.69979 13.8036 2.9025 13.8275L3 13.8333ZM6.65583 10.325L6.5775 10.2558L4.91083 8.58917C4.76735 8.44567 4.68116 8.25476 4.66843 8.05223C4.65569 7.84971 4.71729 7.6495 4.84167 7.48917L4.91083 7.41083L6.5775 5.74417C6.72747 5.59471 6.9287 5.50794 7.14032 5.50148C7.35194 5.49502 7.55809 5.56935 7.7169 5.70937C7.8757 5.8494 7.97525 6.04463 7.99533 6.25539C8.01541 6.46616 7.95451 6.67667 7.825 6.84417L7.75583 6.9225L6.67917 8L7.75583 9.0775C7.89931 9.22099 7.98551 9.41191 7.99824 9.61443C8.01097 9.81695 7.94938 10.0172 7.825 10.1775L7.75583 10.2558C7.61234 10.3993 7.42142 10.4855 7.2189 10.4982C7.01638 10.511 6.81617 10.4494 6.65583 10.325Z"/>
+  </svg>
+  <span class="pst-collapse-sidebar-label">Collapse Sidebar</span>
+  <span class="pst-expand-sidebar-label">Expand Sidebar</span>
+</button></div>
+        <div class="sidebar-primary-item">
+
+<nav class="bd-docs-nav bd-links"
+     aria-label="章节导航">
+  <p class="bd-links__title" role="heading" aria-level="1">章节导航</p>
+  <div class="bd-toc-item navbar-nav"><ul class="current nav bd-sidenav">
+<li class="toctree-l1 current active has-children"><a class="reference internal" href="index.html">模块一 Python 编程基础</a><details open="open"><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="python_conda.html">Python 与 Conda 简介</a></li>
+<li class="toctree-l2"><a class="reference internal" href="datatypes.html">基本数据类型、变量和运算符</a></li>
+<li class="toctree-l2"><a class="reference internal" href="flow.html">分支、条件与循环</a></li>
+<li class="toctree-l2 current active"><a class="current reference internal" href="#">函数及变量作用域、模块和包</a></li>
+<li class="toctree-l2"><a class="reference internal" href="oop.html">面向对象与高级语法</a></li>
+</ul>
+</details></li>
+<li class="toctree-l1 has-children"><a class="reference internal" href="../data/index.html">模块二 气象数据处理</a><details open="open"><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
+<li class="toctree-l2"><a class="reference internal" href="../data/numpy.html">气象数据计算 NumPy</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../data/pandas.html">气象数据分析（一）Pandas</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../data/xarray.html">气象数据分析（二）Xarray</a></li>
+</ul>
+</details></li>
+<li class="toctree-l1 has-children"><a class="reference internal" href="../viz/index.html">模块三 气象数据可视化</a><details open="open"><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
+<li class="toctree-l2"><a class="reference internal" href="../viz/matplotlib.html">气象数据绘图（一）Matplotlib</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../viz/cartopy.html">气象数据绘图（二）Cartopy</a></li>
+</ul>
+</details></li>
+</ul>
+</div>
+</nav></div>
+    </div>
+  
+  
+  <div class="sidebar-primary-items__end sidebar-primary__section">
+      <div class="sidebar-primary-item">
+<div id="ethical-ad-placement"
+      class="flat"
+      data-ea-publisher="readthedocs"
+      data-ea-type="readthedocs-sidebar"
+      data-ea-manual="true">
+</div></div>
+  </div>
+
+
+      </div>
+      
+      <main id="main-content" class="bd-main" role="main">
+        
+        
+          <div class="bd-content">
+            <div class="bd-article-container">
+              
+              <div class="bd-header-article d-print-none">
+<div class="header-article-items header-article__inner">
+  
+    <div class="header-article-items__start">
+      
+        <div class="header-article-item">
+
+<nav aria-label="Breadcrumb" class="d-print-none">
+  <ul class="bd-breadcrumbs">
+    
+    <li class="breadcrumb-item breadcrumb-home">
+      <a href="../../index.html" class="nav-link" aria-label="初始页面">
+        <i class="fa-solid fa-home"></i>
+      </a>
+    </li>
+    
+    <li class="breadcrumb-item"><a href="../index.html" class="nav-link">教程</a></li>
+    
+    
+    <li class="breadcrumb-item"><a href="index.html" class="nav-link">模块一 Python 编程基础</a></li>
+    
+    <li class="breadcrumb-item active" aria-current="page"><span class="ellipsis">函数及变量作用域、模块和包</span></li>
+  </ul>
+</nav>
+</div>
+      
+    </div>
+  
+  
+</div>
+</div>
+              
+              
+              
+                
+<div id="searchbox"></div>
+                <article class="bd-article">
+                  
+  <section id="tut-func">
+<span id="id1"></span><h1>函数及变量作用域、模块和包<a class="headerlink" href="#tut-func" title="Link to this heading">#</a></h1>
+<p>第 4 节 · 模块一 Python 编程基础
+贯穿项目第 4 步：把气温处理逻辑封装成函数，放到 <code class="docutils literal notranslate"><span class="pre">utils.py</span></code> 模块中。</p>
+<p>气象数据处理经常是同一套流程套在不同数据上：今天算兰州站气温，明天算西宁站降水。逻辑差不多，换的是数据源。每次都从头写一遍，效率低；更麻烦的是，一个笔误（比如把 <code class="docutils literal notranslate"><span class="pre">*</span> <span class="pre">9</span> <span class="pre">/</span> <span class="pre">5</span></code> 写成 <code class="docutils literal notranslate"><span class="pre">*</span> <span class="pre">5</span> <span class="pre">/</span> <span class="pre">9</span></code>）会跟着复制粘贴散到各处，不好查。</p>
+<p>函数把重复逻辑收成一块，起个名字，换数据再调用。模块再往上走一步：相近的函数放进同一个文件，方便管理和复用。</p>
+<section id="t-402">
+<span id="ch04-animation"></span><h2>配套动画（T-402）<a class="headerlink" href="#t-402" title="Link to this heading">#</a></h2>
+<p>本动画把本节的&quot;函数&quot;讲透：① <code class="docutils literal notranslate"><span class="pre">def</span></code> 定义与 <code class="docutils literal notranslate"><span class="pre">return</span></code> 返回——调用时进入函数体、返回结果交还给调用者的过程；② 形参／实参的绑定与位置参数、关键字参数的传参方式；③ 变量作用域——函数内部的局部变量与外部全局变量的隔离；④ 模块与 <code class="docutils literal notranslate"><span class="pre">import</span></code>——把离散的函数收敛进一个文件再整体复用。点击播放，配合下文逐步消化。</p>
+<div  class="sphinx-contrib-video-container align-left"><video controls="True" preload="auto" width="100%"><source src="../../_images/T402-%E5%87%BD%E6%95%B0%E3%80%81%E4%BD%9C%E7%94%A8%E5%9F%9F%E3%80%81%E6%A8%A1%E5%9D%97%E5%8A%A8%E7%94%BB_av1.webm" type="video/webm"></video></div></section>
+<section id="id2">
+<h2>4.1 函数：把重复的逻辑收起来<a class="headerlink" href="#id2" title="Link to this heading">#</a></h2>
+<section id="id3">
+<h3>从复制粘贴到调用<a class="headerlink" href="#id3" title="Link to this heading">#</a></h3>
+<p>还没学函数时，重复代码最省事的办法就是复制。比如兰州、西宁、张掖三站都要算平均，就抄三遍 <code class="docutils literal notranslate"><span class="pre">sum</span> <span class="pre">/</span> <span class="pre">len</span></code>。量小时能跑；一旦算法要改（比如先剔除异常值），每一处都得改，漏一处就是 bug。</p>
+<p>函数把这段逻辑收成一个单元，需要时调用即可。调用时看清传入什么、返回什么就够了，内部怎么算可以先不管。这是在做<strong>抽象</strong>：细节留在函数里，外面只看到一个简短的接口。</p>
+</section>
+<section id="id4">
+<h3>定义与调用<a class="headerlink" href="#id4" title="Link to this heading">#</a></h3>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="k">def</span><span class="w"> </span><span class="nf">celsius_to_fahrenheit</span><span class="p">(</span><span class="n">celsius</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;摄氏温度转华氏温度&quot;&quot;&quot;</span>
+    <span class="n">f</span> <span class="o">=</span> <span class="n">celsius</span> <span class="o">*</span> <span class="mi">9</span> <span class="o">/</span> <span class="mi">5</span> <span class="o">+</span> <span class="mi">32</span>
+    <span class="k">return</span> <span class="n">f</span>
+
+<span class="c1"># 调用</span>
+<span class="n">result</span> <span class="o">=</span> <span class="n">celsius_to_fahrenheit</span><span class="p">(</span><span class="mi">25</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">result</span><span class="p">)</span>   <span class="c1"># 77.0</span>
+</pre></div>
+</div>
+<p><code class="docutils literal notranslate"><span class="pre">def</span></code> 用来定义函数，后面是函数名和括号。括号里是参数，也就是外界要传入的数据。函数体按缩进写，<code class="docutils literal notranslate"><span class="pre">return</span></code> 把结果交还给调用者。</p>
+<p>定义时函数体不会执行，只是把代码和函数名绑在一起。执行到 <code class="docutils literal notranslate"><span class="pre">celsius_to_fahrenheit(25)</span></code> 才会真正跑进去。定义和调用是两件事；而且调用必须写在定义<strong>之后</strong>——程序自上而下执行，执行到调用语句时函数必须先定义好，否则会抛 <code class="docutils literal notranslate"><span class="pre">NameError</span></code>。有一个例外：默认参数的表达式会在定义时算一次，见 4.2。</p>
+<p><strong>常见错误</strong></p>
+<ul class="simple">
+<li><p>写了 <code class="docutils literal notranslate"><span class="pre">def</span></code> 却忘了调用，以为定义完就会自动跑。</p></li>
+<li><p>该 <code class="docutils literal notranslate"><span class="pre">return</span></code> 的地方写了 <code class="docutils literal notranslate"><span class="pre">print</span></code>。屏幕上有输出，但调用处拿到的是 <code class="docutils literal notranslate"><span class="pre">None</span></code>，后面没法接着算。</p></li>
+<li><p>函数体缩进不对：少缩进会报错，多缩进则可能把后面不该进函数的代码卷进去。</p></li>
+</ul>
+</section>
+</section>
+<section id="id5">
+<h2>4.2 参数：函数怎么接收外部数据<a class="headerlink" href="#id5" title="Link to this heading">#</a></h2>
+<p>参数是函数接收外部数据的通道。把参数搞清楚，函数基本就会用了。</p>
+<section id="id6">
+<h3>形参和实参<a class="headerlink" href="#id6" title="Link to this heading">#</a></h3>
+<ul class="simple">
+<li><p><strong>形参</strong>（形式参数）：定义时写在括号里的名字，函数内部用来接值。</p></li>
+<li><p><strong>实参</strong>（实际参数）：调用时真正传进去的值。</p></li>
+</ul>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="k">def</span><span class="w"> </span><span class="nf">describe_station</span><span class="p">(</span><span class="n">name</span><span class="p">,</span> <span class="n">lon</span><span class="p">,</span> <span class="n">lat</span><span class="p">):</span>   <span class="c1"># name, lon, lat 是形参</span>
+    <span class="k">return</span> <span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">name</span><span class="si">}</span><span class="s2">: </span><span class="si">{</span><span class="n">lon</span><span class="si">}</span><span class="s2">°E, </span><span class="si">{</span><span class="n">lat</span><span class="si">}</span><span class="s2">°N&quot;</span>
+
+<span class="n">describe_station</span><span class="p">(</span><span class="s2">&quot;兰州站&quot;</span><span class="p">,</span> <span class="mf">103.82</span><span class="p">,</span> <span class="mf">36.06</span><span class="p">)</span>   <span class="c1"># &quot;兰州站&quot;, 103.82, 36.06 是实参</span>
+</pre></div>
+</div>
+<p>形参名和调用处的变量名没有对应关系。形参只在函数内部有效，调用时传什么就绑什么，也可以直接传常量，就像上面这样。外面就算有个也叫 <code class="docutils literal notranslate"><span class="pre">name</span></code> 的变量，不写进括号里，函数也收不到。</p>
+</section>
+<section id="id7">
+<h3>位置参数：按顺序赋值<a class="headerlink" href="#id7" title="Link to this heading">#</a></h3>
+<p>调用时，实参按顺序依次赋给形参。</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">describe_station</span><span class="p">(</span><span class="s2">&quot;兰州站&quot;</span><span class="p">,</span> <span class="mf">103.82</span><span class="p">,</span> <span class="mf">36.06</span><span class="p">)</span>   <span class="c1"># 正确</span>
+<span class="n">describe_station</span><span class="p">(</span><span class="s2">&quot;兰州站&quot;</span><span class="p">,</span> <span class="mf">36.06</span><span class="p">,</span> <span class="mf">103.82</span><span class="p">)</span>   <span class="c1"># 经纬度颠倒了</span>
+</pre></div>
+</div>
+<p>经纬度对调后，站点会落到完全不同的位置。Python 不会报错：它不知道哪个该是经度，只按顺序赋值。程序能跑、结果是错的，这种问题最难查。用位置参数时，实参顺序必须和形参定义一致。</p>
+</section>
+<section id="id8">
+<h3>关键字参数：按名字匹配<a class="headerlink" href="#id8" title="Link to this heading">#</a></h3>
+<p>调用时写上形参名再赋值，顺序就无所谓了。</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">describe_station</span><span class="p">(</span><span class="n">lat</span><span class="o">=</span><span class="mf">36.06</span><span class="p">,</span> <span class="n">name</span><span class="o">=</span><span class="s2">&quot;兰州站&quot;</span><span class="p">,</span> <span class="n">lon</span><span class="o">=</span><span class="mf">103.82</span><span class="p">)</span>   <span class="c1"># 顺序可以打乱</span>
+</pre></div>
+</div>
+<p>看到 <code class="docutils literal notranslate"><span class="pre">lat=36.06</span></code> 就知道这是纬度，读代码也轻松一些。</p>
+<p>位置参数和关键字参数可以混用，但位置参数必须在前：</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">describe_station</span><span class="p">(</span><span class="s2">&quot;兰州站&quot;</span><span class="p">,</span> <span class="mf">103.82</span><span class="p">,</span> <span class="n">lat</span><span class="o">=</span><span class="mf">36.06</span><span class="p">)</span>   <span class="c1"># 正确</span>
+<span class="n">describe_station</span><span class="p">(</span><span class="n">name</span><span class="o">=</span><span class="s2">&quot;兰州站&quot;</span><span class="p">,</span> <span class="mf">103.82</span><span class="p">,</span> <span class="mf">36.06</span><span class="p">)</span>  <span class="c1"># 错误：关键字参数不能出现在位置参数前面</span>
+</pre></div>
+</div>
+<p>写错形参名（比如 <code class="docutils literal notranslate"><span class="pre">latitude=36.06</span></code>）会立刻 <code class="docutils literal notranslate"><span class="pre">TypeError</span></code>，这比经纬度对调好查。漏传没有默认值的参数，也会 <code class="docutils literal notranslate"><span class="pre">TypeError</span></code>。</p>
+</section>
+<section id="id9">
+<h3>默认参数<a class="headerlink" href="#id9" title="Link to this heading">#</a></h3>
+<p>定义时给形参一个默认值。调用时不传就用默认值，传了就用新值。没有默认值的参数必须写在有默认值的前面，<code class="docutils literal notranslate"><span class="pre">def</span> <span class="pre">f(decimal=1,</span> <span class="pre">celsius):</span></code> 会直接语法错误。</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="k">def</span><span class="w"> </span><span class="nf">celsius_to_fahrenheit</span><span class="p">(</span><span class="n">celsius</span><span class="p">,</span> <span class="n">decimal</span><span class="o">=</span><span class="mi">1</span><span class="p">):</span>
+    <span class="n">f</span> <span class="o">=</span> <span class="n">celsius</span> <span class="o">*</span> <span class="mi">9</span> <span class="o">/</span> <span class="mi">5</span> <span class="o">+</span> <span class="mi">32</span>
+    <span class="k">return</span> <span class="nb">round</span><span class="p">(</span><span class="n">f</span><span class="p">,</span> <span class="n">decimal</span><span class="p">)</span>
+
+<span class="n">celsius_to_fahrenheit</span><span class="p">(</span><span class="mf">26.3</span><span class="p">)</span>      <span class="c1"># decimal 默认 1，返回 79.3</span>
+<span class="n">celsius_to_fahrenheit</span><span class="p">(</span><span class="mf">26.3</span><span class="p">,</span> <span class="mi">2</span><span class="p">)</span>   <span class="c1"># decimal 改为 2，返回 79.34</span>
+</pre></div>
+</div>
+<p><code class="docutils literal notranslate"><span class="pre">round</span></code> 改的是数值精度，不是打印时的位数。<code class="docutils literal notranslate"><span class="pre">round(77.0,</span> <span class="pre">2)</span></code> 仍是 <code class="docutils literal notranslate"><span class="pre">77.0</span></code>，要显示成 <code class="docutils literal notranslate"><span class="pre">77.00</span></code> 得用格式化，例如 <code class="docutils literal notranslate"><span class="pre">f&quot;{x:.2f}&quot;</span></code>。</p>
+<p>多数调用只关心气温，小数位数用默认值即可；真要细控时再显式传入。</p>
+<p>有一个常见坑：默认值在函数<strong>定义时</strong>只计算一次，所以不要用列表、字典这类可变对象当默认值。否则多次调用会“记住”上次改过的内容：</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="k">def</span><span class="w"> </span><span class="nf">add_temp</span><span class="p">(</span><span class="n">temp</span><span class="p">,</span> <span class="n">temps_list</span><span class="o">=</span><span class="p">[]):</span>   <span class="c1"># 错误示范</span>
+    <span class="n">temps_list</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">temp</span><span class="p">)</span>
+    <span class="k">return</span> <span class="n">temps_list</span>
+
+<span class="n">add_temp</span><span class="p">(</span><span class="mi">25</span><span class="p">)</span>   <span class="c1"># [25]</span>
+<span class="n">add_temp</span><span class="p">(</span><span class="mi">30</span><span class="p">)</span>   <span class="c1"># [25, 30]，上次的 25 还在</span>
+</pre></div>
+</div>
+<p>用 <code class="docutils literal notranslate"><span class="pre">None</span></code> 占位，在函数里再创建新列表：</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="k">def</span><span class="w"> </span><span class="nf">add_temp</span><span class="p">(</span><span class="n">temp</span><span class="p">,</span> <span class="n">temps_list</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
+    <span class="k">if</span> <span class="n">temps_list</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+        <span class="n">temps_list</span> <span class="o">=</span> <span class="p">[]</span>
+    <span class="n">temps_list</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">temp</span><span class="p">)</span>
+    <span class="k">return</span> <span class="n">temps_list</span>
+</pre></div>
+</div>
+</section>
+<section id="args-kwargs">
+<h3><code class="docutils literal notranslate"><span class="pre">*args</span></code> 和 <code class="docutils literal notranslate"><span class="pre">**kwargs</span></code>：数量不确定时<a class="headerlink" href="#args-kwargs" title="Link to this heading">#</a></h3>
+<p>有时不知道调用方会传几个值。比如记录气温，有时 1 天，有时 30 天。</p>
+<p><code class="docutils literal notranslate"><span class="pre">*args</span></code> 把位置参数收进一个元组。若前面还有别的形参，收进来的是剩下的那些；若它是唯一的形参，就是全部位置参数。<code class="docutils literal notranslate"><span class="pre">args</span></code> 是约定俗成的名字，换成别的也能跑，但别人一看 <code class="docutils literal notranslate"><span class="pre">args</span></code> 就懂。</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="k">def</span><span class="w"> </span><span class="nf">log_daily_temps</span><span class="p">(</span><span class="o">*</span><span class="n">args</span><span class="p">):</span>
+    <span class="k">for</span> <span class="n">i</span><span class="p">,</span> <span class="n">temp</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="n">args</span><span class="p">,</span> <span class="mi">1</span><span class="p">):</span>
+        <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;第</span><span class="si">{</span><span class="n">i</span><span class="si">}</span><span class="s2">天: </span><span class="si">{</span><span class="n">temp</span><span class="si">}</span><span class="s2">°C&quot;</span><span class="p">)</span>
+
+<span class="n">log_daily_temps</span><span class="p">(</span><span class="mi">18</span><span class="p">,</span> <span class="mi">22</span><span class="p">,</span> <span class="mi">25</span><span class="p">)</span>          <span class="c1"># 3 天</span>
+<span class="n">log_daily_temps</span><span class="p">(</span><span class="mi">5</span><span class="p">,</span> <span class="mi">8</span><span class="p">,</span> <span class="mi">12</span><span class="p">,</span> <span class="mi">15</span><span class="p">,</span> <span class="mi">20</span><span class="p">)</span>    <span class="c1"># 5 天</span>
+</pre></div>
+</div>
+<p><code class="docutils literal notranslate"><span class="pre">**kwargs</span></code> 同样只收<strong>剩下的</strong>关键字参数。前面已经对上形参名的，不会进这个字典。函数里它就是普通字典，需要时可以用 <code class="docutils literal notranslate"><span class="pre">.get()</span></code> 取值。</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="k">def</span><span class="w"> </span><span class="nf">show_station</span><span class="p">(</span><span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
+    <span class="k">for</span> <span class="n">key</span><span class="p">,</span> <span class="n">value</span> <span class="ow">in</span> <span class="n">kwargs</span><span class="o">.</span><span class="n">items</span><span class="p">():</span>
+        <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">key</span><span class="si">}</span><span class="s2">: </span><span class="si">{</span><span class="n">value</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+
+<span class="n">show_station</span><span class="p">(</span><span class="n">name</span><span class="o">=</span><span class="s2">&quot;兰州站&quot;</span><span class="p">,</span> <span class="n">elevation</span><span class="o">=</span><span class="mi">1520</span><span class="p">,</span> <span class="n">region</span><span class="o">=</span><span class="s2">&quot;西北&quot;</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>最常见的形参顺序是：普通位置参数、带默认值的参数、<code class="docutils literal notranslate"><span class="pre">*args</span></code>、<code class="docutils literal notranslate"><span class="pre">**kwargs</span></code>。</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="k">def</span><span class="w"> </span><span class="nf">func</span><span class="p">(</span><span class="n">name</span><span class="p">,</span> <span class="n">decimal</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span> <span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
+    <span class="k">pass</span>
+</pre></div>
+</div>
+<p>这不是全部规则。<code class="docutils literal notranslate"><span class="pre">*args</span></code> 后面还可以写仅关键字参数，也可以用 <code class="docutils literal notranslate"><span class="pre">/</span></code> 标出仅位置参数。入门先按上面这个顺序写即可。顺序写反会语法错误，不是运行到一半才报错。</p>
+</section>
+<section id="id10">
+<h3>参数解包：把列表或字典拆开传入<a class="headerlink" href="#id10" title="Link to this heading">#</a></h3>
+<p>已经有一份列表或字典时，不必把值一个个抄进调用括号，用 <code class="docutils literal notranslate"><span class="pre">*</span></code> / <code class="docutils literal notranslate"><span class="pre">**</span></code> 拆开即可。这和定义时的 <code class="docutils literal notranslate"><span class="pre">*args</span></code> / <code class="docutils literal notranslate"><span class="pre">**kwargs</span></code> 方向相反。</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">info</span> <span class="o">=</span> <span class="p">[</span><span class="s2">&quot;兰州站&quot;</span><span class="p">,</span> <span class="mf">103.82</span><span class="p">,</span> <span class="mf">36.06</span><span class="p">]</span>
+<span class="n">describe_station</span><span class="p">(</span><span class="o">*</span><span class="n">info</span><span class="p">)</span>   <span class="c1"># 列表拆成三个位置参数</span>
+
+<span class="n">info_dict</span> <span class="o">=</span> <span class="p">{</span><span class="s2">&quot;name&quot;</span><span class="p">:</span> <span class="s2">&quot;兰州站&quot;</span><span class="p">,</span> <span class="s2">&quot;lon&quot;</span><span class="p">:</span> <span class="mf">103.82</span><span class="p">,</span> <span class="s2">&quot;lat&quot;</span><span class="p">:</span> <span class="mf">36.06</span><span class="p">}</span>
+<span class="n">describe_station</span><span class="p">(</span><span class="o">**</span><span class="n">info_dict</span><span class="p">)</span>   <span class="c1"># 字典拆成关键字参数</span>
+</pre></div>
+</div>
+<p>列表元素个数对不上，或字典里多了、少了、写错了键，都会 <code class="docutils literal notranslate"><span class="pre">TypeError</span></code>。解包前先核对长度和键名。</p>
+</section>
+</section>
+<section id="id11">
+<h2>4.3 返回值<a class="headerlink" href="#id11" title="Link to this heading">#</a></h2>
+<p>函数算完后用 <code class="docutils literal notranslate"><span class="pre">return</span></code> 把结果交给调用者。<code class="docutils literal notranslate"><span class="pre">return</span></code> 一执行，函数立刻结束，后面的代码不会再跑。</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="k">def</span><span class="w"> </span><span class="nf">get_temp_level</span><span class="p">(</span><span class="n">temp</span><span class="p">):</span>
+    <span class="k">if</span> <span class="n">temp</span> <span class="o">&gt;</span> <span class="mi">30</span><span class="p">:</span>
+        <span class="k">return</span> <span class="s2">&quot;炎热&quot;</span>
+    <span class="k">return</span> <span class="s2">&quot;其他&quot;</span>   <span class="c1"># 只有 temp &lt;= 30 才会走到这里</span>
+</pre></div>
+</div>
+<p>可以一次返回多个值。Python 实际返回的是一个元组，左边用多个变量接住：</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="k">def</span><span class="w"> </span><span class="nf">calc_stats</span><span class="p">(</span><span class="n">temps</span><span class="p">):</span>
+    <span class="k">return</span> <span class="nb">min</span><span class="p">(</span><span class="n">temps</span><span class="p">),</span> <span class="nb">max</span><span class="p">(</span><span class="n">temps</span><span class="p">),</span> <span class="nb">sum</span><span class="p">(</span><span class="n">temps</span><span class="p">)</span> <span class="o">/</span> <span class="nb">len</span><span class="p">(</span><span class="n">temps</span><span class="p">)</span>
+
+<span class="n">t_min</span><span class="p">,</span> <span class="n">t_max</span><span class="p">,</span> <span class="n">t_avg</span> <span class="o">=</span> <span class="n">calc_stats</span><span class="p">([</span><span class="o">-</span><span class="mi">2</span><span class="p">,</span> <span class="mi">5</span><span class="p">,</span> <span class="mi">12</span><span class="p">,</span> <span class="mi">20</span><span class="p">,</span> <span class="mi">28</span><span class="p">])</span>
+</pre></div>
+</div>
+<p>没写 <code class="docutils literal notranslate"><span class="pre">return</span></code>，或写了 <code class="docutils literal notranslate"><span class="pre">return</span></code> 却没有值，返回的都是 <code class="docutils literal notranslate"><span class="pre">None</span></code>，表示“没有可用的结果”。</p>
+<p><strong>常见错误</strong></p>
+<ul class="simple">
+<li><p>左边变量个数和返回值个数对不上，会 <code class="docutils literal notranslate"><span class="pre">ValueError</span></code>。返回了三个值，左边只写两个变量，就会炸。</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">temps</span></code> 若是空列表，<code class="docutils literal notranslate"><span class="pre">min</span></code> / <code class="docutils literal notranslate"><span class="pre">max</span></code> / <code class="docutils literal notranslate"><span class="pre">len</span></code> 当除数都会出问题。工具函数里要先判断，不要把“没数据”算成 0°C，见 4.9。</p></li>
+<li><p>在 <code class="docutils literal notranslate"><span class="pre">return</span></code> 后面还写处理逻辑。那些行永远不会执行，不是“返回之后再做一次”。</p></li>
+</ul>
+</section>
+<section id="id12">
+<h2>4.4 变量作用域<a class="headerlink" href="#id12" title="Link to this heading">#</a></h2>
+<p>作用域决定某段代码能不能访问某个变量。搞不清作用域，会出现很难解释的 bug。</p>
+<section id="id13">
+<h3>局部变量<a class="headerlink" href="#id13" title="Link to this heading">#</a></h3>
+<p>在函数内部赋值的变量是局部变量，只能在函数里用。函数结束后，这个名字就没了。</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="k">def</span><span class="w"> </span><span class="nf">process</span><span class="p">():</span>
+    <span class="n">temp</span> <span class="o">=</span> <span class="mi">25</span>   <span class="c1"># 局部变量</span>
+    <span class="nb">print</span><span class="p">(</span><span class="n">temp</span><span class="p">)</span>
+
+<span class="n">process</span><span class="p">()</span>
+<span class="c1"># print(temp)   # 报错，外面没有 temp</span>
+</pre></div>
+</div>
+<p>这样函数有自己的工作空间，调用它时不会随便改掉外面的变量。</p>
+</section>
+<section id="id14">
+<h3>全局变量<a class="headerlink" href="#id14" title="Link to this heading">#</a></h3>
+<p>写在模块最顶层的变量是全局变量，模块里各处都能读。</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">station</span> <span class="o">=</span> <span class="s2">&quot;兰州站&quot;</span>   <span class="c1"># 全局变量</span>
+
+<span class="k">def</span><span class="w"> </span><span class="nf">show</span><span class="p">():</span>
+    <span class="nb">print</span><span class="p">(</span><span class="n">station</span><span class="p">)</span>   <span class="c1"># 可以读</span>
+
+<span class="n">show</span><span class="p">()</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">station</span><span class="p">)</span>       <span class="c1"># 外面也能读</span>
+</pre></div>
+</div>
+<p>注意：只要函数里<strong>某处给这个名字赋了值</strong>，整个函数都把它当局部变量，包括赋值前面的读取。下面会报 <code class="docutils literal notranslate"><span class="pre">UnboundLocalError</span></code>，不是先打印全局的 <code class="docutils literal notranslate"><span class="pre">station</span></code> 再改局部的：</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">station</span> <span class="o">=</span> <span class="s2">&quot;兰州站&quot;</span>
+
+<span class="k">def</span><span class="w"> </span><span class="nf">show</span><span class="p">():</span>
+    <span class="nb">print</span><span class="p">(</span><span class="n">station</span><span class="p">)</span>     <span class="c1"># 这里也会报错</span>
+    <span class="n">station</span> <span class="o">=</span> <span class="s2">&quot;西宁站&quot;</span>  <span class="c1"># 有这行赋值，station 在整个函数里都是局部的</span>
+</pre></div>
+</div>
+</section>
+<section id="global">
+<h3>在函数里修改全局变量：<code class="docutils literal notranslate"><span class="pre">global</span></code><a class="headerlink" href="#global" title="Link to this heading">#</a></h3>
+<p>只读全局变量不用声明。要<strong>换掉这个名字指向的对象</strong>（<code class="docutils literal notranslate"><span class="pre">count</span> <span class="pre">=</span> <span class="pre">1</span></code>、<code class="docutils literal notranslate"><span class="pre">count</span> <span class="pre">+=</span> <span class="pre">1</span></code>），必须写 <code class="docutils literal notranslate"><span class="pre">global</span></code>。</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">count</span> <span class="o">=</span> <span class="mi">0</span>
+
+<span class="k">def</span><span class="w"> </span><span class="nf">count_record</span><span class="p">():</span>
+    <span class="k">global</span> <span class="n">count</span>   <span class="c1"># 改的是外面的 count，不要新建局部变量</span>
+    <span class="n">count</span> <span class="o">+=</span> <span class="mi">1</span>
+
+<span class="n">count_record</span><span class="p">()</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">count</span><span class="p">)</span>   <span class="c1"># 1</span>
+</pre></div>
+</div>
+<p>两种容易混的情况：</p>
+<ul class="simple">
+<li><p>不加 <code class="docutils literal notranslate"><span class="pre">global</span></code> 就写 <code class="docutils literal notranslate"><span class="pre">count</span> <span class="pre">+=</span> <span class="pre">1</span></code>：Python 把 <code class="docutils literal notranslate"><span class="pre">count</span></code> 当成局部变量，右边却还没赋值，会报 <code class="docutils literal notranslate"><span class="pre">UnboundLocalError</span></code>，不是“全局悄悄没变”。</p></li>
+<li><p>不加 <code class="docutils literal notranslate"><span class="pre">global</span></code> 写 <code class="docutils literal notranslate"><span class="pre">count</span> <span class="pre">=</span> <span class="pre">1</span></code>：不会报错，但改的是局部变量，外面的 <code class="docutils literal notranslate"><span class="pre">count</span></code> 仍是 <code class="docutils literal notranslate"><span class="pre">0</span></code>。</p></li>
+</ul>
+<p>改列表、字典<strong>里面的内容</strong>不用 <code class="docutils literal notranslate"><span class="pre">global</span></code>。<code class="docutils literal notranslate"><span class="pre">append</span></code>、改某个元素，动的是同一个对象，不是把名字指到别处：</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">temps</span> <span class="o">=</span> <span class="p">[]</span>
+
+<span class="k">def</span><span class="w"> </span><span class="nf">add</span><span class="p">(</span><span class="n">temp</span><span class="p">):</span>
+    <span class="n">temps</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">temp</span><span class="p">)</span>   <span class="c1"># 不用 global，外面的列表会被加上新值</span>
+
+<span class="n">add</span><span class="p">(</span><span class="mi">25</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">temps</span><span class="p">)</span>   <span class="c1"># [25]</span>
+</pre></div>
+</div>
+<p>如果写成 <code class="docutils literal notranslate"><span class="pre">temps</span> <span class="pre">=</span> <span class="pre">temps</span> <span class="pre">+</span> <span class="pre">[temp]</span></code>，那是在创建新列表再赋值，就必须 <code class="docutils literal notranslate"><span class="pre">global</span></code>。先分清“改对象”和“换名字”。</p>
+<p>尽量少用全局变量。函数的输入最好从参数进来，结果从返回值出去。全局变量谁都能改，出了问题要沿整份代码去追。</p>
+</section>
+<section id="nonlocal">
+<h3>嵌套函数与 <code class="docutils literal notranslate"><span class="pre">nonlocal</span></code><a class="headerlink" href="#nonlocal" title="Link to this heading">#</a></h3>
+<p>函数里面还可以再定义函数。内层要改外层函数的局部变量时，用 <code class="docutils literal notranslate"><span class="pre">nonlocal</span></code>：</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="k">def</span><span class="w"> </span><span class="nf">outer</span><span class="p">():</span>
+    <span class="n">station</span> <span class="o">=</span> <span class="s2">&quot;兰州站&quot;</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">inner</span><span class="p">():</span>
+        <span class="k">nonlocal</span> <span class="n">station</span>
+        <span class="n">station</span> <span class="o">=</span> <span class="s2">&quot;西宁站&quot;</span>
+    <span class="n">inner</span><span class="p">()</span>
+    <span class="nb">print</span><span class="p">(</span><span class="n">station</span><span class="p">)</span>   <span class="c1"># 西宁站</span>
+</pre></div>
+</div>
+<p><code class="docutils literal notranslate"><span class="pre">global</span></code> 改的是模块顶层的名字，<code class="docutils literal notranslate"><span class="pre">nonlocal</span></code> 改的是外层函数里的名字。对象搞反了会 <code class="docutils literal notranslate"><span class="pre">SyntaxError</span></code>（外层没有这个局部变量），或改到你以为没在改的地方。</p>
+</section>
+</section>
+<section id="lambda">
+<h2>4.5 lambda：单行匿名函数<a class="headerlink" href="#lambda" title="Link to this heading">#</a></h2>
+<p><code class="docutils literal notranslate"><span class="pre">lambda</span></code> 用来写只有一个表达式的匿名函数。冒号后面的表达式就是返回值，不能写多行，只适合很短的逻辑。</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="k">def</span><span class="w"> </span><span class="nf">c_to_f</span><span class="p">(</span><span class="n">c</span><span class="p">):</span>
+    <span class="k">return</span> <span class="n">c</span> <span class="o">*</span> <span class="mi">9</span> <span class="o">/</span> <span class="mi">5</span> <span class="o">+</span> <span class="mi">32</span>
+
+<span class="n">c_to_f</span> <span class="o">=</span> <span class="k">lambda</span> <span class="n">c</span><span class="p">:</span> <span class="n">c</span> <span class="o">*</span> <span class="mi">9</span> <span class="o">/</span> <span class="mi">5</span> <span class="o">+</span> <span class="mi">32</span>   <span class="c1"># 和上面等价；若要起名字，更常见的是直接用 def</span>
+</pre></div>
+</div>
+<p>最常见的用法是当作别的函数的参数，例如 <code class="docutils literal notranslate"><span class="pre">sorted</span></code> 的 <code class="docutils literal notranslate"><span class="pre">key</span></code>：</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">stations</span> <span class="o">=</span> <span class="p">[</span>
+    <span class="p">{</span><span class="s2">&quot;name&quot;</span><span class="p">:</span> <span class="s2">&quot;兰州站&quot;</span><span class="p">,</span> <span class="s2">&quot;elevation&quot;</span><span class="p">:</span> <span class="mi">1520</span><span class="p">},</span>
+    <span class="p">{</span><span class="s2">&quot;name&quot;</span><span class="p">:</span> <span class="s2">&quot;西宁站&quot;</span><span class="p">,</span> <span class="s2">&quot;elevation&quot;</span><span class="p">:</span> <span class="mi">2295</span><span class="p">},</span>
+<span class="p">]</span>
+<span class="n">sorted_stations</span> <span class="o">=</span> <span class="nb">sorted</span><span class="p">(</span><span class="n">stations</span><span class="p">,</span> <span class="n">key</span><span class="o">=</span><span class="k">lambda</span> <span class="n">s</span><span class="p">:</span> <span class="n">s</span><span class="p">[</span><span class="s2">&quot;elevation&quot;</span><span class="p">])</span>
+</pre></div>
+</div>
+<p>不用 <code class="docutils literal notranslate"><span class="pre">lambda</span></code> 就得先单独定义一个函数再传给 <code class="docutils literal notranslate"><span class="pre">key</span></code>，这里用它只是少写几行。</p>
+<p>逻辑一长就改回 <code class="docutils literal notranslate"><span class="pre">def</span></code>。另外，在循环里造一批 <code class="docutils literal notranslate"><span class="pre">lambda</span></code> 时要小心，它们用到的循环变量是<strong>用的时候</strong>才取值，不是创建时定住的：</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">funcs</span> <span class="o">=</span> <span class="p">[</span><span class="k">lambda</span><span class="p">:</span> <span class="n">i</span> <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">3</span><span class="p">)]</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">funcs</span><span class="p">[</span><span class="mi">0</span><span class="p">]())</span>   <span class="c1"># 2，不是 0</span>
+</pre></div>
+</div>
+<p>需要定住的话，写成 <code class="docutils literal notranslate"><span class="pre">lambda</span> <span class="pre">i=i:</span> <span class="pre">i</span></code> 这种默认参数，或直接用普通函数。入门阶段更稳妥的办法是少在循环里堆 <code class="docutils literal notranslate"><span class="pre">lambda</span></code>。</p>
+</section>
+<section id="id15">
+<h2>4.6 递归：函数调用自己<a class="headerlink" href="#id15" title="Link to this heading">#</a></h2>
+<p>递归就是函数调用自身。适合能拆成同类子问题的情况，比如走一层套一层的站点树，或处理本身就按递归定义的结构。</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="k">def</span><span class="w"> </span><span class="nf">sum_first_n</span><span class="p">(</span><span class="n">temps</span><span class="p">,</span> <span class="n">n</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;递归求前 n 天气温之和（不是气象学里的积温）&quot;&quot;&quot;</span>
+    <span class="k">if</span> <span class="n">n</span> <span class="o">==</span> <span class="mi">0</span><span class="p">:</span>
+        <span class="k">return</span> <span class="mi">0</span>
+    <span class="k">return</span> <span class="n">temps</span><span class="p">[</span><span class="n">n</span> <span class="o">-</span> <span class="mi">1</span><span class="p">]</span> <span class="o">+</span> <span class="n">sum_first_n</span><span class="p">(</span><span class="n">temps</span><span class="p">,</span> <span class="n">n</span> <span class="o">-</span> <span class="mi">1</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>气象上的积温一般是日均温超过某个界限温度后再累加，不能把原始气温直接加起来。上面只是用求和演示递归。</p>
+<p>必须有<strong>终止条件</strong>。没有的话会一直调用自己，直到超过 Python 的递归深度上限（默认大约 1000 层）后崩溃。代码可以写得很短，但层数深时更费内存、也更慢，这种求和用循环更合适。</p>
+<p><strong>常见错误</strong></p>
+<ul class="simple">
+<li><p>漏写终止条件，或终止条件永远进不去（比如写成 <code class="docutils literal notranslate"><span class="pre">if</span> <span class="pre">n</span> <span class="pre">==</span> <span class="pre">0</span></code> 却从 <code class="docutils literal notranslate"><span class="pre">n</span> <span class="pre">=</span> <span class="pre">-1</span></code> 往下减）。</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">n</span></code> 比 <code class="docutils literal notranslate"><span class="pre">len(temps)</span></code> 大，会 <code class="docutils literal notranslate"><span class="pre">IndexError</span></code>；<code class="docutils literal notranslate"><span class="pre">n</span></code> 为负数，终止条件够不着，最后还是递归爆掉。</p></li>
+<li><p>把简单求和、遍历列表做成递归。能用 <code class="docutils literal notranslate"><span class="pre">for</span></code> / <code class="docutils literal notranslate"><span class="pre">sum</span></code> 解决的，不必为了“用上递归”硬写。</p></li>
+</ul>
+</section>
+<section id="id16">
+<h2>4.7 函数是对象<a class="headerlink" href="#id16" title="Link to this heading">#</a></h2>
+<p>在 Python 里，函数和其他对象一样，可以赋值、当作参数、当作返回值。</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="c1"># 赋值给变量</span>
+<span class="n">c_to_f</span> <span class="o">=</span> <span class="n">celsius_to_fahrenheit</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">c_to_f</span><span class="p">(</span><span class="mi">25</span><span class="p">))</span>   <span class="c1"># 77.0</span>
+
+<span class="c1"># 作为参数传递</span>
+<span class="k">def</span><span class="w"> </span><span class="nf">apply_to_temps</span><span class="p">(</span><span class="n">temps</span><span class="p">,</span> <span class="n">func</span><span class="p">):</span>
+    <span class="k">return</span> <span class="p">[</span><span class="n">func</span><span class="p">(</span><span class="n">t</span><span class="p">)</span> <span class="k">for</span> <span class="n">t</span> <span class="ow">in</span> <span class="n">temps</span><span class="p">]</span>
+
+<span class="n">apply_to_temps</span><span class="p">([</span><span class="mi">0</span><span class="p">,</span> <span class="mi">10</span><span class="p">,</span> <span class="mi">20</span><span class="p">],</span> <span class="n">c_to_f</span><span class="p">)</span>
+
+<span class="c1"># 作为返回值（闭包）</span>
+<span class="k">def</span><span class="w"> </span><span class="nf">make_checker</span><span class="p">(</span><span class="n">threshold</span><span class="p">):</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">checker</span><span class="p">(</span><span class="n">temp</span><span class="p">):</span>
+        <span class="k">return</span> <span class="n">temp</span> <span class="o">&gt;</span> <span class="n">threshold</span>
+    <span class="k">return</span> <span class="n">checker</span>
+
+<span class="n">check_hot</span> <span class="o">=</span> <span class="n">make_checker</span><span class="p">(</span><span class="mi">30</span><span class="p">)</span>
+<span class="n">check_hot</span><span class="p">(</span><span class="mi">28</span><span class="p">)</span>   <span class="c1"># False</span>
+</pre></div>
+</div>
+<p>最后这个例子是<strong>闭包</strong>：内层的 <code class="docutils literal notranslate"><span class="pre">checker</span></code> 会记住外层传入的 <code class="docutils literal notranslate"><span class="pre">threshold</span></code>，外层函数已经返回也不影响。可以用来生成不同阈值的检查函数。</p>
+<p>注意括号：<code class="docutils literal notranslate"><span class="pre">c_to_f</span> <span class="pre">=</span> <span class="pre">celsius_to_fahrenheit</span></code> 是把函数本身交给变量；<code class="docutils literal notranslate"><span class="pre">c_to_f</span> <span class="pre">=</span> <span class="pre">celsius_to_fahrenheit()</span></code> 是先调用再赋值，右边往往得到一个数字或 <code class="docutils literal notranslate"><span class="pre">None</span></code>，不是转换函数。传给 <code class="docutils literal notranslate"><span class="pre">apply_to_temps</span></code> 时同样不要多写括号。</p>
+<p><code class="docutils literal notranslate"><span class="pre">make_checker</span></code> 返回的是 <code class="docutils literal notranslate"><span class="pre">checker</span></code> 这个函数，不是 <code class="docutils literal notranslate"><span class="pre">checker(...)</span></code> 的结果。少写一对括号，外面才能按不同气温反复检查。</p>
+</section>
+<section id="id17">
+<h2>4.8 模块与包<a class="headerlink" href="#id17" title="Link to this heading">#</a></h2>
+<p>一个 <code class="docutils literal notranslate"><span class="pre">.py</span></code> 里堆了几十个函数就不好找了。把相近的函数分到不同文件里，每个 <code class="docutils literal notranslate"><span class="pre">.py</span></code> 就是一个<strong>模块</strong>。</p>
+<section id="id18">
+<h3>导入<a class="headerlink" href="#id18" title="Link to this heading">#</a></h3>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span><span class="w"> </span><span class="nn">weather_utils</span>                     <span class="c1"># 导入整个模块</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">weather_utils</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">wu</span>               <span class="c1"># 重命名</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">weather_utils</span><span class="w"> </span><span class="kn">import</span> <span class="n">c_to_f</span>         <span class="c1"># 只导入特定函数</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">weather_utils</span><span class="w"> </span><span class="kn">import</span> <span class="n">c_to_f</span> <span class="k">as</span> <span class="n">c2f</span>  <span class="c1"># 导入时改名</span>
+</pre></div>
+</div>
+<p>少用 <code class="docutils literal notranslate"><span class="pre">from</span> <span class="pre">weather_utils</span> <span class="pre">import</span> <span class="pre">*</span></code>。它会把模块里的名字一股脑倒进当前文件，和自己写的函数重名时，后导入的会盖住前面的，不好查。</p>
+<p>模块文件不要和标准库同名。项目目录里如果有 <code class="docutils literal notranslate"><span class="pre">json.py</span></code>、<code class="docutils literal notranslate"><span class="pre">random.py</span></code>，<code class="docutils literal notranslate"><span class="pre">import</span> <span class="pre">json</span></code> 可能先导入到你自己的空文件，报一些莫名其妙的 <code class="docutils literal notranslate"><span class="pre">AttributeError</span></code>。</p>
+</section>
+<section id="name">
+<h3><code class="docutils literal notranslate"><span class="pre">__name__</span></code>：区分“直接运行”和“被导入”<a class="headerlink" href="#name" title="Link to this heading">#</a></h3>
+<p>每个模块都有 <code class="docutils literal notranslate"><span class="pre">__name__</span></code>。直接运行 <code class="docutils literal notranslate"><span class="pre">python</span> <span class="pre">weather_utils.py</span></code> 时，它是 <code class="docutils literal notranslate"><span class="pre">&quot;__main__&quot;</span></code>；被导入时，它是模块的导入名（单文件一般是去掉 <code class="docutils literal notranslate"><span class="pre">.py</span></code> 的文件名，例如 <code class="docutils literal notranslate"><span class="pre">&quot;weather_utils&quot;</span></code>；若在包里则可能是 <code class="docutils literal notranslate"><span class="pre">&quot;pkg.weather_utils&quot;</span></code>）。</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="c1"># weather_utils.py</span>
+<span class="k">def</span><span class="w"> </span><span class="nf">c_to_f</span><span class="p">(</span><span class="n">c</span><span class="p">):</span>
+    <span class="k">return</span> <span class="n">c</span> <span class="o">*</span> <span class="mi">9</span> <span class="o">/</span> <span class="mi">5</span> <span class="o">+</span> <span class="mi">32</span>
+
+<span class="k">if</span> <span class="vm">__name__</span> <span class="o">==</span> <span class="s2">&quot;__main__&quot;</span><span class="p">:</span>
+    <span class="c1"># 只有直接运行本文件时才执行</span>
+    <span class="nb">print</span><span class="p">(</span><span class="n">c_to_f</span><span class="p">(</span><span class="mi">25</span><span class="p">))</span>
+</pre></div>
+</div>
+<p>这样可以在模块底部放演示或自测。别人 <code class="docutils literal notranslate"><span class="pre">import</span></code> 时这些代码不会跑；你自己运行这个文件时才会跑。</p>
+<p>自测代码如果写在 <code class="docutils literal notranslate"><span class="pre">if</span> <span class="pre">__name__</span> <span class="pre">==</span> <span class="pre">&quot;__main__&quot;:</span></code> 外面，一被导入就会打印一堆东西，主程序的输出会夹杂工具模块的调试信息。</p>
+</section>
+<section id="id19">
+<h3>包<a class="headerlink" href="#id19" title="Link to this heading">#</a></h3>
+<p>模块再多，就用文件夹分组，这就是包。入门项目里通常放一个 <code class="docutils literal notranslate"><span class="pre">__init__.py</span></code>（可以是空的）。Python 3.3 之后没有它也可以构成命名空间包，但常规包仍然建议留着这个文件。</p>
+<p>两个模块互相 <code class="docutils literal notranslate"><span class="pre">import</span></code>，可能形成循环导入，表现为“模块有这个函数，却提示没有”。入门阶段把工具放进 <code class="docutils literal notranslate"><span class="pre">utils.py</span></code>、主程序放进 <code class="docutils literal notranslate"><span class="pre">main.py</span></code>、只让主程序导入工具，一般能避开。</p>
+</section>
+</section>
+<section id="id20">
+<h2>4.9 项目实践：气温工具模块<a class="headerlink" href="#id20" title="Link to this heading">#</a></h2>
+<p>学完本章后，「兰州气温观测数据分析与可视化系统」要把气温处理收成函数，放到独立模块里。下面的冷/热分界是教学用的自拟阈值，不是气象规范。</p>
+<p>先看不拆函数时常见的写法：</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">temps</span> <span class="o">=</span> <span class="p">[</span><span class="o">-</span><span class="mi">5</span><span class="p">,</span> <span class="o">-</span><span class="mi">3</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="o">-</span><span class="mi">1</span><span class="p">,</span> <span class="o">-</span><span class="mi">4</span><span class="p">,</span> <span class="o">-</span><span class="mi">6</span><span class="p">,</span> <span class="o">-</span><span class="mi">2</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">3</span><span class="p">]</span>
+
+<span class="n">avg</span> <span class="o">=</span> <span class="nb">sum</span><span class="p">(</span><span class="n">temps</span><span class="p">)</span> <span class="o">/</span> <span class="nb">len</span><span class="p">(</span><span class="n">temps</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;平均气温: </span><span class="si">{</span><span class="n">avg</span><span class="si">}</span><span class="s2">°C&quot;</span><span class="p">)</span>
+
+<span class="n">cold</span> <span class="o">=</span> <span class="n">cool</span> <span class="o">=</span> <span class="n">warm</span> <span class="o">=</span> <span class="n">hot</span> <span class="o">=</span> <span class="mi">0</span>
+<span class="k">for</span> <span class="n">t</span> <span class="ow">in</span> <span class="n">temps</span><span class="p">:</span>
+    <span class="k">if</span> <span class="n">t</span> <span class="o">&lt;=</span> <span class="o">-</span><span class="mi">5</span><span class="p">:</span>
+        <span class="n">cold</span> <span class="o">+=</span> <span class="mi">1</span>
+    <span class="k">elif</span> <span class="o">-</span><span class="mi">5</span> <span class="o">&lt;</span> <span class="n">t</span> <span class="o">&lt;=</span> <span class="mi">5</span><span class="p">:</span>
+        <span class="n">cool</span> <span class="o">+=</span> <span class="mi">1</span>
+    <span class="k">elif</span> <span class="mi">5</span> <span class="o">&lt;</span> <span class="n">t</span> <span class="o">&lt;=</span> <span class="mi">28</span><span class="p">:</span>
+        <span class="n">warm</span> <span class="o">+=</span> <span class="mi">1</span>
+    <span class="k">else</span><span class="p">:</span>
+        <span class="n">hot</span> <span class="o">+=</span> <span class="mi">1</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;寒冷: </span><span class="si">{</span><span class="n">cold</span><span class="si">}</span><span class="s2">天, 偏冷: </span><span class="si">{</span><span class="n">cool</span><span class="si">}</span><span class="s2">天, 适宜: </span><span class="si">{</span><span class="n">warm</span><span class="si">}</span><span class="s2">天, 炎热: </span><span class="si">{</span><span class="n">hot</span><span class="si">}</span><span class="s2">天&quot;</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>能跑。换西宁站、张掖站，或把 28°C 改成 30°C，就得连着改好几份拷贝。流程没变，变的是数据；阈值也不该复制多份，集中写在一个函数里即可。入门阶段不必把阈值再做成参数。</p>
+<p>工具函数写小一点，再拼起来用。<code class="docutils literal notranslate"><span class="pre">classify_temperature</span></code> 判定单日，<code class="docutils literal notranslate"><span class="pre">classify_temperatures</span></code> 复用它做批量统计：</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="c1"># utils.py</span>
+
+<span class="k">def</span><span class="w"> </span><span class="nf">classify_temperature</span><span class="p">(</span><span class="n">temp</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;判定单个气温的等级（教学用阈值）。&quot;&quot;&quot;</span>
+    <span class="k">if</span> <span class="n">temp</span> <span class="o">&lt;=</span> <span class="o">-</span><span class="mi">5</span><span class="p">:</span>
+        <span class="k">return</span> <span class="s2">&quot;寒冷&quot;</span>
+    <span class="k">elif</span> <span class="o">-</span><span class="mi">5</span> <span class="o">&lt;</span> <span class="n">temp</span> <span class="o">&lt;=</span> <span class="mi">5</span><span class="p">:</span>
+        <span class="k">return</span> <span class="s2">&quot;偏冷&quot;</span>
+    <span class="k">elif</span> <span class="mi">5</span> <span class="o">&lt;</span> <span class="n">temp</span> <span class="o">&lt;=</span> <span class="mi">28</span><span class="p">:</span>
+        <span class="k">return</span> <span class="s2">&quot;适宜&quot;</span>
+    <span class="k">else</span><span class="p">:</span>
+        <span class="k">return</span> <span class="s2">&quot;炎热&quot;</span>
+
+
+<span class="k">def</span><span class="w"> </span><span class="nf">classify_temperatures</span><span class="p">(</span><span class="n">temps</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;统计一批气温中各等级的天数。&quot;&quot;&quot;</span>
+    <span class="n">result</span> <span class="o">=</span> <span class="p">{</span><span class="s2">&quot;寒冷&quot;</span><span class="p">:</span> <span class="mi">0</span><span class="p">,</span> <span class="s2">&quot;偏冷&quot;</span><span class="p">:</span> <span class="mi">0</span><span class="p">,</span> <span class="s2">&quot;适宜&quot;</span><span class="p">:</span> <span class="mi">0</span><span class="p">,</span> <span class="s2">&quot;炎热&quot;</span><span class="p">:</span> <span class="mi">0</span><span class="p">}</span>
+    <span class="k">for</span> <span class="n">t</span> <span class="ow">in</span> <span class="n">temps</span><span class="p">:</span>
+        <span class="n">result</span><span class="p">[</span><span class="n">classify_temperature</span><span class="p">(</span><span class="n">t</span><span class="p">)]</span> <span class="o">+=</span> <span class="mi">1</span>
+    <span class="k">return</span> <span class="n">result</span>
+
+
+<span class="k">def</span><span class="w"> </span><span class="nf">calc_average</span><span class="p">(</span><span class="n">temps</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;计算平均气温。空列表没有平均值，不能当成 0°C。&quot;&quot;&quot;</span>
+    <span class="k">if</span> <span class="ow">not</span> <span class="n">temps</span><span class="p">:</span>
+        <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s2">&quot;气温列表为空，无法计算平均值&quot;</span><span class="p">)</span>
+    <span class="k">return</span> <span class="nb">sum</span><span class="p">(</span><span class="n">temps</span><span class="p">)</span> <span class="o">/</span> <span class="nb">len</span><span class="p">(</span><span class="n">temps</span><span class="p">)</span>
+
+
+<span class="k">if</span> <span class="vm">__name__</span> <span class="o">==</span> <span class="s2">&quot;__main__&quot;</span><span class="p">:</span>
+    <span class="n">test_temps</span> <span class="o">=</span> <span class="p">[</span><span class="o">-</span><span class="mi">8</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">15</span><span class="p">,</span> <span class="mi">30</span><span class="p">]</span>
+    <span class="k">for</span> <span class="n">t</span> <span class="ow">in</span> <span class="n">test_temps</span><span class="p">:</span>
+        <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">t</span><span class="si">}</span><span class="s2">°C → </span><span class="si">{</span><span class="n">classify_temperature</span><span class="p">(</span><span class="n">t</span><span class="p">)</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+    <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;平均: </span><span class="si">{</span><span class="n">calc_average</span><span class="p">(</span><span class="n">test_temps</span><span class="p">)</span><span class="si">}</span><span class="s2">°C&quot;</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>直接运行 <code class="docutils literal notranslate"><span class="pre">python</span> <span class="pre">utils.py</span></code> 时会执行自测；在 <code class="docutils literal notranslate"><span class="pre">main.py</span></code> 里 <code class="docutils literal notranslate"><span class="pre">import</span> <span class="pre">utils</span></code> 时 <code class="docutils literal notranslate"><span class="pre">__name__</span></code> 是 <code class="docutils literal notranslate"><span class="pre">&quot;utils&quot;</span></code>，自测不会跟着跑。规则见 4.8。</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="c1"># main.py</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">utils</span>
+
+<span class="n">jan_temps</span> <span class="o">=</span> <span class="p">[</span><span class="o">-</span><span class="mi">5</span><span class="p">,</span> <span class="o">-</span><span class="mi">3</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="o">-</span><span class="mi">1</span><span class="p">,</span> <span class="o">-</span><span class="mi">4</span><span class="p">,</span> <span class="o">-</span><span class="mi">6</span><span class="p">,</span> <span class="o">-</span><span class="mi">2</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">3</span><span class="p">]</span>
+
+<span class="n">avg</span> <span class="o">=</span> <span class="n">utils</span><span class="o">.</span><span class="n">calc_average</span><span class="p">(</span><span class="n">jan_temps</span><span class="p">)</span>
+<span class="n">stats</span> <span class="o">=</span> <span class="n">utils</span><span class="o">.</span><span class="n">classify_temperatures</span><span class="p">(</span><span class="n">jan_temps</span><span class="p">)</span>
+
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;平均气温: </span><span class="si">{</span><span class="n">avg</span><span class="si">:</span><span class="s2">.1f</span><span class="si">}</span><span class="s2">°C&quot;</span><span class="p">)</span>
+<span class="k">for</span> <span class="n">level</span><span class="p">,</span> <span class="n">count</span> <span class="ow">in</span> <span class="n">stats</span><span class="o">.</span><span class="n">items</span><span class="p">():</span>
+    <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">level</span><span class="si">}</span><span class="s2">: </span><span class="si">{</span><span class="n">count</span><span class="si">}</span><span class="s2">天&quot;</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>主程序只负责准备数据、调用工具、打印结果。等级怎么划分、平均怎么算，留在 <code class="docutils literal notranslate"><span class="pre">utils.py</span></code>。</p>
+<p><strong>写的时候容易踩的坑</strong></p>
+<ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">classify_temperatures</span></code> 里的字典键，必须和 <code class="docutils literal notranslate"><span class="pre">classify_temperature</span></code> 的返回值对得上。一边改成“偏暖”、另一边字典还是“适宜”，会 <code class="docutils literal notranslate"><span class="pre">KeyError</span></code>。</p></li>
+<li><p>空列表不要返回 <code class="docutils literal notranslate"><span class="pre">0</span></code>。<code class="docutils literal notranslate"><span class="pre">0°C</span></code> 是一个真实气温，和“没有数据”不是一回事。</p></li>
+<li><p>改完 <code class="docutils literal notranslate"><span class="pre">utils.py</span></code> 后要重新运行 <code class="docutils literal notranslate"><span class="pre">main.py</span></code>。只盯着编辑器看，运行的还是旧代码。</p></li>
+<li><p>从项目以外的目录运行时，确认当前目录能找到 <code class="docutils literal notranslate"><span class="pre">utils.py</span></code>，否则会 <code class="docutils literal notranslate"><span class="pre">ModuleNotFoundError</span></code>。</p></li>
+</ul>
+<div class="admonition seealso">
+<p class="admonition-title">参见</p>
+<p>配套练习：<a class="reference internal" href="../../tutorials/basics/ch04_practice.html"><span class="doc">第 4 章练习：函数及变量作用域、模块和包</span></a>　·　术语参考：<a class="reference internal" href="../../api/ch04_terms.html"><span class="doc">第 4 章术语：函数及变量作用域、模块和包</span></a>　·　示例画廊 <a class="reference internal" href="../../gallery/plot_basics/index.html"><span class="doc">基础绘图示例</span></a>。</p>
+</div>
+</section>
+</section>
+
+
+                </article>
+              
+              
+              
+              
+              
+                <footer class="prev-next-footer d-print-none">
+                  
+<div class="prev-next-area">
+    <a class="left-prev"
+       href="flow.html"
+       title="上一页">
+      <i class="fa-solid fa-angle-left"></i>
+      <div class="prev-next-info">
+        <p class="prev-next-subtitle">上一页</p>
+        <p class="prev-next-title">分支、条件与循环</p>
+      </div>
+    </a>
+    <a class="right-next"
+       href="oop.html"
+       title="下一页">
+      <div class="prev-next-info">
+        <p class="prev-next-subtitle">下一页</p>
+        <p class="prev-next-title">面向对象与高级语法</p>
+      </div>
+      <i class="fa-solid fa-angle-right"></i>
+    </a>
+</div>
+                </footer>
+              
+            </div>
+            
+            
+              
+                <dialog id="pst-secondary-sidebar-modal"></dialog>
+                <div id="pst-secondary-sidebar" class="bd-sidebar-secondary bd-toc"><div class="sidebar-secondary-items sidebar-secondary__inner">
+
+
+  <div class="sidebar-secondary-item">
+<div
+    id="pst-page-navigation-heading-2"
+    class="page-toc tocsection onthispage">
+    <i class="fa-solid fa-list"></i> 当前页面
+  </div>
+  <nav id="pst-page-toc-nav" class="page-toc" aria-labelledby="pst-page-navigation-heading-2">
+    <ul class="pst-show_toc_level nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#t-402">配套动画（T-402）</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id2">4.1 函数：把重复的逻辑收起来</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#id3">从复制粘贴到调用</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#id4">定义与调用</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id5">4.2 参数：函数怎么接收外部数据</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#id6">形参和实参</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#id7">位置参数：按顺序赋值</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#id8">关键字参数：按名字匹配</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#id9">默认参数</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#args-kwargs"><code class="docutils literal notranslate"><span class="pre">*args</span></code> 和 <code class="docutils literal notranslate"><span class="pre">**kwargs</span></code>：数量不确定时</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#id10">参数解包：把列表或字典拆开传入</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id11">4.3 返回值</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id12">4.4 变量作用域</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#id13">局部变量</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#id14">全局变量</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#global">在函数里修改全局变量：<code class="docutils literal notranslate"><span class="pre">global</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#nonlocal">嵌套函数与 <code class="docutils literal notranslate"><span class="pre">nonlocal</span></code></a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#lambda">4.5 lambda：单行匿名函数</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id15">4.6 递归：函数调用自己</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id16">4.7 函数是对象</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id17">4.8 模块与包</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#id18">导入</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#name"><code class="docutils literal notranslate"><span class="pre">__name__</span></code>：区分“直接运行”和“被导入”</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#id19">包</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id20">4.9 项目实践：气温工具模块</a></li>
+</ul>
+  </nav></div>
+
+</div></div>
+              
+            
+          </div>
+          <footer class="bd-footer-content">
+            
+          </footer>
+        
+      </main>
+    </div>
+  </div>
+  
+  <!-- Scripts loaded after <body> so the DOM is not blocked -->
+  <script defer src="../../_static/scripts/bootstrap.js?digest=90905a2f556bf617f1a9"></script>
+<script defer src="../../_static/scripts/pydata-sphinx-theme.js?digest=90905a2f556bf617f1a9"></script>
+
+  <footer class="bd-footer">
+<div class="bd-footer__inner bd-page-width">
+  
+    <div class="footer-items__start">
+      
+        <div class="footer-item">
+
+  <p class="copyright">
+    
+      © Copyright 2026, 兰州大学大气科学学院编程社区.
+      <br/>
+    
+  </p>
+</div>
+      
+        <div class="footer-item">
+
+  <p class="sphinx-version">
+    由 <a href="https://www.sphinx-doc.org/">Sphinx</a> 8.2.3创建。
+    <br/>
+  </p>
+</div>
+      
+    </div>
+  
+  
+  
+    <div class="footer-items__end">
+      
+        <div class="footer-item">
+<p class="theme-version">
+  <!-- # L10n: Setting the PST URL as an argument as this does not need to be localized -->
+  使用 <a href="https://pydata-sphinx-theme.readthedocs.io/en/stable/index.html">PyData Sphinx Theme</a> 0.20.0构建.
+</p></div>
+      
+    </div>
+  
+</div>
+
+  </footer>
+  </body>
+</html>

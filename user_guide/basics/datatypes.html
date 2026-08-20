@@ -1,0 +1,1487 @@
+
+<!DOCTYPE html>
+
+
+<html lang="zh-CN" data-content_root="../../" >
+
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
+    <title>基本数据类型、变量和运算符 &#8212; MeteoPython</title>
+  
+  
+  
+  <script data-cfasync="false">
+    document.documentElement.dataset.mode = localStorage.getItem("mode") || "";
+    document.documentElement.dataset.theme = localStorage.getItem("theme") || "";
+  </script>
+  <!--
+    this give us a css class that will be invisible only if js is disabled
+  -->
+  <noscript>
+    <style>
+      .pst-js-only { display: none !important; }
+
+    </style>
+  </noscript>
+  
+  <!-- Loaded before other Sphinx assets -->
+  <link href="../../_static/styles/theme.css?digest=90905a2f556bf617f1a9" rel="stylesheet" />
+<link href="../../_static/styles/pydata-sphinx-theme.css?digest=90905a2f556bf617f1a9" rel="stylesheet" />
+
+    <link rel="stylesheet" type="text/css" href="../../_static/pygments.css?v=8f2a1f02" />
+    <link rel="stylesheet" type="text/css" href="../../_static/copybutton.css?v=76b2166b" />
+    <link rel="stylesheet" type="text/css" href="../../_static/sg_gallery.css?v=fd6457a4" />
+    <link rel="stylesheet" type="text/css" href="../../_static/sg_gallery-binder.css?v=f4aeca0c" />
+    <link rel="stylesheet" type="text/css" href="../../_static/sg_gallery-dataframe.css?v=2082cf3c" />
+    <link rel="stylesheet" type="text/css" href="../../_static/sg_gallery-rendered-html.css?v=1277b6f3" />
+    <link rel="stylesheet" type="text/css" href="../../_static/sphinx-design.min.css?v=95c83b7e" />
+    <link rel="stylesheet" type="text/css" href="../../_static/./custom.css?v=fbe1f034" />
+  
+  <!-- So that users can add custom icons -->
+  <script defer src="../../_static/scripts/fontawesome.js?digest=90905a2f556bf617f1a9"></script>
+  <!-- Pre-loaded scripts that we'll load fully later -->
+  <link rel="preload" as="script" href="../../_static/scripts/bootstrap.js?digest=90905a2f556bf617f1a9" />
+<link rel="preload" as="script" href="../../_static/scripts/pydata-sphinx-theme.js?digest=90905a2f556bf617f1a9" />
+
+    <script src="../../_static/documentation_options.js?v=9becfed8"></script>
+    <script src="../../_static/doctools.js?v=9bcbadda"></script>
+    <script src="../../_static/sphinx_highlight.js?v=dc90522c"></script>
+    <script src="../../_static/sg-tags.js?v=d80f6fa4"></script>
+    <script src="../../_static/clipboard.min.js?v=a7894cd8"></script>
+    <script src="../../_static/copybutton.js?v=fd10adb8"></script>
+    <script src="../../_static/translations.js?v=beaddf03"></script>
+    <script src="../../_static/design-tabs.js?v=f930bc37"></script>
+    <script>DOCUMENTATION_OPTIONS.pagename = 'user_guide/basics/datatypes';</script>
+    <script>
+        DOCUMENTATION_OPTIONS.theme_version = '0.20.0';
+        DOCUMENTATION_OPTIONS.theme_switcher_json_url = '_static/switcher.json';
+        DOCUMENTATION_OPTIONS.theme_switcher_version_match = '0.1.0';
+        DOCUMENTATION_OPTIONS.show_version_warning_banner =
+            false;
+        </script>
+    <script>DOCUMENTATION_OPTIONS.search_as_you_type = false;</script>
+    <link rel="icon" href="../../_static/favicon.svg"/>
+    <link rel="index" title="索引" href="../../genindex.html" />
+    <link rel="search" title="搜索" href="../../search.html" />
+    <link rel="next" title="分支、条件与循环" href="flow.html" />
+    <link rel="prev" title="Python 与 Conda 简介" href="python_conda.html" />
+  <meta name="viewport" content="width=device-width, initial-scale=1"/>
+  <meta name="docsearch:language" content="zh-CN"/>
+  <meta name="docsearch:version" content="0.1" />
+    <meta name="docbuild:last-update" content="2026-08-20"/>
+  
+    
+    <script src="../../_static/searchtools.js"></script>
+    <script src="../../_static/language_data.js"></script>
+    <script src="../../searchindex.js"></script>
+  
+  </head>
+  <body data-default-mode="">
+  
+  
+  <div id="pst-skip-link" class="skip-link d-print-none"><a href="#main-content">跳转至主要内容</a></div>
+
+  
+  <div id="pst-scroll-pixel-helper"></div>
+  
+  <button type="button" class="btn rounded-pill" id="pst-back-to-top">
+    <i class="fa-solid fa-arrow-up"></i>回到顶部</button>
+  
+  
+  
+  
+  <dialog id="pst-search-dialog">
+    
+<form class="bd-search d-flex align-items-center"
+      action="../../search.html"
+      method="get">
+  <i class="fa-solid fa-magnifying-glass"></i>
+  <input type="search"
+         class="form-control"
+         name="q"
+         placeholder="搜索文档…"
+         aria-label="搜索文档…"
+         autocomplete="off"
+         autocorrect="off"
+         autocapitalize="off"
+         spellcheck="false"/>
+  <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd>K</kbd></span>
+</form>
+  </dialog>
+
+  <div class="pst-async-banner-revealer d-none">
+  <aside id="bd-header-version-warning" class="d-none d-print-none" aria-label="版本警告"></aside>
+</div>
+
+  
+    <header id="pst-header" class="bd-header navbar navbar-expand-lg bd-navbar d-print-none">
+<div class="bd-header__inner bd-page-width">
+  <button class="pst-navbar-icon sidebar-toggle primary-toggle" aria-label="网页导航">
+    <span class="fa-solid fa-bars"></span>
+  </button>
+  
+  
+  <div class="col-lg-3 navbar-header-items__start">
+    
+      <div class="navbar-item">
+
+  
+    
+  
+
+<a class="navbar-brand logo" href="../../index.html">
+  
+  
+  
+  
+  
+    
+    
+      
+    
+    
+    <img src="../../_static/logo.svg" class="logo__image only-light" alt="MeteoPython - Home"/>
+    <img src="../../_static/logo.svg" class="logo__image only-dark pst-js-only" alt="MeteoPython - Home"/>
+  
+  
+</a></div>
+    
+  </div>
+  
+  <div class="col-lg-9 navbar-header-items">
+    
+    <div class="me-auto navbar-header-items__center">
+      
+        <div class="navbar-item">
+<nav>
+  <ul class="bd-navbar-elements navbar-nav">
+    
+<li class="nav-item current active">
+  <a class="nav-link nav-internal" href="../index.html">
+    教程
+  </a>
+</li>
+
+
+<li class="nav-item ">
+  <a class="nav-link nav-internal" href="../../tutorials/index.html">
+    练习
+  </a>
+</li>
+
+
+<li class="nav-item ">
+  <a class="nav-link nav-internal" href="../../gallery/index.html">
+    示例
+  </a>
+</li>
+
+
+<li class="nav-item ">
+  <a class="nav-link nav-internal" href="../../api/index.html">
+    术语参考
+  </a>
+</li>
+
+
+<li class="nav-item ">
+  <a class="nav-link nav-internal" href="../../qa/index.html">
+    常见问题 Q&A
+  </a>
+</li>
+
+  </ul>
+</nav></div>
+      
+    </div>
+    
+    
+    <div class="navbar-header-items__end">
+      
+        <div class="navbar-item navbar-persistent--container">
+          
+
+<button class="btn search-button-field search-button__button pst-js-only" title="搜索" aria-label="搜索" data-bs-placement="bottom" data-bs-toggle="tooltip">
+ <i class="fa-solid fa-magnifying-glass"></i>
+ <span class="search-button__default-text">搜索</span>
+ <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd class="kbd-shortcut__modifier">K</kbd></span>
+</button>
+        </div>
+      
+      
+        <div class="navbar-item">
+
+<div class="theme-switch-container dropdown pst-js-only" data-bs-toggle="tooltip" data-bs-placement="bottom" title="Color mode">
+  <button class="btn btn-sm nav-link pst-navbar-icon theme-switch-button dropdown-toggle" aria-label="Color mode" data-bs-toggle="dropdown">
+    <i class="theme-switch fa-solid fa-sun fa-lg fa-fw" data-mode="light" title="亮色"></i>
+    <i class="theme-switch fa-solid fa-moon fa-lg fa-fw" data-mode="dark" title="暗色"></i>
+    <i class="theme-switch fa-solid fa-circle-half-stroke fa-lg fa-fw" data-mode="auto" title="System Settings"></i>
+  </button>
+  <ul class="dropdown-menu dropdown-menu-end">
+    <li><button class="dropdown-item d-flex align-items-center theme-change-button" data-mode="auto"><i class="fa-solid fa-circle-half-stroke fa-lg fa-fw me-1"></i>System Settings</button></li>
+    <li><button class="dropdown-item d-flex align-items-center theme-change-button" data-mode="light"><i class="fa-solid fa-sun fa-lg fa-fw me-1"></i>亮色</button></li>
+    <li><button class="dropdown-item d-flex align-items-center theme-change-button" data-mode="dark"><i class="fa-solid fa-moon fa-lg fa-fw me-1"></i>暗色</button></li>
+  </ul>
+</div></div>
+      
+        <div class="navbar-item"><ul class="navbar-icon-links"
+    aria-label="Icon Links">
+</ul></div>
+      
+    </div>
+    
+  </div>
+  
+  
+    <div class="navbar-persistent--mobile">
+
+<button class="btn search-button-field search-button__button pst-js-only" title="搜索" aria-label="搜索" data-bs-placement="bottom" data-bs-toggle="tooltip">
+ <i class="fa-solid fa-magnifying-glass"></i>
+ <span class="search-button__default-text">搜索</span>
+ <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd class="kbd-shortcut__modifier">K</kbd></span>
+</button>
+    </div>
+  
+
+  
+    <button class="pst-navbar-icon sidebar-toggle secondary-toggle" aria-label="当前页面">
+      <span class="fa-solid fa-outdent"></span>
+    </button>
+  
+</div>
+
+    </header>
+  
+
+  <div class="bd-container">
+    <div class="bd-container__inner bd-page-width">
+      
+      
+      
+      <dialog id="pst-primary-sidebar-modal"></dialog>
+      <div id="pst-primary-sidebar" class="bd-sidebar-primary bd-sidebar">
+        
+
+  
+  <div class="sidebar-header-items sidebar-primary__section">
+    
+    
+      <div class="sidebar-header-items__center">
+        
+          
+          
+            <div class="navbar-item">
+<nav>
+  <ul class="bd-navbar-elements navbar-nav">
+    
+<li class="nav-item current active">
+  <a class="nav-link nav-internal" href="../index.html">
+    教程
+  </a>
+</li>
+
+
+<li class="nav-item ">
+  <a class="nav-link nav-internal" href="../../tutorials/index.html">
+    练习
+  </a>
+</li>
+
+
+<li class="nav-item ">
+  <a class="nav-link nav-internal" href="../../gallery/index.html">
+    示例
+  </a>
+</li>
+
+
+<li class="nav-item ">
+  <a class="nav-link nav-internal" href="../../api/index.html">
+    术语参考
+  </a>
+</li>
+
+
+<li class="nav-item ">
+  <a class="nav-link nav-internal" href="../../qa/index.html">
+    常见问题 Q&A
+  </a>
+</li>
+
+  </ul>
+</nav></div>
+          
+        
+      </div>
+    
+    
+    
+      <div class="sidebar-header-items__end">
+        
+          <div class="navbar-item">
+
+<div class="theme-switch-container dropdown pst-js-only" data-bs-toggle="tooltip" data-bs-placement="bottom" title="Color mode">
+  <button class="btn btn-sm nav-link pst-navbar-icon theme-switch-button dropdown-toggle" aria-label="Color mode" data-bs-toggle="dropdown">
+    <i class="theme-switch fa-solid fa-sun fa-lg fa-fw" data-mode="light" title="亮色"></i>
+    <i class="theme-switch fa-solid fa-moon fa-lg fa-fw" data-mode="dark" title="暗色"></i>
+    <i class="theme-switch fa-solid fa-circle-half-stroke fa-lg fa-fw" data-mode="auto" title="System Settings"></i>
+  </button>
+  <ul class="dropdown-menu dropdown-menu-end">
+    <li><button class="dropdown-item d-flex align-items-center theme-change-button" data-mode="auto"><i class="fa-solid fa-circle-half-stroke fa-lg fa-fw me-1"></i>System Settings</button></li>
+    <li><button class="dropdown-item d-flex align-items-center theme-change-button" data-mode="light"><i class="fa-solid fa-sun fa-lg fa-fw me-1"></i>亮色</button></li>
+    <li><button class="dropdown-item d-flex align-items-center theme-change-button" data-mode="dark"><i class="fa-solid fa-moon fa-lg fa-fw me-1"></i>暗色</button></li>
+  </ul>
+</div></div>
+        
+          <div class="navbar-item"><ul class="navbar-icon-links"
+    aria-label="Icon Links">
+</ul></div>
+        
+      </div>
+    
+  </div>
+  
+    <div class="sidebar-primary-items__start sidebar-primary__section">
+        <div class="sidebar-primary-item pst-sidebar-collapse"><button id="pst-collapse-sidebar-button" aria-expanded="true" aria-controls="pst-primary-sidebar">
+  <svg class="pst-icon" role="img" aria-hidden="true" focusable="false" viewBox="0 0 16 16" xmlns="http://www.w3.org/2000/svg">
+    <path fill="currentColor" d="M3 15.5C2.36232 15.5 1.74874 15.2564 1.28478 14.8189C0.820828 14.3815 0.541576 13.7832 0.504167 13.1467L0.5 13L0.5 3C0.499965 2.36232 0.743605 1.74874 1.18107 1.28478C1.61854 0.820828 2.21676 0.541576 2.85333 0.504167L3 0.5L13 0.5C13.6377 0.499965 14.2513 0.743605 14.7152 1.18107C15.1792 1.61854 15.4584 2.21676 15.4958 2.85333L15.5 3L15.5 13C15.5 13.6377 15.2564 14.2513 14.8189 14.7152C14.3815 15.1792 13.7832 15.4584 13.1467 15.4958L13 15.5L3 15.5ZM3 13.8333L10.5 13.8333L10.5 2.16667L3 2.16667C2.79589 2.16669 2.59889 2.24163 2.44636 2.37726C2.29383 2.5129 2.19638 2.69979 2.1725 2.9025L2.16667 3L2.16667 13C2.16669 13.2041 2.24163 13.4011 2.37726 13.5536C2.5129 13.7062 2.69979 13.8036 2.9025 13.8275L3 13.8333ZM6.65583 10.325L6.5775 10.2558L4.91083 8.58917C4.76735 8.44567 4.68116 8.25476 4.66843 8.05223C4.65569 7.84971 4.71729 7.6495 4.84167 7.48917L4.91083 7.41083L6.5775 5.74417C6.72747 5.59471 6.9287 5.50794 7.14032 5.50148C7.35194 5.49502 7.55809 5.56935 7.7169 5.70937C7.8757 5.8494 7.97525 6.04463 7.99533 6.25539C8.01541 6.46616 7.95451 6.67667 7.825 6.84417L7.75583 6.9225L6.67917 8L7.75583 9.0775C7.89931 9.22099 7.98551 9.41191 7.99824 9.61443C8.01097 9.81695 7.94938 10.0172 7.825 10.1775L7.75583 10.2558C7.61234 10.3993 7.42142 10.4855 7.2189 10.4982C7.01638 10.511 6.81617 10.4494 6.65583 10.325Z"/>
+  </svg>
+  <span class="pst-collapse-sidebar-label">Collapse Sidebar</span>
+  <span class="pst-expand-sidebar-label">Expand Sidebar</span>
+</button></div>
+        <div class="sidebar-primary-item">
+
+<nav class="bd-docs-nav bd-links"
+     aria-label="章节导航">
+  <p class="bd-links__title" role="heading" aria-level="1">章节导航</p>
+  <div class="bd-toc-item navbar-nav"><ul class="current nav bd-sidenav">
+<li class="toctree-l1 current active has-children"><a class="reference internal" href="index.html">模块一 Python 编程基础</a><details open="open"><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="python_conda.html">Python 与 Conda 简介</a></li>
+<li class="toctree-l2 current active"><a class="current reference internal" href="#">基本数据类型、变量和运算符</a></li>
+<li class="toctree-l2"><a class="reference internal" href="flow.html">分支、条件与循环</a></li>
+<li class="toctree-l2"><a class="reference internal" href="functions.html">函数及变量作用域、模块和包</a></li>
+<li class="toctree-l2"><a class="reference internal" href="oop.html">面向对象与高级语法</a></li>
+</ul>
+</details></li>
+<li class="toctree-l1 has-children"><a class="reference internal" href="../data/index.html">模块二 气象数据处理</a><details open="open"><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
+<li class="toctree-l2"><a class="reference internal" href="../data/numpy.html">气象数据计算 NumPy</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../data/pandas.html">气象数据分析（一）Pandas</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../data/xarray.html">气象数据分析（二）Xarray</a></li>
+</ul>
+</details></li>
+<li class="toctree-l1 has-children"><a class="reference internal" href="../viz/index.html">模块三 气象数据可视化</a><details open="open"><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
+<li class="toctree-l2"><a class="reference internal" href="../viz/matplotlib.html">气象数据绘图（一）Matplotlib</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../viz/cartopy.html">气象数据绘图（二）Cartopy</a></li>
+</ul>
+</details></li>
+</ul>
+</div>
+</nav></div>
+    </div>
+  
+  
+  <div class="sidebar-primary-items__end sidebar-primary__section">
+      <div class="sidebar-primary-item">
+<div id="ethical-ad-placement"
+      class="flat"
+      data-ea-publisher="readthedocs"
+      data-ea-type="readthedocs-sidebar"
+      data-ea-manual="true">
+</div></div>
+  </div>
+
+
+      </div>
+      
+      <main id="main-content" class="bd-main" role="main">
+        
+        
+          <div class="bd-content">
+            <div class="bd-article-container">
+              
+              <div class="bd-header-article d-print-none">
+<div class="header-article-items header-article__inner">
+  
+    <div class="header-article-items__start">
+      
+        <div class="header-article-item">
+
+<nav aria-label="Breadcrumb" class="d-print-none">
+  <ul class="bd-breadcrumbs">
+    
+    <li class="breadcrumb-item breadcrumb-home">
+      <a href="../../index.html" class="nav-link" aria-label="初始页面">
+        <i class="fa-solid fa-home"></i>
+      </a>
+    </li>
+    
+    <li class="breadcrumb-item"><a href="../index.html" class="nav-link">教程</a></li>
+    
+    
+    <li class="breadcrumb-item"><a href="index.html" class="nav-link">模块一 Python 编程基础</a></li>
+    
+    <li class="breadcrumb-item active" aria-current="page"><span class="ellipsis">基本数据类型、变量和运算符</span></li>
+  </ul>
+</nav>
+</div>
+      
+    </div>
+  
+  
+</div>
+</div>
+              
+              
+              
+                
+<div id="searchbox"></div>
+                <article class="bd-article">
+                  
+  <section id="tut-datatype">
+<span id="id1"></span><h1>基本数据类型、变量和运算符<a class="headerlink" href="#tut-datatype" title="Link to this heading">#</a></h1>
+<p>第 2 节 · 模块一 Python 编程基础
+贯穿项目第 2 步：用变量和基本类型存储兰州站元信息（站名、经纬度、海拔）。</p>
+<p>计算机程序的基本任务是<strong>处理数据</strong>，而数据类型（data type）就是给数据贴上的&quot;分类标签&quot;——它告诉解释器这份数据是数字、文字还是一个容器，以及能对它做什么运算。气象工作里到处都是类型选择问题：气温要用带小数的 <code class="docutils literal notranslate"><span class="pre">float</span></code>、站号要用 <code class="docutils literal notranslate"><span class="pre">int</span></code> 或 <code class="docutils literal notranslate"><span class="pre">str</span></code>、经纬度适合用 <a class="reference internal" href="../../api/ch02_terms.html#term-2"><span class="xref std std-term">元组</span></a>、一站多要素的记录适合用 <code class="docutils literal notranslate"><span class="pre">dict</span></code>。选对了类型，后面的计算、绘图才不会处处报错。</p>
+<p>学完本章你将能够：</p>
+<ol class="arabic simple">
+<li><p>区分 Python 的常用内置类型：<code class="docutils literal notranslate"><span class="pre">int</span></code>、<code class="docutils literal notranslate"><span class="pre">float</span></code>、<code class="docutils literal notranslate"><span class="pre">complex</span></code>、<code class="docutils literal notranslate"><span class="pre">str</span></code>、<code class="docutils literal notranslate"><span class="pre">list</span></code>、<code class="docutils literal notranslate"><span class="pre">tuple</span></code>、<code class="docutils literal notranslate"><span class="pre">dict</span></code>、<code class="docutils literal notranslate"><span class="pre">set</span></code>、<code class="docutils literal notranslate"><span class="pre">bool</span></code>、<code class="docutils literal notranslate"><span class="pre">NoneType</span></code>；</p></li>
+<li><p>正确给变量赋值、命名，并用 <code class="docutils literal notranslate"><span class="pre">type()</span></code> 与 <code class="docutils literal notranslate"><span class="pre">isinstance()</span></code> 检查类型；</p></li>
+<li><p>熟练使用算术、比较、逻辑、成员运算符处理气象数据；</p></li>
+<li><p>用 f-string 把计算结果格式化成规范的观测报告。</p></li>
+</ol>
+<div class="sd-container-fluid sd-sphinx-override sd-mb-4 docutils">
+<div class="sd-row sd-row-cols-1 sd-row-cols-xs-1 sd-row-cols-sm-2 sd-row-cols-md-2 sd-row-cols-lg-3 sd-g-2 sd-g-xs-2 sd-g-sm-2 sd-g-md-2 sd-g-lg-2 docutils">
+<div class="sd-col sd-d-flex-row docutils">
+<div class="sd-card sd-sphinx-override sd-w-100 sd-shadow-sm sd-card-hover gallery-card docutils">
+<div class="sd-card-header docutils">
+</div>
+<div class="sd-card-body docutils">
+<div class="sd-card-title sd-font-weight-bold docutils">
+🎬 配套动画</div>
+<p class="sd-card-text">变量&quot;贴标签&quot;与三种容器对比</p>
+</div>
+<a class="sd-stretched-link sd-hide-link-text reference internal" href="#ch02-animation"><span class="std std-ref">配套动画（T-202 占位）</span></a></div>
+</div>
+<div class="sd-col sd-d-flex-row docutils">
+<div class="sd-card sd-sphinx-override sd-w-100 sd-shadow-sm sd-card-hover gallery-card docutils">
+<div class="sd-card-header docutils">
+</div>
+<div class="sd-card-body docutils">
+<div class="sd-card-title sd-font-weight-bold docutils">
+✏️ 配套练习</div>
+<p class="sd-card-text">5 道西北站点实战题（含提示）</p>
+</div>
+<a class="sd-stretched-link sd-hide-link-text reference internal" href="../../tutorials/basics/ch02_practice.html"><span class="doc">第 2 章配套练习：站点信息与气温数据</span></a></div>
+</div>
+<div class="sd-col sd-d-flex-row docutils">
+<div class="sd-card sd-sphinx-override sd-w-100 sd-shadow-sm sd-card-hover gallery-card docutils">
+<div class="sd-card-header docutils">
+</div>
+<div class="sd-card-body docutils">
+<div class="sd-card-title sd-font-weight-bold docutils">
+🖼 可执行示例</div>
+<p class="sd-card-text">用基本类型存储站点信息并绘图</p>
+</div>
+<a class="sd-stretched-link sd-hide-link-text reference internal" href="../../gallery/plot_basics/plot_datatypes.html"><span class="doc">用基本数据类型存储站点信息</span></a></div>
+</div>
+</div>
+</div>
+<section id="t-202">
+<span id="ch02-animation"></span><h2>配套动画（T-202 占位）<a class="headerlink" href="#t-202" title="Link to this heading">#</a></h2>
+<figure class="align-center" id="id23">
+<a class="reference internal image-reference" href="../../_images/ch02_types_placeholder.svg"><img alt="第 2 章配套动画占位图" src="../../_images/ch02_types_placeholder.svg" style="width: 88%;" />
+</a>
+<figcaption>
+<p><span class="caption-text"><strong>图 2-1</strong> 配套动画（T-202 交付后替换本占位图）：① 变量是&quot;贴标签&quot;——内存盒子先存在，变量名标签贴上去；② <code class="docutils literal notranslate"><span class="pre">int</span></code> 与 <code class="docutils literal notranslate"><span class="pre">float</span></code> 的精度差异（<code class="docutils literal notranslate"><span class="pre">0.1</span> <span class="pre">+</span> <span class="pre">0.2</span> <span class="pre">!=</span> <span class="pre">0.3</span></code> 的可视化）；③ 列表 / 元组 / 字典三种容器类比（抽屉、密封盒、标签柜）。</span><a class="headerlink" href="#id23" title="Link to this image">#</a></p>
+</figcaption>
+</figure>
+</section>
+<section id="id2">
+<h2>变量与赋值：先有盒子，再贴标签<a class="headerlink" href="#id2" title="Link to this heading">#</a></h2>
+<p>Python 的 <a class="reference internal" href="../../api/ch02_terms.html#term-0"><span class="xref std std-term">变量</span></a> 不是&quot;盒子&quot;，而是<strong>贴在对象上的标签</strong>：解释器先在内存里创建对象 <code class="docutils literal notranslate"><span class="pre">1517.2</span></code>，再把变量名 <code class="docutils literal notranslate"><span class="pre">elevation</span></code> 这张标签贴上去。同一个对象可以贴多张标签，赋值只是换标签、贴新标签，从不复制数据本身。</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">station_name</span> <span class="o">=</span> <span class="s2">&quot;兰州&quot;</span>     <span class="c1"># str：站名</span>
+<span class="n">station_id</span> <span class="o">=</span> <span class="mi">52889</span>        <span class="c1"># int：区站号</span>
+<span class="n">elevation</span> <span class="o">=</span> <span class="mf">1517.2</span>        <span class="c1"># float：海拔（m）</span>
+
+<span class="nb">print</span><span class="p">(</span><span class="nb">type</span><span class="p">(</span><span class="n">station_name</span><span class="p">))</span>  <span class="c1"># &lt;class &#39;str&#39;&gt;</span>
+<span class="nb">print</span><span class="p">(</span><span class="nb">type</span><span class="p">(</span><span class="n">station_id</span><span class="p">))</span>    <span class="c1"># &lt;class &#39;int&#39;&gt;</span>
+<span class="nb">print</span><span class="p">(</span><span class="nb">type</span><span class="p">(</span><span class="n">elevation</span><span class="p">))</span>     <span class="c1"># &lt;class &#39;float&#39;&gt;</span>
+</pre></div>
+</div>
+<p>命名遵循 PEP 8 的几条硬规矩，气象变量推荐&quot;物理量 + 方向/统计量&quot;的全拼写法：</p>
+<ul class="simple">
+<li><p>只用字母、数字、下划线，且不能以数字开头（<code class="docutils literal notranslate"><span class="pre">1temp</span></code> ✗，<code class="docutils literal notranslate"><span class="pre">temp_1</span></code> ✓）；</p></li>
+<li><p>区分大小写：<code class="docutils literal notranslate"><span class="pre">Temp</span></code> 与 <code class="docutils literal notranslate"><span class="pre">temp</span></code> 是两个变量；</p></li>
+<li><p>不能与关键字重名（<code class="docutils literal notranslate"><span class="pre">if</span></code>、<code class="docutils literal notranslate"><span class="pre">for</span></code>、<code class="docutils literal notranslate"><span class="pre">class</span></code> 等）；</p></li>
+<li><p>用 <code class="docutils literal notranslate"><span class="pre">snake_case</span></code> 蛇形命名：<code class="docutils literal notranslate"><span class="pre">temp_max</span></code>、<code class="docutils literal notranslate"><span class="pre">temp_min</span></code>、<code class="docutils literal notranslate"><span class="pre">wind_speed_u</span></code>，见名知义；</p></li>
+<li><p>慎用 <code class="docutils literal notranslate"><span class="pre">l</span></code>、<code class="docutils literal notranslate"><span class="pre">O</span></code> 这类容易看成 <code class="docutils literal notranslate"><span class="pre">1</span></code>、<code class="docutils literal notranslate"><span class="pre">0</span></code> 的单字符名。</p></li>
+</ul>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">temp_max</span> <span class="o">=</span> <span class="mf">32.6</span>        <span class="c1"># 日最高气温（°C）</span>
+<span class="n">temp_min</span> <span class="o">=</span> <span class="mf">18.4</span>        <span class="c1"># 日最低气温（°C）</span>
+<span class="n">temp_range</span> <span class="o">=</span> <span class="n">temp_max</span> <span class="o">-</span> <span class="n">temp_min</span>   <span class="c1"># 日较差</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;今日日较差 </span><span class="si">{</span><span class="n">temp_range</span><span class="si">:</span><span class="s2">.1f</span><span class="si">}</span><span class="s2"> °C&quot;</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>赋值还有两种常用变体：</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="c1"># ① 多重赋值：一次给一组&quot;标签&quot;（经度、纬度天然成对出现）</span>
+<span class="n">lon</span><span class="p">,</span> <span class="n">lat</span> <span class="o">=</span> <span class="mf">103.83</span><span class="p">,</span> <span class="mf">36.06</span>
+
+<span class="c1"># ② 增量赋值：累加观测</span>
+<span class="n">temp_sum</span> <span class="o">=</span> <span class="mf">0.0</span>
+<span class="k">for</span> <span class="n">t</span> <span class="ow">in</span> <span class="p">[</span><span class="mf">5.1</span><span class="p">,</span> <span class="mf">6.3</span><span class="p">,</span> <span class="mf">4.8</span><span class="p">]:</span>   <span class="c1"># for 循环下一章细讲，这里先混个脸熟</span>
+    <span class="n">temp_sum</span> <span class="o">+=</span> <span class="n">t</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">temp_sum</span><span class="p">)</span>   <span class="c1"># 16.2</span>
+</pre></div>
+</div>
+<p>检查类型除了 <code class="docutils literal notranslate"><span class="pre">type()</span></code>，更推荐 <code class="docutils literal notranslate"><span class="pre">isinstance()</span></code>——它对&quot;是不是某类&quot;返回 <a class="reference internal" href="../../api/ch02_terms.html#term-bool"><span class="xref std std-term">布尔值</span></a>，方便写判断：</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">humidity</span> <span class="o">=</span> <span class="mf">45.0</span>
+<span class="nb">print</span><span class="p">(</span><span class="nb">isinstance</span><span class="p">(</span><span class="n">humidity</span><span class="p">,</span> <span class="nb">float</span><span class="p">))</span>         <span class="c1"># True</span>
+<span class="nb">print</span><span class="p">(</span><span class="nb">isinstance</span><span class="p">(</span><span class="n">humidity</span><span class="p">,</span> <span class="p">(</span><span class="nb">int</span><span class="p">,</span> <span class="nb">float</span><span class="p">)))</span>  <span class="c1"># True：允许 int 或 float 都行</span>
+</pre></div>
+</div>
+<div class="admonition seealso">
+<p class="admonition-title">参见</p>
+<p>名词详解见 <a class="reference internal" href="../../api/ch02_terms.html"><span class="doc">第 2 章术语：基本数据类型、变量和运算符</span></a>　·　相关词条：<a class="reference internal" href="../../api/ch02_terms.html#term-0"><span class="xref std std-term">变量</span></a>　·　<a class="reference internal" href="../../api/ch02_terms.html#term-1"><span class="xref std std-term">可变类型</span></a>　·　<a class="reference internal" href="../../api/ch02_terms.html#term-2"><span class="xref std std-term">不可变类型</span></a>。</p>
+</div>
+</section>
+<section id="intfloat-complex">
+<h2>数字类型：int、float 与 complex<a class="headerlink" href="#intfloat-complex" title="Link to this heading">#</a></h2>
+<section id="int">
+<h3>整型 int<a class="headerlink" href="#int" title="Link to this heading">#</a></h3>
+<p><a class="reference internal" href="../../api/ch02_terms.html#term-int"><span class="xref std std-term">整型</span></a> 是<strong>没有小数部分</strong>的整数，Python 的 <code class="docutils literal notranslate"><span class="pre">int</span></code> 没有大小上限（只受内存限制），这在处理大数值（如以秒计的再分析数据时间戳）时很省心。气象里典型的整型：区站号、年份、一天的观测时次（08 时、14 时、20 时）。</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">station_id</span> <span class="o">=</span> <span class="mi">52889</span>          <span class="c1"># 兰州站区站号</span>
+<span class="n">year_days</span> <span class="o">=</span> <span class="mi">366</span>             <span class="c1"># 2024 年是闰年</span>
+<span class="n">obs_hour</span> <span class="o">=</span> <span class="mi">14</span>               <span class="c1"># 14 时观测</span>
+
+<span class="nb">print</span><span class="p">(</span><span class="nb">type</span><span class="p">(</span><span class="n">station_id</span><span class="p">))</span>     <span class="c1"># &lt;class &#39;int&#39;&gt;</span>
+</pre></div>
+</div>
+</section>
+<section id="float">
+<h3>浮点型 float<a class="headerlink" href="#float" title="Link to this heading">#</a></h3>
+<p>带小数部分的数是 <a class="reference internal" href="../../api/ch02_terms.html#term-float"><span class="xref std std-term">浮点型</span></a>。气温、气压、湿度、经纬度、海拔……几乎所有连续物理量都用 <code class="docutils literal notranslate"><span class="pre">float</span></code> 存储——它像一把带毫米刻度的尺子，能分辨 36.06°N 与 36.07°N 的差别。</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">temp</span> <span class="o">=</span> <span class="mf">12.7</span>                 <span class="c1"># 气温（°C）</span>
+<span class="n">pressure</span> <span class="o">=</span> <span class="mf">848.6</span>            <span class="c1"># 本站气压（hPa）</span>
+<span class="nb">print</span><span class="p">(</span><span class="nb">type</span><span class="p">(</span><span class="n">temp</span><span class="p">))</span>           <span class="c1"># &lt;class &#39;float&#39;&gt;</span>
+</pre></div>
+</div>
+<div class="admonition warning">
+<p class="admonition-title">警告</p>
+<p><strong>必知考点：浮点数有精度误差。</strong> 浮点型按 IEEE 754 标准用二进制存储，<code class="docutils literal notranslate"><span class="pre">0.1</span></code> 无法被精确表示，于是 <code class="docutils literal notranslate"><span class="pre">0.1</span> <span class="pre">+</span> <span class="pre">0.2</span></code> 得到 <code class="docutils literal notranslate"><span class="pre">0.30000000000000004</span></code>，<code class="docutils literal notranslate"><span class="pre">0.1</span> <span class="pre">+</span> <span class="pre">0.2</span> <span class="pre">==</span> <span class="pre">0.3</span></code> 为 <code class="docutils literal notranslate"><span class="pre">False</span></code>。
+对气象数据而言，这意味着<strong>判断两个温度&quot;相等&quot;时不要直接用 ``==``</strong>，改用容差比较：</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">t1</span><span class="p">,</span> <span class="n">t2</span> <span class="o">=</span> <span class="mf">0.1</span> <span class="o">+</span> <span class="mf">0.2</span><span class="p">,</span> <span class="mf">0.3</span>
+<span class="nb">print</span><span class="p">(</span><span class="nb">abs</span><span class="p">(</span><span class="n">t1</span> <span class="o">-</span> <span class="n">t2</span><span class="p">)</span> <span class="o">&lt;</span> <span class="mf">1e-9</span><span class="p">)</span>           <span class="c1"># True：差值小于容差即视为相等</span>
+<span class="nb">print</span><span class="p">(</span><span class="nb">round</span><span class="p">(</span><span class="n">t1</span><span class="p">,</span> <span class="mi">6</span><span class="p">)</span> <span class="o">==</span> <span class="nb">round</span><span class="p">(</span><span class="n">t2</span><span class="p">,</span> <span class="mi">6</span><span class="p">))</span>  <span class="c1"># True：先四舍五入再比较</span>
+</pre></div>
+</div>
+</div>
+<p>保留小数位最常用的办法是 f-string 格式说明符 <code class="docutils literal notranslate"><span class="pre">:.2f</span></code>（详见 <a class="reference internal" href="#ch02-fstring"><span class="std std-ref">提升拓展</span></a>）：</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">pi</span> <span class="o">=</span> <span class="mf">3.1415926</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">pi</span><span class="si">:</span><span class="s2">.2f</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>          <span class="c1"># 3.14（四舍五入保留两位）</span>
+</pre></div>
+</div>
+</section>
+<section id="complex">
+<h3>复数 complex（了解即可）<a class="headerlink" href="#complex" title="Link to this heading">#</a></h3>
+<p>复数由实部和虚部组成，虚部以 <code class="docutils literal notranslate"><span class="pre">j</span></code> 结尾。基础阶段用得少，但它在波动与信号分析（如研究大气振荡时做傅里叶变换）里会重新登场。注意：实部和虚部<strong>都是浮点数</strong>，哪怕你写的是整数。</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">number_3</span> <span class="o">=</span> <span class="mi">2</span> <span class="o">+</span> <span class="mi">3</span><span class="n">j</span>
+<span class="nb">print</span><span class="p">(</span><span class="nb">type</span><span class="p">(</span><span class="n">number_3</span><span class="p">))</span>       <span class="c1"># &lt;class &#39;complex&#39;&gt;</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">number_3</span><span class="o">.</span><span class="n">real</span><span class="p">)</span>        <span class="c1"># 2.0（注意是 float）</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">number_3</span><span class="o">.</span><span class="n">imag</span><span class="p">)</span>        <span class="c1"># 3.0</span>
+</pre></div>
+</div>
+<details class="sd-sphinx-override sd-dropdown sd-card sd-mb-3">
+<summary class="sd-summary-title sd-card-header">
+<span class="sd-summary-text">拓展：需要精确小数时用 Decimal</span><span class="sd-summary-state-marker sd-summary-chevron-right"><svg version="1.1" width="1.5em" height="1.5em" class="sd-octicon sd-octicon-chevron-right" viewBox="0 0 24 24" aria-hidden="true"><path d="M8.72 18.78a.75.75 0 0 1 0-1.06L14.44 12 8.72 6.28a.751.751 0 0 1 .018-1.042.751.751 0 0 1 1.042-.018l6.25 6.25a.75.75 0 0 1 0 1.06l-6.25 6.25a.75.75 0 0 1-1.06 0Z"></path></svg></span></summary><div class="sd-summary-content sd-card-body docutils">
+<p class="sd-card-text">观测数据建档、经费核算等不容许 <code class="docutils literal notranslate"><span class="pre">0.1</span> <span class="pre">+</span> <span class="pre">0.2</span></code> 这类误差的场合，可以用标准库 <code class="docutils literal notranslate"><span class="pre">decimal</span></code> 指定有效位数（注意用<strong>字符串</strong>构造）：</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span><span class="w"> </span><span class="nn">decimal</span><span class="w"> </span><span class="kn">import</span> <span class="n">Decimal</span><span class="p">,</span> <span class="n">getcontext</span>
+
+<span class="n">getcontext</span><span class="p">()</span><span class="o">.</span><span class="n">prec</span> <span class="o">=</span> <span class="mi">5</span>          <span class="c1"># 设定有效数字为 5 位</span>
+<span class="n">x</span> <span class="o">=</span> <span class="n">Decimal</span><span class="p">(</span><span class="s2">&quot;0.3&quot;</span><span class="p">)</span>
+<span class="n">y</span> <span class="o">=</span> <span class="n">Decimal</span><span class="p">(</span><span class="s2">&quot;0.36&quot;</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">x</span> <span class="o">+</span> <span class="n">y</span><span class="p">)</span>                   <span class="c1"># 0.66，绝无精度误差</span>
+</pre></div>
+</div>
+<p class="sd-card-text">气象计算里一般保留 <code class="docutils literal notranslate"><span class="pre">float</span></code> 即可——10⁻¹⁷ 量级的误差远小于观测仪器精度，科学计算库 NumPy 也只认 <code class="docutils literal notranslate"><span class="pre">float</span></code>。<code class="docutils literal notranslate"><span class="pre">Decimal</span></code> 知道有这回事就好。</p>
+</div>
+</details></section>
+</section>
+<section id="str">
+<h2>序列之一：字符串 str<a class="headerlink" href="#str" title="Link to this heading">#</a></h2>
+<p><a class="reference internal" href="../../api/ch02_terms.html#term-str"><span class="xref std std-term">字符串</span></a> 是由字符组成的序列，用单引号或双引号包裹均可。它相当于观测记录本上的<strong>文字描述</strong>：站名、天气现象、风向的十六方位码……只用于读取和展示，不能直接参与算术运算。</p>
+<section id="id3">
+<h3>索引与切片<a class="headerlink" href="#id3" title="Link to this heading">#</a></h3>
+<p>字符串是序列，就能按下标取字符。Python 序列<strong>从 0 开始计数</strong>，<a class="reference internal" href="../../api/ch02_terms.html#term-4"><span class="xref std std-term">切片</span></a> <code class="docutils literal notranslate"><span class="pre">[a:b]</span></code> 遵循<strong>左闭右开</strong>——取到下标 <code class="docutils literal notranslate"><span class="pre">a</span></code>，取不到下标 <code class="docutils literal notranslate"><span class="pre">b</span></code>（<a class="reference internal" href="../../api/ch02_terms.html#term-3"><span class="xref std std-term">索引</span></a> 详解见术语 API）。</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">str1</span> <span class="o">=</span> <span class="s2">&quot;Lanzhou&quot;</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">str1</span><span class="p">[</span><span class="mi">1</span><span class="p">:</span><span class="mi">4</span><span class="p">])</span>    <span class="c1"># anz  （下标 1、2、3）</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">str1</span><span class="p">[:</span><span class="mi">3</span><span class="p">])</span>     <span class="c1"># Lan  （省略起点：从头开始）</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">str1</span><span class="p">[</span><span class="o">-</span><span class="mi">2</span><span class="p">:])</span>    <span class="c1"># hu   （负号：从末尾倒数，-1 是最后一个）</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">str1</span><span class="p">[::</span><span class="mi">2</span><span class="p">])</span>    <span class="c1"># Lnzu （步长 2：隔一个取一个）</span>
+</pre></div>
+</div>
+</section>
+<section id="id4">
+<h3>拼接与格式化<a class="headerlink" href="#id4" title="Link to this heading">#</a></h3>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">station</span> <span class="o">=</span> <span class="s2">&quot;Lanzhou&quot;</span>
+<span class="n">report</span> <span class="o">=</span> <span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">station</span><span class="si">}</span><span class="s2"> station, temp 25.6 C&quot;</span>   <span class="c1"># f-string，:ref:`ch02-fstring` 详述</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">report</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">station</span> <span class="o">+</span> <span class="s2">&quot; &quot;</span> <span class="o">+</span> <span class="s2">&quot;52889&quot;</span><span class="p">)</span>                <span class="c1"># + 直接拼接</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;-&quot;</span><span class="o">.</span><span class="n">join</span><span class="p">([</span><span class="s2">&quot;2024&quot;</span><span class="p">,</span> <span class="s2">&quot;07&quot;</span><span class="p">,</span> <span class="s2">&quot;15&quot;</span><span class="p">]))</span>         <span class="c1"># join：用 - 连接成日期 2024-07-15</span>
+</pre></div>
+</div>
+<p>常用方法速查：<code class="docutils literal notranslate"><span class="pre">.upper()</span></code> / <code class="docutils literal notranslate"><span class="pre">.lower()</span></code> 转大小写、<code class="docutils literal notranslate"><span class="pre">.strip()</span></code> 去首尾空白、<code class="docutils literal notranslate"><span class="pre">.split(&quot;,&quot;)</span></code> 按逗号拆成列表、<code class="docutils literal notranslate"><span class="pre">.replace(&quot;T&quot;,</span> <span class="pre">&quot;t&quot;)</span></code> 替换子串。CSV 气温文件的每一行，就是靠 <code class="docutils literal notranslate"><span class="pre">split</span></code> 拆开再用的。</p>
+<div class="admonition warning">
+<p class="admonition-title">警告</p>
+<p>两个易错点：</p>
+<ol class="arabic simple">
+<li><p><strong>数字加引号就成了字符串</strong>：<code class="docutils literal notranslate"><span class="pre">&quot;25&quot;</span></code> 是文本，<code class="docutils literal notranslate"><span class="pre">&quot;25&quot;</span> <span class="pre">+</span> <span class="pre">5</span></code> 直接抛 <code class="docutils literal notranslate"><span class="pre">TypeError</span></code>，须先转换 <code class="docutils literal notranslate"><span class="pre">int(&quot;25&quot;)</span> <span class="pre">+</span> <span class="pre">5</span></code>；</p></li>
+<li><p><strong>字符串不可变</strong>：<code class="docutils literal notranslate"><span class="pre">str1[0]</span> <span class="pre">=</span> <span class="pre">&quot;H&quot;</span></code> 会报错，只能生成新串 <code class="docutils literal notranslate"><span class="pre">str1</span> <span class="pre">=</span> <span class="pre">&quot;H&quot;</span> <span class="pre">+</span> <span class="pre">str1[1:]</span></code>。</p></li>
+</ol>
+</div>
+</section>
+</section>
+<section id="list">
+<h2>序列之二：列表 list<a class="headerlink" href="#list" title="Link to this heading">#</a></h2>
+<p>列表用方括号 <code class="docutils literal notranslate"><span class="pre">[]</span></code> 表示，<strong>有序、可增删改</strong>，能混装任意类型——像一排贴了顺序标签的抽屉（<a class="reference internal" href="../../api/ch02_terms.html#term-1"><span class="xref std std-term">可变类型</span></a>）。逐日气温序列、多站站名、探空各层高度，都先用列表存。</p>
+<section id="id5">
+<h3>增、删、改、查<a class="headerlink" href="#id5" title="Link to this heading">#</a></h3>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">max_temps</span> <span class="o">=</span> <span class="p">[</span><span class="mf">32.6</span><span class="p">,</span> <span class="mf">34.1</span><span class="p">,</span> <span class="mf">36.9</span><span class="p">]</span>     <span class="c1"># 近三日日最高气温（°C）</span>
+
+<span class="n">max_temps</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="mf">37.2</span><span class="p">)</span>             <span class="c1"># 尾部追加新的一天</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">max_temps</span><span class="p">)</span>                   <span class="c1"># [32.6, 34.1, 36.9, 37.2]</span>
+
+<span class="n">max_temps</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">=</span> <span class="mf">33.0</span>                <span class="c1"># 修改：下标 0 的复核值</span>
+<span class="n">max_temps</span><span class="o">.</span><span class="n">remove</span><span class="p">(</span><span class="mf">34.1</span><span class="p">)</span>             <span class="c1"># 按值删除第一个匹配项</span>
+<span class="n">last</span> <span class="o">=</span> <span class="n">max_temps</span><span class="o">.</span><span class="n">pop</span><span class="p">()</span>             <span class="c1"># 弹出末尾元素并返回</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">max_temps</span><span class="p">,</span> <span class="n">last</span><span class="p">)</span>             <span class="c1"># [33.0, 36.9] 37.2</span>
+</pre></div>
+</div>
+</section>
+<section id="id6">
+<h3>统计运算<a class="headerlink" href="#id6" title="Link to this heading">#</a></h3>
+<p>列表配 <code class="docutils literal notranslate"><span class="pre">sum</span></code> / <code class="docutils literal notranslate"><span class="pre">max</span></code> / <code class="docutils literal notranslate"><span class="pre">min</span></code> / <code class="docutils literal notranslate"><span class="pre">len</span></code> / <code class="docutils literal notranslate"><span class="pre">sorted</span></code> 五件套，就能完成初级气候统计：</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">temps</span> <span class="o">=</span> <span class="p">[</span><span class="mf">32.6</span><span class="p">,</span> <span class="mf">34.1</span><span class="p">,</span> <span class="mf">36.9</span><span class="p">,</span> <span class="mf">37.2</span><span class="p">]</span>
+<span class="n">avg</span> <span class="o">=</span> <span class="nb">sum</span><span class="p">(</span><span class="n">temps</span><span class="p">)</span> <span class="o">/</span> <span class="nb">len</span><span class="p">(</span><span class="n">temps</span><span class="p">)</span>      <span class="c1"># 平均值</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">avg</span><span class="si">:</span><span class="s2">.1f</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>                <span class="c1"># 35.2</span>
+<span class="nb">print</span><span class="p">(</span><span class="nb">max</span><span class="p">(</span><span class="n">temps</span><span class="p">),</span> <span class="nb">min</span><span class="p">(</span><span class="n">temps</span><span class="p">))</span>      <span class="c1"># 37.2 32.6</span>
+<span class="nb">print</span><span class="p">(</span><span class="nb">sorted</span><span class="p">(</span><span class="n">temps</span><span class="p">,</span> <span class="n">reverse</span><span class="o">=</span><span class="kc">True</span><span class="p">))</span> <span class="c1"># [37.2, 36.9, 34.1, 32.6]</span>
+</pre></div>
+</div>
+</section>
+<section id="id7">
+<h3>隔位切片：从混合记录中提取气温<a class="headerlink" href="#id7" title="Link to this heading">#</a></h3>
+<p>旧式观测文件常把&quot;日期、温度&quot;交替写在一行里。利用步长切片可以隔位取出温度（下标 1、3、5……），再用列表推导式筛出高温日：</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">record</span> <span class="o">=</span> <span class="p">[</span><span class="mi">711</span><span class="p">,</span> <span class="mf">35.6</span><span class="p">,</span> <span class="mi">712</span><span class="p">,</span> <span class="mf">37.8</span><span class="p">,</span> <span class="mi">713</span><span class="p">,</span> <span class="mf">34.5</span><span class="p">]</span>   <span class="c1"># 日期、气温交替</span>
+<span class="n">temps</span> <span class="o">=</span> <span class="n">record</span><span class="p">[</span><span class="mi">1</span><span class="p">::</span><span class="mi">2</span><span class="p">]</span>                          <span class="c1"># [35.6, 37.8, 34.5]</span>
+<span class="n">high_days</span> <span class="o">=</span> <span class="p">[</span><span class="n">t</span> <span class="k">for</span> <span class="n">t</span> <span class="ow">in</span> <span class="n">temps</span> <span class="k">if</span> <span class="n">t</span> <span class="o">&gt;=</span> <span class="mi">35</span><span class="p">]</span>     <span class="c1"># 列表推导式：只留 ≥35 °C</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;高温天气有 </span><span class="si">{</span><span class="nb">len</span><span class="p">(</span><span class="n">high_days</span><span class="p">)</span><span class="si">}</span><span class="s2"> 天&quot;</span><span class="p">)</span>      <span class="c1"># 高温天气有 2 天</span>
+</pre></div>
+</div>
+<div class="admonition note">
+<p class="admonition-title">备注</p>
+<p>实际项目中应优先用字典（日期→温度）或 Pandas 表格存混合数据，&quot;隔位切片&quot;只是演示序列能力。</p>
+</div>
+</section>
+</section>
+<section id="tuple">
+<h2>序列之三：元组 tuple<a class="headerlink" href="#tuple" title="Link to this heading">#</a></h2>
+<p>元组与列表相似，但<strong>一经创建不可修改</strong>，用圆括号 <code class="docutils literal notranslate"><span class="pre">()</span></code> 表示。它像封装出厂的探空仪器参数：坐标、海拔、传感器标定值——写入后谁都不许动，动了就报错，反而安全（<a class="reference internal" href="../../api/ch02_terms.html#term-2"><span class="xref std std-term">不可变类型</span></a>）。</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">location</span> <span class="o">=</span> <span class="p">(</span><span class="mf">103.83</span><span class="p">,</span> <span class="mf">36.06</span><span class="p">,</span> <span class="mf">1517.2</span><span class="p">)</span>   <span class="c1"># (经度, 纬度, 海拔) —— 兰州站坐标</span>
+<span class="c1"># location[0] = 104.0                # TypeError！元组不支持修改</span>
+
+<span class="nb">print</span><span class="p">(</span><span class="n">location</span><span class="p">[</span><span class="mi">0</span><span class="p">])</span>                   <span class="c1"># 103.83：可以读，不可改</span>
+</pre></div>
+</div>
+<div class="admonition warning">
+<p class="admonition-title">警告</p>
+<p><strong>单元素元组必须带逗号</strong>：<code class="docutils literal notranslate"><span class="pre">(1517,)</span></code> 是元组，<code class="docutils literal notranslate"><span class="pre">(1517)</span></code> 只是一个加了括号的 <code class="docutils literal notranslate"><span class="pre">int</span></code>。</p>
+</div>
+<p>元组最常用的操作是<strong>解包</strong>——按顺序一一对应地取值，经纬度、多要素观测记录拆开写最舒服：</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">data</span> <span class="o">=</span> <span class="p">(</span><span class="mf">25.2</span><span class="p">,</span> <span class="mf">1013.0</span><span class="p">,</span> <span class="mi">60</span><span class="p">)</span>            <span class="c1"># (气温, 海平面气压, 相对湿度)</span>
+<span class="n">temp</span><span class="p">,</span> <span class="n">pressure</span><span class="p">,</span> <span class="n">humidity</span> <span class="o">=</span> <span class="n">data</span>      <span class="c1"># 解包：按位置对应</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;温度 </span><span class="si">{</span><span class="n">temp</span><span class="si">}</span><span class="s2"> °C，气压 </span><span class="si">{</span><span class="n">pressure</span><span class="si">}</span><span class="s2"> hPa，湿度 </span><span class="si">{</span><span class="n">humidity</span><span class="si">}</span><span class="s2"> %&quot;</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>因为不可变，元组的方法只有两个&quot;只读&quot;统计：<code class="docutils literal notranslate"><span class="pre">count</span></code> 计次数、<code class="docutils literal notranslate"><span class="pre">index</span></code> 查下标。</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">temps</span> <span class="o">=</span> <span class="p">(</span><span class="mf">36.9</span><span class="p">,</span> <span class="mf">35.6</span><span class="p">,</span> <span class="mf">38.3</span><span class="p">,</span> <span class="mf">35.6</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">temps</span><span class="o">.</span><span class="n">count</span><span class="p">(</span><span class="mf">35.6</span><span class="p">))</span>   <span class="c1"># 2</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">temps</span><span class="o">.</span><span class="n">index</span><span class="p">(</span><span class="mf">38.3</span><span class="p">))</span>   <span class="c1"># 2</span>
+</pre></div>
+</div>
+<p>另一个隐藏福利：<strong>元组可以做字典的键，列表不行</strong>（详见下节）。</p>
+</section>
+<section id="dict">
+<h2>映射：字典 dict<a class="headerlink" href="#dict" title="Link to this heading">#</a></h2>
+<p>列表按&quot;位置&quot;取值，字典按&quot;名字&quot;取值。字典由<strong>键（key）与值（value）</strong>成对组成，是映射类型——像站点的档案柜：报出&quot;温度&quot;这个抽屉名，直接取出里面的数值，与存放顺序无关。</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">station</span> <span class="o">=</span> <span class="p">{</span>
+    <span class="s2">&quot;station_id&quot;</span><span class="p">:</span> <span class="s2">&quot;52889&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;name&quot;</span><span class="p">:</span> <span class="s2">&quot;兰州&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;temp&quot;</span><span class="p">:</span> <span class="mf">35.6</span><span class="p">,</span>
+    <span class="s2">&quot;humidity&quot;</span><span class="p">:</span> <span class="mi">90</span><span class="p">,</span>
+    <span class="s2">&quot;location&quot;</span><span class="p">:</span> <span class="p">(</span><span class="mf">103.83</span><span class="p">,</span> <span class="mf">36.06</span><span class="p">),</span>
+<span class="p">}</span>
+
+<span class="nb">print</span><span class="p">(</span><span class="n">station</span><span class="p">[</span><span class="s2">&quot;name&quot;</span><span class="p">])</span>        <span class="c1"># 兰州：按键查值</span>
+<span class="n">station</span><span class="p">[</span><span class="s2">&quot;temp&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="mf">30.4</span>        <span class="c1"># 改：更新已有键</span>
+<span class="n">station</span><span class="p">[</span><span class="s2">&quot;wind&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="mf">3.5</span>         <span class="c1"># 增：新增键值对</span>
+<span class="k">del</span> <span class="n">station</span><span class="p">[</span><span class="s2">&quot;humidity&quot;</span><span class="p">]</span>       <span class="c1"># 删：删除键值对</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">station</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>遍历字典的三种姿势：</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="k">for</span> <span class="n">key</span> <span class="ow">in</span> <span class="n">station</span><span class="p">:</span>                    <span class="c1"># 只遍历键</span>
+    <span class="nb">print</span><span class="p">(</span><span class="n">key</span><span class="p">)</span>
+<span class="k">for</span> <span class="n">value</span> <span class="ow">in</span> <span class="n">station</span><span class="o">.</span><span class="n">values</span><span class="p">():</span>         <span class="c1"># 只遍历值</span>
+    <span class="nb">print</span><span class="p">(</span><span class="n">value</span><span class="p">)</span>
+<span class="k">for</span> <span class="n">key</span><span class="p">,</span> <span class="n">value</span> <span class="ow">in</span> <span class="n">station</span><span class="o">.</span><span class="n">items</span><span class="p">():</span>     <span class="c1"># 键值成对（注意这里又用到了元组解包）</span>
+    <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">key</span><span class="si">}</span><span class="s2">: </span><span class="si">{</span><span class="n">value</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>站点多了，就<strong>嵌套</strong>——外层键是站号，内层又是一台档案柜：</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">stations</span> <span class="o">=</span> <span class="p">{</span>
+    <span class="s2">&quot;52889&quot;</span><span class="p">:</span> <span class="p">{</span><span class="s2">&quot;name&quot;</span><span class="p">:</span> <span class="s2">&quot;兰州&quot;</span><span class="p">,</span> <span class="s2">&quot;temp&quot;</span><span class="p">:</span> <span class="mf">25.6</span><span class="p">,</span> <span class="s2">&quot;humidity&quot;</span><span class="p">:</span> <span class="mi">40</span><span class="p">},</span>
+    <span class="s2">&quot;52418&quot;</span><span class="p">:</span> <span class="p">{</span><span class="s2">&quot;name&quot;</span><span class="p">:</span> <span class="s2">&quot;敦煌&quot;</span><span class="p">,</span> <span class="s2">&quot;temp&quot;</span><span class="p">:</span> <span class="mf">28.1</span><span class="p">,</span> <span class="s2">&quot;humidity&quot;</span><span class="p">:</span> <span class="mi">26</span><span class="p">},</span>
+<span class="p">}</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">stations</span><span class="p">[</span><span class="s2">&quot;52418&quot;</span><span class="p">][</span><span class="s2">&quot;temp&quot;</span><span class="p">])</span>       <span class="c1"># 28.1：两级索引</span>
+</pre></div>
+</div>
+<div class="admonition tip">
+<p class="admonition-title">小技巧</p>
+<p><strong>规则</strong>：值可以是任意类型；键必须是<strong>不可变</strong>类型——<code class="docutils literal notranslate"><span class="pre">str</span></code>、<code class="docutils literal notranslate"><span class="pre">int</span></code>、<code class="docutils literal notranslate"><span class="pre">float</span></code>、<code class="docutils literal notranslate"><span class="pre">tuple</span></code> 都行，<code class="docutils literal notranslate"><span class="pre">list</span></code> 不行（可变的东西没有稳定的&quot;档案编号&quot;）。
+<strong>小技巧</strong>：站号若以 <code class="docutils literal notranslate"><span class="pre">0</span></code> 开头（如 <code class="docutils literal notranslate"><span class="pre">&quot;010&quot;</span></code>），必须存成字符串，存成 <code class="docutils literal notranslate"><span class="pre">int</span></code> 会丢掉前导零。</p>
+</div>
+</section>
+<section id="set">
+<h2>集合 set<a class="headerlink" href="#set" title="Link to this heading">#</a></h2>
+<p>集合用大括号 <code class="docutils literal notranslate"><span class="pre">{}</span></code> 表示（空集合须写 <code class="docutils literal notranslate"><span class="pre">set()</span></code>，因为 <code class="docutils literal notranslate"><span class="pre">{}</span></code> 是空字典），两大特性：<strong>无序</strong>、<strong>元素唯一</strong>。它最适合回答&quot;有哪些、重不重、交不交叉&quot;这类问题——比如统计本月出现过哪些天气现象、两地高温站的重合情况。</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">high_temp</span> <span class="o">=</span> <span class="p">{</span><span class="s2">&quot;兰州&quot;</span><span class="p">,</span> <span class="s2">&quot;西安&quot;</span><span class="p">,</span> <span class="s2">&quot;重庆&quot;</span><span class="p">,</span> <span class="s2">&quot;南京&quot;</span><span class="p">}</span>    <span class="c1"># 出现高温的站</span>
+<span class="n">heavy_rain</span> <span class="o">=</span> <span class="p">{</span><span class="s2">&quot;西安&quot;</span><span class="p">,</span> <span class="s2">&quot;广州&quot;</span><span class="p">,</span> <span class="s2">&quot;深圳&quot;</span><span class="p">,</span> <span class="s2">&quot;南京&quot;</span><span class="p">}</span>   <span class="c1"># 出现暴雨的站</span>
+
+<span class="nb">print</span><span class="p">(</span><span class="n">high_temp</span> <span class="o">&amp;</span> <span class="n">heavy_rain</span><span class="p">)</span>   <span class="c1"># 交集 &amp;：又高温又暴雨</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">high_temp</span> <span class="o">|</span> <span class="n">heavy_rain</span><span class="p">)</span>   <span class="c1"># 并集 |：至少占其一</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">high_temp</span> <span class="o">-</span> <span class="n">heavy_rain</span><span class="p">)</span>   <span class="c1"># 差集 -：只高温未暴雨</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">high_temp</span> <span class="o">^</span> <span class="n">heavy_rain</span><span class="p">)</span>   <span class="c1"># 对称差 ^：恰好只占其一</span>
+</pre></div>
+</div>
+<p>唯一性天然适合<strong>去重</strong>：</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">phenomena</span> <span class="o">=</span> <span class="p">[</span><span class="s2">&quot;晴&quot;</span><span class="p">,</span> <span class="s2">&quot;多云&quot;</span><span class="p">,</span> <span class="s2">&quot;晴&quot;</span><span class="p">,</span> <span class="s2">&quot;扬沙&quot;</span><span class="p">,</span> <span class="s2">&quot;多云&quot;</span><span class="p">]</span>
+<span class="nb">print</span><span class="p">(</span><span class="nb">set</span><span class="p">(</span><span class="n">phenomena</span><span class="p">))</span>           <span class="c1"># {&#39;晴&#39;, &#39;多云&#39;, &#39;扬沙&#39;}（顺序随机）</span>
+<span class="nb">print</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="nb">set</span><span class="p">(</span><span class="n">phenomena</span><span class="p">)))</span>      <span class="c1"># 3：本月出现过 3 种天气现象</span>
+</pre></div>
+</div>
+<p>增删元素：</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">stations</span> <span class="o">=</span> <span class="p">{</span><span class="s2">&quot;北京&quot;</span><span class="p">,</span> <span class="s2">&quot;上海&quot;</span><span class="p">}</span>
+<span class="n">stations</span><span class="o">.</span><span class="n">add</span><span class="p">(</span><span class="s2">&quot;广州&quot;</span><span class="p">)</span>            <span class="c1"># 添加</span>
+<span class="n">stations</span><span class="o">.</span><span class="n">discard</span><span class="p">(</span><span class="s2">&quot;武汉&quot;</span><span class="p">)</span>        <span class="c1"># 删除（元素不存在也不报错，推荐）</span>
+<span class="n">stations</span><span class="o">.</span><span class="n">remove</span><span class="p">(</span><span class="s2">&quot;北京&quot;</span><span class="p">)</span>         <span class="c1"># 删除（元素不存在会抛 KeyError）</span>
+</pre></div>
+</div>
+</section>
+<section id="bool-none">
+<h2>布尔型 bool 与空值 None<a class="headerlink" href="#bool-none" title="Link to this heading">#</a></h2>
+<section id="bool">
+<h3>布尔型 bool<a class="headerlink" href="#bool" title="Link to this heading">#</a></h3>
+<p>布尔型只有两个值：<code class="docutils literal notranslate"><span class="pre">True</span></code> 和 <code class="docutils literal notranslate"><span class="pre">False</span></code>（<strong>首字母必须大写</strong>，写 <code class="docutils literal notranslate"><span class="pre">true</span></code> 会得到 <code class="docutils literal notranslate"><span class="pre">NameError</span></code>）。它对应观测里大量的是非判断：是否高温、是否达暴雨量级、风是否超阈值。比较运算的结果就是布尔值：</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">temp</span> <span class="o">=</span> <span class="mf">36.2</span>
+<span class="n">is_high</span> <span class="o">=</span> <span class="n">temp</span> <span class="o">&gt;=</span> <span class="mi">35</span>            <span class="c1"># 高温日判据</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">is_high</span><span class="p">)</span>                  <span class="c1"># True</span>
+<span class="nb">print</span><span class="p">(</span><span class="nb">type</span><span class="p">(</span><span class="n">is_high</span><span class="p">))</span>            <span class="c1"># &lt;class &#39;bool&#39;&gt;</span>
+</pre></div>
+</div>
+<p>数字与布尔可以互通：<code class="docutils literal notranslate"><span class="pre">0</span></code>、<code class="docutils literal notranslate"><span class="pre">0.0</span></code>、<code class="docutils literal notranslate"><span class="pre">&quot;&quot;</span></code>、<code class="docutils literal notranslate"><span class="pre">[]</span></code> 等空容器视为 <code class="docutils literal notranslate"><span class="pre">False</span></code>，其余视为 <code class="docutils literal notranslate"><span class="pre">True</span></code>。因此 <code class="docutils literal notranslate"><span class="pre">if</span> <span class="pre">temps:</span></code> 可以优雅地表达&quot;列表非空才统计&quot;。</p>
+</section>
+<section id="none">
+<h3>空值 None<a class="headerlink" href="#none" title="Link to this heading">#</a></h3>
+<p><a class="reference internal" href="../../api/ch02_terms.html#term-5"><span class="xref std std-term">空值</span></a> <code class="docutils literal notranslate"><span class="pre">None</span></code> 是独立的类型 <code class="docutils literal notranslate"><span class="pre">NoneType</span></code>，表示&quot;<strong>这里暂时没有值</strong>&quot;——不是 0，也不是空字符串，而是&quot;还没观测&quot;。缺测记录、函数暂无返回值、初始化未定的变量，都用 <code class="docutils literal notranslate"><span class="pre">None</span></code> 占位：</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">precip</span> <span class="o">=</span> <span class="kc">None</span>                   <span class="c1"># 降水缺测</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">precip</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">)</span>           <span class="c1"># True：判断空值一律用 is，不用 ==</span>
+<span class="c1"># ... 等仪器修复后补录</span>
+<span class="n">precip</span> <span class="o">=</span> <span class="mf">0.0</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">precip</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">)</span>           <span class="c1"># False：0.0 是&quot;观测到没下雨&quot;，None 是&quot;没观测&quot;</span>
+</pre></div>
+</div>
+<div class="admonition note">
+<p class="admonition-title">备注</p>
+<p>数据处理中请始终区分 <code class="docutils literal notranslate"><span class="pre">None</span></code>（未观测）与 <code class="docutils literal notranslate"><span class="pre">0.0</span></code>（观测为零）——气象上这是两件完全不同的事，NumPy 里的 <code class="docutils literal notranslate"><span class="pre">NaN</span></code> 扮演的就是类似 <code class="docutils literal notranslate"><span class="pre">None</span></code> 的角色。</p>
+</div>
+</section>
+</section>
+<section id="id8">
+<h2>运算符<a class="headerlink" href="#id8" title="Link to this heading">#</a></h2>
+<section id="id9">
+<h3>算术运算符<a class="headerlink" href="#id9" title="Link to this heading">#</a></h3>
+<div class="pst-scrollable-table-container"><table class="table">
+<colgroup>
+<col style="width: 12.5%" />
+<col style="width: 31.2%" />
+<col style="width: 56.2%" />
+</colgroup>
+<thead>
+<tr class="row-odd"><th class="head"><p>运算符</p></th>
+<th class="head"><p>含义</p></th>
+<th class="head"><p>气象示例</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">+</span></code> <code class="docutils literal notranslate"><span class="pre">-</span></code> <code class="docutils literal notranslate"><span class="pre">*</span></code></p></td>
+<td><p>加、减、乘</p></td>
+<td><p>日较差 <code class="docutils literal notranslate"><span class="pre">temp_max</span> <span class="pre">-</span> <span class="pre">temp_min</span></code></p></td>
+</tr>
+<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">/</span></code></p></td>
+<td><p>除（结果必为 float）</p></td>
+<td><p>均温 <code class="docutils literal notranslate"><span class="pre">sum(temps)</span> <span class="pre">/</span> <span class="pre">len(temps)</span></code></p></td>
+</tr>
+<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">//</span></code></p></td>
+<td><p>整除（向下取整）</p></td>
+<td><p>30 天观测折合 <code class="docutils literal notranslate"><span class="pre">30</span> <span class="pre">//</span> <span class="pre">7</span></code> 个整周</p></td>
+</tr>
+<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">%</span></code></p></td>
+<td><p>取模（余数）</p></td>
+<td><p>风向角归一 <code class="docutils literal notranslate"><span class="pre">(90</span> <span class="pre">+</span> <span class="pre">720)</span> <span class="pre">%</span> <span class="pre">360</span></code> → 90</p></td>
+</tr>
+<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">**</span></code></p></td>
+<td><p>幂</p></td>
+<td><p>有效平方流速 <code class="docutils literal notranslate"><span class="pre">u**2</span> <span class="pre">+</span> <span class="pre">v**2</span></code></p></td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">temp_c</span> <span class="o">=</span> <span class="mf">37.5</span>
+<span class="n">temp_f</span> <span class="o">=</span> <span class="n">temp_c</span> <span class="o">*</span> <span class="mi">9</span> <span class="o">/</span> <span class="mi">5</span> <span class="o">+</span> <span class="mi">32</span>          <span class="c1"># 摄氏转华氏</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">temp_f</span><span class="p">)</span>                         <span class="c1"># 99.5</span>
+
+<span class="n">wind_deg</span> <span class="o">=</span> <span class="mi">375</span>                        <span class="c1"># 仪器累积角度</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">wind_deg</span> <span class="o">%</span> <span class="mi">360</span><span class="p">)</span>                 <span class="c1"># 15：规范到 [0, 360)</span>
+
+<span class="n">total_hours</span> <span class="o">=</span> <span class="mi">730</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">total_hours</span> <span class="o">//</span> <span class="mi">24</span><span class="p">,</span> <span class="n">total_hours</span> <span class="o">%</span> <span class="mi">24</span><span class="p">)</span>   <span class="c1"># 30 天 10 小时</span>
+</pre></div>
+</div>
+<div class="admonition attention">
+<p class="admonition-title">注意</p>
+<p><code class="docutils literal notranslate"><span class="pre">/</span></code> 永远返回 float，即使整除：<code class="docutils literal notranslate"><span class="pre">10</span> <span class="pre">/</span> <span class="pre">5</span> <span class="pre">==</span> <span class="pre">2.0</span></code>。要整型结果用 <code class="docutils literal notranslate"><span class="pre">//</span></code>。</p>
+</div>
+</section>
+<section id="id10">
+<h3>比较运算符<a class="headerlink" href="#id10" title="Link to this heading">#</a></h3>
+<p><code class="docutils literal notranslate"><span class="pre">&gt;</span></code> <code class="docutils literal notranslate"><span class="pre">&lt;</span></code> <code class="docutils literal notranslate"><span class="pre">&gt;=</span></code> <code class="docutils literal notranslate"><span class="pre">&lt;=</span></code> <code class="docutils literal notranslate"><span class="pre">==</span></code> <code class="docutils literal notranslate"><span class="pre">!=</span></code>，返回布尔值。再次提醒：浮点数慎用 <code class="docutils literal notranslate"><span class="pre">==</span></code>。</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">temp</span> <span class="o">=</span> <span class="mf">36.5</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">temp</span> <span class="o">&gt;</span> <span class="mi">35</span><span class="p">)</span>         <span class="c1"># True</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">temp</span> <span class="o">&lt;=</span> <span class="mi">35</span><span class="p">)</span>        <span class="c1"># False</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">temp</span> <span class="o">!=</span> <span class="mf">36.5</span><span class="p">)</span>      <span class="c1"># False</span>
+</pre></div>
+</div>
+<p>链式比较是 Python 的特色写法，读起来几乎像数学不等式：</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">temp</span> <span class="o">=</span> <span class="mf">18.3</span>
+<span class="nb">print</span><span class="p">(</span><span class="mi">10</span> <span class="o">&lt;=</span> <span class="n">temp</span> <span class="o">&lt;</span> <span class="mi">20</span><span class="p">)</span>   <span class="c1"># True：适宜温度区间，等价于 10 &lt;= temp and temp &lt; 20</span>
+</pre></div>
+</div>
+</section>
+<section id="id11">
+<h3>逻辑运算符<a class="headerlink" href="#id11" title="Link to this heading">#</a></h3>
+<p><code class="docutils literal notranslate"><span class="pre">and</span></code>（且）、<code class="docutils literal notranslate"><span class="pre">or</span></code>（或）、<code class="docutils literal notranslate"><span class="pre">not</span></code>（非）用来组合判据。气象预警常常就是一条逻辑表达式：</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">temp</span><span class="p">,</span> <span class="n">humidity</span> <span class="o">=</span> <span class="mf">36.8</span><span class="p">,</span> <span class="mi">55</span>
+
+<span class="n">heatwave</span> <span class="o">=</span> <span class="n">temp</span> <span class="o">&gt;=</span> <span class="mi">35</span> <span class="ow">and</span> <span class="n">humidity</span> <span class="o">&gt;=</span> <span class="mi">50</span>       <span class="c1"># 高温高湿&quot;桑拿天&quot;</span>
+<span class="n">night_heat</span> <span class="o">=</span> <span class="n">temp</span> <span class="o">&gt;=</span> <span class="mi">28</span> <span class="ow">or</span> <span class="n">humidity</span> <span class="o">&gt;=</span> <span class="mi">80</span>      <span class="c1"># 夜间闷热</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">heatwave</span><span class="p">)</span>        <span class="c1"># True</span>
+<span class="nb">print</span><span class="p">(</span><span class="ow">not</span> <span class="n">heatwave</span><span class="p">)</span>    <span class="c1"># False</span>
+</pre></div>
+</div>
+</section>
+<section id="id12">
+<h3>成员运算符<a class="headerlink" href="#id12" title="Link to this heading">#</a></h3>
+<p><code class="docutils literal notranslate"><span class="pre">in</span></code> / <code class="docutils literal notranslate"><span class="pre">not</span> <span class="pre">in</span></code> 判断元素是否在序列或字典中：</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">stations</span> <span class="o">=</span> <span class="p">[</span><span class="s2">&quot;兰州&quot;</span><span class="p">,</span> <span class="s2">&quot;敦煌&quot;</span><span class="p">,</span> <span class="s2">&quot;西宁&quot;</span><span class="p">]</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;兰州&quot;</span> <span class="ow">in</span> <span class="n">stations</span><span class="p">)</span>          <span class="c1"># True</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;西安&quot;</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">stations</span><span class="p">)</span>      <span class="c1"># True</span>
+
+<span class="n">station</span> <span class="o">=</span> <span class="p">{</span><span class="s2">&quot;name&quot;</span><span class="p">:</span> <span class="s2">&quot;兰州&quot;</span><span class="p">,</span> <span class="s2">&quot;temp&quot;</span><span class="p">:</span> <span class="mf">25.6</span><span class="p">}</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;temp&quot;</span> <span class="ow">in</span> <span class="n">station</span><span class="p">)</span>           <span class="c1"># True：对字典判断的是键</span>
+</pre></div>
+</div>
+</section>
+<section id="id13">
+<h3>运算符优先级（常用速查）<a class="headerlink" href="#id13" title="Link to this heading">#</a></h3>
+<p>从高到低：<code class="docutils literal notranslate"><span class="pre">**</span></code> → 一元负号 → <code class="docutils literal notranslate"><span class="pre">*</span></code> <code class="docutils literal notranslate"><span class="pre">/</span></code> <code class="docutils literal notranslate"><span class="pre">//</span></code> <code class="docutils literal notranslate"><span class="pre">%</span></code> → <code class="docutils literal notranslate"><span class="pre">+</span></code> <code class="docutils literal notranslate"><span class="pre">-</span></code> → 比较运算 → <code class="docutils literal notranslate"><span class="pre">not</span></code> → <code class="docutils literal notranslate"><span class="pre">and</span></code> → <code class="docutils literal notranslate"><span class="pre">or</span></code>。拿不准时<strong>加括号</strong>——括号不要钱，可读性值千金：</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">u</span><span class="p">,</span> <span class="n">v</span> <span class="o">=</span> <span class="mf">3.0</span><span class="p">,</span> <span class="mf">4.0</span>
+<span class="n">speed</span> <span class="o">=</span> <span class="p">(</span><span class="n">u</span><span class="o">**</span><span class="mi">2</span> <span class="o">+</span> <span class="n">v</span><span class="o">**</span><span class="mi">2</span><span class="p">)</span> <span class="o">**</span> <span class="mf">0.5</span>    <span class="c1"># 风速 5.0，括号让意图一目了然</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">speed</span><span class="p">)</span>
+</pre></div>
+</div>
+</section>
+</section>
+<section id="ch02-fstring">
+<span id="id14"></span><h2>提升拓展<a class="headerlink" href="#ch02-fstring" title="Link to this heading">#</a></h2>
+<section id="f-string">
+<h3>f-string 格式化进阶<a class="headerlink" href="#f-string" title="Link to this heading">#</a></h3>
+<p>f-string（格式化字符串字面量）是当前最主流的字符串拼接方式：字符串前加 <code class="docutils literal notranslate"><span class="pre">f</span></code>，<code class="docutils literal notranslate"><span class="pre">{}</span></code> 里既能放变量，也能放表达式。</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">station_id</span> <span class="o">=</span> <span class="mi">52889</span>
+<span class="n">temp</span> <span class="o">=</span> <span class="mf">37.5</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;站点 </span><span class="si">{</span><span class="n">station_id</span><span class="si">}</span><span class="s2"> 日最高气温 </span><span class="si">{</span><span class="n">temp</span><span class="si">}</span><span class="s2"> °C&quot;</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;折合华氏 </span><span class="si">{</span><span class="n">temp</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="mi">9</span><span class="w"> </span><span class="o">/</span><span class="w"> </span><span class="mi">5</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="mi">32</span><span class="si">}</span><span class="s2"> °F&quot;</span><span class="p">)</span>     <span class="c1"># {} 里可以写算式</span>
+</pre></div>
+</div>
+<p><code class="docutils literal notranslate"><span class="pre">:</span></code> 后跟<strong>格式说明符</strong>，是把数字变成规范报告的关键：</p>
+<div class="pst-scrollable-table-container"><table class="table">
+<colgroup>
+<col style="width: 17.6%" />
+<col style="width: 35.3%" />
+<col style="width: 47.1%" />
+</colgroup>
+<thead>
+<tr class="row-odd"><th class="head"><p>写法</p></th>
+<th class="head"><p>含义</p></th>
+<th class="head"><p>示例输入 → 输出</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">:.1f</span></code></p></td>
+<td><p>保留 1 位小数</p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">12.765</span></code> → <code class="docutils literal notranslate"><span class="pre">12.8</span></code></p></td>
+</tr>
+<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">:+.1f</span></code></p></td>
+<td><p>带正负号</p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">0.5</span></code> → <code class="docutils literal notranslate"><span class="pre">+0.5</span></code>（距平常用）</p></td>
+</tr>
+<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">:.0%</span></code></p></td>
+<td><p>百分数</p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">0.456</span></code> → <code class="docutils literal notranslate"><span class="pre">46%</span></code>（相对湿度）</p></td>
+</tr>
+<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">:.2e</span></code></p></td>
+<td><p>科学计数</p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">12345.6</span></code> → <code class="docutils literal notranslate"><span class="pre">1.23e+04</span></code></p></td>
+</tr>
+<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">:&gt;8.2f</span></code></p></td>
+<td><p>右对齐占 8 格</p></td>
+<td><p>对齐输出多站报表</p></td>
+</tr>
+<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">:08.2f</span></code></p></td>
+<td><p>补零占 8 格</p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">12.5</span></code> → <code class="docutils literal notranslate"><span class="pre">00012.50</span></code>（排序友好）</p></td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">anomaly</span> <span class="o">=</span> <span class="mf">1.456</span>            <span class="c1"># 气温距平（°C）</span>
+<span class="n">humidity</span> <span class="o">=</span> <span class="mf">0.456</span>           <span class="c1"># 相对湿度（小数）</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;气温距平 </span><span class="si">{</span><span class="n">anomaly</span><span class="si">:</span><span class="s2">+.1f</span><span class="si">}</span><span class="s2"> °C&quot;</span><span class="p">)</span>     <span class="c1"># 气温距平 +1.5 °C</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;相对湿度 </span><span class="si">{</span><span class="n">humidity</span><span class="si">:</span><span class="s2">.0%</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>        <span class="c1"># 相对湿度 46%</span>
+</pre></div>
+</div>
+</section>
+<section id="id15">
+<h3>列表推导式初探<a class="headerlink" href="#id15" title="Link to this heading">#</a></h3>
+<p>处理列表数据时，&quot;新建空列表 → for 循环 → append&quot;是常见三步，列表推导式把三步压成一行：</p>
+<p><strong>语法</strong>：<code class="docutils literal notranslate"><span class="pre">[表达式</span> <span class="pre">for</span> <span class="pre">变量</span> <span class="pre">in</span> <span class="pre">可迭代对象</span> <span class="pre">if</span> <span class="pre">条件]</span></code> —— 对每个元素，先过 <code class="docutils literal notranslate"><span class="pre">if</span></code> 关卡，通过者按 <em>表达式</em> 加工后收进新列表。</p>
+<p>以整批摄氏温度转华氏为例（熟悉 Fortran 的同学可以类比 <code class="docutils literal notranslate"><span class="pre">do</span></code> 循环 + <code class="docutils literal notranslate"><span class="pre">write</span></code>）：</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">celsius</span> <span class="o">=</span> <span class="p">[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="mi">4</span><span class="p">,</span> <span class="mi">5</span><span class="p">,</span> <span class="mi">6</span><span class="p">,</span> <span class="mi">7</span><span class="p">,</span> <span class="mi">8</span><span class="p">,</span> <span class="mi">9</span><span class="p">]</span>
+
+<span class="c1"># 方法一：传统三步</span>
+<span class="n">fahrenheit</span> <span class="o">=</span> <span class="p">[]</span>
+<span class="k">for</span> <span class="n">c</span> <span class="ow">in</span> <span class="n">celsius</span><span class="p">:</span>
+    <span class="n">f</span> <span class="o">=</span> <span class="n">c</span> <span class="o">*</span> <span class="mi">9</span> <span class="o">/</span> <span class="mi">5</span> <span class="o">+</span> <span class="mi">32</span>
+    <span class="n">fahrenheit</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">f</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">fahrenheit</span><span class="p">)</span>
+
+<span class="c1"># 方法二：列表推导式，一行等价</span>
+<span class="n">fahrenheit</span> <span class="o">=</span> <span class="p">[</span><span class="n">c</span> <span class="o">*</span> <span class="mi">9</span> <span class="o">/</span> <span class="mi">5</span> <span class="o">+</span> <span class="mi">32</span> <span class="k">for</span> <span class="n">c</span> <span class="ow">in</span> <span class="n">celsius</span><span class="p">]</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">fahrenheit</span><span class="p">)</span>   <span class="c1"># [33.8, 35.6, 37.4, 39.2, 41.0, 42.8, 44.6, 46.4, 48.2]</span>
+</pre></div>
+</div>
+<p>加 <code class="docutils literal notranslate"><span class="pre">if</span></code> 条件即可边遍历边筛选，比如挑出高温日：</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">temps</span> <span class="o">=</span> <span class="p">[</span><span class="mf">33.0</span><span class="p">,</span> <span class="mf">35.6</span><span class="p">,</span> <span class="mf">34.2</span><span class="p">,</span> <span class="mf">37.8</span><span class="p">,</span> <span class="mf">29.9</span><span class="p">]</span>
+<span class="n">high</span> <span class="o">=</span> <span class="p">[</span><span class="n">t</span> <span class="k">for</span> <span class="n">t</span> <span class="ow">in</span> <span class="n">temps</span> <span class="k">if</span> <span class="n">t</span> <span class="o">&gt;=</span> <span class="mi">35</span><span class="p">]</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">high</span><span class="p">,</span> <span class="nb">len</span><span class="p">(</span><span class="n">high</span><span class="p">))</span>    <span class="c1"># [35.6, 37.8] 2</span>
+</pre></div>
+</div>
+<div class="admonition tip">
+<p class="admonition-title">小技巧</p>
+<p>建议一行不超过一个 <code class="docutils literal notranslate"><span class="pre">for</span></code> + 一个 <code class="docutils literal notranslate"><span class="pre">if</span></code>；更复杂的逻辑老老实实写循环，可读性优先。学完第 3 章循环后再回头看这一节，会有更深的体会。</p>
+</div>
+</section>
+</section>
+<section id="ch02-bestpractice">
+<span id="id16"></span><h2>最佳实践：类型选择与单位标注<a class="headerlink" href="#ch02-bestpractice" title="Link to this heading">#</a></h2>
+<p>正文回答了&quot;每种类型是什么&quot;，这一节回答更实际的问题：<strong>面对一个具体的气象量，该选哪种类型？数值和单位怎么标注才不会在三个月后坑到自己？</strong> 以下规则来自一线数据处理的踩坑经验，建议当作团队代码规范执行。</p>
+<section id="id17">
+<h3>气象量的类型选择速查表<a class="headerlink" href="#id17" title="Link to this heading">#</a></h3>
+<div class="pst-scrollable-table-container"><table class="table">
+<colgroup>
+<col style="width: 24.0%" />
+<col style="width: 12.0%" />
+<col style="width: 26.0%" />
+<col style="width: 38.0%" />
+</colgroup>
+<thead>
+<tr class="row-odd"><th class="head"><p>气象量</p></th>
+<th class="head"><p>推荐类型</p></th>
+<th class="head"><p>示例</p></th>
+<th class="head"><p>理由</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p>站名、省份</p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">str</span></code></p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">name</span> <span class="pre">=</span> <span class="pre">&quot;兰州&quot;</span></code></p></td>
+<td><p>文本，无需运算</p></td>
+</tr>
+<tr class="row-odd"><td><p>区站号（无前导零）</p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">int</span></code></p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">station_id</span> <span class="pre">=</span> <span class="pre">52889</span></code></p></td>
+<td><p>纯数字、不参与算术，排序自然</p></td>
+</tr>
+<tr class="row-even"><td><p>区站号（含前导零）</p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">str</span></code></p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">station_id</span> <span class="pre">=</span> <span class="pre">&quot;01001&quot;</span></code></p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">int</span></code> 会吃掉前导零</p></td>
+</tr>
+<tr class="row-odd"><td><p>气温、气压、湿度、风速</p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">float</span></code></p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">temp</span> <span class="pre">=</span> <span class="pre">12.7</span></code></p></td>
+<td><p>连续物理量，必须保留小数</p></td>
+</tr>
+<tr class="row-even"><td><p>经纬度、海拔</p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">tuple</span></code></p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">(103.83,</span> <span class="pre">36.06,</span> <span class="pre">1517.2)</span></code></p></td>
+<td><p>定位参数天然一组、不容篡改</p></td>
+</tr>
+<tr class="row-odd"><td><p>逐日/逐时序列</p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">list</span></code></p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">[5.1,</span> <span class="pre">6.3,</span> <span class="pre">4.8]</span></code></p></td>
+<td><p>有序、需追加、需统计</p></td>
+</tr>
+<tr class="row-even"><td><p>一站多要素档案</p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">dict</span></code></p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">{&quot;temp&quot;:</span> <span class="pre">25.6}</span></code></p></td>
+<td><p>按要素名取值，见名知义</p></td>
+</tr>
+<tr class="row-odd"><td><p>多站档案库</p></td>
+<td><p>嵌套 <code class="docutils literal notranslate"><span class="pre">dict</span></code></p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">stations[&quot;52889&quot;][&quot;temp&quot;]</span></code></p></td>
+<td><p>外层站号、内层要素</p></td>
+</tr>
+<tr class="row-even"><td><p>天气现象、站名去重</p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">set</span></code></p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">set(phenomena)</span></code></p></td>
+<td><p>自动去重、支持交并差</p></td>
+</tr>
+<tr class="row-odd"><td><p>是非判据</p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">bool</span></code></p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">temp</span> <span class="pre">&gt;=</span> <span class="pre">35</span></code></p></td>
+<td><p>直接用于 <code class="docutils literal notranslate"><span class="pre">if</span></code>，语义清晰</p></td>
+</tr>
+<tr class="row-even"><td><p>缺测记录</p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">None</span></code></p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">precip</span> <span class="pre">=</span> <span class="pre">None</span></code></p></td>
+<td><p>区分&quot;没观测&quot;与&quot;观测为零&quot;</p></td>
+</tr>
+</tbody>
+</table>
+</div>
+<p><strong>三条铁律</strong>：</p>
+<ol class="arabic simple">
+<li><p><strong>连续量永远用 float</strong>。把 12.7 °C 存成 <code class="docutils literal notranslate"><span class="pre">int</span></code> 的 12，误差 0.7 °C——比多数观测仪器精度还大一个量级，日积月累会把气候统计悄悄带偏。</p></li>
+<li><p><strong>成对出现且不允许中途修改的参数用 tuple</strong>。坐标用列表存，等于给后续代码留了&quot;随手改掉经度&quot;的后门；元组则会在误改时立刻报错。</p></li>
+<li><p><strong>&quot;编号&quot;类数字先问自己：会拿它做算术吗？</strong> 不会（如站号、日期字符串 <code class="docutils literal notranslate"><span class="pre">&quot;2024-07-15&quot;</span></code>）就倾向 <code class="docutils literal notranslate"><span class="pre">str</span></code>；会（如年积温累加）才用数字类型。</p></li>
+</ol>
+</section>
+<section id="id18">
+<h3>单位标注三习惯<a class="headerlink" href="#id18" title="Link to this heading">#</a></h3>
+<p>气象数据相当一部分&quot;神秘 bug&quot;来自单位混乱：一份代码里同时混着 °C 与 K、hPa 与 Pa、m/s 与 km/h。养成三个习惯：</p>
+<p><strong>习惯 1：变量名带单位后缀。</strong></p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">temp_c</span> <span class="o">=</span> <span class="mf">25.6</span>          <span class="c1"># °C</span>
+<span class="n">pressure_hpa</span> <span class="o">=</span> <span class="mf">848.6</span>   <span class="c1"># hPa</span>
+<span class="n">wind_ms</span> <span class="o">=</span> <span class="mf">3.5</span>          <span class="c1"># m/s</span>
+<span class="n">precip_mm</span> <span class="o">=</span> <span class="mf">12.4</span>       <span class="c1"># mm</span>
+<span class="n">elev_m</span> <span class="o">=</span> <span class="mf">1517.2</span>        <span class="c1"># m</span>
+</pre></div>
+</div>
+<p><strong>习惯 2：转换动作集中在入口处。</strong> 单位转换只做一次、写在读入处，绝不散落在各处计算中：</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="c1"># 读入即统一：数据在项目内部永远用 °C</span>
+<span class="n">temp_c</span> <span class="o">=</span> <span class="p">(</span><span class="n">temp_f</span> <span class="o">-</span> <span class="mi">32</span><span class="p">)</span> <span class="o">*</span> <span class="mi">5</span> <span class="o">/</span> <span class="mi">9</span>     <span class="c1"># 入口转换</span>
+<span class="n">dtemp</span> <span class="o">=</span> <span class="n">temp_c2</span> <span class="o">-</span> <span class="n">temp_c1</span>          <span class="c1"># 之后全是纯 °C 运算</span>
+</pre></div>
+</div>
+<p><strong>习惯 3：输出与文档显式写单位。</strong></p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;兰州站 7 月平均气温 </span><span class="si">{</span><span class="n">temp_c</span><span class="si">:</span><span class="s2">.1f</span><span class="si">}</span><span class="s2"> °C&quot;</span><span class="p">)</span>   <span class="c1"># 数值旁必须有单位</span>
+</pre></div>
+</div>
+<p>字典/表格存元数据时，把单位写进键名，一眼可查：</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">station</span> <span class="o">=</span> <span class="p">{</span>
+    <span class="s2">&quot;name&quot;</span><span class="p">:</span> <span class="s2">&quot;兰州&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;temp_c&quot;</span><span class="p">:</span> <span class="mf">25.6</span><span class="p">,</span>
+    <span class="s2">&quot;pressure_hpa&quot;</span><span class="p">:</span> <span class="mf">848.6</span><span class="p">,</span>
+    <span class="s2">&quot;elev_m&quot;</span><span class="p">:</span> <span class="mf">1517.2</span><span class="p">,</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+</section>
+<section id="pep-8">
+<h3>命名与格式规范（PEP 8 摘要）<a class="headerlink" href="#pep-8" title="Link to this heading">#</a></h3>
+<div class="pst-scrollable-table-container"><table class="table">
+<colgroup>
+<col style="width: 32.0%" />
+<col style="width: 34.0%" />
+<col style="width: 34.0%" />
+</colgroup>
+<thead>
+<tr class="row-odd"><th class="head"><p>规则</p></th>
+<th class="head"><p>推荐</p></th>
+<th class="head"><p>不推荐</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p>变量/函数：蛇形命名</p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">temp_max</span></code>, <code class="docutils literal notranslate"><span class="pre">wind_speed</span></code></p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">TempMax</span></code>, <code class="docutils literal notranslate"><span class="pre">tempmax</span></code></p></td>
+</tr>
+<tr class="row-odd"><td><p>常量：全大写</p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">FREEZING_POINT_C</span> <span class="pre">=</span> <span class="pre">0.0</span></code></p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">freezingPoint</span></code></p></td>
+</tr>
+<tr class="row-even"><td><p>见名知义</p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">temp_min_2024</span></code></p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">t1</span></code>, <code class="docutils literal notranslate"><span class="pre">data2</span></code></p></td>
+</tr>
+<tr class="row-odd"><td><p>布尔值用 is/has 开头</p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">is_heatwave</span></code>, <code class="docutils literal notranslate"><span class="pre">has_precip</span></code></p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">flag1</span></code></p></td>
+</tr>
+<tr class="row-even"><td><p>禁止覆盖内置名</p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">station_list</span></code></p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">list</span> <span class="pre">=</span> <span class="pre">[...]</span></code></p></td>
+</tr>
+</tbody>
+</table>
+</div>
+</section>
+<section id="id19">
+<h3>类型转换检查清单<a class="headerlink" href="#id19" title="Link to this heading">#</a></h3>
+<ul class="simple">
+<li><p>转换前先想清楚<strong>方向与合法性</strong>：<code class="docutils literal notranslate"><span class="pre">int(&quot;25&quot;)</span></code> ✓、<code class="docutils literal notranslate"><span class="pre">int(&quot;25.6&quot;)</span></code> ✗（须先 <code class="docutils literal notranslate"><span class="pre">float</span></code>）、<code class="docutils literal notranslate"><span class="pre">float(&quot;12.7&quot;)</span></code> ✓；</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">str</span> <span class="pre">→</span> <span class="pre">number</span></code> 随时可能抛 <code class="docutils literal notranslate"><span class="pre">ValueError</span></code>，读外部数据（CSV、键盘输入）时用 <code class="docutils literal notranslate"><span class="pre">try/except</span></code> 兜底（第 3 章后可回头实践）；</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">float</span> <span class="pre">→</span> <span class="pre">int</span></code> 是<strong>截断</strong>不是四舍五入：<code class="docutils literal notranslate"><span class="pre">int(25.9)</span></code> 得 <code class="docutils literal notranslate"><span class="pre">25</span></code>；要四舍五入用 <code class="docutils literal notranslate"><span class="pre">round(25.9)</span></code>；</p></li>
+<li><p>显示与计算分离：<strong>计算用原值，显示才格式化</strong>——<code class="docutils literal notranslate"><span class="pre">f&quot;{avg:.1f}&quot;</span></code> 只影响打印，别提前 <code class="docutils literal notranslate"><span class="pre">round</span></code> 破坏精度。</p></li>
+</ul>
+</section>
+<section id="id20">
+<h3>常见反模式（反面教材）<a class="headerlink" href="#id20" title="Link to this heading">#</a></h3>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="c1"># 反模式 1：温度用 int，精度蒸发</span>
+<span class="n">temp</span> <span class="o">=</span> <span class="mi">12</span>                 <span class="c1"># ✗ 12.7 °C 被截成 12</span>
+<span class="n">temp</span> <span class="o">=</span> <span class="mf">12.7</span>               <span class="c1"># ✓</span>
+
+<span class="c1"># 反模式 2：坐标用 list，埋下误改隐患</span>
+<span class="n">location</span> <span class="o">=</span> <span class="p">[</span><span class="mf">103.83</span><span class="p">,</span> <span class="mf">36.06</span><span class="p">]</span>          <span class="c1"># ✗ 任何代码都能 location[0] = 999</span>
+<span class="n">location</span> <span class="o">=</span> <span class="p">(</span><span class="mf">103.83</span><span class="p">,</span> <span class="mf">36.06</span><span class="p">)</span>          <span class="c1"># ✓ 元组防误改，且可作字典键</span>
+
+<span class="c1"># 反模式 3：变量名不带单位，换算 bug 找三天</span>
+<span class="n">pressure</span> <span class="o">=</span> <span class="mf">848.6</span>          <span class="c1"># ✗ hPa 还是 Pa？</span>
+<span class="n">pressure_hpa</span> <span class="o">=</span> <span class="mf">848.6</span>      <span class="c1"># ✓</span>
+
+<span class="c1"># 反模式 4：缺测用 999 填充再忘掉</span>
+<span class="n">temp</span> <span class="o">=</span> <span class="mi">999</span>                <span class="c1"># ✗ 气象惯例的缺测码 999 会混进 max() 统计</span>
+<span class="n">temp</span> <span class="o">=</span> <span class="kc">None</span>               <span class="c1"># ✓ 缺测显式化；进阶章节用 np.nan</span>
+
+<span class="c1"># 反模式 5：浮点直接判等</span>
+<span class="k">if</span> <span class="n">temp_avg</span> <span class="o">==</span> <span class="mf">25.0</span><span class="p">:</span>      <span class="c1"># ✗ 0.1 + 0.2 != 0.3 的远房亲戚</span>
+    <span class="o">...</span>
+<span class="k">if</span> <span class="nb">abs</span><span class="p">(</span><span class="n">temp_avg</span> <span class="o">-</span> <span class="mf">25.0</span><span class="p">)</span> <span class="o">&lt;</span> <span class="mf">1e-6</span><span class="p">:</span>   <span class="c1"># ✓ 容差比较</span>
+    <span class="o">...</span>
+</pre></div>
+</div>
+<div class="admonition tip">
+<p class="admonition-title">小技巧</p>
+<p><strong>一句话总结</strong>：类型选对（float 管连续量、tuple 管定位、dict 管档案）、单位进名字（<code class="docutils literal notranslate"><span class="pre">temp_c</span></code>）、缺测交给 <code class="docutils literal notranslate"><span class="pre">None</span></code>——做到这三条，你的气象代码就有了职业素养的底子。</p>
+</div>
+</section>
+</section>
+<section id="id21">
+<h2>贯穿项目 · 第 2 步：存储兰州站元信息<a class="headerlink" href="#id21" title="Link to this heading">#</a></h2>
+<p>把本章知识点组装起来，完成 <code class="docutils literal notranslate"><span class="pre">weather_project/notebooks/ch02_types.py</span></code>：</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="sd">&quot;&quot;&quot;ch02_types.py —— 贯穿项目第 2 步：用基本类型存储兰州站信息&quot;&quot;&quot;</span>
+
+<span class="c1"># —— 站点元信息 ——</span>
+<span class="n">station_name</span> <span class="o">=</span> <span class="s2">&quot;兰州&quot;</span>                     <span class="c1"># str：站名</span>
+<span class="n">station_id</span> <span class="o">=</span> <span class="mi">52889</span>                        <span class="c1"># int：区站号</span>
+<span class="n">location</span> <span class="o">=</span> <span class="p">(</span><span class="mf">103.83</span><span class="p">,</span> <span class="mf">36.06</span><span class="p">,</span> <span class="mf">1517.2</span><span class="p">)</span>        <span class="c1"># tuple：(经度, 纬度, 海拔 m)</span>
+<span class="n">lon</span><span class="p">,</span> <span class="n">lat</span><span class="p">,</span> <span class="n">elev</span> <span class="o">=</span> <span class="n">location</span>                 <span class="c1"># 解包</span>
+
+<span class="c1"># —— 近三日气温（°C）——</span>
+<span class="n">temp_max_list</span> <span class="o">=</span> <span class="p">[</span><span class="mf">12.6</span><span class="p">,</span> <span class="mf">13.4</span><span class="p">,</span> <span class="mf">11.9</span><span class="p">]</span>
+<span class="n">temp_min_list</span> <span class="o">=</span> <span class="p">[</span><span class="mf">1.4</span><span class="p">,</span> <span class="mf">2.2</span><span class="p">,</span> <span class="mf">0.8</span><span class="p">]</span>
+
+<span class="c1"># —— 档案与统计 ——</span>
+<span class="n">station</span> <span class="o">=</span> <span class="p">{</span>
+    <span class="s2">&quot;station_id&quot;</span><span class="p">:</span> <span class="n">station_id</span><span class="p">,</span>
+    <span class="s2">&quot;name&quot;</span><span class="p">:</span> <span class="n">station_name</span><span class="p">,</span>
+    <span class="s2">&quot;lon&quot;</span><span class="p">:</span> <span class="n">lon</span><span class="p">,</span>
+    <span class="s2">&quot;lat&quot;</span><span class="p">:</span> <span class="n">lat</span><span class="p">,</span>
+    <span class="s2">&quot;elevation&quot;</span><span class="p">:</span> <span class="n">elev</span><span class="p">,</span>
+<span class="p">}</span>
+<span class="n">avg_max</span> <span class="o">=</span> <span class="nb">sum</span><span class="p">(</span><span class="n">temp_max_list</span><span class="p">)</span> <span class="o">/</span> <span class="nb">len</span><span class="p">(</span><span class="n">temp_max_list</span><span class="p">)</span>
+<span class="n">avg_min</span> <span class="o">=</span> <span class="nb">sum</span><span class="p">(</span><span class="n">temp_min_list</span><span class="p">)</span> <span class="o">/</span> <span class="nb">len</span><span class="p">(</span><span class="n">temp_min_list</span><span class="p">)</span>
+<span class="n">station</span><span class="p">[</span><span class="s2">&quot;temp_max_avg&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">avg_max</span>         <span class="c1"># 动态写入统计结果</span>
+<span class="n">station</span><span class="p">[</span><span class="s2">&quot;temp_min_avg&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">avg_min</span>
+
+<span class="c1"># —— 输出观测报告 ——</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;站点：</span><span class="si">{</span><span class="n">station_name</span><span class="si">}</span><span class="s2">（</span><span class="si">{</span><span class="n">station_id</span><span class="si">}</span><span class="s2">）&quot;</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;位置：</span><span class="si">{</span><span class="n">lon</span><span class="si">:</span><span class="s2">.2f</span><span class="si">}</span><span class="s2">°E, </span><span class="si">{</span><span class="n">lat</span><span class="si">:</span><span class="s2">.2f</span><span class="si">}</span><span class="s2">°N, 海拔 </span><span class="si">{</span><span class="n">elev</span><span class="si">:</span><span class="s2">.1f</span><span class="si">}</span><span class="s2"> m&quot;</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;近三日平均最高气温：</span><span class="si">{</span><span class="n">avg_max</span><span class="si">:</span><span class="s2">.1f</span><span class="si">}</span><span class="s2"> °C，平均最低气温：</span><span class="si">{</span><span class="n">avg_min</span><span class="si">:</span><span class="s2">.1f</span><span class="si">}</span><span class="s2"> °C&quot;</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>输出：</p>
+<div class="highlight-text notranslate"><div class="highlight"><pre><span></span>站点：兰州（52889）
+位置：103.83°E, 36.06°N, 海拔 1517.2 m
+近三日平均最高气温：12.6 °C，平均最低气温：1.5 °C
+</pre></div>
+</div>
+<p><strong>验收标准</strong>：脚本输出站名、站号、经纬度、海拔与三日均温，数值格式正确（保留 1 位小数）。可运行版本见 <a class="reference internal" href="../../gallery/plot_basics/plot_datatypes.html"><span class="doc">用基本数据类型存储站点信息</span></a>。</p>
+</section>
+<section id="id22">
+<h2>本章小结<a class="headerlink" href="#id22" title="Link to this heading">#</a></h2>
+<div class="pst-scrollable-table-container"><table class="table">
+<colgroup>
+<col style="width: 14.0%" />
+<col style="width: 24.0%" />
+<col style="width: 8.0%" />
+<col style="width: 8.0%" />
+<col style="width: 46.0%" />
+</colgroup>
+<thead>
+<tr class="row-odd"><th class="head"><p>类型</p></th>
+<th class="head"><p>字面量</p></th>
+<th class="head"><p>有序</p></th>
+<th class="head"><p>可变</p></th>
+<th class="head"><p>典型气象用途</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">int</span></code></p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">52889</span></code></p></td>
+<td><p>—</p></td>
+<td><p>✗</p></td>
+<td><p>站号、年份、时次</p></td>
+</tr>
+<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">float</span></code></p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">1517.2</span></code></p></td>
+<td><p>—</p></td>
+<td><p>✗</p></td>
+<td><p>气温、气压、经纬度、海拔</p></td>
+</tr>
+<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">str</span></code></p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">&quot;兰州&quot;</span></code></p></td>
+<td><p>✓</p></td>
+<td><p>✗</p></td>
+<td><p>站名、天气现象、日期文本</p></td>
+</tr>
+<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">list</span></code></p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">[32.6,</span> <span class="pre">34.1]</span></code></p></td>
+<td><p>✓</p></td>
+<td><p>✓</p></td>
+<td><p>逐日气温序列、站名清单</p></td>
+</tr>
+<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">tuple</span></code></p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">(103.83,</span> <span class="pre">36.06)</span></code></p></td>
+<td><p>✓</p></td>
+<td><p>✗</p></td>
+<td><p>坐标、不可变的标定参数</p></td>
+</tr>
+<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">dict</span></code></p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">{&quot;temp&quot;:</span> <span class="pre">25.6}</span></code></p></td>
+<td><p>按键取</p></td>
+<td><p>✓</p></td>
+<td><p>站点档案、多要素元数据</p></td>
+</tr>
+<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">set</span></code></p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">{&quot;晴&quot;,</span> <span class="pre">&quot;多云&quot;}</span></code></p></td>
+<td><p>✗</p></td>
+<td><p>✓</p></td>
+<td><p>天气现象去重、站点集合运算</p></td>
+</tr>
+<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">bool</span></code></p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">True</span></code></p></td>
+<td><p>—</p></td>
+<td><p>✗</p></td>
+<td><p>高温/暴雨判据</p></td>
+</tr>
+<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">NoneType</span></code></p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">None</span></code></p></td>
+<td><p>—</p></td>
+<td><p>✗</p></td>
+<td><p>缺测占位、无返回值</p></td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="admonition seealso">
+<p class="admonition-title">参见</p>
+<ul class="simple">
+<li><p>术语详解：<a class="reference internal" href="../../api/ch02_terms.html"><span class="doc">第 2 章术语：基本数据类型、变量和运算符</span></a> —— 每个名词的生活类比与易混淆点；</p></li>
+<li><p>动手练习：<a class="reference internal" href="../../tutorials/basics/ch02_practice.html"><span class="doc">第 2 章配套练习：站点信息与气温数据</span></a> —— 5 道西北站点实战题（含提示与参考答案）；</p></li>
+<li><p>可执行示例：<a class="reference internal" href="../../gallery/plot_basics/plot_datatypes.html"><span class="doc">用基本数据类型存储站点信息</span></a> —— 用基本类型存储站点信息并绘图。</p></li>
+</ul>
+</div>
+</section>
+</section>
+
+
+                </article>
+              
+              
+              
+              
+              
+                <footer class="prev-next-footer d-print-none">
+                  
+<div class="prev-next-area">
+    <a class="left-prev"
+       href="python_conda.html"
+       title="上一页">
+      <i class="fa-solid fa-angle-left"></i>
+      <div class="prev-next-info">
+        <p class="prev-next-subtitle">上一页</p>
+        <p class="prev-next-title">Python 与 Conda 简介</p>
+      </div>
+    </a>
+    <a class="right-next"
+       href="flow.html"
+       title="下一页">
+      <div class="prev-next-info">
+        <p class="prev-next-subtitle">下一页</p>
+        <p class="prev-next-title">分支、条件与循环</p>
+      </div>
+      <i class="fa-solid fa-angle-right"></i>
+    </a>
+</div>
+                </footer>
+              
+            </div>
+            
+            
+              
+                <dialog id="pst-secondary-sidebar-modal"></dialog>
+                <div id="pst-secondary-sidebar" class="bd-sidebar-secondary bd-toc"><div class="sidebar-secondary-items sidebar-secondary__inner">
+
+
+  <div class="sidebar-secondary-item">
+<div
+    id="pst-page-navigation-heading-2"
+    class="page-toc tocsection onthispage">
+    <i class="fa-solid fa-list"></i> 当前页面
+  </div>
+  <nav id="pst-page-toc-nav" class="page-toc" aria-labelledby="pst-page-navigation-heading-2">
+    <ul class="pst-show_toc_level nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#t-202">配套动画（T-202 占位）</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id2">变量与赋值：先有盒子，再贴标签</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#intfloat-complex">数字类型：int、float 与 complex</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#int">整型 int</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#float">浮点型 float</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#complex">复数 complex（了解即可）</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#str">序列之一：字符串 str</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#id3">索引与切片</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#id4">拼接与格式化</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#list">序列之二：列表 list</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#id5">增、删、改、查</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#id6">统计运算</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#id7">隔位切片：从混合记录中提取气温</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#tuple">序列之三：元组 tuple</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#dict">映射：字典 dict</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#set">集合 set</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#bool-none">布尔型 bool 与空值 None</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#bool">布尔型 bool</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#none">空值 None</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id8">运算符</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#id9">算术运算符</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#id10">比较运算符</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#id11">逻辑运算符</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#id12">成员运算符</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#id13">运算符优先级（常用速查）</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#ch02-fstring">提升拓展</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#f-string">f-string 格式化进阶</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#id15">列表推导式初探</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#ch02-bestpractice">最佳实践：类型选择与单位标注</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#id17">气象量的类型选择速查表</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#id18">单位标注三习惯</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#pep-8">命名与格式规范（PEP 8 摘要）</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#id19">类型转换检查清单</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#id20">常见反模式（反面教材）</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id21">贯穿项目 · 第 2 步：存储兰州站元信息</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id22">本章小结</a></li>
+</ul>
+  </nav></div>
+
+</div></div>
+              
+            
+          </div>
+          <footer class="bd-footer-content">
+            
+          </footer>
+        
+      </main>
+    </div>
+  </div>
+  
+  <!-- Scripts loaded after <body> so the DOM is not blocked -->
+  <script defer src="../../_static/scripts/bootstrap.js?digest=90905a2f556bf617f1a9"></script>
+<script defer src="../../_static/scripts/pydata-sphinx-theme.js?digest=90905a2f556bf617f1a9"></script>
+
+  <footer class="bd-footer">
+<div class="bd-footer__inner bd-page-width">
+  
+    <div class="footer-items__start">
+      
+        <div class="footer-item">
+
+  <p class="copyright">
+    
+      © Copyright 2026, 兰州大学大气科学学院编程社区.
+      <br/>
+    
+  </p>
+</div>
+      
+        <div class="footer-item">
+
+  <p class="sphinx-version">
+    由 <a href="https://www.sphinx-doc.org/">Sphinx</a> 8.2.3创建。
+    <br/>
+  </p>
+</div>
+      
+    </div>
+  
+  
+  
+    <div class="footer-items__end">
+      
+        <div class="footer-item">
+<p class="theme-version">
+  <!-- # L10n: Setting the PST URL as an argument as this does not need to be localized -->
+  使用 <a href="https://pydata-sphinx-theme.readthedocs.io/en/stable/index.html">PyData Sphinx Theme</a> 0.20.0构建.
+</p></div>
+      
+    </div>
+  
+</div>
+
+  </footer>
+  </body>
+</html>

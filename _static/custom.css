@@ -1,0 +1,78 @@
+/* ============================================================
+   气象 + Python 文档 自定义样式
+   汇总自：02 主题配置 / 03 画廊
+   ============================================================ */
+
+/* —— 正文宽度放宽（两条规则必须分开写）—— */
+.bd-main .bd-content .bd-article-container { max-width: 100%; }
+.bd-page-width { max-width: 100%; }
+
+/* —— 中文字体回退 —— */
+body {
+  font-family: "Noto Sans CJK SC", "PingFang SC", "Microsoft YaHei",
+               system-ui, sans-serif;
+}
+code, pre, kbd {
+  font-family: "JetBrains Mono", "Cascadia Code", Consolas, monospace;
+}
+
+/* ============================================================
+   画廊 A：sphinx-gallery 缩略图 —— 悬停变暗 + 标题浮现
+   ============================================================ */
+.sphx-glr-thumbcontainer { position: relative; overflow: hidden; border-radius: 6px; }
+.sphx-glr-thumbcontainer img { transition: filter .25s ease, transform .25s ease; }
+.sphx-glr-thumbcontainer .sphx-glr-thumbnail-title {
+  position: absolute; inset: auto 0 0 0; margin: 0; padding: 6px 8px;
+  background: rgba(0,0,0,.62); color: #fff; font-size: .85rem;
+  transform: translateY(110%); transition: transform .25s ease;
+}
+.sphx-glr-thumbcontainer:hover img { filter: brightness(.55); transform: scale(1.03); }
+.sphx-glr-thumbcontainer:hover .sphx-glr-thumbnail-title { transform: translateY(0); }
+
+/* ============================================================
+   画廊 B：sphinx-design 教程卡片 —— 悬停变暗 + 标题浮现
+   仅对带顶部图（:img-top:）的卡片启用"正文移出 + 悬停浮现"；
+   无图导航卡片（主页快捷入口、章节页跳转按钮）正文正常
+   流式排布，否则卡片塌陷、文字不可见。
+   ============================================================ */
+.gallery-card { position: relative; overflow: hidden;
+  transition: box-shadow .25s ease, transform .25s ease; }
+/* 同一行卡片等高（grid 内 stretch 时撑满行高） */
+.gallery-card.sd-card { height: 100%; }
+.gallery-card .sd-card-img-top { transition: filter .25s ease, transform .25s ease; }
+
+/* 带图卡片：正文悬浮于底部，悬停浮现 */
+.gallery-card:has(.sd-card-img-top) .sd-card-body {
+  position: absolute; inset: auto 0 0 0; margin: 0; padding: .5rem .75rem;
+  background: rgba(0,0,0,.62); color: #fff;
+  transform: translateY(110%); transition: transform .25s ease;
+}
+html[data-theme="dark"] .gallery-card:has(.sd-card-img-top) .sd-card-body { background: rgba(0,0,0,.72); }
+
+.gallery-card:hover { transform: translateY(-3px);
+  box-shadow: 0 8px 20px rgba(0,0,0,.25); }
+.gallery-card:hover .sd-card-img-top { filter: brightness(.5); transform: scale(1.04); }
+.gallery-card:has(.sd-card-img-top):hover .sd-card-body { transform: translateY(0); }
+
+/* 无图导航卡片：标题与描述正常显示，保证最小高度 */
+.gallery-card:not(:has(.sd-card-img-top)) .sd-card-body {
+  position: static; transform: none;
+  background: none; color: inherit;
+  padding: .75rem 1rem; min-height: 3.5rem;
+}
+
+/* ============================================================
+   配套视频：桌面端限制高度，避免 100% 宽度把高度拉得过大
+   sphinx-contrib.video 指令输出：<div class="sphinx-contrib-video-container">
+   ============================================================ */
+.sphinx-contrib-video-container { text-align: center; }
+.sphinx-contrib-video-container video {
+  width: auto;        /* 覆盖 HTML 上的 width="100%"，不再撑满容器 */
+  max-width: 100%;    /* 窄屏时仍不超出容器 */
+  height: auto;       /* 保持原始宽高比 */
+  max-height: 480px;  /* 桌面端高度上限（原生 720p / 544p 均在此范围） */
+  display: inline-block;
+  margin: 0 auto;
+  background: #000;
+}
+

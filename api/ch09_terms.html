@@ -1,0 +1,681 @@
+
+<!DOCTYPE html>
+
+
+<html lang="zh-CN" data-content_root="../" >
+
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
+    <title>第 9 章术语：Matplotlib 绘图 &#8212; MeteoPython</title>
+  
+  
+  
+  <script data-cfasync="false">
+    document.documentElement.dataset.mode = localStorage.getItem("mode") || "";
+    document.documentElement.dataset.theme = localStorage.getItem("theme") || "";
+  </script>
+  <!--
+    this give us a css class that will be invisible only if js is disabled
+  -->
+  <noscript>
+    <style>
+      .pst-js-only { display: none !important; }
+
+    </style>
+  </noscript>
+  
+  <!-- Loaded before other Sphinx assets -->
+  <link href="../_static/styles/theme.css?digest=90905a2f556bf617f1a9" rel="stylesheet" />
+<link href="../_static/styles/pydata-sphinx-theme.css?digest=90905a2f556bf617f1a9" rel="stylesheet" />
+
+    <link rel="stylesheet" type="text/css" href="../_static/pygments.css?v=8f2a1f02" />
+    <link rel="stylesheet" type="text/css" href="../_static/copybutton.css?v=76b2166b" />
+    <link rel="stylesheet" type="text/css" href="../_static/sg_gallery.css?v=fd6457a4" />
+    <link rel="stylesheet" type="text/css" href="../_static/sg_gallery-binder.css?v=f4aeca0c" />
+    <link rel="stylesheet" type="text/css" href="../_static/sg_gallery-dataframe.css?v=2082cf3c" />
+    <link rel="stylesheet" type="text/css" href="../_static/sg_gallery-rendered-html.css?v=1277b6f3" />
+    <link rel="stylesheet" type="text/css" href="../_static/sphinx-design.min.css?v=95c83b7e" />
+    <link rel="stylesheet" type="text/css" href="../_static/./custom.css?v=fbe1f034" />
+  
+  <!-- So that users can add custom icons -->
+  <script defer src="../_static/scripts/fontawesome.js?digest=90905a2f556bf617f1a9"></script>
+  <!-- Pre-loaded scripts that we'll load fully later -->
+  <link rel="preload" as="script" href="../_static/scripts/bootstrap.js?digest=90905a2f556bf617f1a9" />
+<link rel="preload" as="script" href="../_static/scripts/pydata-sphinx-theme.js?digest=90905a2f556bf617f1a9" />
+
+    <script src="../_static/documentation_options.js?v=9becfed8"></script>
+    <script src="../_static/doctools.js?v=9bcbadda"></script>
+    <script src="../_static/sphinx_highlight.js?v=dc90522c"></script>
+    <script src="../_static/sg-tags.js?v=d80f6fa4"></script>
+    <script src="../_static/clipboard.min.js?v=a7894cd8"></script>
+    <script src="../_static/copybutton.js?v=fd10adb8"></script>
+    <script src="../_static/translations.js?v=beaddf03"></script>
+    <script src="../_static/design-tabs.js?v=f930bc37"></script>
+    <script>DOCUMENTATION_OPTIONS.pagename = 'api/ch09_terms';</script>
+    <script>
+        DOCUMENTATION_OPTIONS.theme_version = '0.20.0';
+        DOCUMENTATION_OPTIONS.theme_switcher_json_url = '_static/switcher.json';
+        DOCUMENTATION_OPTIONS.theme_switcher_version_match = '0.1.0';
+        DOCUMENTATION_OPTIONS.show_version_warning_banner =
+            false;
+        </script>
+    <script>DOCUMENTATION_OPTIONS.search_as_you_type = false;</script>
+    <link rel="icon" href="../_static/favicon.svg"/>
+    <link rel="index" title="索引" href="../genindex.html" />
+    <link rel="search" title="搜索" href="../search.html" />
+    <link rel="next" title="常见问题 Q&amp;A" href="../qa/index.html" />
+    <link rel="prev" title="第 8 章术语：气象数据分析（二）Xarray" href="ch08_terms.html" />
+  <meta name="viewport" content="width=device-width, initial-scale=1"/>
+  <meta name="docsearch:language" content="zh-CN"/>
+  <meta name="docsearch:version" content="0.1" />
+    <meta name="docbuild:last-update" content="2026-08-20"/>
+  
+    
+    <script src="../_static/searchtools.js"></script>
+    <script src="../_static/language_data.js"></script>
+    <script src="../searchindex.js"></script>
+  
+  </head>
+  <body data-default-mode="">
+  
+  
+  <div id="pst-skip-link" class="skip-link d-print-none"><a href="#main-content">跳转至主要内容</a></div>
+
+  
+  <div id="pst-scroll-pixel-helper"></div>
+  
+  <button type="button" class="btn rounded-pill" id="pst-back-to-top">
+    <i class="fa-solid fa-arrow-up"></i>回到顶部</button>
+  
+  
+  
+  
+  <dialog id="pst-search-dialog">
+    
+<form class="bd-search d-flex align-items-center"
+      action="../search.html"
+      method="get">
+  <i class="fa-solid fa-magnifying-glass"></i>
+  <input type="search"
+         class="form-control"
+         name="q"
+         placeholder="搜索文档…"
+         aria-label="搜索文档…"
+         autocomplete="off"
+         autocorrect="off"
+         autocapitalize="off"
+         spellcheck="false"/>
+  <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd>K</kbd></span>
+</form>
+  </dialog>
+
+  <div class="pst-async-banner-revealer d-none">
+  <aside id="bd-header-version-warning" class="d-none d-print-none" aria-label="版本警告"></aside>
+</div>
+
+  
+    <header id="pst-header" class="bd-header navbar navbar-expand-lg bd-navbar d-print-none">
+<div class="bd-header__inner bd-page-width">
+  <button class="pst-navbar-icon sidebar-toggle primary-toggle" aria-label="网页导航">
+    <span class="fa-solid fa-bars"></span>
+  </button>
+  
+  
+  <div class="col-lg-3 navbar-header-items__start">
+    
+      <div class="navbar-item">
+
+  
+    
+  
+
+<a class="navbar-brand logo" href="../index.html">
+  
+  
+  
+  
+  
+    
+    
+      
+    
+    
+    <img src="../_static/logo.svg" class="logo__image only-light" alt="MeteoPython - Home"/>
+    <img src="../_static/logo.svg" class="logo__image only-dark pst-js-only" alt="MeteoPython - Home"/>
+  
+  
+</a></div>
+    
+  </div>
+  
+  <div class="col-lg-9 navbar-header-items">
+    
+    <div class="me-auto navbar-header-items__center">
+      
+        <div class="navbar-item">
+<nav>
+  <ul class="bd-navbar-elements navbar-nav">
+    
+<li class="nav-item ">
+  <a class="nav-link nav-internal" href="../user_guide/index.html">
+    教程
+  </a>
+</li>
+
+
+<li class="nav-item ">
+  <a class="nav-link nav-internal" href="../tutorials/index.html">
+    练习
+  </a>
+</li>
+
+
+<li class="nav-item ">
+  <a class="nav-link nav-internal" href="../gallery/index.html">
+    示例
+  </a>
+</li>
+
+
+<li class="nav-item current active">
+  <a class="nav-link nav-internal" href="index.html">
+    术语参考
+  </a>
+</li>
+
+
+<li class="nav-item ">
+  <a class="nav-link nav-internal" href="../qa/index.html">
+    常见问题 Q&A
+  </a>
+</li>
+
+  </ul>
+</nav></div>
+      
+    </div>
+    
+    
+    <div class="navbar-header-items__end">
+      
+        <div class="navbar-item navbar-persistent--container">
+          
+
+<button class="btn search-button-field search-button__button pst-js-only" title="搜索" aria-label="搜索" data-bs-placement="bottom" data-bs-toggle="tooltip">
+ <i class="fa-solid fa-magnifying-glass"></i>
+ <span class="search-button__default-text">搜索</span>
+ <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd class="kbd-shortcut__modifier">K</kbd></span>
+</button>
+        </div>
+      
+      
+        <div class="navbar-item">
+
+<div class="theme-switch-container dropdown pst-js-only" data-bs-toggle="tooltip" data-bs-placement="bottom" title="Color mode">
+  <button class="btn btn-sm nav-link pst-navbar-icon theme-switch-button dropdown-toggle" aria-label="Color mode" data-bs-toggle="dropdown">
+    <i class="theme-switch fa-solid fa-sun fa-lg fa-fw" data-mode="light" title="亮色"></i>
+    <i class="theme-switch fa-solid fa-moon fa-lg fa-fw" data-mode="dark" title="暗色"></i>
+    <i class="theme-switch fa-solid fa-circle-half-stroke fa-lg fa-fw" data-mode="auto" title="System Settings"></i>
+  </button>
+  <ul class="dropdown-menu dropdown-menu-end">
+    <li><button class="dropdown-item d-flex align-items-center theme-change-button" data-mode="auto"><i class="fa-solid fa-circle-half-stroke fa-lg fa-fw me-1"></i>System Settings</button></li>
+    <li><button class="dropdown-item d-flex align-items-center theme-change-button" data-mode="light"><i class="fa-solid fa-sun fa-lg fa-fw me-1"></i>亮色</button></li>
+    <li><button class="dropdown-item d-flex align-items-center theme-change-button" data-mode="dark"><i class="fa-solid fa-moon fa-lg fa-fw me-1"></i>暗色</button></li>
+  </ul>
+</div></div>
+      
+        <div class="navbar-item"><ul class="navbar-icon-links"
+    aria-label="Icon Links">
+</ul></div>
+      
+    </div>
+    
+  </div>
+  
+  
+    <div class="navbar-persistent--mobile">
+
+<button class="btn search-button-field search-button__button pst-js-only" title="搜索" aria-label="搜索" data-bs-placement="bottom" data-bs-toggle="tooltip">
+ <i class="fa-solid fa-magnifying-glass"></i>
+ <span class="search-button__default-text">搜索</span>
+ <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd class="kbd-shortcut__modifier">K</kbd></span>
+</button>
+    </div>
+  
+
+  
+    <button class="pst-navbar-icon sidebar-toggle secondary-toggle" aria-label="当前页面">
+      <span class="fa-solid fa-outdent"></span>
+    </button>
+  
+</div>
+
+    </header>
+  
+
+  <div class="bd-container">
+    <div class="bd-container__inner bd-page-width">
+      
+      
+      
+      <dialog id="pst-primary-sidebar-modal"></dialog>
+      <div id="pst-primary-sidebar" class="bd-sidebar-primary bd-sidebar">
+        
+
+  
+  <div class="sidebar-header-items sidebar-primary__section">
+    
+    
+      <div class="sidebar-header-items__center">
+        
+          
+          
+            <div class="navbar-item">
+<nav>
+  <ul class="bd-navbar-elements navbar-nav">
+    
+<li class="nav-item ">
+  <a class="nav-link nav-internal" href="../user_guide/index.html">
+    教程
+  </a>
+</li>
+
+
+<li class="nav-item ">
+  <a class="nav-link nav-internal" href="../tutorials/index.html">
+    练习
+  </a>
+</li>
+
+
+<li class="nav-item ">
+  <a class="nav-link nav-internal" href="../gallery/index.html">
+    示例
+  </a>
+</li>
+
+
+<li class="nav-item current active">
+  <a class="nav-link nav-internal" href="index.html">
+    术语参考
+  </a>
+</li>
+
+
+<li class="nav-item ">
+  <a class="nav-link nav-internal" href="../qa/index.html">
+    常见问题 Q&A
+  </a>
+</li>
+
+  </ul>
+</nav></div>
+          
+        
+      </div>
+    
+    
+    
+      <div class="sidebar-header-items__end">
+        
+          <div class="navbar-item">
+
+<div class="theme-switch-container dropdown pst-js-only" data-bs-toggle="tooltip" data-bs-placement="bottom" title="Color mode">
+  <button class="btn btn-sm nav-link pst-navbar-icon theme-switch-button dropdown-toggle" aria-label="Color mode" data-bs-toggle="dropdown">
+    <i class="theme-switch fa-solid fa-sun fa-lg fa-fw" data-mode="light" title="亮色"></i>
+    <i class="theme-switch fa-solid fa-moon fa-lg fa-fw" data-mode="dark" title="暗色"></i>
+    <i class="theme-switch fa-solid fa-circle-half-stroke fa-lg fa-fw" data-mode="auto" title="System Settings"></i>
+  </button>
+  <ul class="dropdown-menu dropdown-menu-end">
+    <li><button class="dropdown-item d-flex align-items-center theme-change-button" data-mode="auto"><i class="fa-solid fa-circle-half-stroke fa-lg fa-fw me-1"></i>System Settings</button></li>
+    <li><button class="dropdown-item d-flex align-items-center theme-change-button" data-mode="light"><i class="fa-solid fa-sun fa-lg fa-fw me-1"></i>亮色</button></li>
+    <li><button class="dropdown-item d-flex align-items-center theme-change-button" data-mode="dark"><i class="fa-solid fa-moon fa-lg fa-fw me-1"></i>暗色</button></li>
+  </ul>
+</div></div>
+        
+          <div class="navbar-item"><ul class="navbar-icon-links"
+    aria-label="Icon Links">
+</ul></div>
+        
+      </div>
+    
+  </div>
+  
+    <div class="sidebar-primary-items__start sidebar-primary__section">
+        <div class="sidebar-primary-item pst-sidebar-collapse"><button id="pst-collapse-sidebar-button" aria-expanded="true" aria-controls="pst-primary-sidebar">
+  <svg class="pst-icon" role="img" aria-hidden="true" focusable="false" viewBox="0 0 16 16" xmlns="http://www.w3.org/2000/svg">
+    <path fill="currentColor" d="M3 15.5C2.36232 15.5 1.74874 15.2564 1.28478 14.8189C0.820828 14.3815 0.541576 13.7832 0.504167 13.1467L0.5 13L0.5 3C0.499965 2.36232 0.743605 1.74874 1.18107 1.28478C1.61854 0.820828 2.21676 0.541576 2.85333 0.504167L3 0.5L13 0.5C13.6377 0.499965 14.2513 0.743605 14.7152 1.18107C15.1792 1.61854 15.4584 2.21676 15.4958 2.85333L15.5 3L15.5 13C15.5 13.6377 15.2564 14.2513 14.8189 14.7152C14.3815 15.1792 13.7832 15.4584 13.1467 15.4958L13 15.5L3 15.5ZM3 13.8333L10.5 13.8333L10.5 2.16667L3 2.16667C2.79589 2.16669 2.59889 2.24163 2.44636 2.37726C2.29383 2.5129 2.19638 2.69979 2.1725 2.9025L2.16667 3L2.16667 13C2.16669 13.2041 2.24163 13.4011 2.37726 13.5536C2.5129 13.7062 2.69979 13.8036 2.9025 13.8275L3 13.8333ZM6.65583 10.325L6.5775 10.2558L4.91083 8.58917C4.76735 8.44567 4.68116 8.25476 4.66843 8.05223C4.65569 7.84971 4.71729 7.6495 4.84167 7.48917L4.91083 7.41083L6.5775 5.74417C6.72747 5.59471 6.9287 5.50794 7.14032 5.50148C7.35194 5.49502 7.55809 5.56935 7.7169 5.70937C7.8757 5.8494 7.97525 6.04463 7.99533 6.25539C8.01541 6.46616 7.95451 6.67667 7.825 6.84417L7.75583 6.9225L6.67917 8L7.75583 9.0775C7.89931 9.22099 7.98551 9.41191 7.99824 9.61443C8.01097 9.81695 7.94938 10.0172 7.825 10.1775L7.75583 10.2558C7.61234 10.3993 7.42142 10.4855 7.2189 10.4982C7.01638 10.511 6.81617 10.4494 6.65583 10.325Z"/>
+  </svg>
+  <span class="pst-collapse-sidebar-label">Collapse Sidebar</span>
+  <span class="pst-expand-sidebar-label">Expand Sidebar</span>
+</button></div>
+        <div class="sidebar-primary-item">
+
+<nav class="bd-docs-nav bd-links"
+     aria-label="章节导航">
+  <p class="bd-links__title" role="heading" aria-level="1">章节导航</p>
+  <div class="bd-toc-item navbar-nav"><ul class="current nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="ch01_terms.html">第 1 章术语：Python 简介及安装环境</a></li>
+<li class="toctree-l1"><a class="reference internal" href="ch02_terms.html">第 2 章术语：基本数据类型、变量和运算符</a></li>
+<li class="toctree-l1"><a class="reference internal" href="ch03_terms.html">第 3 章术语：分支、循环与条件</a></li>
+<li class="toctree-l1"><a class="reference internal" href="ch04_terms.html">第 4 章术语：函数及变量作用域、模块和包</a></li>
+<li class="toctree-l1"><a class="reference internal" href="ch05_terms.html">第 5 章术语：面向对象与高级语法</a></li>
+<li class="toctree-l1"><a class="reference internal" href="ch06_terms.html">第 6 章术语：气象数据计算 NumPy</a></li>
+<li class="toctree-l1"><a class="reference internal" href="ch07_terms.html">第 7 章术语：气象数据分析（一）Pandas</a></li>
+<li class="toctree-l1"><a class="reference internal" href="ch08_terms.html">第 8 章术语：气象数据分析（二）Xarray</a></li>
+<li class="toctree-l1 current active"><a class="current reference internal" href="#">第 9 章术语：Matplotlib 绘图</a></li>
+</ul>
+</div>
+</nav></div>
+    </div>
+  
+  
+  <div class="sidebar-primary-items__end sidebar-primary__section">
+      <div class="sidebar-primary-item">
+<div id="ethical-ad-placement"
+      class="flat"
+      data-ea-publisher="readthedocs"
+      data-ea-type="readthedocs-sidebar"
+      data-ea-manual="true">
+</div></div>
+  </div>
+
+
+      </div>
+      
+      <main id="main-content" class="bd-main" role="main">
+        
+        
+          <div class="bd-content">
+            <div class="bd-article-container">
+              
+              <div class="bd-header-article d-print-none">
+<div class="header-article-items header-article__inner">
+  
+    <div class="header-article-items__start">
+      
+        <div class="header-article-item">
+
+<nav aria-label="Breadcrumb" class="d-print-none">
+  <ul class="bd-breadcrumbs">
+    
+    <li class="breadcrumb-item breadcrumb-home">
+      <a href="../index.html" class="nav-link" aria-label="初始页面">
+        <i class="fa-solid fa-home"></i>
+      </a>
+    </li>
+    
+    <li class="breadcrumb-item"><a href="index.html" class="nav-link">术语参考</a></li>
+    
+    <li class="breadcrumb-item active" aria-current="page"><span class="ellipsis">第 9 章术语：Matplotlib 绘图</span></li>
+  </ul>
+</nav>
+</div>
+      
+    </div>
+  
+  
+</div>
+</div>
+              
+              
+              
+                
+<div id="searchbox"></div>
+                <article class="bd-article">
+                  
+  <section id="matplotlib">
+<h1>第 9 章术语：Matplotlib 绘图<a class="headerlink" href="#matplotlib" title="Link to this heading">#</a></h1>
+<p>配套 <a class="reference internal" href="../user_guide/viz/matplotlib.html#tut-mpl"><span class="std std-ref">气象数据绘图（一）Matplotlib</span></a> 正文使用。每个词条 = 一句话定义 + <strong>生活类比</strong> + <strong>常用写法</strong>（<cite>.. code-block:: python</cite> 承载代码示例）+ <strong>易混淆点</strong>。这些词是读懂 Matplotlib 绘图代码的钥匙：报错时先看词条，再对症下药。</p>
+<div class="admonition seealso">
+<p class="admonition-title">参见</p>
+<p>配套正文：<a class="reference internal" href="../user_guide/viz/matplotlib.html"><span class="doc">气象数据绘图（一）Matplotlib</span></a>　·　配套练习：<a class="reference internal" href="../tutorials/viz/ch09_practice.html"><span class="doc">第 9 章练习：Matplotlib 气象绘图</span></a></p>
+</div>
+<dl class="glossary">
+<dt id="term-Figure">Figure（画布）<a class="headerlink" href="#term-Figure" title="Link to this term">#</a></dt><dd><p>整张图的最外层容器。窗口大小、分辨率、保存成文件，针对的都是它；一张 <code class="docutils literal notranslate"><span class="pre">Figure</span></code> 里可以放一块绘图区，也可以放好几块。</p>
+<p><strong>生活类比</strong> —— 一张空白画纸。纸有多宽、多高，决定整幅作品的尺寸；纸上画几块小图，是下一步的事。</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">fig</span><span class="p">,</span> <span class="n">ax</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">subplots</span><span class="p">(</span><span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">8</span><span class="p">,</span> <span class="mi">4</span><span class="p">),</span> <span class="n">dpi</span><span class="o">=</span><span class="mi">100</span><span class="p">)</span>
+<span class="n">fig</span><span class="o">.</span><span class="n">suptitle</span><span class="p">(</span><span class="s2">&quot;兰州站气温&quot;</span><span class="p">)</span>          <span class="c1"># 整张图的总标题</span>
+<span class="n">fig</span><span class="o">.</span><span class="n">savefig</span><span class="p">(</span><span class="s2">&quot;lanzhou_temp.png&quot;</span><span class="p">,</span> <span class="n">dpi</span><span class="o">=</span><span class="mi">150</span><span class="p">)</span>
+</pre></div>
+</div>
+<div class="admonition note">
+<p class="admonition-title">备注</p>
+<p><code class="docutils literal notranslate"><span class="pre">figsize</span></code> 的单位是英寸；<code class="docutils literal notranslate"><span class="pre">dpi</span></code> 是每英寸点数。导出像素大约等于边长乘以 <code class="docutils literal notranslate"><span class="pre">dpi</span></code>。例如 <cite>(8, 4)</cite>、<code class="docutils literal notranslate"><span class="pre">dpi=150</span></code>，宽约 1200 像素，高约 600 像素。创建 <code class="docutils literal notranslate"><span class="pre">Figure</span></code> 时的 <code class="docutils literal notranslate"><span class="pre">dpi</span></code> 主要影响窗口显示；<code class="docutils literal notranslate"><span class="pre">savefig(...,</span> <span class="pre">dpi=...)</span></code> 决定导出文件，两处可以不同。</p>
+</div>
+<p><strong>易混淆点</strong> —— <code class="docutils literal notranslate"><span class="pre">plt.figure()</span></code> 只做出画布，还没有绘图区。多数入门代码用 <code class="docutils literal notranslate"><span class="pre">plt.subplots()</span></code>，一次拿到 <code class="docutils literal notranslate"><span class="pre">fig</span></code> 和 <code class="docutils literal notranslate"><span class="pre">ax</span></code>；改线宽、改坐标轴范围，是在 <code class="docutils literal notranslate"><span class="pre">Axes</span></code> 上操作，不是在 <code class="docutils literal notranslate"><span class="pre">Figure</span></code> 上。图太小应先改 <code class="docutils literal notranslate"><span class="pre">figsize</span></code> 而不是狂加 <code class="docutils literal notranslate"><span class="pre">dpi</span></code>。</p>
+</dd>
+<dt id="term-Axes">Axes（坐标区 / 绘图区）<a class="headerlink" href="#term-Axes" title="Link to this term">#</a></dt><dd><p>真正画数据的那一块：横轴、纵轴、曲线、散点、标题、轴标签，都挂在它上面。一张 <code class="docutils literal notranslate"><span class="pre">Figure</span></code> 可以有多个 <code class="docutils literal notranslate"><span class="pre">Axes</span></code>，也就是子图。</p>
+<p><strong>生活类比</strong> —— 画纸上用直尺框出来的一块坐标纸。一张纸可以框出左右两块，两块各画各的，互不抢位置。</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">fig</span><span class="p">,</span> <span class="n">ax</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">subplots</span><span class="p">()</span>
+<span class="n">ax</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">hours</span><span class="p">,</span> <span class="n">temps</span><span class="p">)</span>
+<span class="n">ax</span><span class="o">.</span><span class="n">set_xlabel</span><span class="p">(</span><span class="s2">&quot;时次&quot;</span><span class="p">)</span>
+<span class="n">ax</span><span class="o">.</span><span class="n">set_ylabel</span><span class="p">(</span><span class="s2">&quot;气温 / ℃&quot;</span><span class="p">)</span>
+<span class="n">ax</span><span class="o">.</span><span class="n">set_title</span><span class="p">(</span><span class="s2">&quot;兰州站&quot;</span><span class="p">)</span>
+<span class="n">ax</span><span class="o">.</span><span class="n">set_xlim</span><span class="p">(</span><span class="mi">8</span><span class="p">,</span> <span class="mi">20</span><span class="p">)</span>
+<span class="n">ax</span><span class="o">.</span><span class="n">grid</span><span class="p">(</span><span class="kc">True</span><span class="p">,</span> <span class="n">linestyle</span><span class="o">=</span><span class="s2">&quot;--&quot;</span><span class="p">,</span> <span class="n">alpha</span><span class="o">=</span><span class="mf">0.4</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>子图时 <code class="docutils literal notranslate"><span class="pre">ax</span></code> 变成数组：</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">fig</span><span class="p">,</span> <span class="n">axes</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">subplots</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">10</span><span class="p">,</span> <span class="mi">4</span><span class="p">))</span>
+<span class="n">axes</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">hours</span><span class="p">,</span> <span class="n">temps_lz</span><span class="p">)</span>
+<span class="n">axes</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">hours</span><span class="p">,</span> <span class="n">temps_xn</span><span class="p">)</span>
+</pre></div>
+</div>
+<p><strong>易混淆点</strong> —— 英文 plural 是 <code class="docutils literal notranslate"><span class="pre">Axes</span></code>，单块也叫 <code class="docutils literal notranslate"><span class="pre">Axes</span></code>，不是 <code class="docutils literal notranslate"><span class="pre">Axis</span></code>；<code class="docutils literal notranslate"><span class="pre">Axis</span></code> 只指横轴或纵轴本身。<code class="docutils literal notranslate"><span class="pre">plt.plot(...)</span></code> 画在&quot;当前这块&quot;上，多子图时优先写 <code class="docutils literal notranslate"><span class="pre">axes[0].plot(...)</span></code>。</p>
+</dd>
+<dt id="term-Artist">Artist（绘图元素）<a class="headerlink" href="#term-Artist" title="Link to this term">#</a></dt><dd><p>Matplotlib 里能画出来的东西几乎都是 <code class="docutils literal notranslate"><span class="pre">Artist</span></code>：整张 <code class="docutils literal notranslate"><span class="pre">Figure</span></code>、一块 <code class="docutils literal notranslate"><span class="pre">Axes</span></code>、一条折线、一个点、一段文字、一根刻度线，都算。它们叠在一起，组成最终那张图。</p>
+<p><strong>生活类比</strong> —— 画纸上的每一笔。纸是一笔，框出来的坐标区是一笔，折线、数字、图例框也是一笔；改颜色、改线宽，改的是其中某一笔，不是整张纸作废重来。</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">line</span><span class="p">,</span> <span class="o">=</span> <span class="n">ax</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">hours</span><span class="p">,</span> <span class="n">temps</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="s2">&quot;C0&quot;</span><span class="p">,</span> <span class="n">lw</span><span class="o">=</span><span class="mi">2</span><span class="p">,</span> <span class="n">marker</span><span class="o">=</span><span class="s2">&quot;o&quot;</span><span class="p">)</span>
+<span class="n">line</span><span class="o">.</span><span class="n">set_color</span><span class="p">(</span><span class="s2">&quot;crimson&quot;</span><span class="p">)</span>      <span class="c1"># 事后改这一笔</span>
+</pre></div>
+</div>
+<p><strong>易混淆点</strong> —— <code class="docutils literal notranslate"><span class="pre">ax.plot</span></code> 返回的是折线对象组成的列表。逗号解包后 <code class="docutils literal notranslate"><span class="pre">line</span></code> 就是这一条线，以后可以单独改它的颜色、透明度、图例名；不要用 <code class="docutils literal notranslate"><span class="pre">ax.plot(...)</span></code> 的返回值做加法等运算。</p>
+</dd>
+<dt id="term-Ticks">刻度（Ticks）<a class="headerlink" href="#term-Ticks" title="Link to this term">#</a></dt><dd><p>坐标轴上的刻度线（tick）与刻度文字（tick label）。间距太大，读不出峰值出现在几点；间距太密，字会挤成一团。</p>
+<p><strong>生活类比</strong> —— 温度计玻璃管旁边那一排刻痕和数字。管子是坐标轴，刻痕告诉你 20 在哪、30 在哪。</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">ax</span><span class="o">.</span><span class="n">set_xticks</span><span class="p">([</span><span class="mi">8</span><span class="p">,</span> <span class="mi">11</span><span class="p">,</span> <span class="mi">14</span><span class="p">,</span> <span class="mi">17</span><span class="p">,</span> <span class="mi">20</span><span class="p">])</span>
+<span class="n">ax</span><span class="o">.</span><span class="n">set_xticklabels</span><span class="p">([</span><span class="s2">&quot;08&quot;</span><span class="p">,</span> <span class="s2">&quot;11&quot;</span><span class="p">,</span> <span class="s2">&quot;14&quot;</span><span class="p">,</span> <span class="s2">&quot;17&quot;</span><span class="p">,</span> <span class="s2">&quot;20&quot;</span><span class="p">])</span>
+<span class="n">ax</span><span class="o">.</span><span class="n">tick_params</span><span class="p">(</span><span class="n">axis</span><span class="o">=</span><span class="s2">&quot;x&quot;</span><span class="p">,</span> <span class="n">labelsize</span><span class="o">=</span><span class="mi">10</span><span class="p">,</span> <span class="n">rotation</span><span class="o">=</span><span class="mi">0</span><span class="p">)</span>
+<span class="n">ax</span><span class="o">.</span><span class="n">tick_params</span><span class="p">(</span><span class="n">axis</span><span class="o">=</span><span class="s2">&quot;y&quot;</span><span class="p">,</span> <span class="n">direction</span><span class="o">=</span><span class="s2">&quot;in&quot;</span><span class="p">)</span>
+</pre></div>
+</div>
+<p><strong>易混淆点</strong> —— 气象图上时次常写成 <code class="docutils literal notranslate"><span class="pre">08</span></code>、<code class="docutils literal notranslate"><span class="pre">14</span></code>，不要只留 <code class="docutils literal notranslate"><span class="pre">8</span></code>、<code class="docutils literal notranslate"><span class="pre">14</span></code>，否则和观测记录对不齐；刻度太多时用 <code class="docutils literal notranslate"><span class="pre">tick_params(axis=&quot;x&quot;)</span></code> 稀疏或旋转文字，避免糊成一团。</p>
+</dd>
+<dt id="term-Legend">图例（Legend）<a class="headerlink" href="#term-Legend" title="Link to this term">#</a></dt><dd><p>说明图上各条线、各个点代表什么的符号说明。多站对比、多要素叠画时必须有；一条线若创建时没写 <code class="docutils literal notranslate"><span class="pre">label</span></code>，图例里不会出现它。</p>
+<p><strong>生活类比</strong> —— 天气图角落的符号说明：实线是气温，虚线是露点。没有这块说明，两条线颜色再不同，读图的人也不知道各是什么。</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">ax</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">hours</span><span class="p">,</span> <span class="n">temps_lz</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="s2">&quot;兰州&quot;</span><span class="p">)</span>
+<span class="n">ax</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">hours</span><span class="p">,</span> <span class="n">temps_xn</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="s2">&quot;西宁&quot;</span><span class="p">)</span>
+<span class="n">ax</span><span class="o">.</span><span class="n">legend</span><span class="p">(</span><span class="n">loc</span><span class="o">=</span><span class="s2">&quot;best&quot;</span><span class="p">)</span>
+<span class="c1"># 或指定位置：upper right / lower left / upper left</span>
+</pre></div>
+</div>
+<p><strong>易混淆点</strong> —— 必须先在 <code class="docutils literal notranslate"><span class="pre">plot</span></code>/<code class="docutils literal notranslate"><span class="pre">scatter</span></code> 里写 <code class="docutils literal notranslate"><span class="pre">label=&quot;...&quot;</span></code>，<code class="docutils literal notranslate"><span class="pre">legend()</span></code> 才会显示该项；只写 <code class="docutils literal notranslate"><span class="pre">legend()</span></code> 而曲线不带 <code class="docutils literal notranslate"><span class="pre">label</span></code>，图例是空的。</p>
+</dd>
+<dt id="term-Colorbar">色带（Colorbar）<a class="headerlink" href="#term-Colorbar" title="Link to this term">#</a></dt><dd><p>把颜色映射到数值的标尺。填色图、按第三变量上色的散点，必须有它，读者才能读出颜色对应的气温或高度。</p>
+<p><strong>生活类比</strong> —— 红外云图旁边那条从蓝到红的竖条。云图上的红斑本身不写温度，温度写在旁边这条色标上。</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">sc</span> <span class="o">=</span> <span class="n">ax</span><span class="o">.</span><span class="n">scatter</span><span class="p">(</span><span class="n">hours</span><span class="p">,</span> <span class="n">temps</span><span class="p">,</span> <span class="n">c</span><span class="o">=</span><span class="n">temps</span><span class="p">,</span> <span class="n">cmap</span><span class="o">=</span><span class="s2">&quot;coolwarm&quot;</span><span class="p">)</span>
+<span class="n">cbar</span> <span class="o">=</span> <span class="n">fig</span><span class="o">.</span><span class="n">colorbar</span><span class="p">(</span><span class="n">sc</span><span class="p">,</span> <span class="n">ax</span><span class="o">=</span><span class="n">ax</span><span class="p">)</span>
+<span class="n">cbar</span><span class="o">.</span><span class="n">set_label</span><span class="p">(</span><span class="s2">&quot;气温 / ℃&quot;</span><span class="p">)</span>
+</pre></div>
+</div>
+<p><strong>易混淆点</strong> —— <code class="docutils literal notranslate"><span class="pre">colorbar</span></code> 要绑一个&quot;带颜色映射的对象&quot;，上面那个 <code class="docutils literal notranslate"><span class="pre">sc</span></code> 就是；普通 <code class="docutils literal notranslate"><span class="pre">ax.plot</span></code> 没有这套映射，不能凭空加色带，否则报错或画不出。</p>
+</dd>
+<dt id="term-Object-oriented-interface">面向对象接口（Object-oriented interface）<a class="headerlink" href="#term-Object-oriented-interface" title="Link to this term">#</a></dt><dd><p>先明确在哪张画布、哪块坐标区上画，再调用这块区域的方法；和它相对的是 pyplot 状态机接口（<code class="docutils literal notranslate"><span class="pre">plt.plot</span></code>、<code class="docutils literal notranslate"><span class="pre">plt.xlabel</span></code>），后者依赖&quot;当前图、当前坐标区&quot;这个隐含状态。</p>
+<p><strong>生活类比</strong> —— 先指定&quot;在左边那张纸的右上那块画&quot;，再下笔。pyplot 则像口头吩咐&quot;就画在刚才那张上&quot;；一个人画一张图还行，同时摊开几张纸时，最容易画错地方。</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="c1"># 推荐：对象写在明处</span>
+<span class="n">fig</span><span class="p">,</span> <span class="n">ax</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">subplots</span><span class="p">()</span>
+<span class="n">ax</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">hours</span><span class="p">,</span> <span class="n">temps</span><span class="p">)</span>
+<span class="n">ax</span><span class="o">.</span><span class="n">set_xlabel</span><span class="p">(</span><span class="s2">&quot;时次&quot;</span><span class="p">)</span>
+<span class="n">fig</span><span class="o">.</span><span class="n">savefig</span><span class="p">(</span><span class="s2">&quot;out.png&quot;</span><span class="p">,</span> <span class="n">dpi</span><span class="o">=</span><span class="mi">150</span><span class="p">)</span>
+
+<span class="c1"># 能跑，但当前画在哪一块不写在代码里</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">hours</span><span class="p">,</span> <span class="n">temps</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">xlabel</span><span class="p">(</span><span class="s2">&quot;时次&quot;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">savefig</span><span class="p">(</span><span class="s2">&quot;out.png&quot;</span><span class="p">)</span>
+</pre></div>
+</div>
+<p><strong>易混淆点</strong> —— 多子图、多窗口、写进函数里复用时，pyplot 的全局&quot;当前坐标系&quot;会趁你不注意跑偏；面向对象接口把每个元素都挂在明确的 <code class="docutils literal notranslate"><span class="pre">fig</span></code>/<code class="docutils literal notranslate"><span class="pre">ax</span></code> 上，更强也更稳。</p>
+</dd>
+</dl>
+<section id="id1">
+<h2>词条对照<a class="headerlink" href="#id1" title="Link to this heading">#</a></h2>
+<div class="pst-scrollable-table-container"><table class="table">
+<colgroup>
+<col style="width: 22.0%" />
+<col style="width: 30.0%" />
+<col style="width: 48.0%" />
+</colgroup>
+<thead>
+<tr class="row-odd"><th class="head"><p>词条</p></th>
+<th class="head"><p>管什么</p></th>
+<th class="head"><p>典型方法</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p><a class="reference internal" href="#term-Figure"><span class="xref std std-term">Figure（画布）</span></a></p></td>
+<td><p>整张图的尺寸、导出</p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">plt.subplots</span></code>、<code class="docutils literal notranslate"><span class="pre">fig.savefig</span></code></p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="#term-Axes"><span class="xref std std-term">Axes（坐标区 / 绘图区）</span></a></p></td>
+<td><p>一块坐标区里的数据与标注</p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">ax.plot</span></code> / <code class="docutils literal notranslate"><span class="pre">scatter</span></code>、<code class="docutils literal notranslate"><span class="pre">ax.set_*</span></code></p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="#term-Artist"><span class="xref std std-term">Artist（绘图元素）</span></a></p></td>
+<td><p>图上可单独修改的一笔</p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">line.set_color</span></code></p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="#term-Ticks"><span class="xref std std-term">刻度（Ticks）</span></a></p></td>
+<td><p>轴上的位置与数字</p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">ax.set_xticks</span></code>、<code class="docutils literal notranslate"><span class="pre">ax.tick_params</span></code></p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="#term-Legend"><span class="xref std std-term">图例（Legend）</span></a></p></td>
+<td><p>离散对象的名称</p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">ax.legend</span></code></p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="#term-Colorbar"><span class="xref std std-term">色带（Colorbar）</span></a></p></td>
+<td><p>颜色与数值的对应</p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">fig.colorbar</span></code></p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="#term-Object-oriented-interface"><span class="xref std std-term">面向对象接口（Object-oriented interface）</span></a></p></td>
+<td><p>明确画在哪个对象上</p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">fig,</span> <span class="pre">ax</span> <span class="pre">=</span> <span class="pre">plt.subplots()</span></code></p></td>
+</tr>
+</tbody>
+</table>
+</div>
+<p>读报错时先看词条：<code class="docutils literal notranslate"><span class="pre">Figure</span></code> 对不上，多半是尺寸或保存；<code class="docutils literal notranslate"><span class="pre">Axes</span></code> 对不上，多半是画错子图或标签没设上。</p>
+</section>
+</section>
+
+
+                </article>
+              
+              
+              
+              
+              
+                <footer class="prev-next-footer d-print-none">
+                  
+<div class="prev-next-area">
+    <a class="left-prev"
+       href="ch08_terms.html"
+       title="上一页">
+      <i class="fa-solid fa-angle-left"></i>
+      <div class="prev-next-info">
+        <p class="prev-next-subtitle">上一页</p>
+        <p class="prev-next-title">第 8 章术语：气象数据分析（二）Xarray</p>
+      </div>
+    </a>
+    <a class="right-next"
+       href="../qa/index.html"
+       title="下一页">
+      <div class="prev-next-info">
+        <p class="prev-next-subtitle">下一页</p>
+        <p class="prev-next-title">常见问题 Q&amp;A</p>
+      </div>
+      <i class="fa-solid fa-angle-right"></i>
+    </a>
+</div>
+                </footer>
+              
+            </div>
+            
+            
+              
+                <dialog id="pst-secondary-sidebar-modal"></dialog>
+                <div id="pst-secondary-sidebar" class="bd-sidebar-secondary bd-toc"><div class="sidebar-secondary-items sidebar-secondary__inner">
+
+
+  <div class="sidebar-secondary-item">
+<div
+    id="pst-page-navigation-heading-2"
+    class="page-toc tocsection onthispage">
+    <i class="fa-solid fa-list"></i> 当前页面
+  </div>
+  <nav id="pst-page-toc-nav" class="page-toc" aria-labelledby="pst-page-navigation-heading-2">
+    <ul class="pst-show_toc_level nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id1">词条对照</a></li>
+</ul>
+  </nav></div>
+
+</div></div>
+              
+            
+          </div>
+          <footer class="bd-footer-content">
+            
+          </footer>
+        
+      </main>
+    </div>
+  </div>
+  
+  <!-- Scripts loaded after <body> so the DOM is not blocked -->
+  <script defer src="../_static/scripts/bootstrap.js?digest=90905a2f556bf617f1a9"></script>
+<script defer src="../_static/scripts/pydata-sphinx-theme.js?digest=90905a2f556bf617f1a9"></script>
+
+  <footer class="bd-footer">
+<div class="bd-footer__inner bd-page-width">
+  
+    <div class="footer-items__start">
+      
+        <div class="footer-item">
+
+  <p class="copyright">
+    
+      © Copyright 2026, 兰州大学大气科学学院编程社区.
+      <br/>
+    
+  </p>
+</div>
+      
+        <div class="footer-item">
+
+  <p class="sphinx-version">
+    由 <a href="https://www.sphinx-doc.org/">Sphinx</a> 8.2.3创建。
+    <br/>
+  </p>
+</div>
+      
+    </div>
+  
+  
+  
+    <div class="footer-items__end">
+      
+        <div class="footer-item">
+<p class="theme-version">
+  <!-- # L10n: Setting the PST URL as an argument as this does not need to be localized -->
+  使用 <a href="https://pydata-sphinx-theme.readthedocs.io/en/stable/index.html">PyData Sphinx Theme</a> 0.20.0构建.
+</p></div>
+      
+    </div>
+  
+</div>
+
+  </footer>
+  </body>
+</html>

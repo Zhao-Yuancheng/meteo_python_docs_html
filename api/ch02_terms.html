@@ -1,0 +1,643 @@
+
+<!DOCTYPE html>
+
+
+<html lang="zh-CN" data-content_root="../" >
+
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
+    <title>第 2 章术语：基本数据类型、变量和运算符 &#8212; MeteoPython</title>
+  
+  
+  
+  <script data-cfasync="false">
+    document.documentElement.dataset.mode = localStorage.getItem("mode") || "";
+    document.documentElement.dataset.theme = localStorage.getItem("theme") || "";
+  </script>
+  <!--
+    this give us a css class that will be invisible only if js is disabled
+  -->
+  <noscript>
+    <style>
+      .pst-js-only { display: none !important; }
+
+    </style>
+  </noscript>
+  
+  <!-- Loaded before other Sphinx assets -->
+  <link href="../_static/styles/theme.css?digest=90905a2f556bf617f1a9" rel="stylesheet" />
+<link href="../_static/styles/pydata-sphinx-theme.css?digest=90905a2f556bf617f1a9" rel="stylesheet" />
+
+    <link rel="stylesheet" type="text/css" href="../_static/pygments.css?v=8f2a1f02" />
+    <link rel="stylesheet" type="text/css" href="../_static/copybutton.css?v=76b2166b" />
+    <link rel="stylesheet" type="text/css" href="../_static/sg_gallery.css?v=fd6457a4" />
+    <link rel="stylesheet" type="text/css" href="../_static/sg_gallery-binder.css?v=f4aeca0c" />
+    <link rel="stylesheet" type="text/css" href="../_static/sg_gallery-dataframe.css?v=2082cf3c" />
+    <link rel="stylesheet" type="text/css" href="../_static/sg_gallery-rendered-html.css?v=1277b6f3" />
+    <link rel="stylesheet" type="text/css" href="../_static/sphinx-design.min.css?v=95c83b7e" />
+    <link rel="stylesheet" type="text/css" href="../_static/./custom.css?v=fbe1f034" />
+  
+  <!-- So that users can add custom icons -->
+  <script defer src="../_static/scripts/fontawesome.js?digest=90905a2f556bf617f1a9"></script>
+  <!-- Pre-loaded scripts that we'll load fully later -->
+  <link rel="preload" as="script" href="../_static/scripts/bootstrap.js?digest=90905a2f556bf617f1a9" />
+<link rel="preload" as="script" href="../_static/scripts/pydata-sphinx-theme.js?digest=90905a2f556bf617f1a9" />
+
+    <script src="../_static/documentation_options.js?v=9becfed8"></script>
+    <script src="../_static/doctools.js?v=9bcbadda"></script>
+    <script src="../_static/sphinx_highlight.js?v=dc90522c"></script>
+    <script src="../_static/sg-tags.js?v=d80f6fa4"></script>
+    <script src="../_static/clipboard.min.js?v=a7894cd8"></script>
+    <script src="../_static/copybutton.js?v=fd10adb8"></script>
+    <script src="../_static/translations.js?v=beaddf03"></script>
+    <script src="../_static/design-tabs.js?v=f930bc37"></script>
+    <script>DOCUMENTATION_OPTIONS.pagename = 'api/ch02_terms';</script>
+    <script>
+        DOCUMENTATION_OPTIONS.theme_version = '0.20.0';
+        DOCUMENTATION_OPTIONS.theme_switcher_json_url = '_static/switcher.json';
+        DOCUMENTATION_OPTIONS.theme_switcher_version_match = '0.1.0';
+        DOCUMENTATION_OPTIONS.show_version_warning_banner =
+            false;
+        </script>
+    <script>DOCUMENTATION_OPTIONS.search_as_you_type = false;</script>
+    <link rel="icon" href="../_static/favicon.svg"/>
+    <link rel="index" title="索引" href="../genindex.html" />
+    <link rel="search" title="搜索" href="../search.html" />
+    <link rel="next" title="第 3 章术语：分支、循环与条件" href="ch03_terms.html" />
+    <link rel="prev" title="第 1 章术语：Python 简介及安装环境" href="ch01_terms.html" />
+  <meta name="viewport" content="width=device-width, initial-scale=1"/>
+  <meta name="docsearch:language" content="zh-CN"/>
+  <meta name="docsearch:version" content="0.1" />
+    <meta name="docbuild:last-update" content="2026-08-20"/>
+  
+    
+    <script src="../_static/searchtools.js"></script>
+    <script src="../_static/language_data.js"></script>
+    <script src="../searchindex.js"></script>
+  
+  </head>
+  <body data-default-mode="">
+  
+  
+  <div id="pst-skip-link" class="skip-link d-print-none"><a href="#main-content">跳转至主要内容</a></div>
+
+  
+  <div id="pst-scroll-pixel-helper"></div>
+  
+  <button type="button" class="btn rounded-pill" id="pst-back-to-top">
+    <i class="fa-solid fa-arrow-up"></i>回到顶部</button>
+  
+  
+  
+  
+  <dialog id="pst-search-dialog">
+    
+<form class="bd-search d-flex align-items-center"
+      action="../search.html"
+      method="get">
+  <i class="fa-solid fa-magnifying-glass"></i>
+  <input type="search"
+         class="form-control"
+         name="q"
+         placeholder="搜索文档…"
+         aria-label="搜索文档…"
+         autocomplete="off"
+         autocorrect="off"
+         autocapitalize="off"
+         spellcheck="false"/>
+  <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd>K</kbd></span>
+</form>
+  </dialog>
+
+  <div class="pst-async-banner-revealer d-none">
+  <aside id="bd-header-version-warning" class="d-none d-print-none" aria-label="版本警告"></aside>
+</div>
+
+  
+    <header id="pst-header" class="bd-header navbar navbar-expand-lg bd-navbar d-print-none">
+<div class="bd-header__inner bd-page-width">
+  <button class="pst-navbar-icon sidebar-toggle primary-toggle" aria-label="网页导航">
+    <span class="fa-solid fa-bars"></span>
+  </button>
+  
+  
+  <div class="col-lg-3 navbar-header-items__start">
+    
+      <div class="navbar-item">
+
+  
+    
+  
+
+<a class="navbar-brand logo" href="../index.html">
+  
+  
+  
+  
+  
+    
+    
+      
+    
+    
+    <img src="../_static/logo.svg" class="logo__image only-light" alt="MeteoPython - Home"/>
+    <img src="../_static/logo.svg" class="logo__image only-dark pst-js-only" alt="MeteoPython - Home"/>
+  
+  
+</a></div>
+    
+  </div>
+  
+  <div class="col-lg-9 navbar-header-items">
+    
+    <div class="me-auto navbar-header-items__center">
+      
+        <div class="navbar-item">
+<nav>
+  <ul class="bd-navbar-elements navbar-nav">
+    
+<li class="nav-item ">
+  <a class="nav-link nav-internal" href="../user_guide/index.html">
+    教程
+  </a>
+</li>
+
+
+<li class="nav-item ">
+  <a class="nav-link nav-internal" href="../tutorials/index.html">
+    练习
+  </a>
+</li>
+
+
+<li class="nav-item ">
+  <a class="nav-link nav-internal" href="../gallery/index.html">
+    示例
+  </a>
+</li>
+
+
+<li class="nav-item current active">
+  <a class="nav-link nav-internal" href="index.html">
+    术语参考
+  </a>
+</li>
+
+
+<li class="nav-item ">
+  <a class="nav-link nav-internal" href="../qa/index.html">
+    常见问题 Q&A
+  </a>
+</li>
+
+  </ul>
+</nav></div>
+      
+    </div>
+    
+    
+    <div class="navbar-header-items__end">
+      
+        <div class="navbar-item navbar-persistent--container">
+          
+
+<button class="btn search-button-field search-button__button pst-js-only" title="搜索" aria-label="搜索" data-bs-placement="bottom" data-bs-toggle="tooltip">
+ <i class="fa-solid fa-magnifying-glass"></i>
+ <span class="search-button__default-text">搜索</span>
+ <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd class="kbd-shortcut__modifier">K</kbd></span>
+</button>
+        </div>
+      
+      
+        <div class="navbar-item">
+
+<div class="theme-switch-container dropdown pst-js-only" data-bs-toggle="tooltip" data-bs-placement="bottom" title="Color mode">
+  <button class="btn btn-sm nav-link pst-navbar-icon theme-switch-button dropdown-toggle" aria-label="Color mode" data-bs-toggle="dropdown">
+    <i class="theme-switch fa-solid fa-sun fa-lg fa-fw" data-mode="light" title="亮色"></i>
+    <i class="theme-switch fa-solid fa-moon fa-lg fa-fw" data-mode="dark" title="暗色"></i>
+    <i class="theme-switch fa-solid fa-circle-half-stroke fa-lg fa-fw" data-mode="auto" title="System Settings"></i>
+  </button>
+  <ul class="dropdown-menu dropdown-menu-end">
+    <li><button class="dropdown-item d-flex align-items-center theme-change-button" data-mode="auto"><i class="fa-solid fa-circle-half-stroke fa-lg fa-fw me-1"></i>System Settings</button></li>
+    <li><button class="dropdown-item d-flex align-items-center theme-change-button" data-mode="light"><i class="fa-solid fa-sun fa-lg fa-fw me-1"></i>亮色</button></li>
+    <li><button class="dropdown-item d-flex align-items-center theme-change-button" data-mode="dark"><i class="fa-solid fa-moon fa-lg fa-fw me-1"></i>暗色</button></li>
+  </ul>
+</div></div>
+      
+        <div class="navbar-item"><ul class="navbar-icon-links"
+    aria-label="Icon Links">
+</ul></div>
+      
+    </div>
+    
+  </div>
+  
+  
+    <div class="navbar-persistent--mobile">
+
+<button class="btn search-button-field search-button__button pst-js-only" title="搜索" aria-label="搜索" data-bs-placement="bottom" data-bs-toggle="tooltip">
+ <i class="fa-solid fa-magnifying-glass"></i>
+ <span class="search-button__default-text">搜索</span>
+ <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd class="kbd-shortcut__modifier">K</kbd></span>
+</button>
+    </div>
+  
+
+  
+</div>
+
+    </header>
+  
+
+  <div class="bd-container">
+    <div class="bd-container__inner bd-page-width">
+      
+      
+      
+      <dialog id="pst-primary-sidebar-modal"></dialog>
+      <div id="pst-primary-sidebar" class="bd-sidebar-primary bd-sidebar">
+        
+
+  
+  <div class="sidebar-header-items sidebar-primary__section">
+    
+    
+      <div class="sidebar-header-items__center">
+        
+          
+          
+            <div class="navbar-item">
+<nav>
+  <ul class="bd-navbar-elements navbar-nav">
+    
+<li class="nav-item ">
+  <a class="nav-link nav-internal" href="../user_guide/index.html">
+    教程
+  </a>
+</li>
+
+
+<li class="nav-item ">
+  <a class="nav-link nav-internal" href="../tutorials/index.html">
+    练习
+  </a>
+</li>
+
+
+<li class="nav-item ">
+  <a class="nav-link nav-internal" href="../gallery/index.html">
+    示例
+  </a>
+</li>
+
+
+<li class="nav-item current active">
+  <a class="nav-link nav-internal" href="index.html">
+    术语参考
+  </a>
+</li>
+
+
+<li class="nav-item ">
+  <a class="nav-link nav-internal" href="../qa/index.html">
+    常见问题 Q&A
+  </a>
+</li>
+
+  </ul>
+</nav></div>
+          
+        
+      </div>
+    
+    
+    
+      <div class="sidebar-header-items__end">
+        
+          <div class="navbar-item">
+
+<div class="theme-switch-container dropdown pst-js-only" data-bs-toggle="tooltip" data-bs-placement="bottom" title="Color mode">
+  <button class="btn btn-sm nav-link pst-navbar-icon theme-switch-button dropdown-toggle" aria-label="Color mode" data-bs-toggle="dropdown">
+    <i class="theme-switch fa-solid fa-sun fa-lg fa-fw" data-mode="light" title="亮色"></i>
+    <i class="theme-switch fa-solid fa-moon fa-lg fa-fw" data-mode="dark" title="暗色"></i>
+    <i class="theme-switch fa-solid fa-circle-half-stroke fa-lg fa-fw" data-mode="auto" title="System Settings"></i>
+  </button>
+  <ul class="dropdown-menu dropdown-menu-end">
+    <li><button class="dropdown-item d-flex align-items-center theme-change-button" data-mode="auto"><i class="fa-solid fa-circle-half-stroke fa-lg fa-fw me-1"></i>System Settings</button></li>
+    <li><button class="dropdown-item d-flex align-items-center theme-change-button" data-mode="light"><i class="fa-solid fa-sun fa-lg fa-fw me-1"></i>亮色</button></li>
+    <li><button class="dropdown-item d-flex align-items-center theme-change-button" data-mode="dark"><i class="fa-solid fa-moon fa-lg fa-fw me-1"></i>暗色</button></li>
+  </ul>
+</div></div>
+        
+          <div class="navbar-item"><ul class="navbar-icon-links"
+    aria-label="Icon Links">
+</ul></div>
+        
+      </div>
+    
+  </div>
+  
+    <div class="sidebar-primary-items__start sidebar-primary__section">
+        <div class="sidebar-primary-item pst-sidebar-collapse"><button id="pst-collapse-sidebar-button" aria-expanded="true" aria-controls="pst-primary-sidebar">
+  <svg class="pst-icon" role="img" aria-hidden="true" focusable="false" viewBox="0 0 16 16" xmlns="http://www.w3.org/2000/svg">
+    <path fill="currentColor" d="M3 15.5C2.36232 15.5 1.74874 15.2564 1.28478 14.8189C0.820828 14.3815 0.541576 13.7832 0.504167 13.1467L0.5 13L0.5 3C0.499965 2.36232 0.743605 1.74874 1.18107 1.28478C1.61854 0.820828 2.21676 0.541576 2.85333 0.504167L3 0.5L13 0.5C13.6377 0.499965 14.2513 0.743605 14.7152 1.18107C15.1792 1.61854 15.4584 2.21676 15.4958 2.85333L15.5 3L15.5 13C15.5 13.6377 15.2564 14.2513 14.8189 14.7152C14.3815 15.1792 13.7832 15.4584 13.1467 15.4958L13 15.5L3 15.5ZM3 13.8333L10.5 13.8333L10.5 2.16667L3 2.16667C2.79589 2.16669 2.59889 2.24163 2.44636 2.37726C2.29383 2.5129 2.19638 2.69979 2.1725 2.9025L2.16667 3L2.16667 13C2.16669 13.2041 2.24163 13.4011 2.37726 13.5536C2.5129 13.7062 2.69979 13.8036 2.9025 13.8275L3 13.8333ZM6.65583 10.325L6.5775 10.2558L4.91083 8.58917C4.76735 8.44567 4.68116 8.25476 4.66843 8.05223C4.65569 7.84971 4.71729 7.6495 4.84167 7.48917L4.91083 7.41083L6.5775 5.74417C6.72747 5.59471 6.9287 5.50794 7.14032 5.50148C7.35194 5.49502 7.55809 5.56935 7.7169 5.70937C7.8757 5.8494 7.97525 6.04463 7.99533 6.25539C8.01541 6.46616 7.95451 6.67667 7.825 6.84417L7.75583 6.9225L6.67917 8L7.75583 9.0775C7.89931 9.22099 7.98551 9.41191 7.99824 9.61443C8.01097 9.81695 7.94938 10.0172 7.825 10.1775L7.75583 10.2558C7.61234 10.3993 7.42142 10.4855 7.2189 10.4982C7.01638 10.511 6.81617 10.4494 6.65583 10.325Z"/>
+  </svg>
+  <span class="pst-collapse-sidebar-label">Collapse Sidebar</span>
+  <span class="pst-expand-sidebar-label">Expand Sidebar</span>
+</button></div>
+        <div class="sidebar-primary-item">
+
+<nav class="bd-docs-nav bd-links"
+     aria-label="章节导航">
+  <p class="bd-links__title" role="heading" aria-level="1">章节导航</p>
+  <div class="bd-toc-item navbar-nav"><ul class="current nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="ch01_terms.html">第 1 章术语：Python 简介及安装环境</a></li>
+<li class="toctree-l1 current active"><a class="current reference internal" href="#">第 2 章术语：基本数据类型、变量和运算符</a></li>
+<li class="toctree-l1"><a class="reference internal" href="ch03_terms.html">第 3 章术语：分支、循环与条件</a></li>
+<li class="toctree-l1"><a class="reference internal" href="ch04_terms.html">第 4 章术语：函数及变量作用域、模块和包</a></li>
+<li class="toctree-l1"><a class="reference internal" href="ch05_terms.html">第 5 章术语：面向对象与高级语法</a></li>
+<li class="toctree-l1"><a class="reference internal" href="ch06_terms.html">第 6 章术语：气象数据计算 NumPy</a></li>
+<li class="toctree-l1"><a class="reference internal" href="ch07_terms.html">第 7 章术语：气象数据分析（一）Pandas</a></li>
+<li class="toctree-l1"><a class="reference internal" href="ch08_terms.html">第 8 章术语：气象数据分析（二）Xarray</a></li>
+<li class="toctree-l1"><a class="reference internal" href="ch09_terms.html">第 9 章术语：Matplotlib 绘图</a></li>
+</ul>
+</div>
+</nav></div>
+    </div>
+  
+  
+  <div class="sidebar-primary-items__end sidebar-primary__section">
+      <div class="sidebar-primary-item">
+<div id="ethical-ad-placement"
+      class="flat"
+      data-ea-publisher="readthedocs"
+      data-ea-type="readthedocs-sidebar"
+      data-ea-manual="true">
+</div></div>
+  </div>
+
+
+      </div>
+      
+      <main id="main-content" class="bd-main" role="main">
+        
+        
+          <div class="bd-content">
+            <div class="bd-article-container">
+              
+              <div class="bd-header-article d-print-none">
+<div class="header-article-items header-article__inner">
+  
+    <div class="header-article-items__start">
+      
+        <div class="header-article-item">
+
+<nav aria-label="Breadcrumb" class="d-print-none">
+  <ul class="bd-breadcrumbs">
+    
+    <li class="breadcrumb-item breadcrumb-home">
+      <a href="../index.html" class="nav-link" aria-label="初始页面">
+        <i class="fa-solid fa-home"></i>
+      </a>
+    </li>
+    
+    <li class="breadcrumb-item"><a href="index.html" class="nav-link">术语参考</a></li>
+    
+    <li class="breadcrumb-item active" aria-current="page"><span class="ellipsis">第 2 章术语：基本数据类型、变量和运算符</span></li>
+  </ul>
+</nav>
+</div>
+      
+    </div>
+  
+  
+</div>
+</div>
+              
+              
+              
+                
+<div id="searchbox"></div>
+                <article class="bd-article">
+                  
+  <section id="id1">
+<h1>第 2 章术语：基本数据类型、变量和运算符<a class="headerlink" href="#id1" title="Link to this heading">#</a></h1>
+<p>配套 <a class="reference internal" href="../user_guide/basics/datatypes.html#tut-datatype"><span class="std std-ref">基本数据类型、变量和运算符</span></a> 正文使用。每个词条 = 一句话定义 + <strong>生活类比</strong> + <strong>代码示例</strong> + <strong>易混淆点</strong>。</p>
+<div class="admonition seealso">
+<p class="admonition-title">参见</p>
+<p>配套正文：<a class="reference internal" href="../user_guide/basics/datatypes.html"><span class="doc">基本数据类型、变量和运算符</span></a>　·　配套练习：<a class="reference internal" href="../tutorials/basics/ch02_practice.html"><span class="doc">第 2 章配套练习：站点信息与气温数据</span></a></p>
+</div>
+<dl class="glossary">
+<dt id="term-0">变量<a class="headerlink" href="#term-0" title="Link to this term">#</a></dt><dd><p>指向某个对象的名字，赋值即&quot;贴标签&quot;。</p>
+<p><strong>生活类比</strong> —— 变量不是装数据的盒子，而是贴在盒子上的<strong>标签</strong>。内存里的对象（盒子）先存在，<code class="docutils literal notranslate"><span class="pre">elevation</span> <span class="pre">=</span> <span class="pre">1517.2</span></code> 只是把 <code class="docutils literal notranslate"><span class="pre">elevation</span></code> 这张标签贴上去；同一个盒子可以贴多张标签，换标签、贴新标签都不动盒子本身。</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">station_name</span> <span class="o">=</span> <span class="s2">&quot;兰州&quot;</span>    <span class="c1"># 给字符串对象贴上 station_name 标签</span>
+<span class="n">alias</span> <span class="o">=</span> <span class="n">station_name</span>     <span class="c1"># 再贴一张标签：两个名字指向同一对象</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">alias</span><span class="p">)</span>             <span class="c1"># 兰州</span>
+</pre></div>
+</div>
+<p><strong>易混淆点</strong> —— <code class="docutils literal notranslate"><span class="pre">=</span></code> 是赋值（贴标签），不是数学上的&quot;等于&quot;，判断相等要用 <code class="docutils literal notranslate"><span class="pre">==</span></code>；变量名区分大小写，<code class="docutils literal notranslate"><span class="pre">Temp</span></code> 与 <code class="docutils literal notranslate"><span class="pre">temp</span></code> 是两个互不相干的变量。</p>
+</dd>
+<dt id="term-int">整型 int<a class="headerlink" href="#term-int" title="Link to this term">#</a></dt><dd><p>没有小数部分的整数类型。</p>
+<p><strong>生活类比</strong> —— 气象站值班日志里的<strong>整件计数</strong>：区站号 52889、2024 年共 366 天、14 时观测。这些量天然没有&quot;半个&quot;，就像不会有人报&quot;今天观测了 3.7 次温度&quot;。</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">station_id</span> <span class="o">=</span> <span class="mi">52889</span>        <span class="c1"># 兰州站区站号</span>
+<span class="n">year_days</span> <span class="o">=</span> <span class="mi">366</span>           <span class="c1"># 闰年天数</span>
+<span class="nb">print</span><span class="p">(</span><span class="nb">type</span><span class="p">(</span><span class="n">station_id</span><span class="p">))</span>   <span class="c1"># &lt;class &#39;int&#39;&gt;</span>
+</pre></div>
+</div>
+<p><strong>易混淆点</strong> —— 不带小数点的数字默认就是 <code class="docutils literal notranslate"><span class="pre">int</span></code>；只要写了小数点，哪怕数值是整数，类型也会变成 <code class="docutils literal notranslate"><span class="pre">float</span></code>——<code class="docutils literal notranslate"><span class="pre">1518.0</span></code> 不是整型。另外 <code class="docutils literal notranslate"><span class="pre">10</span> <span class="pre">/</span> <span class="pre">5</span></code> 的结果是 <code class="docutils literal notranslate"><span class="pre">2.0</span></code>（float），除法永远不产生整型；想要整型结果用整除 <code class="docutils literal notranslate"><span class="pre">10</span> <span class="pre">//</span> <span class="pre">5</span></code>。</p>
+</dd>
+<dt id="term-float">浮点型 float<a class="headerlink" href="#term-float" title="Link to this term">#</a></dt><dd><p>带小数部分的实数类型，内部用二进制近似存储。</p>
+<p><strong>生活类比</strong> —— 观测场里那把<strong>带毫米刻度的尺子</strong>：气温 12.7 °C、纬度 36.06°N、海拔 1517.2 m，连续物理量都需要小数精度。但尺子有最小刻度，浮点数也有精度极限：它能无限接近、却未必精确等于你写下的十进制数。</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">lon</span> <span class="o">=</span> <span class="mf">103.83</span>              <span class="c1"># 兰州经度</span>
+<span class="n">lat</span> <span class="o">=</span> <span class="mf">36.06</span>               <span class="c1"># 兰州纬度</span>
+<span class="n">temp</span> <span class="o">=</span> <span class="mf">12.7</span>               <span class="c1"># 气温</span>
+<span class="nb">print</span><span class="p">(</span><span class="nb">type</span><span class="p">(</span><span class="n">temp</span><span class="p">))</span>         <span class="c1"># &lt;class &#39;float&#39;&gt;</span>
+
+<span class="nb">print</span><span class="p">(</span><span class="mf">0.1</span> <span class="o">+</span> <span class="mf">0.2</span><span class="p">)</span>          <span class="c1"># 0.30000000000000004 —— 精度误差的直观展示</span>
+</pre></div>
+</div>
+<p><strong>易混淆点</strong> —— 浮点运算存在精度误差，<code class="docutils literal notranslate"><span class="pre">0.1</span> <span class="pre">+</span> <span class="pre">0.2</span> <span class="pre">!=</span> <span class="pre">0.3</span></code>。气温判等不要直接用 <code class="docutils literal notranslate"><span class="pre">==</span></code>，用容差：<code class="docutils literal notranslate"><span class="pre">abs(t1</span> <span class="pre">-</span> <span class="pre">t2)</span> <span class="pre">&lt;</span> <span class="pre">1e-6</span></code>。有效数字很多不等于精确——<code class="docutils literal notranslate"><span class="pre">float</span></code> 约 15–17 位有效数字，超出部分是&quot;刻度幻觉&quot;。</p>
+</dd>
+<dt id="term-str">字符串 str<a class="headerlink" href="#term-str" title="Link to this term">#</a></dt><dd><p>由字符组成的不可变序列，用引号包裹。</p>
+<p><strong>生活类比</strong> —— 纸质观测记录本上<strong>手写的那一行文字</strong>：&quot;兰州，晴，西北风&quot;。它的职责是被读取、被展示、被誊抄，但不能拿去和数字相加。</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">station_name</span> <span class="o">=</span> <span class="s2">&quot;兰州气象观测站&quot;</span>
+<span class="n">unit</span> <span class="o">=</span> <span class="s2">&quot;°C&quot;</span>
+<span class="n">info</span> <span class="o">=</span> <span class="sa">f</span><span class="s2">&quot;气温单位：</span><span class="si">{</span><span class="n">unit</span><span class="si">}</span><span class="s2">&quot;</span>
+<span class="nb">print</span><span class="p">(</span><span class="nb">type</span><span class="p">(</span><span class="n">station_name</span><span class="p">))</span>   <span class="c1"># &lt;class &#39;str&#39;&gt;</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">info</span><span class="p">)</span>                 <span class="c1"># 气温单位：°C</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">station_name</span><span class="p">[</span><span class="mi">0</span><span class="p">:</span><span class="mi">2</span><span class="p">])</span>    <span class="c1"># 兰州：字符串可按下标切片</span>
+</pre></div>
+</div>
+<p><strong>易混淆点</strong> —— 数字一旦加引号就是字符串：<code class="docutils literal notranslate"><span class="pre">&quot;25&quot;</span></code> 是文本，<code class="docutils literal notranslate"><span class="pre">&quot;25&quot;</span> <span class="pre">+</span> <span class="pre">5</span></code> 抛 <code class="docutils literal notranslate"><span class="pre">TypeError</span></code>；不加引号的 <code class="docutils literal notranslate"><span class="pre">25</span></code> 才是数字。字符串不可变：<code class="docutils literal notranslate"><span class="pre">s[0]</span> <span class="pre">=</span> <span class="pre">&quot;x&quot;</span></code> 会报错。站号 <code class="docutils literal notranslate"><span class="pre">&quot;010&quot;</span></code> 这类含前导零的编号必须用字符串存，<code class="docutils literal notranslate"><span class="pre">int(&quot;010&quot;)</span></code> 会把零丢掉。</p>
+</dd>
+<dt id="term-bool">布尔值 bool<a class="headerlink" href="#term-bool" title="Link to this term">#</a></dt><dd><p>只有 <code class="docutils literal notranslate"><span class="pre">True</span></code> / <code class="docutils literal notranslate"><span class="pre">False</span></code> 两个值的逻辑类型，比较运算的结果。</p>
+<p><strong>生活类比</strong> —— 值班台上的<strong>双态指示灯</strong>：高温预警要么亮要么灭，没有&quot;半亮&quot;。观测业务里满是这种是非判断：气温是否 ≥35 °C、是否达到暴雨量级。</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">temp</span> <span class="o">=</span> <span class="mi">28</span>
+<span class="n">is_hot</span> <span class="o">=</span> <span class="n">temp</span> <span class="o">&gt;</span> <span class="mi">30</span>          <span class="c1"># 判据不成立</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">is_hot</span><span class="p">)</span>               <span class="c1"># False</span>
+<span class="nb">print</span><span class="p">(</span><span class="nb">type</span><span class="p">(</span><span class="n">is_hot</span><span class="p">))</span>         <span class="c1"># &lt;class &#39;bool&#39;&gt;</span>
+
+<span class="n">is_heatwave</span> <span class="o">=</span> <span class="n">temp</span> <span class="o">&gt;=</span> <span class="mi">35</span>    <span class="c1"># 高温日判据</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">is_heatwave</span><span class="p">)</span>          <span class="c1"># False</span>
+</pre></div>
+</div>
+<p><strong>易混淆点</strong> —— 只有 <code class="docutils literal notranslate"><span class="pre">True</span></code> / <code class="docutils literal notranslate"><span class="pre">False</span></code> 两种写法，首字母大写；写 <code class="docutils literal notranslate"><span class="pre">true</span></code> / <code class="docutils literal notranslate"><span class="pre">false</span></code> 会触发 <code class="docutils literal notranslate"><span class="pre">NameError</span></code>。布尔是整型的子类：<code class="docutils literal notranslate"><span class="pre">True</span> <span class="pre">==</span> <span class="pre">1</span></code>、<code class="docutils literal notranslate"><span class="pre">False</span> <span class="pre">==</span> <span class="pre">0</span></code>；<code class="docutils literal notranslate"><span class="pre">0</span></code>、<code class="docutils literal notranslate"><span class="pre">0.0</span></code>、<code class="docutils literal notranslate"><span class="pre">&quot;&quot;</span></code>、<code class="docutils literal notranslate"><span class="pre">[]</span></code> 等空值都视作假，其余视作真。</p>
+</dd>
+<dt id="term-1">可变类型<a class="headerlink" href="#term-1" title="Link to this term">#</a></dt><dd><p>创建之后还能原地修改内容的类型（list、dict、set）。</p>
+<p><strong>生活类比</strong> —— 一排<strong>带编号抽屉的柜子</strong>（list）或一柜<strong>可更换内容的档案抽屉</strong>（dict）：东西放进去之后，随时可以取出来换新的、加一格、删一格，柜子还是原来那个柜子。</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">temp_list</span> <span class="o">=</span> <span class="p">[</span><span class="mi">12</span><span class="p">,</span> <span class="mi">15</span><span class="p">,</span> <span class="mi">18</span><span class="p">]</span>
+<span class="n">temp_list</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">=</span> <span class="mi">10</span>              <span class="c1"># 原地修改：换掉 0 号抽屉的内容</span>
+<span class="n">temp_list</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="mi">21</span><span class="p">)</span>           <span class="c1"># 原地追加：柜子加长一格</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">temp_list</span><span class="p">)</span>               <span class="c1"># [10, 15, 18, 21]</span>
+
+<span class="n">station</span> <span class="o">=</span> <span class="p">{</span><span class="s2">&quot;temp&quot;</span><span class="p">:</span> <span class="mf">25.6</span><span class="p">}</span>
+<span class="n">station</span><span class="p">[</span><span class="s2">&quot;temp&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="mf">26.1</span>         <span class="c1"># 字典同样可原地更新</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">station</span><span class="p">)</span>                 <span class="c1"># {&#39;temp&#39;: 26.1}</span>
+</pre></div>
+</div>
+<p><strong>易混淆点</strong> —— 列表、字典、集合是可变类型；元组、字符串、数字是不可变类型。可变对象做函数参数时要当心&quot;原地修改&quot;：函数内的 <code class="docutils literal notranslate"><span class="pre">append</span></code> 会影响到函数外的同一个列表（第 4 章细讲）。</p>
+</dd>
+<dt id="term-2">不可变类型<a class="headerlink" href="#term-2" title="Link to this term">#</a></dt><dd><p>创建之后内容不可修改的类型（int、float、str、tuple），改动只能通过&quot;造新对象 + 重新贴标签&quot;完成。</p>
+<p><strong>生活类比</strong> —— <strong>出厂塑封的仪器标定卡</strong>：坐标、传感器编号一旦打印封装，谁都改不了；要&quot;改&quot;只能重新印一张新卡、贴新标签，旧卡作废。</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">location</span> <span class="o">=</span> <span class="p">(</span><span class="mf">103.83</span><span class="p">,</span> <span class="mf">36.06</span><span class="p">)</span>     <span class="c1"># 元组：兰州站经纬度</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">location</span><span class="p">[</span><span class="mi">0</span><span class="p">])</span>             <span class="c1"># 103.83：可以读</span>
+<span class="c1"># location[0] = 104.0          # TypeError！不可原地修改</span>
+
+<span class="n">s</span> <span class="o">=</span> <span class="s2">&quot;Lanzhou&quot;</span>
+<span class="c1"># s[0] = &quot;l&quot;                   # TypeError！字符串同理</span>
+<span class="n">s</span> <span class="o">=</span> <span class="s2">&quot;l&quot;</span> <span class="o">+</span> <span class="n">s</span><span class="p">[</span><span class="mi">1</span><span class="p">:]</span>                <span class="c1"># 正确姿势：生成新字符串再重新赋值</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">s</span><span class="p">)</span>                       <span class="c1"># lanzhou</span>
+</pre></div>
+</div>
+<p><strong>易混淆点</strong> —— 对不可变对象做&quot;修改&quot;会抛出 <code class="docutils literal notranslate"><span class="pre">TypeError</span></code>；想改只能重新赋值，生成新对象。不可变是元组能当字典键、能进集合的原因。<code class="docutils literal notranslate"><span class="pre">x</span> <span class="pre">=</span> <span class="pre">x</span> <span class="pre">+</span> <span class="pre">1</span></code> 对 <code class="docutils literal notranslate"><span class="pre">int</span></code> 是&quot;造了新对象再贴标签&quot;，而不是原地加一。</p>
+</dd>
+<dt id="term-3">索引<a class="headerlink" href="#term-3" title="Link to this term">#</a></dt><dd><p>按位置编号存取序列元素的方式，编号从 0 开始。</p>
+<p><strong>生活类比</strong> —— <strong>收纳柜的格子编号</strong>：气象观测一线给序列编号的习惯是&quot;第 1 个、第 2 个&quot;，Python 却坚持从 0 号格开始数——第 1 个元素住在 0 号格。负数编号则像倒着数：-1 是最后一格。</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">temp_list</span> <span class="o">=</span> <span class="p">[</span><span class="mi">5</span><span class="p">,</span> <span class="mi">10</span><span class="p">,</span> <span class="mi">15</span><span class="p">,</span> <span class="mi">20</span><span class="p">]</span>     <span class="c1"># 四个时次气温</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">temp_list</span><span class="p">[</span><span class="mi">0</span><span class="p">])</span>             <span class="c1"># 5    —— 第 1 个</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">temp_list</span><span class="p">[</span><span class="mi">2</span><span class="p">])</span>             <span class="c1"># 15   —— 第 3 个</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">temp_list</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">])</span>            <span class="c1"># 20   —— 倒数第 1 个</span>
+</pre></div>
+</div>
+<p><strong>易混淆点</strong> —— Python 索引从 <strong>0</strong> 开始，不是 1；&quot;第 3 个元素&quot;的下标是 2。下标越界抛 <code class="docutils literal notranslate"><span class="pre">IndexError</span></code>：长度为 4 的列表没有下标 4。负索引从 -1 开始（-1 是最后一个），不存在 -0。</p>
+</dd>
+<dt id="term-4">切片<a class="headerlink" href="#term-4" title="Link to this term">#</a></dt><dd><p>按 <code class="docutils literal notranslate"><span class="pre">[起:止:步长]</span></code> 一次截取序列中连续（或等间隔）的一段，返回新对象。</p>
+<p><strong>生活类比</strong> —— <strong>从整卷记录纸上按时间剪一段</strong>：&quot;把 1 号到 7 号的观测剪下来&quot;——从 1 号开始剪，剪到 8 号之前停下（8 号那张留给下一段）。剪下来的是复印件，不是原件本身。</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">temp_list</span> <span class="o">=</span> <span class="p">[</span><span class="mi">2</span><span class="p">,</span> <span class="mi">6</span><span class="p">,</span> <span class="mi">9</span><span class="p">,</span> <span class="mi">13</span><span class="p">,</span> <span class="mi">17</span><span class="p">,</span> <span class="mi">21</span><span class="p">]</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">temp_list</span><span class="p">[</span><span class="mi">1</span><span class="p">:</span><span class="mi">4</span><span class="p">])</span>     <span class="c1"># [6, 9, 13]       下标 1、2、3，不含 4</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">temp_list</span><span class="p">[:</span><span class="mi">3</span><span class="p">])</span>      <span class="c1"># [2, 6, 9]        省略起点：从头开始</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">temp_list</span><span class="p">[</span><span class="mi">3</span><span class="p">:])</span>      <span class="c1"># [13, 17, 21]     省略终点：到末尾</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">temp_list</span><span class="p">[::</span><span class="mi">2</span><span class="p">])</span>     <span class="c1"># [2, 9, 17]       步长 2：隔一个取一个</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">temp_list</span><span class="p">[::</span><span class="o">-</span><span class="mi">1</span><span class="p">])</span>    <span class="c1"># [21, 17, 13, 9, 6, 2]  负步长：倒序</span>
+</pre></div>
+</div>
+<p><strong>易混淆点</strong> —— 规则是<strong>左闭右开</strong>：<code class="docutils literal notranslate"><span class="pre">[1:4]</span></code> 包含下标 1、2、3，不含 4——&quot;到谁为止&quot;的那一位永远取不到，这样 <code class="docutils literal notranslate"><span class="pre">a[:n]</span></code> 恰好是前 n 个。切片不会越界报错：<code class="docutils literal notranslate"><span class="pre">temp_list[1:100]</span></code> 安静地返回到末尾为止。对列表切片得到的是<strong>新列表</strong>，改新列表不影响原列表。</p>
+</dd>
+<dt id="term-5">空值<a class="headerlink" href="#term-5" title="Link to this term">#</a></dt><dd><p><code class="docutils literal notranslate"><span class="pre">None</span></code> 表示&quot;这里暂时没有值&quot;，是 <code class="docutils literal notranslate"><span class="pre">NoneType</span></code> 类型的唯一成员。</p>
+<p><strong>生活类比</strong> —— 值班日志上<strong>画着横线的空栏</strong>：不是填了 0（0 意味着&quot;观测到了零这个数&quot;），而是这一栏根本没写——仪器故障、数据缺测。<code class="docutils literal notranslate"><span class="pre">None</span></code> 就是那个&quot;未填&quot;状态。</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">precip</span> <span class="o">=</span> <span class="kc">None</span>                 <span class="c1"># 降水量缺测</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">precip</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">)</span>         <span class="c1"># True：判断空值一律用 is</span>
+
+<span class="n">precip</span> <span class="o">=</span> <span class="mf">0.0</span>                  <span class="c1"># 修复后补录：观测到没有降水</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">precip</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">)</span>         <span class="c1"># False</span>
+<span class="nb">print</span><span class="p">(</span><span class="nb">type</span><span class="p">(</span><span class="kc">None</span><span class="p">))</span>             <span class="c1"># &lt;class &#39;NoneType&#39;&gt;</span>
+</pre></div>
+</div>
+<p><strong>易混淆点</strong> —— <code class="docutils literal notranslate"><span class="pre">None</span></code> 不等于 <code class="docutils literal notranslate"><span class="pre">0</span></code>、<code class="docutils literal notranslate"><span class="pre">&quot;&quot;</span></code>、<code class="docutils literal notranslate"><span class="pre">[]</span></code>：后三者是&quot;值为空的数据&quot;，<code class="docutils literal notranslate"><span class="pre">None</span></code> 是&quot;压根没有值&quot;。判断是否为 <code class="docutils literal notranslate"><span class="pre">None</span></code> 用 <code class="docutils literal notranslate"><span class="pre">is</span> <span class="pre">None</span></code> / <code class="docutils literal notranslate"><span class="pre">is</span> <span class="pre">not</span> <span class="pre">None</span></code>，不用 <code class="docutils literal notranslate"><span class="pre">==</span></code>。没有写 <code class="docutils literal notranslate"><span class="pre">return</span></code> 的函数默认返回 <code class="docutils literal notranslate"><span class="pre">None</span></code>——初学者常被 <code class="docutils literal notranslate"><span class="pre">result</span> <span class="pre">=</span> <span class="pre">my_func()</span></code> 结果是 <code class="docutils literal notranslate"><span class="pre">None</span></code> 迷惑。</p>
+</dd>
+</dl>
+</section>
+
+
+                </article>
+              
+              
+              
+              
+              
+                <footer class="prev-next-footer d-print-none">
+                  
+<div class="prev-next-area">
+    <a class="left-prev"
+       href="ch01_terms.html"
+       title="上一页">
+      <i class="fa-solid fa-angle-left"></i>
+      <div class="prev-next-info">
+        <p class="prev-next-subtitle">上一页</p>
+        <p class="prev-next-title">第 1 章术语：Python 简介及安装环境</p>
+      </div>
+    </a>
+    <a class="right-next"
+       href="ch03_terms.html"
+       title="下一页">
+      <div class="prev-next-info">
+        <p class="prev-next-subtitle">下一页</p>
+        <p class="prev-next-title">第 3 章术语：分支、循环与条件</p>
+      </div>
+      <i class="fa-solid fa-angle-right"></i>
+    </a>
+</div>
+                </footer>
+              
+            </div>
+            
+            
+              
+            
+          </div>
+          <footer class="bd-footer-content">
+            
+          </footer>
+        
+      </main>
+    </div>
+  </div>
+  
+  <!-- Scripts loaded after <body> so the DOM is not blocked -->
+  <script defer src="../_static/scripts/bootstrap.js?digest=90905a2f556bf617f1a9"></script>
+<script defer src="../_static/scripts/pydata-sphinx-theme.js?digest=90905a2f556bf617f1a9"></script>
+
+  <footer class="bd-footer">
+<div class="bd-footer__inner bd-page-width">
+  
+    <div class="footer-items__start">
+      
+        <div class="footer-item">
+
+  <p class="copyright">
+    
+      © Copyright 2026, 兰州大学大气科学学院编程社区.
+      <br/>
+    
+  </p>
+</div>
+      
+        <div class="footer-item">
+
+  <p class="sphinx-version">
+    由 <a href="https://www.sphinx-doc.org/">Sphinx</a> 8.2.3创建。
+    <br/>
+  </p>
+</div>
+      
+    </div>
+  
+  
+  
+    <div class="footer-items__end">
+      
+        <div class="footer-item">
+<p class="theme-version">
+  <!-- # L10n: Setting the PST URL as an argument as this does not need to be localized -->
+  使用 <a href="https://pydata-sphinx-theme.readthedocs.io/en/stable/index.html">PyData Sphinx Theme</a> 0.20.0构建.
+</p></div>
+      
+    </div>
+  
+</div>
+
+  </footer>
+  </body>
+</html>

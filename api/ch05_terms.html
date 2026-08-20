@@ -1,0 +1,642 @@
+
+<!DOCTYPE html>
+
+
+<html lang="zh-CN" data-content_root="../" >
+
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
+    <title>第 5 章术语：面向对象与高级语法 &#8212; MeteoPython</title>
+  
+  
+  
+  <script data-cfasync="false">
+    document.documentElement.dataset.mode = localStorage.getItem("mode") || "";
+    document.documentElement.dataset.theme = localStorage.getItem("theme") || "";
+  </script>
+  <!--
+    this give us a css class that will be invisible only if js is disabled
+  -->
+  <noscript>
+    <style>
+      .pst-js-only { display: none !important; }
+
+    </style>
+  </noscript>
+  
+  <!-- Loaded before other Sphinx assets -->
+  <link href="../_static/styles/theme.css?digest=90905a2f556bf617f1a9" rel="stylesheet" />
+<link href="../_static/styles/pydata-sphinx-theme.css?digest=90905a2f556bf617f1a9" rel="stylesheet" />
+
+    <link rel="stylesheet" type="text/css" href="../_static/pygments.css?v=8f2a1f02" />
+    <link rel="stylesheet" type="text/css" href="../_static/copybutton.css?v=76b2166b" />
+    <link rel="stylesheet" type="text/css" href="../_static/sg_gallery.css?v=fd6457a4" />
+    <link rel="stylesheet" type="text/css" href="../_static/sg_gallery-binder.css?v=f4aeca0c" />
+    <link rel="stylesheet" type="text/css" href="../_static/sg_gallery-dataframe.css?v=2082cf3c" />
+    <link rel="stylesheet" type="text/css" href="../_static/sg_gallery-rendered-html.css?v=1277b6f3" />
+    <link rel="stylesheet" type="text/css" href="../_static/sphinx-design.min.css?v=95c83b7e" />
+    <link rel="stylesheet" type="text/css" href="../_static/./custom.css?v=fbe1f034" />
+  
+  <!-- So that users can add custom icons -->
+  <script defer src="../_static/scripts/fontawesome.js?digest=90905a2f556bf617f1a9"></script>
+  <!-- Pre-loaded scripts that we'll load fully later -->
+  <link rel="preload" as="script" href="../_static/scripts/bootstrap.js?digest=90905a2f556bf617f1a9" />
+<link rel="preload" as="script" href="../_static/scripts/pydata-sphinx-theme.js?digest=90905a2f556bf617f1a9" />
+
+    <script src="../_static/documentation_options.js?v=9becfed8"></script>
+    <script src="../_static/doctools.js?v=9bcbadda"></script>
+    <script src="../_static/sphinx_highlight.js?v=dc90522c"></script>
+    <script src="../_static/sg-tags.js?v=d80f6fa4"></script>
+    <script src="../_static/clipboard.min.js?v=a7894cd8"></script>
+    <script src="../_static/copybutton.js?v=fd10adb8"></script>
+    <script src="../_static/translations.js?v=beaddf03"></script>
+    <script src="../_static/design-tabs.js?v=f930bc37"></script>
+    <script>DOCUMENTATION_OPTIONS.pagename = 'api/ch05_terms';</script>
+    <script>
+        DOCUMENTATION_OPTIONS.theme_version = '0.20.0';
+        DOCUMENTATION_OPTIONS.theme_switcher_json_url = '_static/switcher.json';
+        DOCUMENTATION_OPTIONS.theme_switcher_version_match = '0.1.0';
+        DOCUMENTATION_OPTIONS.show_version_warning_banner =
+            false;
+        </script>
+    <script>DOCUMENTATION_OPTIONS.search_as_you_type = false;</script>
+    <link rel="icon" href="../_static/favicon.svg"/>
+    <link rel="index" title="索引" href="../genindex.html" />
+    <link rel="search" title="搜索" href="../search.html" />
+    <link rel="next" title="第 6 章术语：气象数据计算 NumPy" href="ch06_terms.html" />
+    <link rel="prev" title="第 4 章术语：函数及变量作用域、模块和包" href="ch04_terms.html" />
+  <meta name="viewport" content="width=device-width, initial-scale=1"/>
+  <meta name="docsearch:language" content="zh-CN"/>
+  <meta name="docsearch:version" content="0.1" />
+    <meta name="docbuild:last-update" content="2026-08-20"/>
+  
+    
+    <script src="../_static/searchtools.js"></script>
+    <script src="../_static/language_data.js"></script>
+    <script src="../searchindex.js"></script>
+  
+  </head>
+  <body data-default-mode="">
+  
+  
+  <div id="pst-skip-link" class="skip-link d-print-none"><a href="#main-content">跳转至主要内容</a></div>
+
+  
+  <div id="pst-scroll-pixel-helper"></div>
+  
+  <button type="button" class="btn rounded-pill" id="pst-back-to-top">
+    <i class="fa-solid fa-arrow-up"></i>回到顶部</button>
+  
+  
+  
+  
+  <dialog id="pst-search-dialog">
+    
+<form class="bd-search d-flex align-items-center"
+      action="../search.html"
+      method="get">
+  <i class="fa-solid fa-magnifying-glass"></i>
+  <input type="search"
+         class="form-control"
+         name="q"
+         placeholder="搜索文档…"
+         aria-label="搜索文档…"
+         autocomplete="off"
+         autocorrect="off"
+         autocapitalize="off"
+         spellcheck="false"/>
+  <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd>K</kbd></span>
+</form>
+  </dialog>
+
+  <div class="pst-async-banner-revealer d-none">
+  <aside id="bd-header-version-warning" class="d-none d-print-none" aria-label="版本警告"></aside>
+</div>
+
+  
+    <header id="pst-header" class="bd-header navbar navbar-expand-lg bd-navbar d-print-none">
+<div class="bd-header__inner bd-page-width">
+  <button class="pst-navbar-icon sidebar-toggle primary-toggle" aria-label="网页导航">
+    <span class="fa-solid fa-bars"></span>
+  </button>
+  
+  
+  <div class="col-lg-3 navbar-header-items__start">
+    
+      <div class="navbar-item">
+
+  
+    
+  
+
+<a class="navbar-brand logo" href="../index.html">
+  
+  
+  
+  
+  
+    
+    
+      
+    
+    
+    <img src="../_static/logo.svg" class="logo__image only-light" alt="MeteoPython - Home"/>
+    <img src="../_static/logo.svg" class="logo__image only-dark pst-js-only" alt="MeteoPython - Home"/>
+  
+  
+</a></div>
+    
+  </div>
+  
+  <div class="col-lg-9 navbar-header-items">
+    
+    <div class="me-auto navbar-header-items__center">
+      
+        <div class="navbar-item">
+<nav>
+  <ul class="bd-navbar-elements navbar-nav">
+    
+<li class="nav-item ">
+  <a class="nav-link nav-internal" href="../user_guide/index.html">
+    教程
+  </a>
+</li>
+
+
+<li class="nav-item ">
+  <a class="nav-link nav-internal" href="../tutorials/index.html">
+    练习
+  </a>
+</li>
+
+
+<li class="nav-item ">
+  <a class="nav-link nav-internal" href="../gallery/index.html">
+    示例
+  </a>
+</li>
+
+
+<li class="nav-item current active">
+  <a class="nav-link nav-internal" href="index.html">
+    术语参考
+  </a>
+</li>
+
+
+<li class="nav-item ">
+  <a class="nav-link nav-internal" href="../qa/index.html">
+    常见问题 Q&A
+  </a>
+</li>
+
+  </ul>
+</nav></div>
+      
+    </div>
+    
+    
+    <div class="navbar-header-items__end">
+      
+        <div class="navbar-item navbar-persistent--container">
+          
+
+<button class="btn search-button-field search-button__button pst-js-only" title="搜索" aria-label="搜索" data-bs-placement="bottom" data-bs-toggle="tooltip">
+ <i class="fa-solid fa-magnifying-glass"></i>
+ <span class="search-button__default-text">搜索</span>
+ <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd class="kbd-shortcut__modifier">K</kbd></span>
+</button>
+        </div>
+      
+      
+        <div class="navbar-item">
+
+<div class="theme-switch-container dropdown pst-js-only" data-bs-toggle="tooltip" data-bs-placement="bottom" title="Color mode">
+  <button class="btn btn-sm nav-link pst-navbar-icon theme-switch-button dropdown-toggle" aria-label="Color mode" data-bs-toggle="dropdown">
+    <i class="theme-switch fa-solid fa-sun fa-lg fa-fw" data-mode="light" title="亮色"></i>
+    <i class="theme-switch fa-solid fa-moon fa-lg fa-fw" data-mode="dark" title="暗色"></i>
+    <i class="theme-switch fa-solid fa-circle-half-stroke fa-lg fa-fw" data-mode="auto" title="System Settings"></i>
+  </button>
+  <ul class="dropdown-menu dropdown-menu-end">
+    <li><button class="dropdown-item d-flex align-items-center theme-change-button" data-mode="auto"><i class="fa-solid fa-circle-half-stroke fa-lg fa-fw me-1"></i>System Settings</button></li>
+    <li><button class="dropdown-item d-flex align-items-center theme-change-button" data-mode="light"><i class="fa-solid fa-sun fa-lg fa-fw me-1"></i>亮色</button></li>
+    <li><button class="dropdown-item d-flex align-items-center theme-change-button" data-mode="dark"><i class="fa-solid fa-moon fa-lg fa-fw me-1"></i>暗色</button></li>
+  </ul>
+</div></div>
+      
+        <div class="navbar-item"><ul class="navbar-icon-links"
+    aria-label="Icon Links">
+</ul></div>
+      
+    </div>
+    
+  </div>
+  
+  
+    <div class="navbar-persistent--mobile">
+
+<button class="btn search-button-field search-button__button pst-js-only" title="搜索" aria-label="搜索" data-bs-placement="bottom" data-bs-toggle="tooltip">
+ <i class="fa-solid fa-magnifying-glass"></i>
+ <span class="search-button__default-text">搜索</span>
+ <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd class="kbd-shortcut__modifier">K</kbd></span>
+</button>
+    </div>
+  
+
+  
+</div>
+
+    </header>
+  
+
+  <div class="bd-container">
+    <div class="bd-container__inner bd-page-width">
+      
+      
+      
+      <dialog id="pst-primary-sidebar-modal"></dialog>
+      <div id="pst-primary-sidebar" class="bd-sidebar-primary bd-sidebar">
+        
+
+  
+  <div class="sidebar-header-items sidebar-primary__section">
+    
+    
+      <div class="sidebar-header-items__center">
+        
+          
+          
+            <div class="navbar-item">
+<nav>
+  <ul class="bd-navbar-elements navbar-nav">
+    
+<li class="nav-item ">
+  <a class="nav-link nav-internal" href="../user_guide/index.html">
+    教程
+  </a>
+</li>
+
+
+<li class="nav-item ">
+  <a class="nav-link nav-internal" href="../tutorials/index.html">
+    练习
+  </a>
+</li>
+
+
+<li class="nav-item ">
+  <a class="nav-link nav-internal" href="../gallery/index.html">
+    示例
+  </a>
+</li>
+
+
+<li class="nav-item current active">
+  <a class="nav-link nav-internal" href="index.html">
+    术语参考
+  </a>
+</li>
+
+
+<li class="nav-item ">
+  <a class="nav-link nav-internal" href="../qa/index.html">
+    常见问题 Q&A
+  </a>
+</li>
+
+  </ul>
+</nav></div>
+          
+        
+      </div>
+    
+    
+    
+      <div class="sidebar-header-items__end">
+        
+          <div class="navbar-item">
+
+<div class="theme-switch-container dropdown pst-js-only" data-bs-toggle="tooltip" data-bs-placement="bottom" title="Color mode">
+  <button class="btn btn-sm nav-link pst-navbar-icon theme-switch-button dropdown-toggle" aria-label="Color mode" data-bs-toggle="dropdown">
+    <i class="theme-switch fa-solid fa-sun fa-lg fa-fw" data-mode="light" title="亮色"></i>
+    <i class="theme-switch fa-solid fa-moon fa-lg fa-fw" data-mode="dark" title="暗色"></i>
+    <i class="theme-switch fa-solid fa-circle-half-stroke fa-lg fa-fw" data-mode="auto" title="System Settings"></i>
+  </button>
+  <ul class="dropdown-menu dropdown-menu-end">
+    <li><button class="dropdown-item d-flex align-items-center theme-change-button" data-mode="auto"><i class="fa-solid fa-circle-half-stroke fa-lg fa-fw me-1"></i>System Settings</button></li>
+    <li><button class="dropdown-item d-flex align-items-center theme-change-button" data-mode="light"><i class="fa-solid fa-sun fa-lg fa-fw me-1"></i>亮色</button></li>
+    <li><button class="dropdown-item d-flex align-items-center theme-change-button" data-mode="dark"><i class="fa-solid fa-moon fa-lg fa-fw me-1"></i>暗色</button></li>
+  </ul>
+</div></div>
+        
+          <div class="navbar-item"><ul class="navbar-icon-links"
+    aria-label="Icon Links">
+</ul></div>
+        
+      </div>
+    
+  </div>
+  
+    <div class="sidebar-primary-items__start sidebar-primary__section">
+        <div class="sidebar-primary-item pst-sidebar-collapse"><button id="pst-collapse-sidebar-button" aria-expanded="true" aria-controls="pst-primary-sidebar">
+  <svg class="pst-icon" role="img" aria-hidden="true" focusable="false" viewBox="0 0 16 16" xmlns="http://www.w3.org/2000/svg">
+    <path fill="currentColor" d="M3 15.5C2.36232 15.5 1.74874 15.2564 1.28478 14.8189C0.820828 14.3815 0.541576 13.7832 0.504167 13.1467L0.5 13L0.5 3C0.499965 2.36232 0.743605 1.74874 1.18107 1.28478C1.61854 0.820828 2.21676 0.541576 2.85333 0.504167L3 0.5L13 0.5C13.6377 0.499965 14.2513 0.743605 14.7152 1.18107C15.1792 1.61854 15.4584 2.21676 15.4958 2.85333L15.5 3L15.5 13C15.5 13.6377 15.2564 14.2513 14.8189 14.7152C14.3815 15.1792 13.7832 15.4584 13.1467 15.4958L13 15.5L3 15.5ZM3 13.8333L10.5 13.8333L10.5 2.16667L3 2.16667C2.79589 2.16669 2.59889 2.24163 2.44636 2.37726C2.29383 2.5129 2.19638 2.69979 2.1725 2.9025L2.16667 3L2.16667 13C2.16669 13.2041 2.24163 13.4011 2.37726 13.5536C2.5129 13.7062 2.69979 13.8036 2.9025 13.8275L3 13.8333ZM6.65583 10.325L6.5775 10.2558L4.91083 8.58917C4.76735 8.44567 4.68116 8.25476 4.66843 8.05223C4.65569 7.84971 4.71729 7.6495 4.84167 7.48917L4.91083 7.41083L6.5775 5.74417C6.72747 5.59471 6.9287 5.50794 7.14032 5.50148C7.35194 5.49502 7.55809 5.56935 7.7169 5.70937C7.8757 5.8494 7.97525 6.04463 7.99533 6.25539C8.01541 6.46616 7.95451 6.67667 7.825 6.84417L7.75583 6.9225L6.67917 8L7.75583 9.0775C7.89931 9.22099 7.98551 9.41191 7.99824 9.61443C8.01097 9.81695 7.94938 10.0172 7.825 10.1775L7.75583 10.2558C7.61234 10.3993 7.42142 10.4855 7.2189 10.4982C7.01638 10.511 6.81617 10.4494 6.65583 10.325Z"/>
+  </svg>
+  <span class="pst-collapse-sidebar-label">Collapse Sidebar</span>
+  <span class="pst-expand-sidebar-label">Expand Sidebar</span>
+</button></div>
+        <div class="sidebar-primary-item">
+
+<nav class="bd-docs-nav bd-links"
+     aria-label="章节导航">
+  <p class="bd-links__title" role="heading" aria-level="1">章节导航</p>
+  <div class="bd-toc-item navbar-nav"><ul class="current nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="ch01_terms.html">第 1 章术语：Python 简介及安装环境</a></li>
+<li class="toctree-l1"><a class="reference internal" href="ch02_terms.html">第 2 章术语：基本数据类型、变量和运算符</a></li>
+<li class="toctree-l1"><a class="reference internal" href="ch03_terms.html">第 3 章术语：分支、循环与条件</a></li>
+<li class="toctree-l1"><a class="reference internal" href="ch04_terms.html">第 4 章术语：函数及变量作用域、模块和包</a></li>
+<li class="toctree-l1 current active"><a class="current reference internal" href="#">第 5 章术语：面向对象与高级语法</a></li>
+<li class="toctree-l1"><a class="reference internal" href="ch06_terms.html">第 6 章术语：气象数据计算 NumPy</a></li>
+<li class="toctree-l1"><a class="reference internal" href="ch07_terms.html">第 7 章术语：气象数据分析（一）Pandas</a></li>
+<li class="toctree-l1"><a class="reference internal" href="ch08_terms.html">第 8 章术语：气象数据分析（二）Xarray</a></li>
+<li class="toctree-l1"><a class="reference internal" href="ch09_terms.html">第 9 章术语：Matplotlib 绘图</a></li>
+</ul>
+</div>
+</nav></div>
+    </div>
+  
+  
+  <div class="sidebar-primary-items__end sidebar-primary__section">
+      <div class="sidebar-primary-item">
+<div id="ethical-ad-placement"
+      class="flat"
+      data-ea-publisher="readthedocs"
+      data-ea-type="readthedocs-sidebar"
+      data-ea-manual="true">
+</div></div>
+  </div>
+
+
+      </div>
+      
+      <main id="main-content" class="bd-main" role="main">
+        
+        
+          <div class="bd-content">
+            <div class="bd-article-container">
+              
+              <div class="bd-header-article d-print-none">
+<div class="header-article-items header-article__inner">
+  
+    <div class="header-article-items__start">
+      
+        <div class="header-article-item">
+
+<nav aria-label="Breadcrumb" class="d-print-none">
+  <ul class="bd-breadcrumbs">
+    
+    <li class="breadcrumb-item breadcrumb-home">
+      <a href="../index.html" class="nav-link" aria-label="初始页面">
+        <i class="fa-solid fa-home"></i>
+      </a>
+    </li>
+    
+    <li class="breadcrumb-item"><a href="index.html" class="nav-link">术语参考</a></li>
+    
+    <li class="breadcrumb-item active" aria-current="page"><span class="ellipsis">第 5 章术语：面向对象与高级语法</span></li>
+  </ul>
+</nav>
+</div>
+      
+    </div>
+  
+  
+</div>
+</div>
+              
+              
+              
+                
+<div id="searchbox"></div>
+                <article class="bd-article">
+                  
+  <section id="id1">
+<h1>第 5 章术语：面向对象与高级语法<a class="headerlink" href="#id1" title="Link to this heading">#</a></h1>
+<p>配套 <a class="reference internal" href="../user_guide/basics/oop.html#tut-oop"><span class="std std-ref">面向对象与高级语法</span></a> 正文使用。每个词条 = 一句话定义 + <strong>生活类比</strong> + <strong>气象示例</strong> + <strong>易混淆点</strong>（<cite>.. code-block:: python</cite> 承载代码示例）。本章术语围绕&quot;把气象站抽象成类&quot;展开。</p>
+<div class="admonition seealso">
+<p class="admonition-title">参见</p>
+<p>配套正文：<a class="reference internal" href="../user_guide/basics/oop.html"><span class="doc">面向对象与高级语法</span></a>　·　配套练习：<a class="reference internal" href="../tutorials/basics/ch05_practice.html"><span class="doc">第 5 章练习：面向对象与高级语法</span></a></p>
+</div>
+<dl class="glossary">
+<dt id="term-Class">类（Class）<a class="headerlink" href="#term-Class" title="Link to this term">#</a></dt><dd><p>对象的模板，定义一组对象共有的属性与方法，是一张抽象的设计图纸；类本身不占具体&quot;实物&quot;，只描述&quot;应该长什么样、会做什么&quot;。</p>
+<p><strong>生活类比</strong> —— 汽车设计图纸：规定车子有车轮、颜色、行驶功能，但图纸本身不是真车。</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="k">class</span><span class="w"> </span><span class="nc">Station</span><span class="p">:</span>
+    <span class="k">def</span><span class="w"> </span><span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">station_id</span><span class="p">,</span> <span class="n">name</span><span class="p">,</span> <span class="n">lat</span><span class="p">,</span> <span class="n">lon</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">station_id</span> <span class="o">=</span> <span class="n">station_id</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">name</span> <span class="o">=</span> <span class="n">name</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">lat</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">lon</span> <span class="o">=</span> <span class="n">lat</span><span class="p">,</span> <span class="n">lon</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">info</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">return</span> <span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">name</span><span class="si">}</span><span class="s2">站（区站号 </span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">station_id</span><span class="si">}</span><span class="s2">）&quot;</span>
+</pre></div>
+</div>
+<p><strong>易混淆点</strong> —— 类（图纸）≠ 实例（真车）。<code class="docutils literal notranslate"><span class="pre">Station</span></code> 类只是&quot;台站说明书&quot;，不会自己算气温；必须先 <code class="docutils literal notranslate"><span class="pre">类名()</span></code> 造出一座具体的站，才能读写与统计。</p>
+</dd>
+<dt id="term-Object-Instance">对象 / 实例（Object / Instance）<a class="headerlink" href="#term-Object-Instance" title="Link to this term">#</a></dt><dd><p>依据类创建出来的具体实体，称为实例（对象），在内存中占有一块真实的存储空间。</p>
+<p><strong>生活类比</strong> —— 按照图纸造出来的一台真实汽车：图纸是类，这台实物汽车就是实例。</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">lz</span> <span class="o">=</span> <span class="n">Station</span><span class="p">(</span><span class="s2">&quot;52889&quot;</span><span class="p">,</span> <span class="s2">&quot;兰州&quot;</span><span class="p">,</span> <span class="mf">36.05</span><span class="p">,</span> <span class="mf">103.88</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">lz</span><span class="o">.</span><span class="n">info</span><span class="p">())</span>          <span class="c1"># 兰州站（区站号 52889）</span>
+</pre></div>
+</div>
+<p><strong>易混淆点</strong> —— <code class="docutils literal notranslate"><span class="pre">lz</span></code> 是真真切切的兰州站对象，可读取、可统计；而 <code class="docutils literal notranslate"><span class="pre">Station</span></code> 本身仍然只是&quot;图纸&quot;。</p>
+</dd>
+<dt id="term-Attribute">属性（Attribute）<a class="headerlink" href="#term-Attribute" title="Link to this term">#</a></dt><dd><p>类 / 实例身上存储的数据变量，描述对象的特征，反映对象的&quot;状态&quot;。</p>
+<p><strong>生活类比</strong> —— 汽车的颜色、车牌号、行驶里程，属于这辆车的特征信息。</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">lz</span><span class="o">.</span><span class="n">station_id</span> <span class="o">=</span> <span class="s2">&quot;52889&quot;</span>   <span class="c1"># 区站号</span>
+<span class="n">lz</span><span class="o">.</span><span class="n">lat</span> <span class="o">=</span> <span class="mf">36.05</span>
+<span class="n">lz</span><span class="o">.</span><span class="n">lon</span> <span class="o">=</span> <span class="mf">103.88</span>
+<span class="n">lz</span><span class="o">.</span><span class="n">altitude</span> <span class="o">=</span> <span class="mi">1517</span>        <span class="c1"># 海拔 / m</span>
+</pre></div>
+</div>
+<p><strong>易混淆点</strong> —— 属性描述&quot;它是什么样&quot;，方法描述&quot;它能做什么&quot;。<code class="docutils literal notranslate"><span class="pre">lz.name</span></code> 是属性（站名），<code class="docutils literal notranslate"><span class="pre">lz.info()</span></code> 是方法（要加括号调用）。</p>
+</dd>
+<dt id="term-Method">方法（Method）<a class="headerlink" href="#term-Method" title="Link to this term">#</a></dt><dd><p>写在类内部的函数，用来描述对象可以执行的行为动作；调用时 Python 会自动传入 <code class="docutils literal notranslate"><span class="pre">self</span></code> 指向当前实例。</p>
+<p><strong>生活类比</strong> —— 汽车的刹车、加速、开灯，是汽车可以完成的动作。</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">lz</span><span class="o">.</span><span class="n">record</span><span class="p">(</span><span class="mf">31.6</span><span class="p">)</span>            <span class="c1"># 记录一次气温</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">lz</span><span class="o">.</span><span class="n">calc_mean</span><span class="p">(</span><span class="mi">7</span><span class="p">))</span>     <span class="c1"># 算出 7 月平均气温</span>
+</pre></div>
+</div>
+<p><strong>易混淆点</strong> —— 方法调用要加括号 <code class="docutils literal notranslate"><span class="pre">info()</span></code>，属性访问不加括号 <code class="docutils literal notranslate"><span class="pre">name</span></code>；实例方法的第一个参数必须是 <code class="docutils literal notranslate"><span class="pre">self</span></code>，漏写是最常见报错之一。</p>
+</dd>
+<dt id="term-__init__">构造函数 __init__<a class="headerlink" href="#term-__init__" title="Link to this term">#</a></dt><dd><p>实例创建时自动调用的特殊方法，用来初始化实例的属性；名字固定为 <code class="docutils literal notranslate"><span class="pre">__init__</span></code>，且第一个参数必须是 <code class="docutils literal notranslate"><span class="pre">self</span></code>。</p>
+<p><strong>生活类比</strong> —— 新车出厂装配流程：造车的时候给它装好颜色、轮胎等初始配置。</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="k">class</span><span class="w"> </span><span class="nc">Station</span><span class="p">:</span>
+    <span class="k">def</span><span class="w"> </span><span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">station_id</span><span class="p">,</span> <span class="n">name</span><span class="p">,</span> <span class="n">lat</span><span class="p">,</span> <span class="n">lon</span><span class="p">,</span> <span class="n">altitude</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">station_id</span> <span class="o">=</span> <span class="n">station_id</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">name</span> <span class="o">=</span> <span class="n">name</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">lat</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">lon</span> <span class="o">=</span> <span class="n">lat</span><span class="p">,</span> <span class="n">lon</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">altitude</span> <span class="o">=</span> <span class="n">altitude</span>
+
+<span class="n">lz</span> <span class="o">=</span> <span class="n">Station</span><span class="p">(</span><span class="s2">&quot;52889&quot;</span><span class="p">,</span> <span class="s2">&quot;兰州&quot;</span><span class="p">,</span> <span class="mf">36.05</span><span class="p">,</span> <span class="mf">103.88</span><span class="p">,</span> <span class="mi">1517</span><span class="p">)</span>  <span class="c1"># &quot;出生&quot;即带全部信息</span>
+</pre></div>
+</div>
+<p><strong>易混淆点</strong> —— <code class="docutils literal notranslate"><span class="pre">__init__</span></code> 由 <code class="docutils literal notranslate"><span class="pre">类名(参数)</span></code> 自动触发，不能手动 <code class="docutils literal notranslate"><span class="pre">lz.__init__(...)</span></code>；它只做初始化，不负责&quot;返回创建好的对象&quot;。</p>
+</dd>
+<dt id="term-Inheritance">继承（Inheritance）<a class="headerlink" href="#term-Inheritance" title="Link to this term">#</a></dt><dd><p>子类复用父类的属性与方法，还可以扩展属于自己的新功能，实现代码复用；同名改写时以子类内容为优先。</p>
+<p><strong>生活类比</strong> —— 普通轿车图纸（父类）→ 电动轿车图纸（子类）：继承轿车全部功能，新增充电功能。</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="k">class</span><span class="w"> </span><span class="nc">AutoStation</span><span class="p">(</span><span class="n">Station</span><span class="p">):</span>              <span class="c1"># 继承父类 Station</span>
+    <span class="k">def</span><span class="w"> </span><span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="n">temperature</span><span class="o">=</span><span class="mf">0.0</span><span class="p">,</span> <span class="n">humidity</span><span class="o">=</span><span class="mf">0.0</span><span class="p">,</span> <span class="n">pressure</span><span class="o">=</span><span class="mf">0.0</span><span class="p">):</span>
+        <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span><span class="o">*</span><span class="n">args</span><span class="p">)</span>          <span class="c1"># 先初始化父类属性</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">temperature</span> <span class="o">=</span> <span class="n">temperature</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">humidity</span> <span class="o">=</span> <span class="n">humidity</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">pressure</span> <span class="o">=</span> <span class="n">pressure</span>
+</pre></div>
+</div>
+<p><strong>易混淆点</strong> —— 子类重写 <code class="docutils literal notranslate"><span class="pre">__init__</span></code> 后，父类构造函数不会自动执行，须显式调用 <code class="docutils literal notranslate"><span class="pre">super().__init__(...)</span></code>，否则父类属性缺失。</p>
+</dd>
+<dt id="term-Encapsulation">封装（Encapsulation）<a class="headerlink" href="#term-Encapsulation" title="Link to this term">#</a></dt><dd><p>把数据和操作数据的方法打包到类内，对外隐藏内部细节，只暴露可供调用的接口（公有成员）。</p>
+<p><strong>生活类比</strong> —— 开车只需踩油门握方向盘，不用关心发动机内部齿轮如何运转。</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">mean</span> <span class="o">=</span> <span class="n">station</span><span class="o">.</span><span class="n">calc_month_mean</span><span class="p">(</span><span class="mi">7</span><span class="p">)</span>        <span class="c1"># 对外只需这一个接口</span>
+<span class="c1"># 内部究竟是遍历逐日数据还是查表，被封装在类里，外部不可见也不可篡改</span>
+</pre></div>
+</div>
+<p><strong>易混淆点</strong> —— Python 的&quot;私有&quot;只是约定（双下划线 <code class="docutils literal notranslate"><span class="pre">__</span></code> 名称改写为 <code class="docutils literal notranslate"><span class="pre">_类名__属性</span></code>），并非语法级强制隔离；封装是设计规范，不是安全机制。</p>
+</dd>
+<dt id="term-Polymorphism">多态（Polymorphism）<a class="headerlink" href="#term-Polymorphism" title="Link to this term">#</a></dt><dd><p>不同子类重写同一个方法，调用同一个方法名，不同对象会表现出不同行为——同一接口，多种实现。</p>
+<p><strong>生活类比</strong> —— 同样&quot;鸣叫&quot;这个动作：狗对象执行&quot;汪汪叫&quot;，猫对象执行&quot;喵喵叫&quot;。</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="k">class</span><span class="w"> </span><span class="nc">AutoStation</span><span class="p">(</span><span class="n">Station</span><span class="p">):</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">info</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>                      <span class="c1"># 重写父类 info()</span>
+        <span class="k">return</span> <span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="n">info</span><span class="p">()</span><span class="si">}</span><span class="s2"> | </span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">temperature</span><span class="si">}</span><span class="s2">℃ </span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">humidity</span><span class="si">}</span><span class="s2">%&quot;</span>
+
+<span class="nb">print</span><span class="p">(</span><span class="n">Station</span><span class="p">(</span><span class="s2">&quot;54511&quot;</span><span class="p">,</span> <span class="s2">&quot;北京&quot;</span><span class="p">,</span> <span class="mf">39.8</span><span class="p">,</span> <span class="mf">116.47</span><span class="p">)</span><span class="o">.</span><span class="n">info</span><span class="p">())</span>   <span class="c1"># 普通站：只有基础信息</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">shanghai</span><span class="o">.</span><span class="n">info</span><span class="p">())</span>                                  <span class="c1"># 自动站：多出气象要素</span>
+</pre></div>
+</div>
+<p><strong>易混淆点</strong> —— 多态靠&quot;同名重写 + 运行时绑定&quot;实现：调用方只认方法名 <code class="docutils literal notranslate"><span class="pre">info()</span></code>，具体输出由对象的实际类型决定。</p>
+</dd>
+<dt id="term-Decorator">装饰器（Decorator）<a class="headerlink" href="#term-Decorator" title="Link to this term">#</a></dt><dd><p>在不修改原函数代码的前提下，用 <code class="docutils literal notranslate"><span class="pre">&#64;</span></code> 语法包装、增强函数功能的一种工具；本质是&quot;接收函数、返回新函数&quot;的高阶函数。</p>
+<p><strong>生活类比</strong> —— 给手机套手机壳：不改变手机本身，额外增加防摔保护功能。</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="k">def</span><span class="w"> </span><span class="nf">log_record</span><span class="p">(</span><span class="n">func</span><span class="p">):</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">wrapper</span><span class="p">(</span><span class="n">temperature</span><span class="p">):</span>
+        <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;开始记录气温&quot;</span><span class="p">)</span>
+        <span class="n">result</span> <span class="o">=</span> <span class="n">func</span><span class="p">(</span><span class="n">temperature</span><span class="p">)</span>
+        <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;已记录 </span><span class="si">{</span><span class="n">temperature</span><span class="si">}</span><span class="s2">℃&quot;</span><span class="p">)</span>
+        <span class="k">return</span> <span class="n">result</span>
+    <span class="k">return</span> <span class="n">wrapper</span>
+
+<span class="nd">@log_record</span>
+<span class="k">def</span><span class="w"> </span><span class="nf">record_temperature</span><span class="p">(</span><span class="n">temperature</span><span class="p">):</span>
+    <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;写入:&quot;</span><span class="p">,</span> <span class="n">temperature</span><span class="p">)</span>
+
+<span class="n">record_temperature</span><span class="p">(</span><span class="mf">31.6</span><span class="p">)</span>
+</pre></div>
+</div>
+<p><strong>易混淆点</strong> —— 装饰器只是&quot;包装层&quot;，不会丢失原函数的行为；务必在 <code class="docutils literal notranslate"><span class="pre">wrapper</span></code> 里 <code class="docutils literal notranslate"><span class="pre">return</span> <span class="pre">func(...)</span></code> 的返回值，否则原函数的返回会被吞掉。</p>
+</dd>
+<dt id="term-Generator">生成器（Generator）<a class="headerlink" href="#term-Generator" title="Link to this term">#</a></dt><dd><p>使用 <code class="docutils literal notranslate"><span class="pre">yield</span></code> 惰性逐个产出数据的函数；调用生成器函数得到的是生成器对象，用 <code class="docutils literal notranslate"><span class="pre">for</span></code> 遍历时逐个取出，不会一次性把全部数据载入内存。</p>
+<p><strong>生活类比</strong> —— 饮水机接水：需要一杯接一杯出水，而不是一次性把整桶水全部倒出来。</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="k">def</span><span class="w"> </span><span class="nf">temp_seq</span><span class="p">(</span><span class="n">records</span><span class="p">):</span>
+    <span class="k">for</span> <span class="n">hour</span><span class="p">,</span> <span class="n">temperature</span> <span class="ow">in</span> <span class="n">records</span><span class="p">:</span>
+        <span class="k">yield</span> <span class="n">hour</span><span class="p">,</span> <span class="n">temperature</span>          <span class="c1"># 惰性逐个产出</span>
+
+<span class="k">for</span> <span class="n">hour</span><span class="p">,</span> <span class="n">temperature</span> <span class="ow">in</span> <span class="n">temp_seq</span><span class="p">([(</span><span class="mi">8</span><span class="p">,</span> <span class="mf">21.6</span><span class="p">),</span> <span class="p">(</span><span class="mi">14</span><span class="p">,</span> <span class="mf">31.6</span><span class="p">)]):</span>
+    <span class="nb">print</span><span class="p">(</span><span class="n">hour</span><span class="p">,</span> <span class="n">temperature</span><span class="p">)</span>
+</pre></div>
+</div>
+<p><strong>易混淆点</strong> —— 含 <code class="docutils literal notranslate"><span class="pre">yield</span></code> 的函数是&quot;生成器函数&quot;，调用即返回生成器对象，函数体并不立即执行；用 <code class="docutils literal notranslate"><span class="pre">return</span></code> 直接返回列表会立刻占用全部内存，违背惰性初衷。</p>
+</dd>
+</dl>
+</section>
+
+
+                </article>
+              
+              
+              
+              
+              
+                <footer class="prev-next-footer d-print-none">
+                  
+<div class="prev-next-area">
+    <a class="left-prev"
+       href="ch04_terms.html"
+       title="上一页">
+      <i class="fa-solid fa-angle-left"></i>
+      <div class="prev-next-info">
+        <p class="prev-next-subtitle">上一页</p>
+        <p class="prev-next-title">第 4 章术语：函数及变量作用域、模块和包</p>
+      </div>
+    </a>
+    <a class="right-next"
+       href="ch06_terms.html"
+       title="下一页">
+      <div class="prev-next-info">
+        <p class="prev-next-subtitle">下一页</p>
+        <p class="prev-next-title">第 6 章术语：气象数据计算 NumPy</p>
+      </div>
+      <i class="fa-solid fa-angle-right"></i>
+    </a>
+</div>
+                </footer>
+              
+            </div>
+            
+            
+              
+            
+          </div>
+          <footer class="bd-footer-content">
+            
+          </footer>
+        
+      </main>
+    </div>
+  </div>
+  
+  <!-- Scripts loaded after <body> so the DOM is not blocked -->
+  <script defer src="../_static/scripts/bootstrap.js?digest=90905a2f556bf617f1a9"></script>
+<script defer src="../_static/scripts/pydata-sphinx-theme.js?digest=90905a2f556bf617f1a9"></script>
+
+  <footer class="bd-footer">
+<div class="bd-footer__inner bd-page-width">
+  
+    <div class="footer-items__start">
+      
+        <div class="footer-item">
+
+  <p class="copyright">
+    
+      © Copyright 2026, 兰州大学大气科学学院编程社区.
+      <br/>
+    
+  </p>
+</div>
+      
+        <div class="footer-item">
+
+  <p class="sphinx-version">
+    由 <a href="https://www.sphinx-doc.org/">Sphinx</a> 8.2.3创建。
+    <br/>
+  </p>
+</div>
+      
+    </div>
+  
+  
+  
+    <div class="footer-items__end">
+      
+        <div class="footer-item">
+<p class="theme-version">
+  <!-- # L10n: Setting the PST URL as an argument as this does not need to be localized -->
+  使用 <a href="https://pydata-sphinx-theme.readthedocs.io/en/stable/index.html">PyData Sphinx Theme</a> 0.20.0构建.
+</p></div>
+      
+    </div>
+  
+</div>
+
+  </footer>
+  </body>
+</html>
